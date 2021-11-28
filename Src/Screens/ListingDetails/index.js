@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ScrollView, TextInput, StyleSheet, Dimensions, FlatList, TouchableOpacity, Alert, Platform, PermissionsAndroid, ActivityIndicator, ToastAndroid, StatusBar } from 'react-native';
+import { View, Text, Image, ScrollView, TextInput, StyleSheet, Dimensions, FlatList, TouchableOpacity, Alert, Platform, PermissionsAndroid, ActivityIndicator, ToastAndroid, StatusBar, BackHandler, } from 'react-native';
 import Header from "../../Component/HeaderBack"
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Geolocation from '@react-native-community/geolocation';
@@ -109,6 +109,7 @@ class ListingDetails extends Component {
             ImageLoadingState: [],
             HeaderBackModalStatus: false
         }
+        this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
     }
     state = this.state
 
@@ -259,6 +260,16 @@ class ListingDetails extends Component {
 
     componentDidMount() {
         this.getDetails();
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+    }
+
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+    }
+
+    handleBackButtonClick() {
+        this.HandelBack()
+        return true;
     }
 
     getDetails = async () => {
