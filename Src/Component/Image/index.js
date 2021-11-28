@@ -39,30 +39,30 @@ const ImageOptionModal = (props) => {
             }}>
             <View  style={styles.modalContainer}>
               <View style={styles.modalBody}>
-                <ScrollView showsVerticalScrollIndicator={false}>
-                 
+                <ScrollView showsVerticalScrollIndicator={false} style={{width: '100%'}}>
+
                   {/* <TouchableOpacity style={styles.HeadrIconContainer}
                     onPress={() => props.onPressClose()}
                   >
                     <Image source={require('../../Assets/Cross.png')} style={{ width: 17, height: 17, resizeMode: 'contain' }}></Image>
                   </TouchableOpacity> */}
-                 
+
                   <Text style={{color:'#787878',fontSize:16,textAlign:'left',marginTop:20,}}>Select Image Source</Text>
-                  <TouchableOpacity style={{alignItems:'flex-start',justifyContent:'flex-start',alignSelf:'flex-start',borderRadius:5,marginTop:30,alignSelf:"flex-start"}} onPress={() => chooseFile('photo')}>
+                  <TouchableOpacity style={{width: '100%',alignItems:'flex-start',justifyContent:'flex-start',borderRadius:5,marginTop:10, paddingTop: 10, paddingBottom: 10, alignSelf:"flex-start"}} onPress={() => chooseFile('photo')}>
                    <Text style={{color:'#262626',fontSize:16,textAlign:'left'}}>Load from Library</Text>
                  </TouchableOpacity>
-                 <TouchableOpacity style={{alignItems:'flex-start',justifyContent:'flex-start',alignSelf:'flex-start',borderRadius:5,marginTop:30,alignSelf:"flex-start"}} onPress={() => captureImage('photo')}>
+                 <TouchableOpacity style={{width: '100%',alignItems:'flex-start',justifyContent:'flex-start',borderRadius:5,marginTop:10, paddingTop: 10, paddingBottom: 10,alignSelf:"flex-start"}} onPress={() => captureImage('photo')}>
                    <Text style={{color:'#262626',fontSize:16,textAlign:'left'}}>Use Camera</Text>
                  </TouchableOpacity>
-                 
-                 <TouchableOpacity  onPress={() => props.onPressClose()} style={{alignItems:'flex-start',justifyContent:'flex-start',alignSelf:'flex-start',marginTop:30,}}>
+
+                 <TouchableOpacity  onPress={() => props.onPressClose()} style={{width: '100%',alignItems:'flex-start',justifyContent:'flex-start',alignSelf:'flex-start',marginTop:10, paddingTop: 10, paddingBottom: 10,}}>
                    <Text style={{color:'#262626',fontSize:16,textAlign:'left'}}>Cancel</Text>
                  </TouchableOpacity>
-                  
+
                 </ScrollView>
               </View>
             </View>
-            
+
           </Modal>
           : null
       }
