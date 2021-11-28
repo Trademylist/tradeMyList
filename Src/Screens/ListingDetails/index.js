@@ -1546,7 +1546,7 @@ class ListingDetails extends Component {
                         {
                             this.state.selectedProdCategory == "Jobs" &&
                             (
-                                this.state.Jobname == '' || this.state.Jobtype == '' || this.state.sellerAddress == '' || this.state.JobDescription == '' ?
+                                this.state.coverImage == '' || this.state.Jobname == '' || this.state.Jobtype == '' || this.state.sellerAddress == '' || this.state.JobDescription == '' ?
                                 <View style={styles.btnContainer} >
                                     <Text style={styles.btnText} >{this.props.route.params.productId !== undefined ? 'Update' : 'Submit'}</Text>
                                 </View>
@@ -1559,7 +1559,7 @@ class ListingDetails extends Component {
                         {
                             this.state.selectedProdCategory != "Jobs" && this.state.selectedProdCategory != "Freebies" && this.state.selectedProdCategory != "Services" &&
                             (
-                                this.state.Productname == '' || this.state.Productprice == '' || this.state.sellerAddress == '' || this.state.ProductDescription == '' ?
+                                this.state.coverImage == '' || this.state.Productname == '' || this.state.Productprice == '' || this.state.sellerAddress == '' || this.state.ProductDescription == '' ?
                                 <View style={styles.btnContainer} >
                                     <Text style={styles.btnText} >{this.props.route.params.productId !== undefined ? 'Update' : 'Submit'}</Text>
                                 </View>
@@ -1572,7 +1572,7 @@ class ListingDetails extends Component {
                         {
                             this.state.selectedProdCategory == "Freebies" &&
                             (
-                                this.state.Productname == '' || this.state.sellerAddress == '' || this.state.ProductDescription == '' ?
+                                this.state.coverImage == '' || this.state.Productname == '' || this.state.sellerAddress == '' || this.state.ProductDescription == '' ?
                                 <View style={styles.btnContainer} >
                                     <Text style={styles.btnText} >{this.props.route.params.productId !== undefined ? 'Update' : 'Submit'}</Text>
                                 </View>
