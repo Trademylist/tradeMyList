@@ -154,7 +154,7 @@ class ListingDetails extends Component {
                         return true
                     })
                     console.log("my yearr and milage", Year, Mileage)
-                     
+
                     this.setState({
                         CarMake: carmake,
                         CarModel: carmodel,
@@ -420,6 +420,7 @@ class ListingDetails extends Component {
     };
 
     getFileFromGallery = async (data) => {
+        this.setState({ImageOptionVisible: false});
         let options = {
             mediaType: data,
             maxWidth: 300,
@@ -446,7 +447,6 @@ class ListingDetails extends Component {
 
             this.getImageuploadGallery(response)
             this.setState({
-                ImageOptionVisible: false,
                 ImageSpinnerVisible: true
             })
         });
@@ -544,7 +544,7 @@ class ListingDetails extends Component {
             if (value !== null) {
 
                 //seller can only upload max 10 images for a product
-                // let MyLength = 10 
+                // let MyLength = 10
                 var j = AdditionalIndex
                 let MyLength = response.length
                 for (var i = 0; i < MyLength; i++) {
@@ -622,6 +622,7 @@ class ListingDetails extends Component {
     }
 
     getCaptureFromCamera = async () => {
+        this.setState({ImageOptionVisible: false});
         ImagePicker.openCamera({
             width: 300,
             height: 400,
@@ -630,7 +631,6 @@ class ListingDetails extends Component {
         }).then(image => {
             this.getImageupload(image)
             this.setState({
-                ImageOptionVisible: false,
                 ImageSpinnerVisible: true
             })
             // this.getImageaddupload(image)
@@ -673,7 +673,6 @@ class ListingDetails extends Component {
             // });
         // }
     }
-
 
     selectAdditionalImage = async (itemindex) => {
         const { AdditionalImages } = this.state;
@@ -1050,7 +1049,7 @@ class ListingDetails extends Component {
                     navigation={this.props.navigation}
                 >
                 </AdditionalImageOption>
-                
+
                 <CarMakeModal
                     modalProps={this.state.CarMakeStatus}
                     onPressClose={() => this.closeCarMakeModal()}
@@ -1597,7 +1596,7 @@ class ListingDetails extends Component {
                                 </TouchableOpacity>
                             )
                         }
-                        
+
                     </ScrollView>
                     </>
                 }
