@@ -54,14 +54,14 @@ class Menu extends Component {
                     .then(response => {
                         console.log("my login data at menu modal res", response);
                         // SetUserData(response.data.data)
-                        
+
                         this.setState({
                             userData: response.data.data,
                             LoginType:LoginType,
                             loading:false,
                         })
                         console.log("my login data at menu modal", this.state.userData)
-                        
+
                     })
             } else {
                 // error reading value
@@ -91,7 +91,7 @@ class Menu extends Component {
                         //console.log(response.data)
                         alert("Image Updated Successfully")
                         this.getData();
-                        
+
                     } catch (e) {
                         // saving error
 
@@ -230,7 +230,7 @@ class Menu extends Component {
             this.getImageuploadGallery(response)
             this.setState({
                 ImageOptionVisible: false,
-            }) 
+            })
         });
     }
 
@@ -253,7 +253,7 @@ class Menu extends Component {
         } else return true;
     };
 
-    
+
     getCaptureFromCamera = async (data) => {
         ImagePicker.openCamera({
             width: 300,
@@ -265,12 +265,12 @@ class Menu extends Component {
             this.setState({
                 ImageOptionVisible: false,
                 ImageSpinnerVisible: true
-            }) 
+            })
             // this.getImageaddupload(image)
             console.log("my image from camera", image);
         });
 
-         
+
     }
 
     getImageuploadGallery = async (image) => {
@@ -347,10 +347,10 @@ class Menu extends Component {
         return (
             <AuthContext.Consumer>
             {
-                context => 
+                context =>
                 <View style={styles.modalBody}>
-                   
-                         
+
+
                     <ScrollView showsVerticalScrollIndicator={false}>
                         <ImageOptionModal
                             modalProps={this.state.ImageOptionVisible}
@@ -395,7 +395,7 @@ class Menu extends Component {
                                 }}>
                                     <Image source={require("../../Assets/Member.png")} style={{ height: "80%", width: "80%" }}></Image>
                                 </View>
-                                <Text style={{ fontFamily:"Roboto-Regular" , color: "#000", fontSize: 16, textAlign: 'center', alignSelf: 'center',fontWeight:"400",marginLeft: 5 }}>Member since 2020</Text>
+                                <Text style={{ fontFamily:"Roboto-Regular" , color: "#000", fontSize: 16, textAlign: 'center', alignSelf: 'center',fontWeight:"400",marginLeft: 5 }}>Member since {this.state.userData.createdAt ? new Date(this.state.userData.createdAt).getFullYear() : ''}</Text>
                             </View>
 
                             <View style={{
@@ -432,8 +432,8 @@ class Menu extends Component {
                         {this.state.loading==true?
                         null
                         :
-                        <View>  
-                        
+                        <View>
+
                         {/* My Listing */}
                         <TouchableOpacity onPress={() => this.HandelMyListing()} style={{ flexDirection: 'row', alignSelf: "center", borderBottomColor: "#dedede", borderBottomWidth: 1, width: Devicewidth / 1.1, height: Deviceheight / 14, justifyContent: 'space-between' }}>
                             <View style={{ flexDirection: 'row', alignSelf: "center", width: Devicewidth / 1.5, height: Deviceheight / 14, justifyContent: 'flex-start', paddingLeft: 10 }}>
@@ -629,13 +629,13 @@ class Menu extends Component {
                             </TouchableOpacity>
                         </View>
                         </View>
-                       }              
+                       }
 
-                                    
-                        
+
+
 
                     </ScrollView>
-                    
+
                 </View>
             }
             </AuthContext.Consumer>
@@ -669,5 +669,5 @@ const mapDispatchToProps = dispatch => {
         onChatCounterUpdate: (val) => dispatch({type: UPDATE_CHAT_COUNTER, payload: val}),
     }
 }
-  
+
 export default connect(null, mapDispatchToProps)(Menu);
