@@ -53,7 +53,7 @@ class ProductList extends Component {
             selectedProdId: null,
             selectedProdProcess: null,
             selectedCategoryName: null,
-            
+
             //filetr values
             filterValue: '',
             selectedCategory: '',
@@ -99,7 +99,7 @@ class ProductList extends Component {
                 UserId: value.userid
             })
         }
-        this.getCatList()      
+        this.getCatList()
         this.getlocationProduct()
         this.getAllLikes();
         this.HandelReload();
@@ -209,12 +209,12 @@ class ProductList extends Component {
                         'x-access-token': value.token,
                     }
                 })
-                    .then(response => { 
+                    .then(response => {
                         if (response.data.data.product.length > 0) {
                             response.data.data.product.map((prodData, prodIndex) => {
-                                likesList.push(prodData._id) 
+                                likesList.push(prodData._id)
                             })
-                        } 
+                        }
                         this.setState({
                             likesProduct: likesList
                         })
@@ -252,20 +252,20 @@ class ProductList extends Component {
         }
         else{
             if(country=="United States"){
-                myRange=500 * 1609.344
+                myRange=this.props.sliderDistance * 1609.344
             }
             else{
-                myRange=500 * 1000
+                myRange=this.props.sliderDistance * 1000
             }
         }
-        
+
         const value = JSON.parse(await AsyncStorage.getItem('UserData'))
 
         //for filtering views
         this.state.filterValue = await JSON.parse(await AsyncStorage.getItem('setFilter'));
         this.state.selectedCategory = await JSON.parse(await AsyncStorage.getItem('selectedCategory'));
         this.state.selectedCategoryImage = await JSON.parse(await AsyncStorage.getItem('selectedCategorymage'));
-        
+
 
         if (value !== null) {
             const object = {
@@ -277,7 +277,6 @@ class ProductList extends Component {
             }
             axios.post(`https://trademylist.com:8936/app_seller/all_product?page=${this.state.page}`, object, { headers: { 'x-access-token': value.token } })
                 .then(response => {
-                    //console.log('ss1', response);
                     this.setState({
                         ProductList: response.data.data.product,
                         country: country,
@@ -475,7 +474,7 @@ class ProductList extends Component {
     }
 
     renderItem(itemprod, index) {
-        
+
         if (itemprod[0].type == "banner") {
             return (
                 <View key={index} style={{ width: WIDTH - 10, flexDirection: 'row', marginLeft: 10, marginRight: 10, marginBottom: 30, marginTop: 20, height: 40, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center' }}>
@@ -550,10 +549,10 @@ class ProductList extends Component {
         }
         else{
             if(this.props.savedLocation.country=="United States"){
-                myRange=500 * 1609.344
+                myRange=this.props.sliderDistance * 1609.344
             }
             else{
-                myRange=500 * 1000
+                myRange=this.props.sliderDistance * 1000
             }
         }
         const value = JSON.parse(await AsyncStorage.getItem('UserData'))
@@ -675,7 +674,7 @@ class ProductList extends Component {
     }
 
     onShowAllProductsHandler = () => {
-        
+
         this.setState({
             selectedCategoryName : null,
             page: 1
@@ -685,10 +684,10 @@ class ProductList extends Component {
     }
 
     render() {
-        const newData = this.modifyData(this.state.ProductList); 
+        const newData = this.modifyData(this.state.ProductList);
         const {savedLocation, categoryList, categoryImageBaseUrl} = this.props;
 
-       
+
         return (
             <>
                 <View style={styles.Container}>
@@ -721,8 +720,8 @@ class ProductList extends Component {
                     ></MapModal>
 
                     {/* FOR THE FILTER VIEW CONTAINER */}
-                    
-                    <View style={styles.FlatlistContainer}>                        
+
+                    <View style={styles.FlatlistContainer}>
                         <FlatList
                         data={categoryList}
                         horizontal={true}
@@ -743,7 +742,7 @@ class ProductList extends Component {
                             )}
                         />
                     </View>
-                    
+
                     <View style={{ flexDirection: 'row', width: Devicewidth, alignItems: 'center', justifyContent: 'space-between', alignSelf: 'center', marginTop: 10, paddingLeft: 20 }}>
                         <Text style={{ fontFamily:"Roboto-Regular",fontWeight:'bold', fontSize: 18, textAlign: 'left', width: Devicewidth / 1.4 }}>{savedLocation.address}</Text>
                         <View style={{ width: Devicewidth / 6, alignItems: "center", flexDirection: 'row', }}>
@@ -769,7 +768,7 @@ class ProductList extends Component {
                                 </View>
                                 :
                                 <>
-                                    <FlatList 
+                                    <FlatList
                                         data={newData}
                                         showsVerticalScrollIndicator={false}
                                         onEndReached={() => this.GetReched()}
