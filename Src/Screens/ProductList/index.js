@@ -136,7 +136,11 @@ class ProductList extends Component {
             })
             .then(() => {
             });
-            this.getlocationProduct();
+            if(this.state.filterApplied && this.state.filterData) {
+                this.filteredProducts();
+            } else {
+                this.getlocationProduct();
+            }
         })
     }
 
@@ -238,7 +242,8 @@ class ProductList extends Component {
 
     getlocationProduct = async () => {
         this.setState({
-            LoadMore: false
+            LoadMore: false,
+            filterData: undefined,
         })
         const {latitude, longitude, country} = this.props.savedLocation;
         let myRange = 0
@@ -281,6 +286,8 @@ class ProductList extends Component {
                         ProductList: response.data.data.product,
                         country: country,
                         ProductLoder: false,
+                        filterApplied: false,
+                        filterData: undefined,
                     })
                     window.scrollTo(0, 0);
                 })
@@ -305,6 +312,8 @@ class ProductList extends Component {
                     ProductList: response.data.data.product,
                     country: country,
                     ProductLoder: false,
+                    filterApplied: false,
+                    filterData: undefined,
                 })
             })
             .catch(error => {
@@ -359,6 +368,8 @@ class ProductList extends Component {
                     .then(response => {
                         this.setState({
                             ProductList: response.data.data.product,
+                            filterApplied: false,
+                            filterData: undefined,
                         })
                     })
                     .catch(error => {
@@ -375,6 +386,8 @@ class ProductList extends Component {
                     .then(response => {
                         this.setState({
                             ProductList: response.data.data.product,
+                            filterApplied: false,
+                            filterData: undefined,
                         })
                     })
                     .catch(error => {
@@ -392,6 +405,8 @@ class ProductList extends Component {
                     .then(response => {
                         this.setState({
                             ProductList: response.data.data.product,
+                            filterApplied: false,
+                            filterData: undefined,
                         })
                     })
                     .catch(error => {
@@ -406,64 +421,66 @@ class ProductList extends Component {
 
     checkFilter = async (distance, sortBy, lat, lng, selectedProdCategory, fromInr, toInr, country, obj) => {
         try {
+            let object = {
+                "latitude": lat,
+                "longitude": lng,
+                "category": selectedProdCategory,
+                "distance": distance,
+                // "no_of_day": 30,
+                "price": [{ "lower": fromInr, "upper": toInr }],
+                "sortBy": sortBy
+            }
+            if(obj){
+                object = {...object, ...obj}
+            }
+            this.setState({
+                filterData: object,
+            }, async () => {
+                this.filteredProducts();
+            })
+        }
+        catch (e) {
+            // error reading value
+        }
+
+    }
+
+    filteredProducts = async () => {
+        try {
             this.setState({
                 ProductLoder: true,
                 filterApplied: true,
             }, async () => {
                 const value = await JSON.parse(await AsyncStorage.getItem('UserData'))
                 if (value !== null) {
-                    let object = {
-                        "latitude": lat,
-                        "longitude": lng,
-                        "category": selectedProdCategory,
-                        "distance": distance,
-                        // "no_of_day": 30,
-                        "price": [{ "lower": fromInr, "upper": toInr }],
-                        "sortBy": sortBy
-                    }
-                    if(obj){
-                        object = {...object, ...obj}
-                    }
-                    axios.post('https://trademylist.com:8936/app_seller/filter', object, {
+                    axios.post('https://trademylist.com:8936/app_seller/filter', this.state.filterData, {
                         headers: {
                             'x-access-token': value.token,
                         }
                     })
-                    .then(response => {
-                        //console.log('asdda', response);
-                        this.setState({
-                            ProductList: response.data.data.product,
-                            ProductLoder: false,
+                        .then(response => {
+                            console.log('asdda', JSON.stringify(response));
+                            this.setState({
+                                ProductList: response.data.data.product,
+                                ProductLoder: false,
+                            })
                         })
-                    })
-                    .catch(error => {
-                        //console.log(error.data)
-                    })
+                        .catch(error => {
+                            //console.log(error.data)
+                        })
                 } else {
-                    let object = {
-                        "latitude": lat,
-                        "longitude": lng,
-                        "category": selectedProdCategory,
-                        "distance": distance,
-                        // "no_of_day": 30,
-                        "price": [{ "lower": fromInr, "upper": toInr }],
-                        "sortBy": sortBy
-                    }
-                    if(obj){
-                        object = {...object, ...obj}
-                    }
-                    axios.post('https://trademylist.com:8936/app_user/filter', object)
-                    .then(response => {
-                        // console.log('asdda wt', JSON.parse(response.config.data));
-                        //console.log('ss', response);
-                        this.setState({
-                            ProductList: response.data.data.product,
-                            ProductLoder: false,
+                    axios.post('https://trademylist.com:8936/app_user/filter', this.state.filterData)
+                        .then(response => {
+                            // console.log('asdda wt', JSON.parse(response.config.data));
+                            //console.log('ss', response);
+                            this.setState({
+                                ProductList: response.data.data.product,
+                                ProductLoder: false,
+                            })
                         })
-                    })
-                    .catch(error => {
-                        //console.log(error.response)
-                    })
+                        .catch(error => {
+                            //console.log(error.response)
+                        })
                 }
             })
         }
