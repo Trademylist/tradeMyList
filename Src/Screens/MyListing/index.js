@@ -60,7 +60,7 @@ export default class MyListing extends Component {
     }
 
     fetchData = async () => {
-        console.log('calleed'); 
+        console.log('calleed');
         if (this.props.route.params.process !== '') {
             if (this.props.route.params.process === 'Commercial') {
                 this.setState({
@@ -218,7 +218,7 @@ export default class MyListing extends Component {
             Expired: true,
             ProductList: []
         })
-        
+
         this.getData('https://trademylist.com:8936/app_seller/all_expire_product')
     }
 
@@ -564,7 +564,7 @@ export default class MyListing extends Component {
                                                 image={item.cover_thumb}
                                                 navigation={this.props.navigation}
                                                 ProductId={item._id}
-                                                process={this.state.Commercial ? 'commercial' : 'general'}
+                                                process={item.product_type == 'Commercial' ? 'commercial' : 'general'}
                                                 unLike={this.doUnlike}
                                             />
                                         )}
@@ -653,7 +653,7 @@ export default class MyListing extends Component {
                                                     <Text style={{ fontFamily:"Roboto-Bold" , color: '#606160', textAlign: 'center', fontSize: 18, fontWeight: 'bold',letterSpacing:1 }}>No Expired Listings</Text>
                                                     <Text style={{letterSpacing: 1, marginTop: 5, fontFamily:"Roboto-medium" , color: '#606160', textAlign: 'center', fontSize: 14}}>Your listing are active for 120 days after they are posted. (We have found buyers like listings that are fresh from the oven. )</Text>
                                                     <Text style={{letterSpacing: 1, fontFamily:"Roboto-medium" , color: '#606160', textAlign: 'center', fontSize: 14}}>When you listings expire, you can come here to reactivate them.</Text>
-                                                    
+
                                                 </View>
                                                 :
                                                 <FlatList
