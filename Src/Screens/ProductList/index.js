@@ -48,7 +48,8 @@ class ProductList extends Component {
             LoadMore: false,
             CountryforProduct: '',
             loginModal: false,
-            filterApplied: false,
+            searchKey: '',
+            productListType: '',
             showSubModal: false,
             selectedProdId: null,
             selectedProdProcess: null,
@@ -115,7 +116,7 @@ class ProductList extends Component {
             ((this.props.savedLocation.latitude != prevProps.savedLocation.latitude) || (this.props.savedLocation.longitude != prevProps.savedLocation.longitude) || (this.props.sliderDistance != prevProps.sliderDistance))){
                 this.setState({
                     page: 1,
-                    filterApplied: false
+                    productListType: 'location'
                 }, () => {
                     this.getlocationProduct();
                 })
@@ -136,10 +137,14 @@ class ProductList extends Component {
             })
             .then(() => {
             });
-            if(this.state.filterApplied && this.state.filterData) {
+            if(this.state.productListType == 'search') {
+                this.ProdSearch()
+            } else if(this.state.productListType == 'filter') {
                 this.filteredProducts();
-            } else {
+            } else if(this.state.productListType == 'location'){
                 this.getlocationProduct();
+            } else {
+                this.ProdSearch('')
             }
         })
     }
@@ -286,7 +291,7 @@ class ProductList extends Component {
                         ProductList: response.data.data.product,
                         country: country,
                         ProductLoder: false,
-                        filterApplied: false,
+                        productListType: 'location',
                         filterData: undefined,
                     })
                     window.scrollTo(0, 0);
@@ -312,7 +317,7 @@ class ProductList extends Component {
                     ProductList: response.data.data.product,
                     country: country,
                     ProductLoder: false,
-                    filterApplied: false,
+                    productListType: 'location',
                     filterData: undefined,
                 })
             })
@@ -353,11 +358,16 @@ class ProductList extends Component {
         })
     }
 
-    ProdSearch = async (val) => {
+    onSearchProduct = async (val) => {
+        this.setState({searchKey: val});
+        this.ProdSearch();
+    }
+
+    ProdSearch = async () => {
         try {
             const { latitude, longitude, country } = this.props.savedLocation;
             const value = await JSON.parse(await AsyncStorage.getItem('UserData'))
-            if (val === '') {
+            if (this.state.searchKey === '') {
                 if (value !== null) {
                     const object = {
                         "latitude": latitude,
@@ -367,8 +377,9 @@ class ProductList extends Component {
                     axios.post(`https://trademylist.com:8936/app_seller/all_product?page=${this.state.page}`, object, { headers: { 'x-access-token': value.token } })
                     .then(response => {
                         this.setState({
+                            productListType: '',
                             ProductList: response.data.data.product,
-                            filterApplied: false,
+                            ProdSearch: 'search',
                             filterData: undefined,
                         })
                     })
@@ -385,8 +396,9 @@ class ProductList extends Component {
                     axios.post(`https://trademylist.com:8936/app_user/all_product?page=${this.state.page}`, object)
                     .then(response => {
                         this.setState({
+                            productListType: '',
                             ProductList: response.data.data.product,
-                            filterApplied: false,
+                            ProdSearch: false,
                             filterData: undefined,
                         })
                     })
@@ -399,13 +411,13 @@ class ProductList extends Component {
                     "latitude": latitude,
                     "longitude": longitude,
                     "country": country,
-                    "search_value": val
+                    "search_value": this.state.searchKey
                 }
                 axios.post('https://trademylist.com:8936/app_user/search_product', object)
                     .then(response => {
                         this.setState({
                             ProductList: response.data.data.product,
-                            filterApplied: false,
+                            productListType: 'search',
                             filterData: undefined,
                         })
                     })
@@ -449,7 +461,7 @@ class ProductList extends Component {
         try {
             this.setState({
                 ProductLoder: true,
-                filterApplied: true,
+                productListType: 'filter',
             }, async () => {
                 const value = await JSON.parse(await AsyncStorage.getItem('UserData'))
                 if (value !== null) {
@@ -617,12 +629,16 @@ class ProductList extends Component {
     }
 
     GetReched = () => {
-        if(!this.state.filterApplied){
+        if(this.state.productListType !== 'filter'){
             this.setState({
                 LoadMore: true,
                 page: this.state.page + 1
             }, () => {
-                this.getlocationProductForLoadMore()
+                if(this.state.productListType == 'search') {
+                    this.ProdSearch();
+                } else if(this.state.productListType == 'location') {
+                    this.getlocationProductForLoadMore();
+                }
             })
         }
     }
@@ -720,7 +736,7 @@ class ProductList extends Component {
                     <Header
                         categoryName={this.state.selectedCategoryName}
                         navigation={this.props.navigation}
-                        getsearchKey={this.ProdSearch}
+                        getsearchKey={this.onSearchProduct}
                         process='product'
                         getDataFilter={this.checkFilter}
                     />
