@@ -39,8 +39,9 @@ class CommercialList extends Component {
             page: 1,
             LoadMore: false,
             CountryforProduct: '',
-            filterApplied: false,
             loginModal: false,
+            searchKey: '',
+            productListType: '',
             showSubModal: false,
             selectedProdId: null,
             selectedProdProcess: null,
@@ -100,7 +101,15 @@ class CommercialList extends Component {
             })
             .then(() => {
             });
-            this.getlocationProduct();
+            if(this.state.productListType == 'search') {
+                this.ProdSearch()
+            } else if(this.state.productListType == 'filter') {
+                this.filteredProducts();
+            } else if(this.state.productListType == 'location'){
+                this.getlocationProduct();
+            } else {
+                this.ProdSearch('')
+            }
         })
     }
 
@@ -176,12 +185,12 @@ class CommercialList extends Component {
                     .then(response => {
                         if (response.data.data.product.length > 0) {
                             response.data.data.product.map((prodData, prodIndex) => {
-                                likesList.push(prodData._id) 
+                                likesList.push(prodData._id)
                             })
-                        } 
+                        }
                         this.setState({
                             likesProduct: likesList
-                        }) 
+                        })
                     })
                     .catch(error => {
                         // //console.log(error.data)
@@ -246,7 +255,9 @@ class CommercialList extends Component {
                         ProductList: response.data.data.product,
                         country: country,
                         LoadMore: false,
-                        ProductLoder: false
+                        ProductLoder: false,
+                        productListType: 'location',
+                        filterData: undefined,
                     })
                 }
             }
@@ -264,7 +275,9 @@ class CommercialList extends Component {
                         ProductList: response.data.data.product,
                         country: country,
                         LoadMore: false,
-                        ProductLoder: false
+                        ProductLoder: false,
+                        productListType: 'location',
+                        filterData: undefined,
                     })
                 }
             }
@@ -289,11 +302,16 @@ class CommercialList extends Component {
         })
     }
 
-    ProdSearch = async (val) => {
+    onSearchProduct = async (val) => {
+        this.setState({searchKey: val});
+        this.ProdSearch();
+    }
+
+    ProdSearch = async () => {
         try {
             const { latitude, longitude, country } = this.props.savedLocation;
             const value = JSON.parse(await AsyncStorage.getItem('UserData'))
-            if (val === '') {
+            if (this.state.searchKey === '') {
                 if (value !== null) {
                     const object = {
                         "latitude": latitude,
@@ -307,6 +325,8 @@ class CommercialList extends Component {
                             this.setState({
                                 ProductList: response.data.data.product,
                                 ProductLoder: false,
+                                productListType: '',
+                                filterData: undefined,
                             })
                         })
                         .catch(error => {
@@ -324,6 +344,8 @@ class CommercialList extends Component {
                         .then(response => {
                             this.setState({
                                 ProductList: response.data.data.product,
+                                productListType: '',
+                                filterData: undefined,
                             })
                         })
                         .catch(error => {
@@ -335,12 +357,14 @@ class CommercialList extends Component {
                     "latitude": latitude,
                     "longitude": longitude,
                     "country": country,
-                    "search_value": val
+                    "search_value": this.state.searchKey
                 }
                 axios.post('https://trademylist.com:8936/app_user/search_freebies', object)
                     .then(response => {
                         this.setState({
                             ProductList: response.data.data.product,
+                            productListType: 'search',
+                            filterData: undefined,
                         })
                     })
                     .catch(error => {
@@ -540,26 +564,42 @@ class CommercialList extends Component {
         )
     }
 
-    checkFilter = async (distance, sortBy, lat, lng, selectedProdCategory, fromInr, toInr, country) => {
+    checkFilter = async (distance, sortBy, lat, lng, selectedProdCategory, fromInr, toInr, country, obj) => {
+        try {
+            let object = {
+                "latitude": lat,
+                "longitude": lng,
+                "category": selectedProdCategory,
+                "distance": distance,
+                // "no_of_day": 30,
+                "price": [{ "lower": fromInr, "upper": toInr }],
+                "sortBy": sortBy
+            }
+            if(obj){
+                object = {...object, ...obj}
+            }
+            this.setState({
+                filterData: object,
+            }, async () => {
+                this.filteredProducts();
+            })
+        }
+        catch (e) {
+            // error reading value
+        }
+
+    }
+
+    filteredProducts = async () => {
         try {
             this.setState({
                 ProductLoder: true,
-                filterApplied: true,
+                productListType: 'filter',
             }, async() => {
                 const value = JSON.parse(await AsyncStorage.getItem('UserData'))
                 if (value !== null) {
-                    const object = {
-                        "latitude": lat,
-                        "longitude": lng,
-                        "country": country,
-                        "category": selectedProdCategory,
-                        "distance": distance,
-                        "no_of_day": 30,
-                        "price": [{ "lower": fromInr, "upper": toInr }],
-                        "sortBy": sortBy
-                    }
                     //console.log(value.token)
-                    axios.post('https://trademylist.com:8936/app_seller/commercial_filter', object, {
+                    axios.post('https://trademylist.com:8936/app_seller/commercial_filter', this.state.filterData, {
                         headers: {
                             'x-access-token': value.token,
                         }
@@ -575,18 +615,8 @@ class CommercialList extends Component {
                         console.log('errorG',error.data)
                     })
                 } else {
-                    const object = {
-                        "latitude": lat,
-                        "longitude": lng,
-                        "country": country,
-                        "category": selectedProdCategory == "" ? "All categories" : selectedProdCategory,
-                        "distance": distance,
-                        "no_of_day": 30,
-                        "price": [{ "lower": fromInr, "upper": toInr }],
-                        "sortBy": sortBy
-                    }
                     //console.log(value.token)
-                    axios.post('https://trademylist.com:8936/app_user/commercial_filter', object)
+                    axios.post('https://trademylist.com:8936/app_user/commercial_filter', this.state.filterData)
                     .then(response => {
                         console.log('ss', response);
                         this.setState({
@@ -642,7 +672,7 @@ class CommercialList extends Component {
                     <Header
                         categoryName={this.state.selectedCategoryName}
                         navigation={this.props.navigation}
-                        getsearchKey={this.ProdSearch}
+                        getsearchKey={this.onSearchProduct}
                         process='freebies'
                         getDataFilter={this.checkFilter}
                     />
