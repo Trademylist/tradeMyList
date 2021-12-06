@@ -42,7 +42,7 @@ export default class Chatter extends Component {
             Buying: false,
             SellingChat: [],
             BuyingChat: [],
-            AllChat: [], 
+            AllChat: [],
         })
         const value = JSON.parse(await AsyncStorage.getItem('UserData'));
         const currentUserId = value.userid;
@@ -56,8 +56,8 @@ export default class Chatter extends Component {
         // this.allChat()
         this.notificationdata()
         // this.HandelReload()
-        
-        
+
+
     }
 
     getChat = async () => {
@@ -135,7 +135,7 @@ export default class Chatter extends Component {
         }
 
         headerChats = [...headerChats].sort((a,b) => b.created - a.created);
-        
+
         // for (let i = 0; i < newHeaders.length; i++) {
         //     let main = newHeaders[i];
         //     for (let j = 0; j < main.data.length; j++) {
@@ -164,7 +164,7 @@ export default class Chatter extends Component {
         //     productIds.push(all[i].product_id);
         //     headerChats.push(all[i]);
         // }
-        
+
         // if(headerChats.length == 0){
         //     headerChats.push(all[i]);
         // } else {
@@ -257,7 +257,7 @@ export default class Chatter extends Component {
                     }
                     //console.log('product name',productname)
                     //console.log('user',getUser)
-        
+
                     axios.get("https://trademylist.com:8936/user/" + getUser, {
                         headers: {
                             'x-access-token': value.token,
@@ -278,7 +278,7 @@ export default class Chatter extends Component {
                         this.setState({
                             SellingChat:[...this.state.SellingChat,object],
                             AllChat:[...this.state.AllChat,object]
-                        })  
+                        })
                     })
                     .catch(error => {
                         //console.log(error.data)
@@ -372,7 +372,7 @@ export default class Chatter extends Component {
                             .catch(error => {
                                 //console.log(error.data)
                             })
-                            
+
                         })
                         .catch(error => {
                             //console.log(error.data)
@@ -389,7 +389,7 @@ export default class Chatter extends Component {
         }
     }
 
-   
+
 
     groupBy = (array, key) => {
         var selectedArray = []
@@ -524,7 +524,7 @@ export default class Chatter extends Component {
             Notification: true
         })
     }
-    
+
     render() {
         //console.log('all chat',this.state.AllChat)
         //console.log('selling chat',this.state.SellingChat)
@@ -624,7 +624,7 @@ export default class Chatter extends Component {
                                                             </View> */}
                                                         </TouchableOpacity>
                                                     )}
-                                                    
+
                                                     keyExtractor={item => item.messageId}
                                                     />
                                                     :
@@ -643,7 +643,7 @@ export default class Chatter extends Component {
                                         this.state.Selling &&
                                         <>
                                         {
-                                            !this.state.chatSellingList !== null &&
+                                            this.state.chatSellingList !== null &&
                                             <>
                                                 {
                                                     this.state.chatSellingList.length > 0 ?
@@ -684,13 +684,13 @@ export default class Chatter extends Component {
                                             </>
                                         }
                                         </>
-                                        
+
                                     }
                                     {
                                         this.state.Buying &&
                                         <>
                                         {
-                                            !this.state.chatBuyingList !== null  &&
+                                            this.state.chatBuyingList !== null  &&
                                             <>
                                                 {
                                                     this.state.chatBuyingList.length > 0 ?
@@ -739,7 +739,7 @@ export default class Chatter extends Component {
                         <View style={styles.NotificationFlatListContainer}>
                             {this.state.AllNotification.length == 0 ?
                                  <>
-                                 
+
                                  <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 22, color: "#000", fontWeight: "bold", textAlign: "center",marginTop: 30,marginBottom:10 }}>You're all cayght up</Text>
                                  <View style={{ alignItems: 'center', justifyContent: 'center', alignSelf: 'center', height: Deviceheight / 3, width: Devicewidth / 1.5, marginBottom: 10, marginTop: 10,}}>
                                      <Image source={require("../../Assets/no_data.png")} style={{ height: "100%", width: "100%", resizeMode: "contain" }}></Image>
