@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import { GiftedChat, Send } from 'react-native-gifted-chat'
+import { GiftedChat, Send, Bubble } from 'react-native-gifted-chat'
 import { View, Text, Image, ImageBackground, StyleSheet, Dimensions, FlatList, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -148,7 +148,7 @@ function ChatDetails(props) {
     }
     catch (e) {
       // error reading value
-    } 
+    }
   }
 
   const generateRandomNo = () => {
@@ -348,7 +348,7 @@ function ChatDetails(props) {
         }}>
           <Text style={{ fontFamily:"Roboto-Bold" , color: "#000", fontSize: 16, fontWeight: "bold", textAlign: "left", marginBottom: 2, marginTop: 5 }}>{productData.product_name && productData.product_name}</Text>
           {
-            (productData.category != "Jobs" && productData.category != "Freebies" && productData.category != "Services") && 
+            (productData.category != "Jobs" && productData.category != "Freebies" && productData.category != "Services") &&
             <Text style={{ fontFamily:"Roboto-Bold" , color: "#434343", fontSize: 12, textAlign: "left", }}>{productData.currencyCode && productData.currencyCode == "INR" ? "₹ " : productData.currencyCode == "USD" ? "$ " : `${productData.currencyCode} `} {productData.product_price &&productData.product_price}</Text>
           }
         </TouchableOpacity>
@@ -396,12 +396,12 @@ function ChatDetails(props) {
           </View>
         </TouchableOpacity>
         <View style={{ height: Deviceheight / 20, width: Devicewidth / 1.1, paddingHorizontal: 20, alignSelf: 'center', alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
-          <View style={{ 
+          <View style={{
             height: Deviceheight / 30,
             width: Devicewidth / 2.3, alignItems: "center", justifyContent: "center", alignSelf: "center", flexDirection: 'row', justifyContent: "space-around",
           }}>
             <View style={{
-              height: Deviceheight / 50, 
+              height: Deviceheight / 50,
               width: Devicewidth / 30, alignItems: "center", justifyContent: "center", alignSelf: "center",
             }}>
               <Image source={require("../../Assets/Member.png")} style={{ height: "100%", width: "100%" }}></Image>
@@ -413,7 +413,7 @@ function ChatDetails(props) {
           </TouchableOpacity> */}
         </View>
       </View>
-      
+
       <View style={{
         flex: 2,  marginBottom:40,padding:10,
       }}>
@@ -428,6 +428,30 @@ function ChatDetails(props) {
           scrollToBottom
           text={currentMessage}
           renderSend={renderSendButton}
+          renderBubble={props => {
+            return (
+                <Bubble
+                    {...props}
+
+                    textStyle={{
+                      right: {
+                        color: 'white',
+                      },
+                      left: {
+                        color: '#000000',
+                      },
+                    }}
+                    wrapperStyle={{
+                      left: {
+                        backgroundColor: '#ffffff',
+                      },
+                      right: {
+                        backgroundColor: "#373ec2",
+                      },
+                    }}
+                />
+            );
+          }}
         />
       </View>
        {console.log('Chat details',Data)}
@@ -459,7 +483,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     // height: Deviceheight / 14,
     //alignItems: 'center',
-    margin:5, 
+    margin:5,
     //backgroundColor: "grey",
   },
   SearchIcon: {
