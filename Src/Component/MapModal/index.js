@@ -169,7 +169,7 @@ class MapModal extends Component {
     } catch (error) {
       console.log('err', error);
     }
-    
+
       // .then(response => {
 
       //   const lng = response.data.results[0].geometry.location.lng
@@ -271,8 +271,8 @@ class MapModal extends Component {
       alert("Feteching the Position failed ,please pick one manually !")
     }
   )
-  
-      
+
+
   }
   getAddressByLatANDLng = async (latitude,longitude)=>{
     const response = await axios
@@ -545,10 +545,11 @@ const styles = StyleSheet.create({
   resultItem: {
     width: '100%',
     justifyContent: 'center',
-    height: 40,
     borderBottomColor: '#ccc',
     borderBottomWidth: 1,
     paddingLeft: 15,
+    paddingTop: 5,
+    paddingBottom: 5
   },
   SingleSliderMainContainer: {
     alignItems: 'center',
