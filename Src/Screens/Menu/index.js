@@ -256,10 +256,7 @@ class Menu extends Component {
 
     getCaptureFromCamera = async (data) => {
         ImagePicker.openCamera({
-            width: 300,
-            height: 400,
             multiple: false,
-            compressImageQuality: 0.99
         }).then(image => {
             this.getImageupload(image)
             this.setState({

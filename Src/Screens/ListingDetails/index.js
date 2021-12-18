@@ -635,10 +635,7 @@ class ListingDetails extends Component {
     getCaptureFromCamera = async () => {
         this.setState({ImageOptionVisible: false});
         ImagePicker.openCamera({
-            width: 300,
-            height: 400,
             multiple: false,
-            compressImageQuality: 0.99
         }).then(image => {
             this.getImageupload(image)
             this.setState({
@@ -732,10 +729,7 @@ class ListingDetails extends Component {
 
     selectImageCamera() {
         ImagePicker.openCamera({
-            width: 300,
-            height: 400,
             cropping: false,
-            compressImageQuality: 0.99
         }).then(image => {
             console.log('image', image);
             let array = [image];

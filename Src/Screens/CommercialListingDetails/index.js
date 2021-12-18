@@ -292,7 +292,7 @@ class CommercialListingDetails extends Component {
             selectedProdCategory: catName
         })
     }
-    
+
     componentDidMount() {
         this.getDetails();
     }
@@ -673,10 +673,7 @@ class CommercialListingDetails extends Component {
 
     getCaptureFromCamera = async () => {
         ImagePicker.openCamera({
-            width: 300,
-            height: 400,
             multiple: false,
-            compressImageQuality: 0.99
         }).then(image => {
             this.setState({
                 ImageOptionVisible: false,
@@ -686,7 +683,7 @@ class CommercialListingDetails extends Component {
             // this.getImageaddupload(image)
             //console.log("my image from camera", image);
         });
-    
+
         // let options = {
         //     mediaType: data,
         //     maxWidth: 300,
@@ -786,10 +783,7 @@ class CommercialListingDetails extends Component {
 
     selectImageCamera() {
         ImagePicker.openCamera({
-            width: 300,
-            height: 400,
             cropping: false,
-            compressImageQuality: 0.99
         }).then(image => {
             let array = [image];
             this.getImageaddupload(array)
