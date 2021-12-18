@@ -1,5 +1,15 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ScrollView, StyleSheet, Dimensions, StatusBar, TouchableOpacity } from 'react-native';
+import {
+    View,
+    Text,
+    Image,
+    ScrollView,
+    StyleSheet,
+    Dimensions,
+    StatusBar,
+    TouchableOpacity,
+    ToastAndroid
+} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import Header from "../../Component/HeaderBack"
 import AsyncStorage from '@react-native-community/async-storage';
@@ -139,7 +149,7 @@ export default class SelectBuyer extends Component {
     //                 } else {
     //                     getUser = data.sender_id
     //                 }
-                    
+
     //         //console.log("my userid", value.userid);
     //         //console.log("my getUser data", getUser);
     //         axios.get("https://trademylist.com:8936/user/" + getUser, {
@@ -199,7 +209,7 @@ export default class SelectBuyer extends Component {
     //                                             "username": response.data.data.username,
     //                                             "userImage": response.data.data.image
     //                                         }
-                                            
+
     //                                         this.setState({
     //                                             buyerDetails: [...this.state.buyerDetails, object],
     //                                         }, () => {
@@ -209,7 +219,7 @@ export default class SelectBuyer extends Component {
     //                                                 buyerDetails: updated,
     //                                             })
     //                                         })
-                                            
+
     //                                     }
     //                                     // this.setState({
     //                                     //     userDetails: response.data.data,
@@ -235,6 +245,39 @@ export default class SelectBuyer extends Component {
     //     }
     // }
 
+    submitFinal = async () => {
+        const value = JSON.parse(await AsyncStorage.getItem('UserData'))
+        if (value !== null) {
+            let url;
+            if (this.props.route.params.productType === 'general') {
+                url = 'https://trademylist.com:8936/app_seller/product_sold'
+            } else {
+                url = 'https://trademylist.com:8936/app_seller/freebies_sold'
+            }
+
+            const prodObject = {
+                "product_id": this.props.route.params.productId
+            }
+            axios.post(url, prodObject, {
+                headers: {
+                    'x-access-token': value.token,
+                }
+            })
+                .then(response => {
+                    if (response.data.success) {
+                        ToastAndroid.showWithGravity(
+                            "Product successfully updated",
+                            ToastAndroid.SHORT,
+                            ToastAndroid.BOTTOM,
+                        );
+                        this.props.navigation.navigate('myListing', {"process": 'sold'})
+                    }
+                })
+                .catch(error => {
+                    console.log('errorA', error.data)
+                })
+        }
+    }
 
     render() {
         return (
@@ -255,7 +298,7 @@ export default class SelectBuyer extends Component {
 
                     <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 10, height: Deviceheight / 1.2, }}>
                         {
-                            this.state.buyerDetails.map((btrData, btrindex) => { 
+                            this.state.buyerDetails.map((btrData, btrindex) => {
                                 return (
                                     <TouchableOpacity key={btrindex} style={{ width: Devicewidth / 1.01, paddingHorizontal: 5, alignSelf: 'flex-start', alignItems: 'flex-start', flexDirection: 'row', marginTop: 5, marginBottom: 5 }}
                                         onPress={() => this.props.navigation.navigate('reviewExperience', { "productId": this.props.route.params.productId, "buyerId": btrData.foundUserId, 'process': this.props.route.params.productType })}>
@@ -282,7 +325,7 @@ export default class SelectBuyer extends Component {
 
 
                     </ScrollView>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('reviewExperience', { "productId": this.props.route.params.productId, "buyerId": null, 'process': this.props.route.params.productType })} style={{ height: Deviceheight / 12, width: Devicewidth / 1.01, paddingHorizontal: 5, alignSelf: 'flex-end', alignItems: 'center', justifyContent: "center" }}>
+                    <TouchableOpacity onPress={() => this.submitFinal()} style={{ height: Deviceheight / 12, width: Devicewidth / 1.01, paddingHorizontal: 5, alignSelf: 'flex-end', alignItems: 'center', justifyContent: "center" }}>
                         <Text style={{ fontFamily:"Roboto-Bold" , color: "#000", fontSize: 17, fontWeight: 'bold', textAlign: 'center', alignSelf: 'center', }}>Sold it somewhere else</Text>
                     </TouchableOpacity>
                 </View>
