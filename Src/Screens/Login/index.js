@@ -48,7 +48,7 @@ class Login extends Component {
         const enabled =
           authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
           authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-    
+
         if (enabled) {
           console.log('Authorization status:', authStatus);
           this.getToken()
@@ -86,7 +86,7 @@ class Login extends Component {
                         AsyncStorage.setItem('UserData', JSON.stringify(response.data.data))
                         let val = await chatList(this.props.onChatCounterUpdate);
                         // this.props.onChatCounterUpdate(val);
-                        this.props.navigation.push('home');
+                        this.props.navigation.goBack();
                         this.setState({
                             loder: false
                         })
@@ -102,7 +102,7 @@ class Login extends Component {
                     this.setState({
                         loder: false
                     })
-                    
+
                 }
                 ToastAndroid.showWithGravity(
                     response.data.message,
@@ -222,7 +222,7 @@ class Login extends Component {
                                 </View>
                                 {this.state.isValidPassword || this.state.isValidPassword === '' ? null :
                                     <Animatable.View animation="fadeInLeft" duration={500}>
-                                        <Text style={styles.errorMsg}>Password must be 6 characters long.</Text> 
+                                        <Text style={styles.errorMsg}>Password must be 6 characters long.</Text>
                                     </Animatable.View>
                                 }
                             </View>
@@ -413,5 +413,5 @@ const mapDispatchToProps = dispatch => {
         onChatCounterUpdate: (val) => dispatch({type: UPDATE_CHAT_COUNTER, payload: val}),
     }
 }
-  
+
 export default connect(null, mapDispatchToProps)(Login);
