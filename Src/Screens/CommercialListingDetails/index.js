@@ -21,6 +21,7 @@ import {
 } from 'react-native-image-picker';
 const axios = require('axios');
 import {connect} from 'react-redux';
+import {RNS3} from "react-native-s3-upload/src/RNS3";
 
 const { width: WIDTH } = Dimensions.get('window');
 const Devicewidth = Dimensions.get('window').width;
@@ -111,6 +112,14 @@ class CommercialListingDetails extends Component {
             ImageLoadingState: [],
             HeaderBackModalStatus: false
         }
+
+        this.bucketOptions = {
+            keyPrefix: "uploads/",
+            bucket: "magclubbucket",
+            region: "us-east-1",
+            accessKey: "AKIAI2XID245DD7OSKQA",
+            secretKey: "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",
+            successActionStatus: 201};
     }
     state = this.state
 
@@ -449,7 +458,8 @@ class CommercialListingDetails extends Component {
                 return;
             }
 
-            this.getImageuploadGallery(response)
+            // this.getImageuploadGallery(response)
+            this.uploadFileToS3(response, false);
             this.setState({
                 ImageOptionVisible: false,
                 ImageSpinnerVisible: true
@@ -679,7 +689,13 @@ class CommercialListingDetails extends Component {
                 ImageOptionVisible: false,
                 ImageSpinnerVisible: true
             })
-            this.getImageupload(image)
+            let file = {
+                uri: image.path,
+                fileName: image.path.replace(/^.*[\\\/]/, ''),
+                type: image.mime
+            }
+            this.uploadFileToS3(file, false);
+            // this.getImageupload(image)
             // this.getImageaddupload(image)
             //console.log("my image from camera", image);
         });
@@ -776,7 +792,8 @@ class CommercialListingDetails extends Component {
             height: 400,
             multiple: true
         }).then(image => {
-            this.getImageaddupload(image)
+            this.uploadFileToS3(image, true);
+            // this.getImageaddupload(image)
             // //console.log("my image from camera", image);
         });
     }
@@ -786,7 +803,8 @@ class CommercialListingDetails extends Component {
             cropping: false,
         }).then(image => {
             let array = [image];
-            this.getImageaddupload(array)
+            this.uploadFileToS3(array, true);
+            // this.getImageaddupload(array)
             // //console.log("my image from camera", image);
         });
     }
@@ -1127,6 +1145,66 @@ class CommercialListingDetails extends Component {
             HeaderBackModalStatus: false
         })
     }
+    uploadFileToS3 = async (response, isAdditionalImage) => {
+        if(isAdditionalImage) {
+            const { ImageLoadingState, AdditionalIndex } = this.state
+            var h = AdditionalIndex
+            var imagestate = []
+            for (var k = 0; k < response.length; k++) {
+                imagestate.push(h)
+                h++
+            }
+            this.setState({
+                AdditionalImageSpinnerVisible: true,
+                ImageLoadingState: imagestate
+            })
+            // //console.log("in fnc");
+            try {
+                const { AdditionalImages, AdditionalIndex } = this.state;
+                const value = await JSON.parse(await AsyncStorage.getItem('UserData'))
+                if (value !== null) {
+                    var j = AdditionalIndex
+                    let MyLength = response.length
+                    for (var i = 0; i < MyLength; i++) {
+                        const formattedFile = {
+                            uri: response[i].path,
+                            name: (new Date().getTime()) + response[i].path.replace(/^.*[\\\/]/, ''),
+                            type: response[i].mime
+                        }
+                        await RNS3.put(formattedFile, this.bucketOptions).then(response => {
+                            if (response.status !== 201) {
+                                throw new Error("Failed to upload to S3");
+                            } else {
+                                AdditionalImages[j] = response.body.postResponse.location;
+                            }
+                        });
+                        j++
+                    }
+                    this.setState({
+                        AdditionalImages,
+                        AdditionalImageSpinnerVisible: false,
+                    })
+                }
+            } catch (e) {}
+        } else {
+            const formattedFile = {
+                uri: response.uri,
+                name: (new Date().getTime()) + response.fileName,
+                type: response.type
+            }
+            RNS3.put(formattedFile, this.bucketOptions).then(response => {
+                if (response.status !== 201) {
+                    throw new Error("Failed to upload to S3");
+                } else {
+                    this.setState({
+                        coverImage: response.body.postResponse.location,
+                        ImageOptionVisible: false,
+                        ImageSpinnerVisible: false,
+                    });
+                }
+            });
+        }
+    };
     render() {
         return (
             <View style={styles.Container}>
