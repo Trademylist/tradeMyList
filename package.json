@@ -44,6 +44,7 @@
     "react-native-material-dropdown-v2-fixed": "^0.11.3",
     "react-native-paper": "^4.9.2",
     "react-native-permissions": "^3.0.3",
+    "react-native-s3-upload": "^0.0.12",
     "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "^2.16.1",
     "react-native-snap-carousel": "^3.9.1",
