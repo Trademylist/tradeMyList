@@ -52,7 +52,7 @@ export default class EditEmail extends Component {
         const value = await JSON.parse(await AsyncStorage.getItem('UserData'))
         //console.log("value", value);
 
-        await axios.post("https://trademylist.com:8936/app_seller/useredit", object, {
+        await axios.post("https://trademylist.com:8936/app_seller/changeEmail", object, {
             headers: {
                 'x-access-token': value.token,
             }
@@ -63,7 +63,7 @@ export default class EditEmail extends Component {
                     try {
 
                         //console.log(response.data)
-                        alert("email Updated Successfully")
+                        alert(response.data.message);
 
                     } catch (e) {
                         // saving error
