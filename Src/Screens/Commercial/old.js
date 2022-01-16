@@ -1,5 +1,17 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ActivityIndicator, ScrollView, FlatList, StyleSheet, Dimensions, TextInput, TouchableOpacity } from 'react-native';
+import {
+    View,
+    Text,
+    Image,
+    ActivityIndicator,
+    ScrollView,
+    FlatList,
+    StyleSheet,
+    Dimensions,
+    TextInput,
+    TouchableOpacity,
+    Platform
+} from 'react-native';
 import admob, { MaxAdContentRating, InterstitialAd, AdEventType, RewardedAd, BannerAd, TestIds, BannerAdSize } from '@react-native-firebase/admob';
 const { width: WIDTH } = Dimensions.get('window');
 const Devicewidth = Dimensions.get('window').width;
@@ -58,7 +70,7 @@ export default class CommercialList extends Component {
             .setRequestConfiguration({
                 // Update all future requests suitable for parental guidance
                 maxAdContentRating: MaxAdContentRating.PG,
-                // Indicates that you want your content treated as child-directed for purposes of COPPA. 
+                // Indicates that you want your content treated as child-directed for purposes of COPPA.
                 tagForChildDirectedTreatment: true,
                 // Indicates that you want the ad request to be handled in a
                 // manner suitable for users under the age of consent.
@@ -79,7 +91,7 @@ export default class CommercialList extends Component {
                 .setRequestConfiguration({
                     // Update all future requests suitable for parental guidance
                     maxAdContentRating: MaxAdContentRating.PG,
-                    // Indicates that you want your content treated as child-directed for purposes of COPPA. 
+                    // Indicates that you want your content treated as child-directed for purposes of COPPA.
                     tagForChildDirectedTreatment: true,
                     // Indicates that you want the ad request to be handled in a
                     // manner suitable for users under the age of consent.
@@ -162,11 +174,11 @@ export default class CommercialList extends Component {
                     .then(response => {
                         if (response.data.data.product.length > 0) {
                             response.data.data.product.map((prodData, prodIndex) => {
-                                likesList.push(prodData._id) 
+                                likesList.push(prodData._id)
                             })
                             this.setState({
                                 likesProduct: likesList
-                            }) 
+                            })
                         }
                     })
                     .catch(error => {
@@ -286,8 +298,8 @@ export default class CommercialList extends Component {
                 myRange=range * 1000
             }
         }
-        
-        
+
+
         //console.log("my range noe", myRange);
         const value = await JSON.parse(await AsyncStorage.getItem('UserData'))
         if (value !== null) {
@@ -297,7 +309,7 @@ export default class CommercialList extends Component {
                 "country": country,
                 "distance":myRange
             }
-            
+
             //console.log("my req obj",object);
             await axios.post(`https://trademylist.com:8936/app_seller/all_freebies?page=${this.state.page}`, object, { headers: { 'x-access-token': value.token } })
                 .then(response => {
@@ -433,7 +445,7 @@ export default class CommercialList extends Component {
             return (
                 <View key={index} style={{ width: WIDTH - 10, flexDirection: 'row', marginLeft: 10, marginRight: 10, marginBottom: 30, marginTop: 20, height: 40, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center' }}>
                     <BannerAd size={BannerAdSize.SMART_BANNER}
-                        unitId={'ca-app-pub-3940256099942544/6300978111'}>
+                        unitId={Platform.OS == 'ios' ? 'ca-app-pub-7489460627950788/2002515682' : 'ca-app-pub-3940256099942544/6300978111'}>
                     </BannerAd>
                 </View>
             )

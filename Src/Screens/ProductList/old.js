@@ -87,7 +87,7 @@ export default class ProductList extends Component {
         // }
     }
     // shouldComponentUpdate(nextState) {
-    //     // Rendering the component only if 
+    //     // Rendering the component only if
     //     // passed props value is changed
 
     //     if (nextState.ProductList !== this.state.ProductList) {
@@ -199,12 +199,12 @@ export default class ProductList extends Component {
                     .then(response => {
                         if (response.data.data.product.length > 0) {
                             response.data.data.product.map((prodData, prodIndex) => {
-                                likesList.push(prodData._id) 
+                                likesList.push(prodData._id)
                             })
                         }
                         this.setState({
                             likesProduct: likesList
-                        }) 
+                        })
                     })
                     .catch(error => {
                         //console.log(error.data)
@@ -254,7 +254,7 @@ export default class ProductList extends Component {
                         },
                         error => console.log('ssss',error),
                         {
-                            enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 
+                            enableHighAccuracy: true, timeout: 20000, maximumAge: 1000
                         }
                     )
                 } else {
@@ -345,7 +345,7 @@ export default class ProductList extends Component {
 
     getlocationProduct = async (latitude, longitude, country,range) => {
         // //console.log("my locationNow requiredddddd", this.state.locationNow);
-        
+
         //console.log("my range requiredddddd", range);
         //console.log("my country requiredddddd", country);
         let myRange = 0
@@ -365,8 +365,8 @@ export default class ProductList extends Component {
                 myRange=range * 1000
             }
         }
-        
-        
+
+
         //console.log("my range noe", myRange);
 
 
@@ -569,7 +569,7 @@ export default class ProductList extends Component {
             return (
                 <View key={index} style={{ width: WIDTH - 10, flexDirection: 'row', marginLeft: 10, marginRight: 10, marginBottom: 30, marginTop: 20, height: 40, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center' }}>
                     <BannerAd size={BannerAdSize.SMART_BANNER}
-                        unitId={'ca-app-pub-3940256099942544/6300978111'}>
+                        unitId={Platform.OS == 'ios' ? 'ca-app-pub-7489460627950788/2002515682' : 'ca-app-pub-3940256099942544/6300978111'}>
                     </BannerAd>
                 </View>
             )
