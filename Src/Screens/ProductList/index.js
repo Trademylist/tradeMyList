@@ -508,7 +508,7 @@ class ProductList extends Component {
             return (
                 <View key={index} style={{ width: WIDTH - 10, flexDirection: 'row', marginLeft: 10, marginRight: 10, marginBottom: 30, marginTop: 20, height: 40, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center' }}>
                     <BannerAd size={BannerAdSize.SMART_BANNER}
-                        unitId={'ca-app-pub-3940256099942544/6300978111'}>
+                        unitId={Platform.OS == 'ios' ? 'ca-app-pub-7489460627950788/2002515682' : 'ca-app-pub-3940256099942544/6300978111'}>
                     </BannerAd>
                 </View>
             )
@@ -813,7 +813,7 @@ class ProductList extends Component {
                                     />
                                     {/* <View  style={{width: WIDTH-20, flexDirection: 'row', marginLeft: 10, marginRight:10, marginBottom: 10, height: 60, backgroundColor: 'blue', justifyContent: 'center', alignItems: 'center'}}>
                             <BannerAd size={BannerAdSize.SMART_BANNER}
-                                      unitId={'ca-app-pub-3940256099942544/6300978111'}>
+                                      unitId={Platform.OS == 'ios' ? 'ca-app-pub-7489460627950788/2002515682' : 'ca-app-pub-3940256099942544/6300978111'}>
                             </BannerAd>
                           </View> */}
                                 </>
