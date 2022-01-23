@@ -7,7 +7,8 @@ import {
   TextInput,
   TouchableOpacity,
   Dimensions,
-  StatusBar
+  StatusBar,
+  SafeAreaView,
 } from 'react-native';
 import LoginModal from '../LoginModal';
 import LoginModalFirst from '../LoginModalFirst';
@@ -132,7 +133,7 @@ const Header = (props) => {
     props.getDataFilter(distance, sortBy, lat, lng, selectedProdCategory, fromInr, toInr, country, obj)
   }
   return (
-        <View style={styles.Container}>
+        <SafeAreaView style={styles.Container}>
           <StatusBar backgroundColor="#000000" />
           <FilterModal
             modalProps={FilterVisible}
@@ -158,7 +159,7 @@ const Header = (props) => {
 
             <TouchableOpacity onPress={() => handelMenu()} style={{
               height: Deviceheight / 20,
-              width: Devicewidth / 10, alignItems: "center", justifyContent: "center", alignSelf: "center", marginLeft: 10, borderRadius: 360, 
+              width: Devicewidth / 10, alignItems: "center", justifyContent: "center", alignSelf: "center", marginLeft: 10, borderRadius: 360,
             }}>
             {
                 (userDetails !== '' && userDetails !== null) ?
@@ -178,8 +179,8 @@ const Header = (props) => {
                 <SearchIcon name={'search'} size={22} color={'#000'} />
               </TouchableOpacity>
 
-                
-                  
+
+
                     <TextInput
                       placeholder={props.categoryName || "All Product"}
                       placeholderTextColor={"#000"}
@@ -189,13 +190,13 @@ const Header = (props) => {
                       onChangeText={(value) => props.getsearchKey(value)}
                       ref={ref_input}
                     />
-                 
-                  
-               
-              
-                
-              
-              
+
+
+
+
+
+
+
               {/*{ cancelIcon && */}
                 <TouchableOpacity
                   style={styles.closeButtonParent}
@@ -206,7 +207,7 @@ const Header = (props) => {
                   />
                 </TouchableOpacity>
               {/*}*/}
-              
+
             </View>
             <TouchableOpacity onPress={() => handelFilter()} style={{
               height: Deviceheight / 40,
@@ -215,7 +216,7 @@ const Header = (props) => {
               <Image source={require("../../Assets/filter1.png")} style={{ height: "100%", width: "100%" }}></Image>
             </TouchableOpacity>
           </View>
-        </View>
+        </SafeAreaView>
   )
 }
 

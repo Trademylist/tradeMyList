@@ -835,6 +835,7 @@ const styles = StyleSheet.create({
     },
     FlatlistContainer: {
         // borderWidth: 1,
+        marginTop: Platform.OS == 'ios' ? 50 : 0,
         padding: 5,
         height: Deviceheight/8,
         width: Devicewidth,

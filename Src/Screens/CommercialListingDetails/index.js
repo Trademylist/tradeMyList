@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ScrollView, TextInput, StyleSheet, Dimensions, FlatList, TouchableOpacity, Alert, Platform, PermissionsAndroid, ActivityIndicator, ToastAndroid, StatusBar } from 'react-native';
+import { View, Text, Image, ScrollView, TextInput, StyleSheet, Dimensions, FlatList, TouchableOpacity, Alert, Platform, PermissionsAndroid, ActivityIndicator, ToastAndroid, StatusBar, SafeAreaView } from 'react-native';
 import Header from "../../Component/HeaderBack"
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Geolocation from '@react-native-community/geolocation';
@@ -1207,7 +1207,7 @@ class CommercialListingDetails extends Component {
     };
     render() {
         return (
-            <View style={styles.Container}>
+            <SafeAreaView style={styles.Container}>
                 <View style={styles.HeaderContainer}>
                     <StatusBar backgroundColor="#000000" />
 
@@ -1662,7 +1662,7 @@ class CommercialListingDetails extends Component {
                         </TouchableOpacity> */}
                     </ScrollView>
                 }
-            </View>
+            </SafeAreaView>
         )
     }
 }

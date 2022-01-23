@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ActivityIndicator, StyleSheet, Dimensions, TextInput, TouchableOpacity ,ToastAndroid} from 'react-native';
+import { View, Text, Image, ActivityIndicator, StyleSheet, Dimensions, TextInput, TouchableOpacity ,ToastAndroid, Platform} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
@@ -256,7 +256,8 @@ class Login extends Component {
 const styles = StyleSheet.create({
     Container: {
         flex: 1,
-        backgroundColor: '#FFF'
+        backgroundColor: '#FFF',
+        paddingTop: Platform.OS == 'ios' ? 35 : 0,
     },
     descriptionContainer: {
         flex: 0.7,
@@ -304,7 +305,7 @@ const styles = StyleSheet.create({
         marginLeft: 30,
         paddingLeft: 10,
         paddingTop: 12,
-        fontFamily: 'Raleway; Medium',
+        fontFamily: 'Roboto-Medium',
         // backgroundColor:'yellow',
         alignSelf: 'flex-end'
     },
@@ -315,7 +316,7 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         paddingTop: 12,
         marginLeft: 15,
-        fontFamily: 'Raleway; Medium',
+        fontFamily: 'Roboto-Medium',
         // backgroundColor:'yellow',
         alignSelf: 'flex-end'
     },
@@ -331,7 +332,7 @@ const styles = StyleSheet.create({
     signinText: {
         color: "#000000",
         fontSize: 16,
-        fontFamily: 'Raleway; Medium',
+        fontFamily: 'Roboto-Medium',
 
     },
     headingContainer: {
@@ -365,7 +366,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     },
     forgotText: {
-        fontFamily: 'Raleway; Medium',
+        fontFamily: 'Roboto-Medium',
         fontSize: 14,
         color: "#383ebd",
         marginTop: 30,
@@ -378,7 +379,7 @@ const styles = StyleSheet.create({
         marginTop: 25
     },
     AccountText: {
-        fontFamily: 'Raleway; Medium',
+        fontFamily: 'Roboto-Medium',
         fontSize: 14,
         color: "#9d9d9d",
     },
@@ -391,7 +392,7 @@ const styles = StyleSheet.create({
         // backgroundColor:'green'
     },
     signup: {
-        fontFamily: 'Raleway; Medium',
+        fontFamily: 'Roboto-Medium',
         fontSize: 15,
         textAlign: "center",
         color: "#383ebd",

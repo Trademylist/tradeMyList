@@ -12,7 +12,7 @@ import MapView, { Marker, Circle, AnimatedRegion } from 'react-native-maps';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import {connect} from 'react-redux';
 import { STORE_SLIDER_DISTANCE } from '../../store/actions';
-
+import {Platform} from 'react-native';
 const Devicewidth = Dimensions.get('window').width;
 const Deviceheight = Dimensions.get('window').height;
 const ASPECT_RATIO = Devicewidth / Deviceheight;
@@ -473,7 +473,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
-    backgroundColor: ' rgba(0,0,0,0.8)'
+    backgroundColor: ' rgba(0,0,0,0.8)',
+    paddingTop: Platform.OS == 'ios' ? 35 : 0,
   },
   HeadrIconContainer: {
     paddingTop: 10,

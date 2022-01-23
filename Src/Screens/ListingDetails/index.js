@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ScrollView, TextInput, StyleSheet, Dimensions, FlatList, TouchableOpacity, Alert, Platform, PermissionsAndroid, ActivityIndicator, ToastAndroid, StatusBar, BackHandler, } from 'react-native';
+import { View, Text, Image, ScrollView, TextInput, StyleSheet, Dimensions, FlatList, TouchableOpacity, Alert, Platform, PermissionsAndroid, ActivityIndicator, ToastAndroid, StatusBar, BackHandler, SafeAreaView } from 'react-native';
 import Header from "../../Component/HeaderBack"
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Geolocation from '@react-native-community/geolocation';
@@ -1098,7 +1098,7 @@ class ListingDetails extends Component {
 
     render() {
         return (
-            <View style={styles.Container}>
+            <SafeAreaView style={styles.Container}>
                 <View style={styles.HeaderContainer}>
                     <StatusBar backgroundColor="#000000" />
                     <View style={styles.HeadrIconContainer}>
@@ -1684,7 +1684,7 @@ class ListingDetails extends Component {
                     </ScrollView>
                     </>
                 }
-            </View>
+            </SafeAreaView>
         )
     }
 }

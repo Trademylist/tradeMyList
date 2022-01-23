@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Modal, TouchableOpacity, StyleSheet, Dimensions, Image, ActivityIndicator } from 'react-native';
+import { View, Text, Modal, TouchableOpacity, StyleSheet, Dimensions, Image, ActivityIndicator, Platform } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { LoginManager, AccessToken, LoginButton, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
@@ -143,7 +143,7 @@ const LoginModal = (props) => {
       })
   }
   // const now123 = () => {
-  //   console.log("in fncccccccccccccc") 
+  //   console.log("in fncccccccccccccc")
   //   var current_access_token = '';
   //   AccessToken.getCurrentAccessToken().then((data) => {
   //     current_access_token = data.accessToken.toString();
@@ -160,7 +160,7 @@ const LoginModal = (props) => {
   //             console.log('Error fetching data: ' + error.toString());
   //           } else {
   //             LoginManager.logOut();
-  //             console.log("in logout") 
+  //             console.log("in logout")
   //           }
   //         });
   //     new GraphRequestManager().addRequest(logout).start();
@@ -228,8 +228,8 @@ const LoginModal = (props) => {
         if (response.data.success === true) {
           try {
             console.log("fb login response api", response.data.data);
-            await AsyncStorage.setItem('UserData', JSON.stringify(response.data.data))  
-            await AsyncStorage.setItem('LoginType','facebook')  
+            await AsyncStorage.setItem('UserData', JSON.stringify(response.data.data))
+            await AsyncStorage.setItem('LoginType','facebook')
             setTimeout(async () => {
               props.onPressClose()
               let val = await chatList(props.onChatCounterUpdate);
@@ -325,7 +325,8 @@ const styles = StyleSheet.create({
     flex: 1,
     width: Devicewidth,
     backgroundColor: '#fff',
-    paddingBottom: 10
+    paddingBottom: 10,
+    paddingTop: Platform.OS == 'ios' ? 35 : 0,
   },
   modalContainer: {
     justifyContent: 'center',

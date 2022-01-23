@@ -755,6 +755,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff'
     },
     FlatlistContainer: {
+        marginTop: Platform.OS == 'ios' ? 50 : 0,
         padding: 5,
         height: Deviceheight/8,
         // height: '13%',
@@ -764,7 +765,6 @@ const styles = StyleSheet.create({
     },
     FlatlistContainer1: {
         padding: 5,
-        width: Devicewidth,
         alignItems: 'center',
         justifyContent: 'center',
         flex: 1,
