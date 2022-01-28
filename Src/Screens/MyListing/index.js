@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ActivityIndicator, ScrollView, FlatList, StyleSheet, Dimensions, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, Image, ActivityIndicator, ScrollView, FlatList, StyleSheet, Dimensions, TextInput, TouchableOpacity, SafeAreaView } from 'react-native';
 const { width: WIDTH } = Dimensions.get('window');
 const Devicewidth = Dimensions.get('window').width;
 const Deviceheight = Dimensions.get('window').height;
@@ -471,7 +471,7 @@ export default class MyListing extends Component {
         //console.log('sssss', this.state.ProductList);
         return (
             <>
-                <View style={styles.Container}>
+                <SafeAreaView style={styles.Container}>
                     <Header navigation={this.props.navigation} Heading={"Listings"} />
                     <MarkAsSoldModal
                         modalProps={this.state.MarkAsSoldModalVisible}
@@ -680,7 +680,7 @@ export default class MyListing extends Component {
                                     null
                     }
                     <Footer navigation={this.props.navigation} catdata={this.state.Commercial ? "freebies" : "product"} />
-                </View>
+                </SafeAreaView>
             </>
         )
     }
