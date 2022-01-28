@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, Dimensions, TouchableOpacity, FlatList, StyleSheet,StatusBar } from 'react-native';
+import { View, Text, Image, Dimensions, TouchableOpacity, FlatList, StyleSheet,StatusBar, SafeAreaView } from 'react-native';
 import Header from "../../Component/HeaderOne"
 import Footer from "../../Component/Footer"
 import NotificationListing from "../../Component/NotificationList/index"
@@ -530,7 +530,7 @@ export default class Chatter extends Component {
         //console.log('selling chat',this.state.SellingChat)
         return (
             <>
-                <View style={styles.Container}>
+                <SafeAreaView style={styles.Container}>
                     <StatusBar barStyle={"light-content"}/>
                     <Header navigation={this.props.navigation} Heading={"Chat"} />
 
@@ -773,7 +773,7 @@ export default class Chatter extends Component {
 
 
                     <Footer navigation={this.props.navigation} catdata="product" />
-                </View>
+                </SafeAreaView>
             </>
         )
     }
