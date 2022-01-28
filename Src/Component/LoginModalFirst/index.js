@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Modal, TouchableOpacity, StyleSheet, Dimensions, Image, } from 'react-native';
+import { View, Text, Modal, TouchableOpacity, StyleSheet, Dimensions, Image, Platform } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -160,10 +160,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
-    backgroundColor: ' rgba(0,0,0,0.8)'
+    backgroundColor: ' rgba(0,0,0,0.8)',
   },
   HeadrIconContainer: {
-    paddingTop: 20,
+    paddingTop: Platform.OS == 'ios' ? 55 : 20,
     paddingLeft: 15,
     alignSelf: 'center',
     alignItems: 'flex-start',
