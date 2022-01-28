@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, FlatList, StyleSheet, Dimensions, ScrollView, TouchableOpacity, TextInput, Share, ActivityIndicator, ToastAndroid,Linking } from 'react-native';
+import { View, Text, Image, FlatList, StyleSheet, Dimensions, ScrollView, TouchableOpacity, TextInput, Share, ActivityIndicator, ToastAndroid,Linking, SafeAreaView } from 'react-native';
 import { getApicall, postApiCall } from "../../ApiRequest/index";
 import Geocoder from 'react-native-geocoding';
 import Geolocation from '@react-native-community/geolocation';
@@ -138,7 +138,7 @@ export default class ProductDetails extends Component {
       //console.log("routeName"+routeName)
       //console.log("route"+route)
       //console.log("split "+splitData)
-     
+
       //const process = this.props.route.params.process
       //console.log("call product details %%%%%%%%%%")
       this.getProductDetails(id, process)
@@ -384,7 +384,7 @@ export default class ProductDetails extends Component {
             })
             //console.log("before chatterrrrrrrrrrrrrrrrrrrrr========================>>");
             this.props.navigation.navigate('chatDetails',  { "productId": productId, "prod_type": prodType, "otherId": receiver_id })
-            
+
         } catch (e) {
             // error reading value
         }
@@ -424,7 +424,7 @@ export default class ProductDetails extends Component {
             })
         }
     }
-    
+
     RemoveFavProduct = async (prodId) => {
 
         try {
@@ -509,12 +509,12 @@ export default class ProductDetails extends Component {
                     .then(response => {
                         if (response.data.data.product.length > 0) {
                             response.data.data.product.map((prodData, prodIndex) => {
-                                likesList.push(prodData._id) 
+                                likesList.push(prodData._id)
                             })
                         }
                         this.setState({
                             likesProduct: likesList
-                        }) 
+                        })
                     })
                     .catch(error => {
                         //console.log(error.data)
@@ -582,7 +582,7 @@ export default class ProductDetails extends Component {
         const {productDetails} = this.state;
         console.log('details',productDetails);
         return (
-            <View style={styles.Container}>
+            <SafeAreaView style={styles.Container}>
                 {
                 productDetails != "" &&
                 <>
@@ -776,12 +776,12 @@ export default class ProductDetails extends Component {
                                     productDetails.sub_category.map(subC => {
                                     var key = subC.key.replace(/([a-z](?=[A-Z]))/g, '$1 ')
                                     key = key.split("_").join(" ");
-                                    
+
                                     return(
                                         (key!='unit')?
                                         <View style={{
                                             // flexDirection: 'row',
-                                            
+
                                             justifyContent: 'flex-start',
                                             // flexWrap: 'wrap',
                                             // width: '90%',
@@ -821,7 +821,7 @@ export default class ProductDetails extends Component {
                                 )}
                             </View>
                         }
-                        
+
                         <Text style={{ fontFamily:"Roboto-Regular" , color: "#000", fontSize: 18, fontWeight: '900', textAlign: 'left', alignSelf: 'flex-start', width: Devicewidth / 1.1, marginLeft: 20, marginTop: 10 }}>Location</Text>
                         <Text style={{ fontFamily:"Roboto-Regular" , color: "#666666", fontSize: 16,textAlign: 'left', alignSelf: 'flex-start', width: Devicewidth / 1.1, marginLeft: 20, marginTop: 5 }}>{this.state.productDetails.address}</Text>
                         <View style={{ alignItems: 'center', justifyContent: "center", alignSelf: 'center', width: Devicewidth / 1.1, height: Deviceheight / 4, marginBottom: 10, marginTop: 15, borderBottomWidth: 1, borderBottomColor: "#e1e1e1", }}>
@@ -897,7 +897,7 @@ export default class ProductDetails extends Component {
                     }
                 </>
                 }
-            </View>
+            </SafeAreaView>
         )
     }
 }
