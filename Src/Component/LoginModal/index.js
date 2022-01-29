@@ -8,7 +8,7 @@ import messaging from '@react-native-firebase/messaging';
 import {connect} from 'react-redux';
 import { UPDATE_CHAT_COUNTER } from '../../store/actions';
 import { chatList } from '../../helperFunctions/chatList';
-
+import { appleAuth } from '@invertase/react-native-apple-authentication';
 
 const Devicewidth = Dimensions.get('window').width;
 const Deviceheight = Dimensions.get('window').height;
@@ -250,7 +250,15 @@ const LoginModal = (props) => {
   }
 
   const applelogin = async () => {
-    alert('ok');
+    const appleAuthRequestResponse = await appleAuth.performRequest({
+      requestedOperation: appleAuth.Operation.LOGIN,
+      requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+    });
+    alert(JSON.stringify(appleAuthRequestResponse));
+    const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user);
+    if (credentialState === appleAuth.State.AUTHORIZED) {
+      // user is authenticated
+    }
   };
 
   return (
