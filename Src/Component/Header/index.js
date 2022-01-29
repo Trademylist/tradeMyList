@@ -125,7 +125,9 @@ const Header = (props) => {
     SetLoginModalFirst(false)
   }
   const redcLoginModal = () => {
-    SetLoginModal(true)
+    SetLoginModalFirst(false);
+    SetLoginModal(false);
+    navigation.push('auth');
   }
 
   const getfilterDetails = (distance, sortBy, lat, lng, selectedProdCategory, fromInr, toInr, country, obj) => {
