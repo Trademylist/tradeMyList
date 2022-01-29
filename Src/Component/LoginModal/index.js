@@ -248,6 +248,11 @@ const LoginModal = (props) => {
         console.log('errorA',error.data)
       })
   }
+
+  const applelogin = async () => {
+    alert('ok');
+  };
+
   return (
     <View>
       {
@@ -292,6 +297,13 @@ const LoginModal = (props) => {
                       </View>
                       <Text style={styles.btnText} >Login with Facebook</Text>
                     </TouchableOpacity>
+
+                        <TouchableOpacity onPress={applelogin} style={styles.btnContainer2}>
+                          <View style={{ height: Deviceheight / 41, width: Devicewidth / 20, alignItems: 'center', justifyContent: 'center', alignSelf: 'center' }}>
+                            <Image source={require("../../Assets/apple.png")} style={{ height: "100%", width: '100%', resizeMode: "contain", tintColor: 'white' }} />
+                          </View>
+                          <Text style={styles.btnText} >Login with Apple</Text>
+                        </TouchableOpacity>
 
                     <Text style={styles.OR} >OR</Text>
                     <TouchableOpacity style={{ alignItems: 'center', alignSelf: "center", justifyContent: "center", }} onPress={redirectlogin}>
@@ -361,6 +373,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: 'center',
     backgroundColor: "#014eff",
+    borderRadius: 50,
+    marginTop: 20,
+    alignSelf: "center",
+    flexDirection: "row"
+  },
+  btnContainer2: {
+    width: Devicewidth / 1.1,
+    height: Deviceheight / 18,
+    alignItems: "center",
+    justifyContent: 'center',
+    backgroundColor: "black",
     borderRadius: 50,
     marginTop: 20,
     alignSelf: "center",
