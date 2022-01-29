@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Modal, TouchableOpacity, StyleSheet, Dimensions, Image, TextInput } from 'react-native';
+import { View, Text, Modal, TouchableOpacity, StyleSheet, Dimensions, Image, TextInput, Platform } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
 // import { getStateFromPath } from '@react-navigation/native';
@@ -60,7 +60,7 @@ const FilterModal = (props) => {
   const [noofBedrooms, setNoofBedrooms] = useState('')
   const [noofBathRooms, setNoofBathRooms] = useState('')
 
-  
+
   const { navigation } = props
 
 
@@ -93,8 +93,8 @@ const FilterModal = (props) => {
 
   const getFilter = () => {
     props.onSliderUpdate(slider1value);
-    
-    
+
+
     //for filter
     AsyncStorage.setItem("setFilter", JSON.stringify("yes"));
     AsyncStorage.setItem("selectedCategory", JSON.stringify(selectedProdCategory));
@@ -257,7 +257,7 @@ const FilterModal = (props) => {
 
     return (
     <View>
-      <CarMakeModal 
+      <CarMakeModal
           modalProps={carMakeStatus}
           onPressClose={() => closeCarMakeModal()}
           selectedMake={carMake}
@@ -574,10 +574,10 @@ const FilterModal = (props) => {
                           </TouchableOpacity>
                           <TouchableOpacity style={[styles.SinglesmallTransmission, noofBedrooms === 6 ? styles.active : '']} onPress={() => setNoofBedrooms(6)}>
                               <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 13, color: noofBedrooms === 6 ? '#fff' : '#000', textAlign: "center", }}>6</Text>
-                          </TouchableOpacity>                             
+                          </TouchableOpacity>
                       </View>
 
-                      <View style={styles.TransmissionsmallContainerBedroom2}>                           
+                      <View style={styles.TransmissionsmallContainerBedroom2}>
                         <TouchableOpacity style={[styles.SinglesmallTransmission, noofBedrooms === 7 ? styles.active : '']} onPress={() => setNoofBedrooms(7)}>
                                 <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 13, color: noofBedrooms === 7 ? '#fff' : '#000', textAlign: "center", }}>7</Text>
                         </TouchableOpacity>
@@ -831,6 +831,7 @@ SingleSeller: {
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
+    paddingTop: Platform.OS == 'ios' ? 35 : 0,
     backgroundColor: ' rgba(0,0,0,0.8)'
   },
   HeadrIconContainer: {
@@ -926,18 +927,16 @@ SingleSeller: {
     marginLeft: 10,
     // paddingLeft: 10,
     paddingTop: 12,
-    fontFamily: 'Raleway; Medium',
     alignSelf: 'flex-end',
-    fontWeight: "bold", 
+    fontWeight: "bold",
     textAlign: "left",
     color: 'black'
   },
   InputSelect: {
     width: Devicewidth / 1.2,
-    fontFamily: 'Raleway; Medium',
     alignSelf: 'flex-end',
-    fontSize: 15, 
-    fontWeight: "bold", 
+    fontSize: 15,
+    fontWeight: "bold",
     textAlign: "left",
     color: 'black',
     // paddingLeft: 10,
