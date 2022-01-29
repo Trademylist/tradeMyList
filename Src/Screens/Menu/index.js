@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ScrollView, StyleSheet, Dimensions, TextInput, TouchableOpacity,ActivityIndicator } from 'react-native';
+import { View, Text, Image, ScrollView, StyleSheet, Dimensions, TextInput, TouchableOpacity,ActivityIndicator, Platform } from 'react-native';
 const Devicewidth = Dimensions.get('window').width;
 const Deviceheight = Dimensions.get('window').height;
 import AsyncStorage from '@react-native-community/async-storage';
@@ -646,7 +646,8 @@ const styles = StyleSheet.create({
         flex: 1,
         width: Devicewidth,
         backgroundColor: '#fff',
-        paddingBottom: 10
+        paddingBottom: 10,
+        paddingTop: Platform.OS == 'ios' ? 35 : 0,
     },
     HeadrIconContainer: {
         paddingTop: 20,
