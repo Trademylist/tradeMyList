@@ -10,6 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@invertase/react-native-apple-authentication": "^2.1.5",
     "@ptomasroos/react-native-multi-slider": "^2.2.2",
     "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/geolocation": "^2.0.2",
@@ -43,6 +44,7 @@
     "react-native-maps": "^0.28.0",
     "react-native-material-dropdown-v2-fixed": "^0.11.3",
     "react-native-paper": "^4.9.2",
+    "react-native-payments": "^0.8.4",
     "react-native-permissions": "^3.0.3",
     "react-native-s3-upload": "^0.0.12",
     "react-native-safe-area-context": "^3.1.9",

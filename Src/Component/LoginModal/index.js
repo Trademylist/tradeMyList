@@ -305,14 +305,14 @@ const LoginModal = (props) => {
                       </View>
                       <Text style={styles.btnText} >Login with Facebook</Text>
                     </TouchableOpacity>
-
+                    {Platform.OS === 'ios' && (
                         <TouchableOpacity onPress={applelogin} style={styles.btnContainer2}>
                           <View style={{ height: Deviceheight / 41, width: Devicewidth / 20, alignItems: 'center', justifyContent: 'center', alignSelf: 'center' }}>
                             <Image source={require("../../Assets/apple.png")} style={{ height: "100%", width: '100%', resizeMode: "contain", tintColor: 'white' }} />
                           </View>
                           <Text style={styles.btnText} >Login with Apple</Text>
                         </TouchableOpacity>
-
+                    )}
                     <Text style={styles.OR} >OR</Text>
                     <TouchableOpacity style={{ alignItems: 'center', alignSelf: "center", justifyContent: "center", }} onPress={redirectlogin}>
                       <Text style={styles.Email} >Login with Email</Text>
