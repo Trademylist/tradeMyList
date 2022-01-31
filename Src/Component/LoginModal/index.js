@@ -254,10 +254,44 @@ const LoginModal = (props) => {
       requestedOperation: appleAuth.Operation.LOGIN,
       requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
     });
-    alert(JSON.stringify(appleAuthRequestResponse));
     const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user);
     if (credentialState === appleAuth.State.AUTHORIZED) {
       // user is authenticated
+      Setloder(true)
+      const object = {
+        "email": appleAuthRequestResponse.email,
+        "username": appleAuthRequestResponse.fullName.givenName,
+        "notification_token": FCMToken,
+        "login_type": "apple",
+        "socialId": appleAuthRequestResponse.user,
+        "image": ''
+      }
+      //console.log("my google login object", object);
+      await axios.post("https://trademylist.com:8936/app/social_login", object)
+          .then(async response => {
+            //console.log(response.data.success)
+            if (response.data.success === true) {
+              try {
+                //console.log("google login response api", response.data.data);
+                await AsyncStorage.setItem('UserData', JSON.stringify(response.data.data))
+                await AsyncStorage.setItem('LoginType','apple')
+                setTimeout(async () => {
+                  props.onPressClose()
+                  let val = await chatList(props.onChatCounterUpdate);
+                  // props.onChatCounterUpdate(val);
+                  Setloder(false)
+                  props.navigation.push('home')
+                }, 1000)
+
+              } catch (e) {
+                // saving error
+
+              }
+            }
+          })
+          .catch(error => {
+            console.log('errorA',error.data)
+          })
     }
   };
 
