@@ -471,7 +471,7 @@ export default class MyListing extends Component {
         //console.log('sssss', this.state.ProductList);
         return (
             <>
-                <SafeAreaView style={styles.Container}>
+                <View style={styles.Container}>
                     <Header navigation={this.props.navigation} Heading={"Listings"} />
                     <MarkAsSoldModal
                         modalProps={this.state.MarkAsSoldModalVisible}
@@ -680,7 +680,7 @@ export default class MyListing extends Component {
                                     null
                     }
                     <Footer navigation={this.props.navigation} catdata={this.state.Commercial ? "freebies" : "product"} />
-                </SafeAreaView>
+                </View>
             </>
         )
     }
@@ -690,7 +690,8 @@ const styles = StyleSheet.create({
     Container: {
         flex: 1,
         alignItems: 'center',
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        paddingTop: Platform.OS == 'ios' ? 35 : 0,
     },
     FlatlistContainer: {
         padding: 5,
