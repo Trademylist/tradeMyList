@@ -530,7 +530,7 @@ export default class Chatter extends Component {
         //console.log('selling chat',this.state.SellingChat)
         return (
             <>
-                <SafeAreaView style={styles.Container}>
+                <View style={styles.Container}>
                     <StatusBar barStyle={"light-content"}/>
                     <Header navigation={this.props.navigation} Heading={"Chat"} />
 
@@ -773,7 +773,7 @@ export default class Chatter extends Component {
 
 
                     <Footer navigation={this.props.navigation} catdata="product" />
-                </SafeAreaView>
+                </View>
             </>
         )
     }
@@ -783,7 +783,8 @@ const styles = StyleSheet.create({
     Container: {
         flex: 1,
         alignItems: 'center',
-        backgroundColor: '#ffffff'
+        backgroundColor: '#ffffff',
+        paddingTop: Platform.OS == 'ios' ? 35 : 0,
     },
     NotificationFlatListContainer: {
         width: Devicewidth,
