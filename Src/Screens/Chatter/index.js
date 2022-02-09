@@ -740,7 +740,7 @@ export default class Chatter extends Component {
                             {this.state.AllNotification.length == 0 ?
                                  <>
 
-                                 <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 22, color: "#000", fontWeight: "bold", textAlign: "center",marginTop: 30,marginBottom:10 }}>You're all cayght up</Text>
+                                 <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 22, color: "#000", fontWeight: "bold", textAlign: "center",marginTop: 30,marginBottom:10 }}>You're all caught up</Text>
                                  <View style={{ alignItems: 'center', justifyContent: 'center', alignSelf: 'center', height: Deviceheight / 3, width: Devicewidth / 1.5, marginBottom: 10, marginTop: 10,}}>
                                      <Image source={require("../../Assets/no_data.png")} style={{ height: "100%", width: "100%", resizeMode: "contain" }}></Image>
                                  </View>

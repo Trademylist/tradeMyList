@@ -193,7 +193,7 @@ export default class Chatter extends Component {
             Buying: false,
             SellingChat: [],
             BuyingChat: [],
-            AllChat: [], 
+            AllChat: [],
         })
         this.getChat()
         this.buyChat()
@@ -201,7 +201,7 @@ export default class Chatter extends Component {
         this.notificationdata()
         // this.HandelReload()
 
-        
+
     }
     // async componentDidUpdate(prevState) {
     //     if(this.state.AllChat !== prevState.AllChat){
@@ -218,7 +218,7 @@ export default class Chatter extends Component {
                 Buying: false,
                 SellingChat: [],
                 BuyingChat: [],
-                AllChat: [], 
+                AllChat: [],
             })
             this.getChat()
             this.buyChat()
@@ -232,7 +232,7 @@ export default class Chatter extends Component {
             chatLoader:true
         })
         try {
-            const value = JSON.parse(await AsyncStorage.getItem('UserData')) 
+            const value = JSON.parse(await AsyncStorage.getItem('UserData'))
             // ref.orderBy('created', 'desc')
             // ref.where('seller_id', '==', value.userid)
             //     // .where('seen', '==', true)
@@ -283,7 +283,7 @@ export default class Chatter extends Component {
                     }
                     //console.log('product name',productname)
                     //console.log('user',getUser)
-        
+
                     axios.get("https://trademylist.com:8936/user/" + getUser, {
                         headers: {
                             'x-access-token': value.token,
@@ -304,7 +304,7 @@ export default class Chatter extends Component {
                         this.setState({
                             SellingChat:[...this.state.SellingChat,object],
                             AllChat:[...this.state.AllChat,object]
-                        })  
+                        })
                     })
                     .catch(error => {
                         //console.log(error.data)
@@ -398,7 +398,7 @@ export default class Chatter extends Component {
                             .catch(error => {
                                 //console.log(error.data)
                             })
-                            
+
                         })
                         .catch(error => {
                             //console.log(error.data)
@@ -415,7 +415,7 @@ export default class Chatter extends Component {
         }
     }
 
-   
+
 
     groupBy = (array, key) => {
         console.log('array',array);
@@ -663,7 +663,7 @@ export default class Chatter extends Component {
                                                                     :
                                                                     <Image source={require("../../Assets/default-avatar.png")} style={styles.Image}></Image>
                                                             }
-                                                            
+
 
                                                         </View>
                                                         <TouchableOpacity style={styles.DescriptionContainer} onPress={() => this.getNavigation(item)}>
@@ -772,8 +772,8 @@ export default class Chatter extends Component {
                         <View style={styles.NotificationFlatListContainer}>
                             {this.state.AllNotification.length == 0 ?
                                  <>
-                                 
-                                 <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 22, color: "#000", fontWeight: "bold", textAlign: "center",marginTop: 30,marginBottom:10 }}>You're all cayght up</Text>
+
+                                 <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 22, color: "#000", fontWeight: "bold", textAlign: "center",marginTop: 30,marginBottom:10 }}>You're all caught up</Text>
                                  <View style={{ alignItems: 'center', justifyContent: 'center', alignSelf: 'center', height: Deviceheight / 3, width: Devicewidth / 1.5, marginBottom: 10, marginTop: 10,}}>
                                      <Image source={require("../../Assets/no_data.png")} style={{ height: "100%", width: "100%", resizeMode: "contain" }}></Image>
                                  </View>
