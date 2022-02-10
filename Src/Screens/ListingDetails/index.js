@@ -1384,13 +1384,13 @@ class ListingDetails extends Component {
                                             <TouchableOpacity style={styles.transmission} >
                                                 <Image source={require("../../Assets/Manual.png")} style={{ height: "100%", width: "100%" }}></Image>
                                             </TouchableOpacity>
-                                            <Text style={{ fontFamily:"Roboto-Medium" , fontSize: 13, color: this.state.TransMission === 'Manual' ? '#fff' : '#000', textAlign: 'center', }}>Manual</Text>
+                                            <Text style={{ fontSize: 13, color: this.state.TransMission === 'Manual' ? '#fff' : '#000', textAlign: 'center', }}>Manual</Text>
                                         </TouchableOpacity>
                                         <TouchableOpacity style={[styles.SingleTransmission, this.state.TransMission === 'Automatic' ? styles.active : '']} onPress={() => this.setState({ TransMission: 'Automatic' })}>
                                             <TouchableOpacity style={styles.transmission}  >
                                                 <Image source={require("../../Assets/Automatic.png")} style={{ height: "95%", width: "70%" }}></Image>
                                             </TouchableOpacity>
-                                            <Text style={{ fontFamily:"Roboto-Medium" , fontSize: 13, color: this.state.TransMission === 'Automatic' ? '#fff' : '#000', textAlign: "center", }}>Automatic</Text>
+                                            <Text style={{ fontSize: 13, color: this.state.TransMission === 'Automatic' ? '#fff' : '#000', textAlign: "center", }}>Automatic</Text>
                                         </TouchableOpacity>
                                     </View>
                                 </>
@@ -1743,7 +1743,6 @@ const styles = StyleSheet.create({
         width: Devicewidth / 1.10,
         height: Deviceheight / 13,
         fontSize: 15,
-        fontFamily: 'Raleway; Medium',
         backgroundColor: '#f5f5f5',
         alignSelf: 'center',
         borderRadius: 10,
@@ -1763,7 +1762,6 @@ const styles = StyleSheet.create({
         width: Devicewidth / 1.10,
         height: Deviceheight / 13,
         fontSize: 15,
-        fontFamily: 'Raleway; Medium',
         backgroundColor: '#f5f5f5',
         alignSelf: 'flex-start',
         borderRadius: 10,
@@ -1773,7 +1771,6 @@ const styles = StyleSheet.create({
         width: Devicewidth / 1.3,
         height: Deviceheight / 13,
         fontSize: 15,
-        fontFamily: 'Raleway; Medium',
         backgroundColor: '#f5f5f5',
         alignSelf: 'flex-start',
         borderRadius: 10,
@@ -1792,7 +1789,6 @@ const styles = StyleSheet.create({
         width: Devicewidth / 1.10,
         height: Deviceheight / 8,
         fontSize: 15,
-        fontFamily: 'Raleway; Medium',
         backgroundColor: '#f5f5f5',
         alignSelf: 'center',
         borderRadius: 10,
