@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   Dimensions,
   StatusBar,
-  SafeAreaView,
+  Platform,
 } from 'react-native';
 import LoginModal from '../LoginModal';
 import LoginModalFirst from '../LoginModalFirst';
@@ -135,7 +135,7 @@ const Header = (props) => {
     props.getDataFilter(distance, sortBy, lat, lng, selectedProdCategory, fromInr, toInr, country, obj)
   }
   return (
-        <SafeAreaView style={styles.Container}>
+        <View style={styles.Container}>
           <StatusBar backgroundColor="#000000" />
           <FilterModal
             modalProps={FilterVisible}
@@ -218,7 +218,7 @@ const Header = (props) => {
               <Image source={require("../../Assets/filter1.png")} style={{ height: "100%", width: "100%" }}></Image>
             </TouchableOpacity>
           </View>
-        </SafeAreaView>
+        </View>
   )
 }
 
@@ -229,6 +229,7 @@ const styles = StyleSheet.create({
     height: Deviceheight / 12,
     justifyContent: 'space-between',
     backgroundColor: '#fff',
+    paddingTop: Platform.OS == 'ios' ? 30 : 0,
   },
   HeadrIconContainer: {
     width: Devicewidth,
