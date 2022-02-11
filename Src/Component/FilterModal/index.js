@@ -927,6 +927,7 @@ SingleSeller: {
     marginLeft: 10,
     // paddingLeft: 10,
     paddingTop: 12,
+    paddingBottom: 12,
     alignSelf: 'flex-end',
     fontWeight: "bold",
     textAlign: "left",
@@ -941,6 +942,7 @@ SingleSeller: {
     color: 'black',
     // paddingLeft: 10,
     paddingTop: 12,
+    paddingBottom: 12,
 },
   active: {
     backgroundColor: '#bdbdbd',
