@@ -55,7 +55,7 @@ const LoginModalFirst = (props) => {
                     <Image source={require('../../Assets/close_button.png')} style={{ width: 13, height: 13, resizeMode: 'contain' }}></Image>
                   </TouchableOpacity>
 
-                  <View style={{ height: Deviceheight / 6.8, width: Devicewidth, alignItems: 'center', justifyContent: 'center', alignSelf: 'center', marginTop: 5, backgroundColor: "#eeeeee", flexDirection: "row" }}>
+                  <View style={{ height: Deviceheight / 6.8, width: Devicewidth, alignItems: 'center', justifyContent: 'center', alignSelf: 'center', marginTop: 20, backgroundColor: "#eeeeee", flexDirection: "row" }}>
                     <TouchableOpacity style={{
                       height: Deviceheight / 11,
                       width: Devicewidth / 5.5, alignItems: "center", justifyContent: "center", alignSelf: "center", borderRadius: 360, backgroundColor: '#fff', marginBottom: 10
