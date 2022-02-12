@@ -24,14 +24,14 @@ const SubscribeModal = (props) => {
     if(subscription.length == 0){
       const itemSkus = ['sub1day', 'sub1week', 'sub1month']
       RNIap.getSubscriptions(itemSkus).then((sub_res) => {
-        //console.log(" get Subscriptions", sub_res);
+        console.log(" get Subscriptions", sub_res);
         SetSubscription(sub_res)
       }).catch((error) => {
         console.log('errorA',error);
       })
     }
   }
-  
+
   const purchaseSubscription = () => {
     let Subscription_Id
     //console.log("my sub choose", SubChoice);
@@ -137,10 +137,10 @@ const SubscribeModal = (props) => {
             onRequestClose={() => {
               props.onPressCloseSub()
             }}>
-              
+
                 <View style={styles.modalContainer}>
                 <View style={styles.modalBody}>
-                  <TouchableOpacity style={{ marginBottom: 10, marginTop: 10, height: Deviceheight / 30, width: Devicewidth / 16, alignSelf: 'flex-start', alignItems: "center", justifyContent: "center", marginLeft: 10 }}
+                  <TouchableOpacity style={{ marginBottom: 10, marginTop: 40, height: Deviceheight / 30, width: Devicewidth / 16, alignSelf: 'flex-start', alignItems: "center", justifyContent: "center", marginLeft: 10 }}
                     onPress={() => props.onPressCloseSub()}
                   >
                     <Image source={require('../../Assets/Cross.png')} style={{ width: "60%", height: "60%", resizeMode: 'contain' }}></Image>
@@ -151,16 +151,16 @@ const SubscribeModal = (props) => {
                       <View style={{ height: Deviceheight / 2.2, width: Devicewidth / 1.01, alignItems: 'center', justifyContent: "center", alignSelf: "center" }}>
                     <Image source={require('../../Assets/subscribe.png')} style={{ width: "100%", height: "100%", resizeMode: 'contain' }}></Image>
                   </View>
-  
-  
-  
+
+
+
                   <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 26, color: "#000", textAlign: "center", alignSelf: 'center', fontWeight: 'bold', marginTop: 10 }}>Attract 10 X more buyers</Text>
                   <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#000", textAlign: "center", alignSelf: 'center', marginTop: 10, width: Devicewidth / 1.5, height: Deviceheight / 16, }}>Feature your listing at the top of all listings at a discounted rate</Text>
-  
-  
-  
+
+
+
                   <View style={{ width: Devicewidth, height: Deviceheight / 6, alignSelf: "center", alignItems: "center", justifyContent: "space-around", flexDirection: "row", marginTop: 10 }}>
-  
+
                     {SubChoice != "one" ?
                       <TouchableOpacity onPress={() => SetSubChoice('one')} style={styles.subscriptionBox}>
                         <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#4e00b5", textAlign: "center", alignSelf: 'center', fontWeight: "bold", }}>Daily</Text>
@@ -172,7 +172,7 @@ const SubscribeModal = (props) => {
                         <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#4e00b5", textAlign: "center", alignSelf: 'center', fontWeight: "bold", marginTop: 10 }}>{subscription[2].currency == 'INR' ? '₹' : '$'} {subscription[0].originalPrice}</Text>
                       </TouchableOpacity>
                     }
-  
+
                     {SubChoice != "two" ?
                       <TouchableOpacity onPress={() => SetSubChoice('two')} style={styles.subscriptionBox}>
                         <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#4e00b5", textAlign: "center", alignSelf: 'center', fontWeight: "bold", }}>Weekly</Text>
@@ -184,7 +184,7 @@ const SubscribeModal = (props) => {
                         <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#4e00b5", textAlign: "center", alignSelf: 'center', fontWeight: "bold", marginTop: 10 }}>{subscription[2].currency == 'INR' ? '₹' : '$'} {subscription[1].originalPrice}</Text>
                       </TouchableOpacity>
                     }
-  
+
                     {SubChoice != "three" ?
                       <TouchableOpacity onPress={() => SetSubChoice('three')} style={styles.subscriptionBox}>
                         <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#4e00b5", textAlign: "center", alignSelf: 'center', fontWeight: "bold", }}>Monthly</Text>
@@ -203,7 +203,7 @@ const SubscribeModal = (props) => {
                       </TouchableOpacity>
                     }
                   </View>
-  
+
                   <TouchableOpacity
                     onPress={purchaseSubscription}
                     style={{ backgroundColor: '#fb7700', width: Devicewidth / 2, height: Deviceheight / 14, borderRadius: 50, alignSelf: "center", alignItems: "center", justifyContent: "center", marginTop: 30 }}>
@@ -211,7 +211,7 @@ const SubscribeModal = (props) => {
                   </TouchableOpacity>
                     </>
                   }
-                  
+
                 </View>
               </View>
           </Modal>

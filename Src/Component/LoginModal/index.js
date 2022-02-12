@@ -259,15 +259,14 @@ const LoginModal = (props) => {
       // user is authenticated
       Setloder(true)
       const object = {
-        "email": appleAuthRequestResponse.email,
-        "username": appleAuthRequestResponse.fullName.givenName,
+        provider: 'Apple',
+        response: appleAuthRequestResponse,
+        // "email": appleAuthRequestResponse.email,
+        // "username": appleAuthRequestResponse.fullName.givenName,
         "notification_token": FCMToken,
-        "login_type": "apple",
-        "socialId": appleAuthRequestResponse.user,
-        "image": ''
       }
       //console.log("my google login object", object);
-      await axios.post("https://trademylist.com:8936/app/social_login", object)
+      await axios.post("https://trademylist.com:8936/app_user/applelogin", object)
           .then(async response => {
             //console.log(response.data.success)
             if (response.data.success === true) {
