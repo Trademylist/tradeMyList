@@ -636,17 +636,14 @@ class ListingDetails extends Component {
     }
 
     getaddCaptureFromCamera = async (data) => {
-        this.setState({
-            AdditionalOptionVisible: false
-        })
         this.selectImageCamera()
     }
 
     getCaptureFromCamera = async () => {
-        this.setState({ImageOptionVisible: false});
         ImagePicker.openCamera({
             multiple: false,
         }).then(image => {
+            this.setState({ImageOptionVisible: false});
             let file = {
                 uri: image.path,
                 fileName: image.path.replace(/^.*[\\\/]/, ''),
@@ -748,7 +745,9 @@ class ListingDetails extends Component {
         ImagePicker.openCamera({
             cropping: false,
         }).then(image => {
-            console.log('image', image);
+            this.setState({
+                AdditionalOptionVisible: false
+            })
             let array = [image];
             this.uploadFileToS3(array, true);
             // this.getImageaddupload(array)

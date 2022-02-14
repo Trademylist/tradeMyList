@@ -675,9 +675,6 @@ class CommercialListingDetails extends Component {
     }
 
     getaddCaptureFromCamera = async (data) => {
-        this.setState({
-            AdditionalOptionVisible: false
-        })
         this.selectImageCamera()
     }
 
@@ -802,6 +799,9 @@ class CommercialListingDetails extends Component {
         ImagePicker.openCamera({
             cropping: false,
         }).then(image => {
+            this.setState({
+                AdditionalOptionVisible: false
+            })
             let array = [image];
             this.uploadFileToS3(array, true);
             // this.getImageaddupload(array)
