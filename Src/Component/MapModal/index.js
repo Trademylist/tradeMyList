@@ -385,7 +385,6 @@ class MapModal extends Component {
                         autoCapitalize="none"
                         value={locationData.wholeAddress}
                         onTouchStart={this.onFocus}
-                        onPressOut={true}
                         onChangeText={(text) => this.searchLocation(text)}
                       >
                       </TextInput>
