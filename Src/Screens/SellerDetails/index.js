@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StatusBar, StyleSheet, Dimensions, FlatList, TouchableOpacity } from 'react-native';
-const { width: WIDTH } = Dimensions.get('window');
+import { View, Text, Image, StatusBar, StyleSheet, Dimensions, FlatList, TouchableOpacity,SafeAreaView } from 'react-native';
+const { width: WIDTH } = Dimensions.get('window');            
 const Devicewidth = Dimensions.get('window').width;
 const Deviceheight = Dimensions.get('window').height;
 import Header from "../../Component/HeaderBack"
@@ -213,7 +213,8 @@ export default class SellerDetails extends Component {
     render() {
         console.log("Reviews", this.state.ReviewList);
         return (
-            <>
+            <SafeAreaView style={styles.Container}>
+            
                 <View style={styles.Container}>
                     <View style={styles.Container1}>
                         <StatusBar backgroundColor="#000000" />
@@ -254,7 +255,7 @@ export default class SellerDetails extends Component {
                         navigation={this.props.navigation}
                         seller_Id={this.props.route.params.sellerId}
                     ></ReportModal>
-                    <View style={{ backgroundColor: '#ff6801', height: Deviceheight / 6, width: Devicewidth, paddingHorizontal: 20, alignSelf: 'center', alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <View style={{ backgroundColor: 'orange', height: Deviceheight / 6, width: Devicewidth, paddingHorizontal: 20, alignSelf: 'center', alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
                         <View style={{ alignItems: 'flex-start', height: Deviceheight / 8, width: Devicewidth / 2.5 }}>
                             <Text style={{ fontFamily:"Roboto-Bold" , color: "#000", fontSize: 20, fontWeight: 'bold', textAlign: 'left', alignSelf: 'flex-start', marginTop: 5 }}>{this.state.UserData.username}</Text>
                             <View style={{ alignItems: 'flex-start', alignSelf: 'flex-start', width: Devicewidth / 2.5, height: Deviceheight / 26, flexDirection: 'row', }}>
@@ -281,34 +282,34 @@ export default class SellerDetails extends Component {
                                 height: Deviceheight / 28,
                                 width: Devicewidth / 3, alignItems: "center", justifyContent: "center", alignSelf: 'flex-start', flexDirection: 'row', justifyContent: "space-around", marginTop: 2
                             }}>
-                                <View style={{
-                                    height: Deviceheight / 55,
-                                    width: Devicewidth / 25, alignItems: "center", justifyContent: "center", alignSelf: "center",
+                               <View style={{
+                                    height: 60,
+                                    width: 20, marginRight:5, alignItems: "center", justifyContent: "center", alignSelf: "center",
                                 }}>
-                                    <Image source={require("../../Assets/Verified1.png")} style={{ height: "100%", width: "100%" }}></Image>
-                                </View>
+                                    <Image source={require("../../Assets/Verified1.png")} style={{ height: 20, width: 20 }}></Image>
+                                </View> 
                                 <Text style={{ fontFamily:"Roboto-Regular" , color: "#000", fontSize: 14, textAlign: 'center', alignSelf: 'center', }}>Verified with :</Text>
                                 <TouchableOpacity style={{
-                                    height: Deviceheight / 60,
-                                    width: Devicewidth / 25, alignItems: "center", justifyContent: "center", alignSelf: "center",
+                                    height:60,
+                                    width: 20,marginLeft:5, alignItems: "center", justifyContent: "center", alignSelf: "center",
                                 }}>
                                     {this.state.UserData.login_type == null ?
-                                        <Image source={require("../../Assets/Email_Black.png")} style={{ height: "100%", width: "100%" }}></Image>
+                                        <Image source={require("../../Assets/Email_Black.png")} style={{ height:15, width: 16}}></Image>
                                         :
                                         this.state.UserData.login_type == "facebook" ?
-                                            <Icon name='facebook' style={{ fontSize: 15, marginTop: 4 }} />
+                                            <Icon name='facebook' style={{ fontSize: 12, marginTop: 0 }} />
                                             :
                                             this.state.UserData.login_type == "google" ?
-                                                <Icon name='google' style={{ fontSize: 15, marginTop: 4 }} />
+                                                <Icon name='google' style={{ fontSize: 12, marginTop: 0 }} />
                                                 :
                                                 null
-                                    }
+                                    }h
                                 </TouchableOpacity>
                             </View>
                         </View>
                         <TouchableOpacity style={{
-                            height: Deviceheight / 10,
-                            width: Devicewidth / 5, alignItems: "center", justifyContent: "center", alignSelf: "center", borderRadius: 360, backgroundColor: '#fff', padding: 2
+                            height: 90,
+                            width: 90, alignItems: "center", justifyContent: "center", alignSelf: "center", borderRadius: 360, backgroundColor: '#fff', padding: 2
                         }}>
                             {this.state.UserData.image !== '' ?
                                 <Image source={{ uri: this.state.UserData.image }} style={{ height: "100%", width: "100%", borderRadius: 360 }}></Image>
@@ -317,7 +318,7 @@ export default class SellerDetails extends Component {
                             }
                         </TouchableOpacity>
                     </View>
-
+   
                     <View style={{ width: Devicewidth, height: Deviceheight / 16, alignItems: 'center', justifyContent: 'space-around', flexDirection: 'row', backgroundColor: '#fff', borderBottomColor: '#e6e6e6', borderBottomWidth: 1 }}>
                         {this.state.Product == true ?
                             <TouchableOpacity onPress={() => this.handelProduct()} style={{ width: Devicewidth / 3, height: Deviceheight / 16, alignItems: 'center', justifyContent: "center", borderBottomColor: "#383ec1", borderBottomWidth: 2 }}>
@@ -464,7 +465,8 @@ export default class SellerDetails extends Component {
                     }
 
                 </View>
-            </>
+
+            </SafeAreaView>        
         )
     }
 }

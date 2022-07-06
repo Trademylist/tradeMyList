@@ -21,8 +21,8 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const axios = require('axios');
 const API_KEY = 'AIzaSyCPCwSH6Wtnu0dAJUapPeU2NWTwCmlNQhY';
-
-class MapModal extends Component {
+  
+class MapModal extends Component {  
 
   constructor(props) {
     super(props)

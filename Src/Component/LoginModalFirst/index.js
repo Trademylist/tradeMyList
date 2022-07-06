@@ -57,8 +57,8 @@ const LoginModalFirst = (props) => {
 
                   <View style={{ height: Deviceheight / 6.8, width: Devicewidth, alignItems: 'center', justifyContent: 'center', alignSelf: 'center', marginTop: 20, backgroundColor: "#eeeeee", flexDirection: "row" }}>
                     <TouchableOpacity style={{
-                      height: Deviceheight / 11,
-                      width: Devicewidth / 5.5, alignItems: "center", justifyContent: "center", alignSelf: "center", borderRadius: 360, backgroundColor: '#fff', marginBottom: 10
+                      height:80,
+                      width: 80, alignItems: "center", justifyContent: "center", alignSelf: "center", borderRadius: 360, backgroundColor: '#fff', marginBottom: 10
                     }}>
                       <Image source={require("../../Assets/default-avatar.png")} style={{ height: "100%", width: "100%", borderRadius: 360 }}></Image>
                     </TouchableOpacity>

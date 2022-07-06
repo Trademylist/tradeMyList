@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, FlatList, StyleSheet, Dimensions, ScrollView, TouchableOpacity, TextInput, Share, ActivityIndicator, ToastAndroid,Linking, SafeAreaView } from 'react-native';
+import { View, Text, Image, FlatList, StyleSheet, Dimensions, ScrollView, TouchableOpacity, TextInput, Share, ActivityIndicator, ToastAndroid, Linking, SafeAreaView } from 'react-native';
 import { getApicall, postApiCall } from "../../ApiRequest/index";
 import Geocoder from 'react-native-geocoding';
 import Geolocation from '@react-native-community/geolocation';
@@ -69,7 +69,7 @@ export default class ProductDetails extends Component {
             productDetails: '',
             productImages: [],
             productZoomImages: [],
-            lat:0,
+            lat: 0,
             lng: 0,
             userDetails: '',
             messageInput: '',
@@ -104,7 +104,7 @@ export default class ProductDetails extends Component {
         const process = this.props.route.params.process
         //console.log("my pro id at pro dtails", productId)
         //console.log("my process at pro dtails", process)
-        if(productId!==undefined){
+        if (productId !== undefined) {
             this.setState({
                 ProductID: productId,
                 Process: process,
@@ -112,16 +112,16 @@ export default class ProductDetails extends Component {
             })
             this.getProductDetails(productId, process)
         }
-        else{
+        else {
             if (Platform.OS === 'android') {
                 Linking.getInitialURL().then(url => {
                     //console.log("url"+url)
-                  this.navigate(url);
+                    this.navigate(url);
                 });
-              } else {
-                  //console.log("url"+url)
-                  Linking.addEventListener('url', this.handleOpenURL);
-                }
+            } else {
+                //console.log("url"+url)
+                Linking.addEventListener('url', this.handleOpenURL);
+            }
         }
         this.getAllLikes()
     }
@@ -131,21 +131,21 @@ export default class ProductDetails extends Component {
         // const id = route.match(/\/([^\/]+)\/?$/)[1];
         // const id2 = route.match(/\/([^\/]+)\/?$/)[2];
         const routeName = route.split('/')[0];
-        var splitData=route.split("/");
-        var id=splitData[2];
-        var process=splitData[3];
-      //console.log("id%%% "+splitData[2] +" ** id2 "+splitData[3])
-      //console.log("routeName"+routeName)
-      //console.log("route"+route)
-      //console.log("split "+splitData)
+        var splitData = route.split("/");
+        var id = splitData[2];
+        var process = splitData[3];
+        //console.log("id%%% "+splitData[2] +" ** id2 "+splitData[3])
+        //console.log("routeName"+routeName)
+        //console.log("route"+route)
+        //console.log("split "+splitData)
 
-      //const process = this.props.route.params.process
-      //console.log("call product details %%%%%%%%%%")
-      this.getProductDetails(id, process)
+        //const process = this.props.route.params.process
+        //console.log("cdetails %%%%%%%%%%")
+        this.getProductDetails(id, process)
         // if (routeName === 'people') {
         //   navigate('People', { id, name: 'chris' })
         // };
-      }
+    }
     getReviewList = async (UserId) => {
         const value = await JSON.parse(await AsyncStorage.getItem('UserData'))
         //console.log("my data sayaaaannnn", value);
@@ -189,12 +189,12 @@ export default class ProductDetails extends Component {
 
     getShare = async () => {
         try {
-            const {ProductName}=this.state
+            const { ProductName } = this.state
             const productId = this.props.route.params.productId;
             const process = this.props.route.params.process
             //const ProductLink = 'https://trademylist.com/product-details/?id=' + productId;
-            const ProductLink = 'https://trademylist.com/product-details/' + productId+"/"+process;
-            const ShareLink =ProductName!==undefined? ProductName + "" + ProductLink: ProductLink
+            const ProductLink = 'https://trademylist.com/product-details/' + productId + "/" + process;
+            const ShareLink = ProductName !== undefined ? ProductName + "" + ProductLink : ProductLink
             await Share.share({
                 title: ProductName,
                 message:
@@ -224,11 +224,11 @@ export default class ProductDetails extends Component {
                 var imageData = [];
                 var imgzoomData = []
                 imageData.push(response.data.data.product.cover_thumb)
-                if(response.data.data.product.cover_thumb == ""){
-                    if(response.data.data.product.category == "Jobs"){
+                if (response.data.data.product.cover_thumb == "") {
+                    if (response.data.data.product.category == "Jobs") {
                         imgzoomData.push({ "uri": "https://trademylist.com:8936/jobs.jpg" });
-                    } else if(response.data.data.product.category == "Services"){
-                        imgzoomData.push({"uri":"https://trademylist.com:8936/services.jpg"});
+                    } else if (response.data.data.product.category == "Services") {
+                        imgzoomData.push({ "uri": "https://trademylist.com:8936/services.jpg" });
                     }
                 } else {
                     imgzoomData.push({ "uri": response.data.data.product.cover_thumb })
@@ -236,11 +236,11 @@ export default class ProductDetails extends Component {
                 if (response.data.data.product.image.length > 0) {
                     response.data.data.product.image.map((imgdata, imgindex) => {
                         imageData.push(imgdata)
-                        if(imgdata == ""){
-                            if(response.data.data.product.category == "Jobs"){
+                        if (imgdata == "") {
+                            if (response.data.data.product.category == "Jobs") {
                                 imgzoomData.push({ "uri": "https://trademylist.com:8936/jobs.jpg" });
-                            } else if(response.data.data.product.category == "Services"){
-                                imgzoomData.push({"uri":"https://trademylist.com:8936/services.jpg"});
+                            } else if (response.data.data.product.category == "Services") {
+                                imgzoomData.push({ "uri": "https://trademylist.com:8936/services.jpg" });
                             }
                         } else {
                             imgzoomData.push({ "uri": imgdata });
@@ -250,10 +250,10 @@ export default class ProductDetails extends Component {
                 //console.log(response);
                 Geocoder.from(response.data.data.product.address)
                     .then(json => {
-                        if(imageData[0] == ""){
-                            if(response.data.data.product.category == "Jobs"){
+                        if (imageData[0] == "") {
+                            if (response.data.data.product.category == "Jobs") {
                                 imageData[0] = "https://trademylist.com:8936/jobs.jpg";
-                            } else if(response.data.data.product.category == "Services"){
+                            } else if (response.data.data.product.category == "Services") {
                                 imageData[0] = "https://trademylist.com:8936/services.jpg";
                             }
                         }
@@ -309,7 +309,7 @@ export default class ProductDetails extends Component {
                 // .catch(error => console.warn(error));
             })
             .catch(error => {
-                console.log('errorA',error)
+                console.log('errorA', error)
             })
 
     }
@@ -356,7 +356,7 @@ export default class ProductDetails extends Component {
             const senderId = value.userid
             const receiver_id = sellerId
             const productId = this.props.route.params.productId;
-            const prodType = this.props.route.params.process == 'general' ? 'p' : 'c' ;
+            const prodType = this.props.route.params.process == 'general' ? 'p' : 'c';
             const SellerIds = sellerId;
             const text = messageInput;
             firestore()
@@ -373,17 +373,17 @@ export default class ProductDetails extends Component {
                     seller_id: SellerIds,
                     sender_id: senderId
                 });
-                this.HitPush(SellerIds, senderId, receiver_id, productId, text)
-                ToastAndroid.showWithGravity(
-                    "Message Successfully sent",
-                    ToastAndroid.SHORT,
-                    ToastAndroid.BOTTOM,
-                );
+            this.HitPush(SellerIds, senderId, receiver_id, productId, text)
+            ToastAndroid.showWithGravity(
+                "Message Successfully sent",
+                ToastAndroid.SHORT,
+                ToastAndroid.BOTTOM,
+            );
             this.setState({
                 messageInput: ''
             })
             //console.log("before chatterrrrrrrrrrrrrrrrrrrrr========================>>");
-            this.props.navigation.navigate('chatDetails',  { "productId": productId, "prod_type": prodType, "otherId": receiver_id })
+            this.props.navigation.navigate('chatDetails', { "productId": productId, "prod_type": prodType, "otherId": receiver_id })
 
         } catch (e) {
             // error reading value
@@ -398,30 +398,30 @@ export default class ProductDetails extends Component {
     HitPush = async (sellerId, senderId, receiver_id, productId, text) => {
         console.log("in handel HitPush");
         let ProductImage = ''
-        if(this.state.productImages.length!=0){
-            ProductImage=this.state.productImages[0]
+        if (this.state.productImages.length != 0) {
+            ProductImage = this.state.productImages[0]
         }
         const value = JSON.parse(await AsyncStorage.getItem('UserData'))
         if (value !== null) {
-          const object = {
-            "seller_id": sellerId,
-            "sender_id": senderId,
-            "receiver_id": receiver_id,
-            "product_id": productId,
-            "message": text,
-            "image": ProductImage
-          }
-          axios.post("https://trademylist.com:8936/app_seller/chat_push", object, {
-            headers: {
-              'x-access-token': value.token,
+            const object = {
+                "seller_id": sellerId,
+                "sender_id": senderId,
+                "receiver_id": receiver_id,
+                "product_id": productId,
+                "message": text,
+                "image": ProductImage
             }
-          })
-            .then(response => {
-              console.log("Hit push response", response)
+            axios.post("https://trademylist.com:8936/app_seller/chat_push", object, {
+                headers: {
+                    'x-access-token': value.token,
+                }
             })
-            .catch(error => {
-              console.log('errorB',error)
-            })
+                .then(response => {
+                    console.log("Hit push response", response)
+                })
+                .catch(error => {
+                    console.log('errorB', error)
+                })
         }
     }
 
@@ -485,7 +485,7 @@ export default class ProductDetails extends Component {
                         this.getAllLikes()
                     })
                     .catch(error => {
-                        console.log('errorC',error);
+                        console.log('errorC', error);
                     })
             } else {
                 this.openLoginModal()
@@ -579,254 +579,262 @@ export default class ProductDetails extends Component {
     }
 
     render() {
-        const {productDetails} = this.state;
-        console.log('details',productDetails);
+        const { productDetails } = this.state;
+        console.log('details', productDetails);
         return (
             <SafeAreaView style={styles.Container}>
                 {
-                productDetails != "" &&
-                <>
-                    <MySubscriptionModal
-                        modalProps={this.state.SubscriptionModal}
-                        onPressCloseSub={() => this.closeSubscriptionModal()}
-                        navigation={this.props.navigation}
-                        Product_Id={this.state.ProductID}
-                        Process={this.state.Process}
-                    ></MySubscriptionModal>
-                    <LoginModal
-                        modalProps={this.state.loginModal}
-                        onPressClose={this.closeloginModal}
-                        getlogin={this.redcLogin}
-                        navigation={this.props.navigation}
-                    ></LoginModal>
-                    <ImageView
-                        swipeToCloseEnabled={false}
-                        images={this.state.productZoomImages}
-                        imageIndex={this.state.ZoomImageIndex}
-                        visible={this.state.imageVisible}
-                        onRequestClose={() => this.setIsVisible()}
-                    />
-                    <ScrollView keyboardShouldPersistTaps={"always"} showsVerticalScrollIndicator={false} contentContainerStyle={{ width: Devicewidth }}>
-                        <View style={{ width: Devicewidth / 1.05, height: Deviceheight / 2.5, justifyContent: "center", alignItems: "center", alignSelf: 'center', }}>
+                    productDetails != "" &&
+                    <>
+                        <MySubscriptionModal
+                            modalProps={this.state.SubscriptionModal}
+                            onPressCloseSub={() => this.closeSubscriptionModal()}
+                            navigation={this.props.navigation}
+                            Product_Id={this.state.ProductID}
+                            Process={this.state.Process}
+                        ></MySubscriptionModal>
+                        <LoginModal
+                            modalProps={this.state.loginModal}
+                            onPressClose={this.closeloginModal}
+                            getlogin={this.redcLogin}
+                            navigation={this.props.navigation}
+                        ></LoginModal>
+                        <ImageView
+                            swipeToCloseEnabled={false}
+                            images={this.state.productZoomImages}
+                            imageIndex={this.state.ZoomImageIndex}
+                            visible={this.state.imageVisible}
+                            onRequestClose={() => this.setIsVisible()}
+                        />
+                        <ScrollView keyboardShouldPersistTaps={"always"} showsVerticalScrollIndicator={false} contentContainerStyle={{ width: Devicewidth }} >
+                            <View style={{ width: Devicewidth / 1.05, height: Deviceheight / 2.5, justifyContent: "center", alignItems: "center", position:'relative', alignSelf: 'center', }}>
 
-                            <View style={{ alignSelf: "center", alignItems: "center", width: Devicewidth / 1.2, height: Deviceheight / 3, }}>
-                                <SliderBox
-                                    images={this.state.productImages}
-                                    sliderBoxHeight={Deviceheight / 2.8}
-                                    resizeMethod={'resize'}
-                                    resizeMode={'cover'}
-                                    currentImageEmitter={index =>
-                                        this.setState({
-                                            ImageCurrentIndex: index
-                                        })}
-                                    onCurrentImagePressed={index => {
-                                        this.setState({
-                                            imageVisible: true,
-                                            ZoomImageIndex: index
-                                        })
-                                    }}
-                                    dotColor="#FFEE58"
-                                    inactiveDotColor="#E1E1E1"
-                                    paginationBoxVerticalPadding={20}
-                                    ImageComponentStyle={{ resizeMode: 'contain', marginTop: 5, paddingTop: 20}}
-                                />
-                            </View>
-                            <View style={styles.HeadrIconContainer}>
-                                <TouchableOpacity onPress={() => this.props.navigation.goBack()}
-                                hitSlop={{
-                                    bottom: 15,
-                                    top: 15,
-                                    left: 15,
-                                    right: 15
-                                }}
-                                style={{
-                                    height: Deviceheight / 36,
-                                    width: Devicewidth / 18, alignItems: "center", justifyContent: "center", alignSelf: "center", marginLeft: 10, marginBottom: 5, backgroundColor: "#b2b2b2", borderRadius: 2,
-                                }}>
-                                    <Icon name='close-a' size={16} color={'#f0f0f0'} />
-                                </TouchableOpacity>
-                                <TouchableOpacity style={{
-                                    height: Deviceheight / 36,
-                                    width: Devicewidth / 18, alignItems: "center", justifyContent: "center", alignSelf: "center", marginRight: 20, marginBottom: 5, backgroundColor: "#b2b2b2", borderRadius: 2,
-                                }} onPress={() => this.getShare()}>
-                                    <Icon name='share' size={18} color={'#f0f0f0'} />
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                        <View style={{
-                            height: Deviceheight / 28,
-                            width: Devicewidth / 9, alignItems: "center", justifyContent: "center", alignSelf: "center", marginLeft: 10, marginBottom: 5, backgroundColor: "#b2b2b2", position: 'absolute', top: 220, right: 30
-                        }}>
-                            <Text style={{ fontFamily:"Roboto-Bold" , color: "#fff", fontSize: 18, textAlign: "center" }}>{this.state.ImageCurrentIndex + 1}/{this.state.productImages.length}</Text>
-                        </View>
-                        {this.state.loggedUserId === this.state.sellerId ?
-                            <TouchableOpacity
-                                onPress={() => this.OpenSubscriptionModal()}
-                                style={{
-                                    height: Deviceheight / 15,
-                                    width: Devicewidth / 1.4, borderRadius: 50, alignItems: "center", justifyContent: "center", alignSelf: "center", backgroundColor: "#373ec2", flexDirection: "row", marginTop: 10,
-                                }}>
-                                <View style={{
-                                    alignItems: "center", justifyContent: "center", alignSelf: "center", marginRight: 15,
-                                }}>
-                                    <Entypo name="flash" size={30} color="#fb7700" />
+                                <View style={{ alignSelf: "center",position:'relative', alignItems: "center", width: Devicewidth / 1.2, height: Deviceheight / 3, }}>
+                                    <SliderBox
+                                        images={this.state.productImages}
+                                        sliderBoxHeight={Deviceheight / 2.8}
+                                        resizeMethod={'resize'}
+                                        resizeMode={'cover'}
+                                        currentImageEmitter={index =>
+                                            this.setState({
+                                                ImageCurrentIndex: index
+                                            })}
+                                        onCurrentImagePressed={index => {
+                                            this.setState({
+                                                imageVisible: true,
+                                                ZoomImageIndex: index
+                                            })
+                                        }}
+                                        dotColor="#FFEE58"
+                                        inactiveDotColor="#E1E1E1"
+                                        paginationBoxVerticalPadding={20}
+                                        ImageComponentStyle={{ resizeMode: 'contain', marginTop: 5, paddingTop: 20 }}
+                                    />
+
+                                    <View style={{
+                                        height: Deviceheight / 28,
+                                        width: Devicewidth / 9, alignItems: "center", justifyContent: "center", alignSelf: "center", marginLeft: 10, marginBottom: 5, backgroundColor: "#00000094", position: 'absolute', bottom:10, right: -20,
+                                    
+                                    }}>
+                                        <Text style={{ fontFamily: "Roboto-Bold", color: "#fff", fontSize: 18, textAlign: "center" }}>{this.state.ImageCurrentIndex + 1}/{this.state.productImages.length}</Text>
+                                    </View>
+
                                 </View>
-                                <Text style={{ fontFamily:"Roboto-Bold" , color: "#fff", fontSize: 16, textAlign: 'center', alignSelf: 'center', fontWeight: 'bold' }}>Sell Faster Now</Text>
-                            </TouchableOpacity>
-                            :
-                            null
-                        }
-                        {
-                            (this.state.userDetails !== '' && this.state.userDetails !== null)
-                                ?
-                                <View style={{ height: Deviceheight / 7.2, width: Devicewidth / 1.01, paddingRight: 20,paddingLeft:15, alignSelf: 'center', alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <View style={styles.HeadrIconContainer}>
+                                    <TouchableOpacity onPress={() => this.props.navigation.goBack()}
+                                        hitSlop={{
+                                            bottom: 15,
+                                            top: 15,
+                                            left: 15,
+                                            right: 15
+                                        }}
+                                        style={{
+                                            height: Deviceheight / 36,
+                                            width: Devicewidth / 18, alignItems: "center", justifyContent: "center", alignSelf: "center", marginLeft: 10, marginTop:25, marginBottom: 5, backgroundColor: "#00000094", borderRadius: 2,
+                                        }}>
+                                        <Icon name='close-a' size={16} color={'#f0f0f0'} />
+                                    </TouchableOpacity>
                                     <TouchableOpacity style={{
-                                        height: Deviceheight / 10,
-                                        width: Devicewidth / 5, alignItems: "center", justifyContent: "center", alignSelf: "center", borderRadius: 360, backgroundColor: '#fff', padding: 2
-                                    }} onPress={() => this.props.navigation.navigate('sellerDetails', { "sellerId": this.state.sellerId })}>
+                                        height: 30,
+                                        width: 30, alignItems: "center", justifyContent: "center", alignSelf: "center", marginRight: 5, marginBottom: 5, backgroundColor: "#00000094", borderRadius: 2,
+                                        padding:2,
+                                        top:15
+                                    }} onPress={() => this.getShare()}>
+                                        <Icon name='share' size={16} color={'#f0f0f0'} />
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                            
+                            {this.state.loggedUserId === this.state.sellerId ?
+                                <TouchableOpacity
+                                    onPress={() => this.OpenSubscriptionModal()}
+                                    style={{
+                                        height: Deviceheight / 15,
+                                        width: Devicewidth / 1.4, borderRadius: 50, alignItems: "center", justifyContent: "center", alignSelf: "center", backgroundColor: "#373ec2", flexDirection: "row", marginTop: 10,
+                                    }}>
+                                    <View style={{
+                                        alignItems: "center", justifyContent: "center", alignSelf: "center", marginRight: 15,
+                                    }}>
+                                        <Entypo name="flash" size={30} color="#fb7700" />
+                                    </View>
+                                    <Text style={{ fontFamily: "Roboto-Bold", color: "#fff", fontSize: 16, textAlign: 'center', alignSelf: 'center', fontWeight: 'bold' }}>Sell Faster Now</Text>
+                                </TouchableOpacity>
+                                :
+                                null
+                            }
+                            {
+                                (this.state.userDetails !== '' && this.state.userDetails !== null)
+                                    ?
+                                    <View style={{ height: Deviceheight / 7.2, width: Devicewidth / 1.01, paddingRight: 20, paddingLeft: 15, alignSelf: 'center', alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
+                                        <TouchableOpacity style={{
+                                            height: 80,
+                                            width: 80, alignItems: "center", justifyContent: "center", alignSelf: "center", borderRadius: 360, backgroundColor: '#fff', padding: 2
+                                        }} onPress={() => this.props.navigation.navigate('sellerDetails', { "sellerId": this.state.sellerId })}>
+                                            {
+                                                this.state.userDetails && this.state.userDetails.image !== null
+                                                    ?
+                                                    <Image source={{ uri: this.state.userDetails.image }} style={{ height: "100%", width: "100%", borderRadius: 360 }} />
+                                                    :
+                                                    <Image source={require("../../Assets/default-avatar.png")} style={{ height: "100%", width: "100%", borderRadius: 360 }}></Image>
+                                            }
+
+                                        </TouchableOpacity>
+                                        <View style={{ alignItems: 'flex-start', height: Deviceheight / 8, width: Devicewidth / 1.5, paddingTop: 15, }}>
+                                            <Text style={{ fontFamily: "Roboto-Bold", color: "#000", fontSize: 18, fontWeight: 'bold', textAlign: 'left', alignSelf: 'flex-start', marginTop: 5, marginLeft: 5 }}>{this.state.userDetails.username}</Text>
+                                            <View style={{ alignItems: 'flex-start', alignSelf: 'flex-start', width: Devicewidth / 2.5, height: Deviceheight / 26, flexDirection: 'row', }}>
+                                                <TouchableOpacity style={{
+                                                    height: Deviceheight / 50,
+                                                    width: Devicewidth / 4, alignSelf: 'flex-start', marginTop: 10
+                                                }}>
+                                                    <StarRating
+                                                        disabled={false}
+                                                        emptyStar={'star-o'}
+                                                        fullStar={'star'}
+                                                        halfStar={'star-half-full'}
+                                                        iconSet={'FontAwesome'}
+                                                        maxStars={5}
+                                                        containerStyle={{ width: Devicewidth / 4.5, justifyContent: 'space-around', height: Deviceheight / 50, alignItems: "center", }}
+                                                        starSize={15}
+                                                        rating={this.state.UserStarCount}
+                                                        fullStarColor={'#ff6801'}
+                                                    />
+                                                </TouchableOpacity>
+                                                <Text style={{ fontFamily: "Roboto-Bold", color: '#000', fontSize: 14, fontWeight: 'bold', textAlign: 'left', marginTop: 8, marginLeft: 5 }}>({this.state.UserReviewCount})</Text>
+                                            </View>
+                                        </View>
+                                    </View>
+                                    :
+                                    <></>
+                            }
+
+                            <View style={{ marginTop: 10, height: Deviceheight / 18, width: Devicewidth / 1.01, paddingRight: 20, paddingLeft: 15, alignSelf: 'center', alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
+                                {
+                                    this.state.productDetails.category == "Freebies" ?
+                                        <Text style={{ fontFamily: "Roboto-Black", color: "#2c384e", fontSize: 22, fontWeight: 'bold', textAlign: 'left', alignSelf: 'center' }}>{'Free'}</Text>
+                                        :
+                                        <Text style={{ fontFamily: "Roboto-Black", color: "#2c384e", fontSize: 22, fontWeight: 'bold', textAlign: 'left', alignSelf: 'center' }}>{(this.state.productDetails.category != "Jobs" && this.state.productDetails.category != "Freebies" && this.state.productDetails.category != "Services") ? this.state.productDetails.currencyCode == "INR" ? "₹ " : this.state.productDetails.currencyCode == "USD" ? "$ " : `${this.state.productDetails.currencyCode} ` : null} {(this.state.productDetails.category != "Jobs" && this.state.productDetails.category != "Freebies" && this.state.productDetails.category != "Services") && this.state.productDetails.product_price}</Text>
+                                }
+                                {this.state.loggedUserId === this.state.sellerId ?
+                                    <TouchableOpacity style={{
+                                        height: Deviceheight / 24,
+                                        width: Devicewidth / 12, alignItems: "center", justifyContent: "center", alignSelf: "center", marginLeft: 20, borderRadius: 360, backgroundColor: '#ffffff', elevation: 2
+                                    }} onPress={() => this.ProductEdit()}>
+                                        <EditIcon name="pencil" size={22} color="#fb7700" />
+                                    </TouchableOpacity>
+                                    :
+                                    <TouchableOpacity
+                                        hitSlop={{
+                                            bottom: 15,
+                                            top: 15,
+                                            left: 15,
+                                            right: 15
+                                        }}
+                                        style={{
+                                            height: Deviceheight / 24,
+                                            width: Devicewidth / 12, alignItems: "center", justifyContent: "center", alignSelf: "center", marginRight: 10, marginBottom: 5, borderRadius: 360, backgroundColor: "#ffffff", elevation: 2
+                                        }} onPress={() => this.state.likesProduct.indexOf(this.props.route.params.productId) !== -1 ? this.RemoveFavProduct(this.props.route.params.productId) : this.AddFavProduct(this.props.route.params.productId)}>
                                         {
-                                            this.state.userDetails && this.state.userDetails.image !== null
-                                                ?
-                                                <Image source={{ uri: this.state.userDetails.image }} style={{ height: "100%", width: "100%", borderRadius: 360 }} />
-                                                :
-                                                <Image source={require("../../Assets/default-avatar.png")} style={{ height: "100%", width: "100%", borderRadius: 360 }}></Image>
+                                            this.state.likesProduct.indexOf(this.props.route.params.productId) !== -1 ?
+
+                                                <FontAwesomeIcon name="heart" size={18} color="#fb7700" />
+                                                : <FontAwesomeIcon name="heart" size={18} color="#ccc" />
                                         }
 
                                     </TouchableOpacity>
-                                    <View style={{ alignItems: 'flex-start', height: Deviceheight / 8, width: Devicewidth / 1.5, paddingTop: 15, }}>
-                                        <Text style={{ fontFamily:"Roboto-Bold" , color: "#000", fontSize: 18, fontWeight: 'bold', textAlign: 'left', alignSelf: 'flex-start', marginTop: 5, marginLeft: 5 }}>{this.state.userDetails.username}</Text>
-                                        <View style={{ alignItems: 'flex-start', alignSelf: 'flex-start', width: Devicewidth / 2.5, height: Deviceheight / 26, flexDirection: 'row', }}>
-                                            <TouchableOpacity style={{
-                                                height: Deviceheight / 50,
-                                                width: Devicewidth / 4, alignSelf: 'flex-start', marginTop: 10
-                                            }}>
-                                                <StarRating
-                                                    disabled={false}
-                                                    emptyStar={'star-o'}
-                                                    fullStar={'star'}
-                                                    halfStar={'star-half-full'}
-                                                    iconSet={'FontAwesome'}
-                                                    maxStars={5}
-                                                    containerStyle={{ width: Devicewidth / 4.5, justifyContent: 'space-around', height: Deviceheight / 50, alignItems: "center", }}
-                                                    starSize={15}
-                                                    rating={this.state.UserStarCount}
-                                                    fullStarColor={'#ff6801'}
-                                                />
-                                            </TouchableOpacity>
-                                            <Text style={{ fontFamily:"Roboto-Bold" , color: '#000', fontSize: 14, fontWeight: 'bold', textAlign: 'left', marginTop: 8, marginLeft: 5 }}>({this.state.UserReviewCount})</Text>
-                                        </View>
-                                    </View>
-                                </View>
-                                :
-                                <></>
-                        }
-
-                        <View style={{ marginTop: 10, height: Deviceheight / 18, width: Devicewidth / 1.01, paddingRight: 20,paddingLeft:15, alignSelf: 'center', alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
-                            {
-                                this.state.productDetails.category == "Freebies" ?
-                                <Text style={{ fontFamily:"Roboto-Black" , color: "#2c384e", fontSize: 22, fontWeight: 'bold', textAlign: 'left', alignSelf: 'center' }}>{'Free'}</Text>
-                                :
-                                <Text style={{ fontFamily:"Roboto-Black" , color: "#2c384e", fontSize: 22, fontWeight: 'bold', textAlign: 'left', alignSelf: 'center' }}>{(this.state.productDetails.category != "Jobs" && this.state.productDetails.category != "Freebies" && this.state.productDetails.category != "Services") ? this.state.productDetails.currencyCode == "INR" ? "₹ " : this.state.productDetails.currencyCode == "USD" ? "$ " : `${this.state.productDetails.currencyCode} ` : null} {(this.state.productDetails.category != "Jobs" && this.state.productDetails.category != "Freebies" && this.state.productDetails.category != "Services") && this.state.productDetails.product_price}</Text>
-                            }
-                            {this.state.loggedUserId === this.state.sellerId ?
-                                <TouchableOpacity style={{
-                                    height: Deviceheight / 24,
-                                    width: Devicewidth / 12, alignItems: "center", justifyContent: "center", alignSelf: "center", marginLeft: 20, borderRadius: 360, backgroundColor: '#ffffff', elevation: 2
-                                }} onPress={() => this.ProductEdit()}>
-                                    <EditIcon name="pencil" size={22} color="#fb7700" />
-                                </TouchableOpacity>
-                                :
-                                <TouchableOpacity
-                                hitSlop={{
-                                    bottom: 15,
-                                    top: 15,
-                                    left: 15,
-                                    right: 15
-                                }}
-                                style={{
-                                    height: Deviceheight / 24,
-                                    width: Devicewidth / 12, alignItems: "center", justifyContent: "center", alignSelf: "center", marginRight: 10, marginBottom: 5, borderRadius: 360, backgroundColor: "#ffffff", elevation: 2
-                                }} onPress={() => this.state.likesProduct.indexOf(this.props.route.params.productId) !== -1 ? this.RemoveFavProduct(this.props.route.params.productId) : this.AddFavProduct(this.props.route.params.productId)}>
-                                    {
-                                        this.state.likesProduct.indexOf(this.props.route.params.productId) !== -1 ?
-
-                                            <FontAwesomeIcon name="heart" size={18} color="#fb7700" />
-                                            : <FontAwesomeIcon name="heart" size={18} color="#ccc" />
-                                    }
-
-                                </TouchableOpacity>
-                            }
-                        </View>
-                        <View style={styles.inputContainer}>
-                            <Text style={{ fontFamily:"Roboto-Bold" , color: "#000", fontSize: 17, fontWeight: '900', textAlign: 'left', alignSelf: 'flex-start', width: Devicewidth / 1.1 }}>{this.state.productDetails.product_name}</Text>
-                        </View>
-                        <Text style={{ fontFamily:"Roboto-Regular" , color: "#000", fontSize: 18,  textAlign: 'left', alignSelf: 'flex-start', width: Devicewidth / 1.1, marginLeft: 20, marginTop: 15 }}>Category</Text>
-                        <Text style={{ fontFamily:"Roboto-Regular" , color: "#666666", fontSize: 16, textAlign: 'left', alignSelf: 'flex-start', width: Devicewidth / 1.1, marginLeft: 20, marginTop: 5 }}>{this.state.productDetails.category}</Text>
-                        <View style={styles.inputContainer1}>
-                            <Text style={{ fontFamily:"Roboto-Regular" , color: "#000", fontSize: 18, textAlign: 'left', alignSelf: 'flex-start', width: Devicewidth / 1.1, }}>Posted</Text>
-                            <Text style={{ fontFamily:"Roboto-Regular" , color: "#666666", fontSize: 16, textAlign: 'left', alignSelf: 'flex-start', width: Devicewidth / 1.1, marginTop: 5,paddingBottom:5 }}>{this.state.postedAt} ago</Text>
-                        </View>
-                        <Text style={{ fontFamily:"Roboto-Regular" , color: "#000", fontSize: 18,  textAlign: 'left', alignSelf: 'flex-start', width: Devicewidth / 1.1, marginLeft: 20, marginTop: 10 }}>Description</Text>
-                        <Text style={{ fontFamily:"Roboto-Regular" , color: "#666666", fontSize: 16, textAlign: 'left', alignSelf: 'flex-start', width: Devicewidth / 1.1, marginLeft: 20, marginTop: 5 }}>{this.state.productDetails.product_description}</Text>
-                        {
-                            (productDetails.sub_category.length > 0 || productDetails.sub_category_number.length > 0) &&
-                            <View>
-                                {/* <Text style={{ fontFamily:"Roboto-Bold" , color: "#000", fontSize: 18, fontWeight: '900', textAlign: 'left', alignSelf: 'flex-start', width: Devicewidth / 1.1, marginLeft: 20, marginVertical: 10 }}>Specifications</Text> */}
-                                {
-                                    productDetails.sub_category.map(subC => {
-                                    var key = subC.key.replace(/([a-z](?=[A-Z]))/g, '$1 ')
-                                    key = key.split("_").join(" ");
-
-                                    return(
-                                        (key!='unit')?
-                                        <View style={{
-                                            // flexDirection: 'row',
-
-                                            justifyContent: 'flex-start',
-                                            // flexWrap: 'wrap',
-                                            // width: '90%',
-                                            alignSelf: 'center',
-                                            // marginVertical: 5,
-                                            paddingTop:15,
-                                            marginBottom:10,
-                                            borderBottomWidth: 1,
-                                            borderBottomColor: "#e1e1e1",
-                                            width: Devicewidth / 1.1,
-                                        }} key={key}>
-                                            <Text style={{ fontFamily:"Roboto-Regular" , color: "#000", fontSize: 18,  textTransform: 'capitalize'}}>{key}</Text>
-                                            <Text style={{ fontFamily:"Roboto-Regular" , color: "#666666", fontSize: 16,marginTop: 5 ,marginBottom:5 }}>{subC.value}</Text>
-                                        </View>
-                                        :
-                                        null
-                                    )})}
-                                {
-                                    productDetails.sub_category_number.map(subC => {
-                                    var key = subC.key.replace(/([a-z](?=[A-Z]))/g, '$1 ');
-                                    //if(key=='range') subC.value = key;
-                                    key = key.split("_").join(" ");
-                                    return (
-                                    <View style={{
-                                        justifyContent: 'flex-start',
-                                        alignSelf: 'center',
-                                        paddingTop:15,
-                                        marginBottom:10,
-                                        borderBottomWidth: 1,
-                                        borderBottomColor: "#e1e1e1",
-                                        width: Devicewidth / 1.1,
-                                    }} key={key}>
-                                        <Text style={{ fontFamily:"Roboto-Regular" , color: "#000", fontSize: 18,  textTransform: 'capitalize'}}>{key}</Text>
-                                        <Text style={{ fontFamily:"Roboto-Regular" , color: "#666666", fontSize: 16, marginTop: 5 ,marginBottom:5}}>{subC.value}</Text>
-                                    </View>
-                                    )}
-                                )}
+                                }
                             </View>
-                        }
+                            <View style={styles.inputContainer}>
+                                <Text style={{ fontFamily: "Roboto-Bold", color: "#000", fontSize: 17, fontWeight: '900', textAlign: 'left', alignSelf: 'flex-start', width: Devicewidth / 1.1 }}>{this.state.productDetails.product_name}</Text>
+                            </View>
+                            <Text style={{ fontFamily: "Roboto-Regular", color: "#000", fontSize: 18, textAlign: 'left', alignSelf: 'flex-start', width: Devicewidth / 1.1, marginLeft: 20, marginTop: 15 }}>Category</Text>
+                            <Text style={{ fontFamily: "Roboto-Regular", color: "#666666", fontSize: 16, textAlign: 'left', alignSelf: 'flex-start', width: Devicewidth / 1.1, marginLeft: 20, marginTop: 5 }}>{this.state.productDetails.category}</Text>
+                            <View style={styles.inputContainer1}>
+                                <Text style={{ fontFamily: "Roboto-Regular", color: "#000", fontSize: 18, textAlign: 'left', alignSelf: 'flex-start', width: Devicewidth / 1.1, }}>Posted</Text>
+                                <Text style={{ fontFamily: "Roboto-Regular", color: "#666666", fontSize: 16, textAlign: 'left', alignSelf: 'flex-start', width: Devicewidth / 1.1, marginTop: 5, paddingBottom: 5 }}>{this.state.postedAt} ago</Text>
+                            </View>
+                            <Text style={{ fontFamily: "Roboto-Regular", color: "#000", fontSize: 18, textAlign: 'left', alignSelf: 'flex-start', width: Devicewidth / 1.1, marginLeft: 20, marginTop: 10 }}>Description</Text>
+                            <Text style={{ fontFamily: "Roboto-Regular", color: "#666666", fontSize: 16, textAlign: 'left', alignSelf: 'flex-start', width: Devicewidth / 1.1, marginLeft: 20, marginTop: 5 }}>{this.state.productDetails.product_description}</Text>
+                            {
+                                (productDetails.sub_category.length > 0 || productDetails.sub_category_number.length > 0) &&
+                                <View>
+                                    {/* <Text style={{ fontFamily:"Roboto-Bold" , color: "#000", fontSize: 18, fontWeight: '900', textAlign: 'left', alignSelf: 'flex-start', width: Devicewidth / 1.1, marginLeft: 20, marginVertical: 10 }}>Specifications</Text> */}
+                                    {
+                                        productDetails.sub_category.map(subC => {
+                                            var key = subC.key.replace(/([a-z](?=[A-Z]))/g, '$1 ')
+                                            key = key.split("_").join(" ");
 
-                        <Text style={{ fontFamily:"Roboto-Regular" , color: "#000", fontSize: 18, fontWeight: '900', textAlign: 'left', alignSelf: 'flex-start', width: Devicewidth / 1.1, marginLeft: 20, marginTop: 10 }}>Location</Text>
-                        <Text style={{ fontFamily:"Roboto-Regular" , color: "#666666", fontSize: 16,textAlign: 'left', alignSelf: 'flex-start', width: Devicewidth / 1.1, marginLeft: 20, marginTop: 5 }}>{this.state.productDetails.address}</Text>
-                        <View style={{ alignItems: 'center', justifyContent: "center", alignSelf: 'center', width: Devicewidth / 1.1, height: Deviceheight / 4, marginBottom: 10, marginTop: 15, borderBottomWidth: 1, borderBottomColor: "#e1e1e1", }}>
-                            {/* <Image source={require("../../Assets/Map.jpg")} style={{ height: "100%", width: "100%", resizeMode: 'contain' }}></Image> */}
-                            <MapView
+                                            return (
+                                                (key != 'unit') ?
+                                                    <View style={{
+                                                        // flexDirection: 'row',
+
+                                                        justifyContent: 'flex-start',
+                                                        // flexWrap: 'wrap',
+                                                        // width: '90%',
+                                                        alignSelf: 'center',
+                                                        // marginVertical: 5,
+                                                        paddingTop: 15,
+                                                        marginBottom: 10,
+                                                        borderBottomWidth: 1,
+                                                        borderBottomColor: "#e1e1e1",
+                                                        width: Devicewidth / 1.1,
+                                                    }} key={key}>
+                                                        <Text style={{ fontFamily: "Roboto-Regular", color: "#000", fontSize: 18, textTransform: 'capitalize' }}>{key}</Text>
+                                                        <Text style={{ fontFamily: "Roboto-Regular", color: "#666666", fontSize: 16, marginTop: 5, marginBottom: 5 }}>{subC.value}</Text>
+                                                    </View>
+                                                    :
+                                                    null
+                                            )
+                                        })}
+                                    {
+                                        productDetails.sub_category_number.map(subC => {
+                                            var key = subC.key.replace(/([a-z](?=[A-Z]))/g, '$1 ');
+                                            //if(key=='range') subC.value = key;
+                                            key = key.split("_").join(" ");
+                                            return (
+                                                <View style={{
+                                                    justifyContent: 'flex-start',
+                                                    alignSelf: 'center',
+                                                    paddingTop: 15,
+                                                    marginBottom: 10,
+                                                    borderBottomWidth: 1,
+                                                    borderBottomColor: "#e1e1e1",
+                                                    width: Devicewidth / 1.1,
+                                                }} key={key}>
+                                                    <Text style={{ fontFamily: "Roboto-Regular", color: "#000", fontSize: 18, textTransform: 'capitalize' }}>{key}</Text>
+                                                    <Text style={{ fontFamily: "Roboto-Regular", color: "#666666", fontSize: 16, marginTop: 5, marginBottom: 5 }}>{subC.value}</Text>
+                                                </View>
+                                            )
+                                        }
+                                        )}
+                                </View>
+                            }
+
+                            <Text style={{ fontFamily: "Roboto-Regular", color: "#000", fontSize: 18, fontWeight: '900', textAlign: 'left', alignSelf: 'flex-start', width: Devicewidth / 1.1, marginLeft: 20, marginTop: 10 }}>Location</Text>
+                            <Text style={{ fontFamily: "Roboto-Regular", color: "#666666", fontSize: 16, textAlign: 'left', alignSelf: 'flex-start', width: Devicewidth / 1.1, marginLeft: 20, marginTop: 5 }}>{this.state.productDetails.address}</Text>
+                            <View style={{ alignItems: 'center', justifyContent: "center", alignSelf: 'center', width: Devicewidth / 1.1, height: Deviceheight / 4, marginBottom: 10, marginTop: 15, borderBottomWidth: 1, borderBottomColor: "#e1e1e1", }}>
+                                {/* <Image source={require("../../Assets/Map.jpg")} style={{ height: "100%", width: "100%", resizeMode: 'contain' }}></Image> */}
+                                <MapView
                                     style={{ height: "100%", width: "100%" }}
                                     showsMyLocationButton={false}
                                     showsUserLocation={false}
@@ -844,58 +852,58 @@ export default class ProductDetails extends Component {
                                         longitudeDelta: LONGITUDE_DELTA,
                                     }}
                                 >
-                                <Marker
-                                    coordinate={{
-                                        latitude: parseFloat(this.state.lat),
-                                        longitude: parseFloat(this.state.lng),
-                                    }}
-                                />
-                            </MapView>
-                        </View>
+                                    <Marker
+                                        coordinate={{
+                                            latitude: parseFloat(this.state.lat),
+                                            longitude: parseFloat(this.state.lng),
+                                        }}
+                                    />
+                                </MapView>
+                            </View>
 
-                    </ScrollView>
-                    {this.state.userDetails == '' ?
-                        null
-                        :
-                        <>
-                            {this.state.loggedUserId === this.state.sellerId ?
-                                null
-                                :
-                                <>
-                                    <View style={styles.FlatListContainer}>
-                                        <FlatList
-                                            data={Data}
-                                            scrollEnabled={true}
-                                            horizontal={true}
-                                            showsHorizontalScrollIndicator={false}
-                                            renderItem={({ item }) => (
-                                                <TouchableOpacity style={{ borderRadius: 50, alignItems: 'center', justifyContent: "center", backgroundColor: '#363ed9', marginRight: 20, height: Deviceheight / 21, padding: 10, }} onPress={() => this.getMessage(item.name)}>
-                                                    <Text style={{ fontFamily:"Roboto-Medium" , fontSize: 14, textAlign: 'center', color: "#fff" }}>{item.name}</Text>
-                                                </TouchableOpacity>
-                                            )}
-                                            keyExtractor={item => item.key}
-                                        />
-                                    </View>
-                                    <View style={styles.MessageInputContainer}>
-                                        <TextInput
-                                            style={styles.SearchContainer}
-                                            autoFocus={false}
-                                            placeholder={'Type your message here...'}
-                                            keyboardType={"default"}
-                                            onChangeText={(val) => this.setState({
-                                                messageInput: val
-                                            })}
-                                            value={this.state.messageInput}
-                                        />
-                                        <TouchableOpacity style={this.state.messageInput == '' ? styles.SearchIcon : styles.SearchIcon1} onPress={this.sendMessage}>
-                                            <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 16, fontWeight: 'bold', textAlign: 'center', color: "#fff" }}>Send</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                </>
-                            }
-                        </>
-                    }
-                </>
+                        </ScrollView>
+                        {this.state.userDetails == '' ?
+                            null
+                            :
+                            <>
+                                {this.state.loggedUserId === this.state.sellerId ?
+                                    null
+                                    :
+                                    <>
+                                        <View style={styles.FlatListContainer}>
+                                            <FlatList
+                                                data={Data}
+                                                scrollEnabled={true}
+                                                horizontal={true}
+                                                showsHorizontalScrollIndicator={false}
+                                                renderItem={({ item }) => (
+                                                    <TouchableOpacity style={{ borderRadius: 50, alignItems: 'center', justifyContent: "center", backgroundColor: '#363ed9', marginRight: 20, height:48, padding: 10, }} onPress={() => this.getMessage(item.name)}>
+                                                        <Text style={{ fontFamily: "Roboto-Medium", fontSize: 14, textAlign: 'center', color: "#fff" }}>{item.name}</Text>
+                                                    </TouchableOpacity>
+                                                )}
+                                                keyExtractor={item => item.key}
+                                            />
+                                        </View>
+                                        <View style={styles.MessageInputContainer}>
+                                            <TextInput
+                                                style={styles.SearchContainer}
+                                                autoFocus={false}
+                                                placeholder={'Type your message here...'}
+                                                keyboardType={"default"}
+                                                onChangeText={(val) => this.setState({
+                                                    messageInput: val
+                                                })}
+                                                value={this.state.messageInput}
+                                            />
+                                            <TouchableOpacity style={this.state.messageInput == '' ? styles.SearchIcon : styles.SearchIcon1} onPress={this.sendMessage}>
+                                                <Text style={{ fontFamily: "Roboto-Bold", fontSize: 16, fontWeight: 'bold', textAlign: 'center', color: "#fff" }}>Send</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </>
+                                }
+                            </>
+                        }
+                    </>
                 }
             </SafeAreaView>
         )

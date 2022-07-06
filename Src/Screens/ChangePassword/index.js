@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ImageBackground, StyleSheet, Dimensions, TextInput, TouchableOpacity } from 'react-native';
+import {SafeAreaView, View, Text, Image, ImageBackground, StyleSheet, Dimensions, TextInput, TouchableOpacity } from 'react-native';
 const { width: WIDTH } = Dimensions.get('window');
 const Devicewidth = Dimensions.get('window').width;
 const Deviceheight = Dimensions.get('window').height;
@@ -50,6 +50,7 @@ export default class ChangePassword extends Component {
     }
     render() {
         return (
+            <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.Container}>
                 <Header navigation={this.props.navigation} Desc={"Change password"} />
                 <TextInput
@@ -101,6 +102,7 @@ export default class ChangePassword extends Component {
                 </TouchableOpacity>
     }
             </View>
+            </SafeAreaView>
         )
     }
 }

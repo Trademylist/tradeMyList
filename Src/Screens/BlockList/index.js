@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ImageBackground, StyleSheet, Dimensions, FlatList, TouchableOpacity } from 'react-native';
+import {SafeAreaView, View, Text, Image, ImageBackground, StyleSheet, Dimensions, FlatList, TouchableOpacity } from 'react-native';
 const { width: WIDTH } = Dimensions.get('window');
 const Devicewidth = Dimensions.get('window').width;
 const Deviceheight = Dimensions.get('window').height;
@@ -81,6 +81,7 @@ export default class BlockList extends Component {
     render() {
         return (
             <>
+             <SafeAreaView style={{ flex: 1 }}>
                 <View style={styles.Container}>
                     <Header navigation={this.props.navigation} Desc={"Block list"} />
                     <View style={styles.FlatListContainer}>
@@ -112,6 +113,7 @@ export default class BlockList extends Component {
                         }
                     </View>
                 </View>
+                </SafeAreaView>
             </>
         )
     }

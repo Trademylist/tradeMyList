@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ImageBackground, StyleSheet, Dimensions, FlatList, TouchableOpacity } from 'react-native';
+import { SafeAreaView,View, Text, Image, ImageBackground, StyleSheet, Dimensions, FlatList, TouchableOpacity } from 'react-native';
 const { width: WIDTH } = Dimensions.get('window');
 const Devicewidth = Dimensions.get('window').width;
 const Deviceheight = Dimensions.get('window').height;
@@ -347,11 +347,13 @@ export default class MyListingMenu extends Component {
         // console.warn("my reviewUserlist", this.state.ReviewList)
         return (
             <>
+                <SafeAreaView style={{ flex: 1 }}>
+
                 <View style={styles.Container}>
                     <Header navigation={this.props.navigation} />
-                    <View style={{ backgroundColor: '#ff6801', height: Deviceheight / 6, width: Devicewidth, paddingHorizontal: 20, alignSelf: 'center', alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <View style={{ alignItems: 'flex-start', height: Deviceheight / 8, width: Devicewidth / 2.5 }}>
-                            <Text style={{ fontFamily:"Roboto-Bold" , color: "#000", fontSize: 20, fontWeight: 'bold', textAlign: 'left', alignSelf: 'flex-start', marginTop: 5,marginBottom:2 }}>{this.state.UserData.username==null?'Trade User':this.state.UserData.username}</Text>
+                    <View style={{ backgroundColor: '#ff6801', height: 160, width: Devicewidth, paddingHorizontal: 20, alignSelf: 'center', alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <View style={{ alignItems: 'flex-start',  width: Devicewidth / 2.5 }}>
+                            <Text style={{ fontFamily:"Roboto-Bold" , color: "#000", fontSize: 18, fontWeight: 'bold', textAlign: 'left', alignSelf: 'flex-start', marginTop: 5,marginBottom:2 }}>{this.state.UserData.username==null?'Trade User':this.state.UserData.username}</Text>
                             <View style={{ alignItems: 'flex-start', alignSelf: 'flex-start', width: Devicewidth / 2.5, height: Deviceheight / 26, flexDirection: 'row',marginBottom:2 }}>
                                 <TouchableOpacity style={{
                                     height: Deviceheight / 50,
@@ -373,28 +375,28 @@ export default class MyListingMenu extends Component {
                                 <Text style={{ fontFamily:"Roboto-Regular" , color: '#000', fontSize: 16, textAlign: 'left', marginTop: 5, marginLeft: 5 }}>({this.state.UserReviewCount})</Text>
                             </View>
                             <View style={{
-                                height: Deviceheight / 28,
+                                height: 40,
                                 width: Devicewidth / 3, alignItems: "center", justifyContent: "center", alignSelf: 'flex-start', flexDirection: 'row', justifyContent: "space-around", marginTop: 2
                             }}>
                                 <View style={{
-                                    height: Deviceheight / 55,
-                                    width: Devicewidth / 25, alignItems: "center", justifyContent: "center", alignSelf: "center",
+                                    height:60,
+                                    width: 20, marginRight:5, alignItems: "center", justifyContent: "center", alignSelf: "center",
                                 }}>
-                                    <Image source={require("../../Assets/Verified1.png")} style={{ height: "100%", width: "100%" }}></Image>
+                                    <Image source={require("../../Assets/Verified1.png")} style={{ height:20, width: 20}}></Image>
                                 </View>
                                 <Text style={{ fontFamily:"Roboto-Regular" , color: "#000", fontSize: 14, textAlign: 'center', alignSelf: 'center', }}>Verified with :</Text>
                                 <TouchableOpacity style={{
-                                    height: Deviceheight / 60,
-                                    width: Devicewidth / 25, alignItems: "center", justifyContent: "center", alignSelf: "center",
+                                    height: 60,
+                                    width: 20,marginLeft:5, alignItems: "center", justifyContent: "center", alignSelf: "center",
                                 }}>
                                     {this.state.UserData.login_type == null ?
-                                        <Image source={require("../../Assets/Email_Black.png")} style={{ height: "100%", width: "100%" }}></Image>
+                                        <Image source={require("../../Assets/Email_Black.png")} style={{ height: 15, width: 16 }}></Image>
                                         :
                                         this.state.UserData.login_type == "facebook" ?
-                                            <FbIcon name='facebook-square' style={{ fontSize: 15, marginTop: 4 }} />
+                                            <FbIcon name='facebook-square' style={{ fontSize: 12, marginTop: 0 }} />
                                             :
                                             this.state.UserData.login_type == "google" ?
-                                                <Icon name='google' style={{ fontSize: 15, marginTop: 4 }} />
+                                                <Icon name='google' style={{ fontSize: 12, marginTop: 0 }} />
                                                 :
                                                 null
                                     }
@@ -402,8 +404,8 @@ export default class MyListingMenu extends Component {
                             </View>
                         </View>
                         <TouchableOpacity style={{
-                            height: Deviceheight / 10,
-                            width: Devicewidth / 5, alignItems: "center", justifyContent: "center", alignSelf: "center", borderRadius: 360, backgroundColor: '#fff', padding: 2
+                            height: 80,
+                            width: 80, alignItems: "center", justifyContent: "center", alignSelf: "center", borderRadius: 360, backgroundColor: '#fff', padding: 2
                         }}>
                             {this.state.UserData.image !== '' ?
                                 <Image source={{ uri: this.state.UserData.image }} style={{ height: "100%", width: "100%", borderRadius: 360 }}></Image>
@@ -563,6 +565,8 @@ export default class MyListingMenu extends Component {
                     
 
                 </View>
+                </SafeAreaView>
+
             </>
         )
     }

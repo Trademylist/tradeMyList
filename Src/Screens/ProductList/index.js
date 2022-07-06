@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ActivityIndicator, ScrollView, FlatList, StyleSheet, Dimensions, TextInput, TouchableOpacity, Alert, BackHandler, PermissionsAndroid, Platform } from 'react-native';
+import { View, Text, Image, ActivityIndicator, SafeAreaView, ScrollView, FlatList, StyleSheet, Dimensions, TextInput, TouchableOpacity, Alert, BackHandler, PermissionsAndroid, Platform } from 'react-native';
+
+
 import admob, { MaxAdContentRating, InterstitialAd, AdEventType, RewardedAd, BannerAd, TestIds, BannerAdSize } from '@react-native-firebase/admob';
 const { width: WIDTH } = Dimensions.get('window');
 const Devicewidth = Dimensions.get('window').width;
@@ -93,6 +95,7 @@ class ProductList extends Component {
             tagForUnderAgeOfConsent: true,
         })
         .then(() => {
+            console.warn('add set')
         });
         const value = JSON.parse(await AsyncStorage.getItem('UserData'));
         if (value !== null) {
@@ -503,12 +506,20 @@ class ProductList extends Component {
     }
 
     renderItem(itemprod, index) {
-
-        if (itemprod[0].type == "banner") {
+        //console.warn('admob',itemprod[0].type)
+        if (itemprod[0].type == "banner" //  || itemprod[0].type == undefined
+        ) {
             return (
                 <View key={index} style={{ width: WIDTH - 10, flexDirection: 'row', marginLeft: 10, marginRight: 10, marginBottom: 30, marginTop: 20, height: 40, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center' }}>
                     <BannerAd size={BannerAdSize.SMART_BANNER}
-                        unitId={Platform.OS == 'ios' ? 'ca-app-pub-7489460627950788/2002515682' : 'ca-app-pub-3940256099942544/6300978111'}>
+                        unitId={Platform.OS == 'ios' ? 'ca-app-pub-7489460627950788/2002515682' : 'ca-app-pub-3940256099942544/6300978111'}
+                        onAdLoaded={() => {
+                            console.log('Advert loaded')
+                          }}
+                          onAdFailedToLoad={(result) => {
+                            console.log('Advert failed to load!!!!',result)
+                          }}
+                        >
                     </BannerAd>
                 </View>
             )
@@ -795,22 +806,34 @@ class ProductList extends Component {
                             <Loading />
                             :
                             this.state.ProductList.length == 0 ?
-                                <View style={{ alignItems: 'center', justifyContent: 'flex-start', alignSelf: 'center', height: '100%', width: Devicewidth / 1.5,
+                                <View style={{  WebkitTouchCallout: 'none', alignItems: 'center', justifyContent: 'flex-start', alignSelf: 'center', height: '100%', width: Devicewidth / 1.5,
                                 }}>
                                     <Image source={require("../../Assets/no_product.png")} style={{ height: Deviceheight/3, width: Deviceheight/3, resizeMode: "contain" }}></Image>
                                 </View>
                                 :
                                 <>
-                                    <FlatList
+                                <SafeAreaView style={{ flex: 1 }}>
+
+                                <FlatList
+                                       // horizontal
                                         data={newData}
+                                        scrollEnabled={true}
                                         showsVerticalScrollIndicator={false}
                                         onEndReached={() => this.GetReched()}
-                                        onEndReachedThreshold={0.005}
+                                        onEndReachedThreshold={0.005} 
                                         ListFooterComponent={this.RenderLoadMore}
                                         renderItem={({ item, index }) => this.renderItem(item, index)}
+                                        showsHorizontalScrollIndicator={false}  
+
                                         keyExtractor={(item, index) => index.toString()}
 
-                                    />
+                          
+                                        /> 
+                                </SafeAreaView>
+                                
+
+                  
+                                    
                                     {/* <View  style={{width: WIDTH-20, flexDirection: 'row', marginLeft: 10, marginRight:10, marginBottom: 10, height: 60, backgroundColor: 'blue', justifyContent: 'center', alignItems: 'center'}}>
                             <BannerAd size={BannerAdSize.SMART_BANNER}
                                       unitId={Platform.OS == 'ios' ? 'ca-app-pub-7489460627950788/2002515682' : 'ca-app-pub-3940256099942544/6300978111'}>
@@ -820,41 +843,49 @@ class ProductList extends Component {
 
                         }
                     </View>
-                    <Footer pageName={this.props.route.name} onShowAllProducts={this.onShowAllProductsHandler} navigation={this.props.navigation} catdata="product" />
+                  <Footer pageName={this.props.route.name} onShowAllProducts={this.onShowAllProductsHandler} navigation={this.props.navigation} catdata="product" /> 
                 </View>
+
+                
             </>
         )
     }
 }
 
 const styles = StyleSheet.create({
+    
+
     Container: {
         flex: 1,
         alignItems: 'center',
-        backgroundColor: '#fff'
-    },
+        backgroundColor: '#fff',
+       },
     FlatlistContainer: {
         // borderWidth: 1,
-        marginTop: Platform.OS == 'ios' ? 50 : 0,
+marginTop: Platform.OS == 'ios' ? 50 : 0,
         padding: 5,
-        height: Deviceheight/8,
-        width: Devicewidth,
-        // alignItems: 'center',
-        // justifyContent: 'center',
+       // height: Deviceheight/8,        
+      width: Devicewidth,
+        alignItems: 'center',
+       justifyContent: 'center',
     },
     FilterViewContainer: {
         padding: 10,
-        height: Deviceheight/8,
-        width: Devicewidth,
+      // height: Deviceheight/8,
+       width: Devicewidth,
     },
     FlatlistContainer1: {
         padding: 5,
-        width: Devicewidth,
+        margin:12,
+       width: Devicewidth,
         alignItems: 'center',
         justifyContent: 'center',
-        flex: 1,
-        // marginBottom: 20,
+       flex: 1, 
+       /// WebkitTouchCallout: 'none',
+
+        // marginBottom: 20,  
     },
+    
 })
 
 const mapDispatchToProps = dispatch => {
@@ -873,3 +904,5 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductList);
+
+

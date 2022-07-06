@@ -31,7 +31,9 @@ class Login extends Component {
     }
     state = this.state;
     async componentDidMount() {
-    this.requestUserPermission()
+    //this.requestUserPermission()
+    const fcmtoken = await  AsyncStorage.getItem('fcm_token')
+    this.setState({FCMToken: fcmtoken})
     }
     closeModal = () => {
         this.setState({
@@ -78,6 +80,7 @@ class Login extends Component {
             "password": password,
             "notification_token": this.state.FCMToken,
         }
+        console.warn('logindata',object)
         await axios.post("https://trademylist.com:8936/app/login", object)
             .then(async response => {
                 //console.log("login data",response)

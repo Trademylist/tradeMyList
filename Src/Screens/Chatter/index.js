@@ -592,7 +592,7 @@ export default class Chatter extends Component {
                             </View>
                             {
                                 <View style={styles.FlatListContainer}>
-                                    {
+                                    { 
                                         this.state.All &&
                                         <>
                                         {
@@ -803,8 +803,11 @@ const styles = StyleSheet.create({
     ImageContainer: {
         alignItems: "center",
         justifyContent: "center",
-        height: Deviceheight / 14,
-        width: Devicewidth / 7,
+        //height: Deviceheight / 14,
+       // width: Devicewidth / 7,
+       width:60,
+       height:60,
+       marginLeft:10,
         borderRadius: 360,
         // backgroundColor:'green'
     },
@@ -845,9 +848,13 @@ const styles = StyleSheet.create({
     DescriptionContainer: {
         // backgroundColor:'green',
         alignItems: 'flex-start',
-        width: Devicewidth / 1.5,
-        height: Deviceheight / 12,
-        justifyContent: 'space-evenly'
+    
+        //maxWidth: Devicewidth / 1.5,
+        //width: Devicewidth / 1.5,
+        //height: Deviceheight / 12,
+        justifyContent: 'space-evenly',
+       flex:1,
+        paddingLeft:15,
     },
     Name: {
         textAlign: 'left',

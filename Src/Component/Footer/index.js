@@ -9,8 +9,10 @@ import {
     Dimensions,
     StatusBar,
     TextInput,
-    SafeAreaView,
-} from 'react-native';
+    SafeAreaView,BrowserRouter,Switch,Route,
+} from 'react-native';  
+
+
 import AsyncStorage from '@react-native-community/async-storage';
 import LoginModal from '../LoginModal';
 const axios = require('axios');
@@ -19,6 +21,16 @@ const Devicewidth = Dimensions.get('window').width;
 const Deviceheight = Dimensions.get('window').height;
 import Modal from "../SellModal"
 import {useRoute} from '@react-navigation/native';
+
+
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+
+import ProductList from '../../Screens/ProductList';
+import CommercialList from '../../Screens/Commercial';
+import Chatter from "../../Screens/Chatter"
+
+const Stack = createStackNavigator();
 
 
 
@@ -137,7 +149,7 @@ const Footer = (props) => {
             ></LoginModal>
 
             <View style={styles.HeadrIconContainer}>
-                <TouchableOpacity onPress={() => props.pageName == "productList" ? props.onShowAllProducts() : navigation.navigate('productList')}>
+            <TouchableOpacity onPress={() => props.pageName == "productList" ? props.onShowAllProducts() : navigation.push('productList')}>
                 {
                     route.name=='productList' ?
                      <View >
@@ -148,7 +160,7 @@ const Footer = (props) => {
                             <Image source={require("../../Assets/homeselected.png")} style={{ height: "80%", width: "100%", }}></Image>
                         </View>
                         <Text style={{
-                            fontSize: 12, color: "#eea631", fontWeight: 'bold', textAlign: "center", alignSelf: "center", marginBottom: 5
+                             fontSize: 12, color: "#eea631", fontWeight: 'bold', textAlign: "center", alignSelf: "center", marginBottom: 5
                         }}>Product</Text>
                      </View>
                     :
@@ -166,7 +178,7 @@ const Footer = (props) => {
                 }
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => props.pageName == "commercialList" ? props.onShowAllProducts() : navigation.navigate('commercialList')}>
+                <TouchableOpacity onPress={() => props.pageName == "commercialList" ? props.onShowAllProducts() : navigation.push('commercialList')}>
                 {
                     route.name=='commercialList' ?
                     <View>
@@ -192,12 +204,12 @@ const Footer = (props) => {
                             fontSize: 12, color: "#464646", textAlign: "center", alignSelf: "center", paddingBottom: 5
                         }}>Commercial</Text>
                     </View>
-                }
+                } 
                 </TouchableOpacity>
-                <View style={{ backgroundColor: '#fff', elevation: 2, borderRadius: 360, height: Deviceheight / 13, width: Devicewidth / 6.5, alignItems: 'center', justifyContent: 'center', top: -15 }}>
-                    <TouchableOpacity onPress={() => handelSell()} style={{ backgroundColor: '#ff6700', borderRadius: 360, height: Deviceheight / 15, width: Devicewidth / 7.5, alignItems: 'center', justifyContent: 'center' }}>
+                <View style={{ backgroundColor: '#fff', elevation: 2, borderRadius: 360, height: Deviceheight / 13, width: Devicewidth / 6.5, alignItems: 'center', justifyContent: 'center', top: -20, left:-2 }}>
+                    <TouchableOpacity onPress={() => handelSell()} style={{ backgroundColor: '#ff6700', borderRadius: 360, height: 60, width: 60, alignItems: 'center', justifyContent: 'center' }}>
                         <View style={{
-                            height: Deviceheight / 44, width: Devicewidth / 26, alignItems: "center", justifyContent: "center", alignSelf: "center",
+                          height: Deviceheight / 50, width: Devicewidth / 30, alignItems: "center", justifyContent: "center", alignSelf: "center",
                         }}>
                             <Image source={require("../../Assets/Camera.png")} style={{ height: "65%", width: "100%", }}></Image>
                         </View>
@@ -205,7 +217,7 @@ const Footer = (props) => {
                             fontSize: 12, color: "#ffffff", textAlign: "center", alignSelf: "center",
                         }}>Sell</Text>
                     </TouchableOpacity>
-                </View>
+                </View>  
                 <TouchableOpacity
                     onPress={() => getchatter()}
                     style={{
@@ -298,6 +310,11 @@ const Footer = (props) => {
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
+
+
+
+
+
     )
 }
 
@@ -321,6 +338,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         borderTopColor: '#f1f1f1',
         borderTopWidth: 1,
+   
     },
 })
 

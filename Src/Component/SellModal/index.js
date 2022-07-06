@@ -195,7 +195,7 @@ const redcLogin = () => {
                 <TouchableOpacity onPress={() => props.onPressClose()} style={{ alignItems: 'center', justifyContent: 'center',  marginTop: 10,backgroundColor:"#f5f5f5" ,padding:4}}>
                 <Fontisto name='close-a' size={12} color={"#000000"} />
                 </TouchableOpacity>
-                <View style={{ alignItems: 'center', justifyContent: 'center', height: Deviceheight / 20,paddingBottom:8 }}>
+                <View style={{ alignItems: 'center', justifyContent: 'center',paddingBottom:8 }}>
                   <Text style={{ fontFamily:"Roboto-Bold" , color: '#000', fontWeight: 'bold', fontSize: 18, textAlign: 'left', marginLeft: 30 }}>What are you selling?</Text></View>
               </View>
 

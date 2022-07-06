@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ScrollView, StyleSheet, Dimensions, Switch, TouchableOpacity } from 'react-native';
+import { SafeAreaView,View, Text, Image, ScrollView, StyleSheet, Dimensions, Switch, TouchableOpacity } from 'react-native';
 const { width: WIDTH } = Dimensions.get('window');
 const Devicewidth = Dimensions.get('window').width;
 const Deviceheight = Dimensions.get('window').height;
@@ -1010,7 +1010,9 @@ export default class NotificationSettings extends Component {
     }
     render() {
         return (
-            <>
+            <>    
+            <SafeAreaView style={{ flex: 1 }}>
+
                 <View style={styles.Container}>
                     <Header navigation={this.props.navigation} Desc={"Notifications"} />
                     <ScrollView>
@@ -1441,9 +1443,10 @@ export default class NotificationSettings extends Component {
                         </View>
                     </ScrollView>
                 </View>
+            </SafeAreaView >
             </>
         )
-    }
+    } 
 }
 
 const styles = StyleSheet.create({

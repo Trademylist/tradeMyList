@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, ScrollView, Image, Dimensions, ImageBackground, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { SafeAreaView,Text, View, ScrollView, Image, Dimensions, ImageBackground, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 const Devicewidth = Dimensions.get('window').width;
 const Deviceheight = Dimensions.get('window').height;
 import MySubscriptionModal from "../../Component/SubscriptionModal"
@@ -59,6 +59,7 @@ const MyProductListing = (props) => {
         SetDeleteProductConfermationModal(false)
     }
     return (
+        <SafeAreaView >
         <View style={styles.Container}>
             {/* <MySubscriptionModal
                 modalProps={SubscriptionModal}
@@ -71,15 +72,17 @@ const MyProductListing = (props) => {
                 modalProps={ImageZoomeModal}
                 onPressClose={() => closeImageZoomeModal()}
                 MyImage={ props.image == "" ? props.category == "Jobs" ? "https://trademylist.com:8936/jobs.jpg" : props.category == "Services" ? "https://trademylist.com:8936/services.jpg" : null : props.image}
-                navigation={props.navigation}
+                navigation={props.navigation} 
+                style={{  marginTop: 0,top:0, paddingTop:100 , backgroundColor:'red'}}
             ></MyImageZoomeModal>
+            
             <MyDeleteProductModal
                 modalProps={DeleteProductConfermationModal}
                 onPressClose={() => CloseDeleteProductModal()}
                 DeleteProduct={() => DeleteProduct()}
                 navigation={props.navigation}
             />
-            <TouchableOpacity onPress={() => OpenImageZoomeModal()} style={{ alignItems: 'center', justifyContent: 'center', height: Deviceheight / 5.5, width: Devicewidth / 3, marginBottom: 5, borderRadius: 5, }}
+            <TouchableOpacity onPress={() => OpenImageZoomeModal()} style={{ alignItems: 'center', justifyContent: 'center', height: Deviceheight / 5.5, width: Devicewidth / 3, marginBottom: 5, borderRadius: 5 }}
             //  onPress={() => props.navigation.navigate('productDetails', { "productId": props.ProductId })}
             >
                 <Image source={{  uri: props.image == "" ? props.category == "Jobs" ? "https://trademylist.com:8936/jobs.jpg" : props.category == "Services" ? "https://trademylist.com:8936/services.jpg" : null : props.image  }} style={{ height: "100%", width: '100%', resizeMode: "contain", alignSelf: 'center' }} />
@@ -133,6 +136,7 @@ const MyProductListing = (props) => {
             </TouchableOpacity>
 
         </View>
+        </SafeAreaView>
     )
 }
 

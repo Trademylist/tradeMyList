@@ -52,10 +52,12 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Profile Picture and Product Upload</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This permission is for order tracking.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Nearby Product search according to user's current location.</string>
+	<string>This permission is for order tracking.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Nearby Product search according to user's current location.</string>
+	<string>This permission is for order tracking.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We use Photo Libary to pload photo in Profile Picture Update and Product Listing</string>
 	<key>UIAppFonts</key>
@@ -92,6 +94,7 @@
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
+		<string>location</string>
 		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>

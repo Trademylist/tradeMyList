@@ -3,16 +3,21 @@ import { View, Text, Modal, TouchableOpacity, StyleSheet, Dimensions, Image, Tex
 import AsyncStorage from '@react-native-community/async-storage';
 import Geocoder from 'react-native-geocoding';
 import Geolocation from 'react-native-geolocation-service';
-// import Geolocation from '@react-native-community/geolocation';
+ //import Geolocation from '@react-native-community/geolocation';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import CustomMarker from '../../Component/MultiSlider/index'
+import CustomMarker from '../MultiSlider/index'
 import MapView, { Marker, Circle, AnimatedRegion } from 'react-native-maps';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import {connect} from 'react-redux';
 import { STORE_SLIDER_DISTANCE } from '../../store/actions';
-import {Platform} from 'react-native';
+import {Platform,Alert} from 'react-native';
+import {
+  check,
+  PERMISSIONS,
+  request
+} from 'react-native-permissions';
 const Devicewidth = Dimensions.get('window').width;
 const Deviceheight = Dimensions.get('window').height;
 const ASPECT_RATIO = Devicewidth / Deviceheight;
@@ -22,7 +27,7 @@ const axios = require('axios');
 const API_KEY = 'AIzaSyCPCwSH6Wtnu0dAJUapPeU2NWTwCmlNQhY';
 
 class MapModal extends Component {
-
+  
   constructor(props) {
     super(props)
     this.state = {
@@ -47,6 +52,7 @@ class MapModal extends Component {
 
 
   async componentDidMount() {
+    this.requestPermission()
     this.getAllData();
   }
 
@@ -61,6 +67,89 @@ class MapModal extends Component {
       this.setState({
         slider1value: this.props.sliderDistance,
       })
+  }
+}
+requestPermission = () =>{
+  if (Platform.OS === 'ios') {
+    request(PERMISSIONS.IOS.LOCATION_ALWAYS).then((result)=>{
+        console.warn(result)
+        if (result === 'granted') {
+          //Alert.alert("Location Permission Granted.");
+          this.checkPermission();
+        }
+        else if(result === 'unavailable' || result === 'blocked'){
+          request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE).then((result)=>{
+            console.warn(result)
+            if (result === 'granted') {
+              //Alert.alert("Location Permission Granted.");
+              this.checkPermission();
+            }
+          })
+        }
+        else {
+          Alert.alert("Oops..","Location Permission Not Granted");
+          //setAddress('4505 Roane Avenue, Hous.. ')
+        }
+    });
+}
+}
+
+checkPermission = () => {
+ 
+  if (Platform.OS === 'android') {
+      check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION).then((result) => {
+          if (result === 'granted') {
+              Geolocation.getCurrentPosition((position) => {
+                  const { coords } = position;
+                  console.warn(position)
+                 
+              }, (error) => {
+                  //Toast.show(error["message"]);
+                  console.warn(error)
+                  
+              }, {
+                  enableHighAccuracy: true,
+                  timeout: 20000
+              });
+          } else if (result === 'blocked') {
+              console.warn("App is not permitted to access location.");
+             
+          }
+      });
+  } else {
+      check(PERMISSIONS.IOS.LOCATION_ALWAYS).then((result) => {
+          if (result === 'granted') {
+              Geolocation.getCurrentPosition((position) => {
+                  const { coords } = position;
+                  console.warn(position)
+                  this.getAddressByLatANDLng(coords.latitude,coords.longitude)
+              }, (error) => {
+                  console.warn(error)
+              }, {
+                  enableHighAccuracy: true,
+                  timeout: 20000
+              });
+          } else if (result === 'blocked' || result === 'unavailable') {
+            console.warn('hello1')
+              check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE).then((result) => {
+                  if (result === 'granted') {
+                      Geolocation.getCurrentPosition((position) => {
+                          const { coords } = position;
+                          console.warn(position)
+                          this.getAddressByLatANDLng(coords.latitude,coords.longitude)
+                      }, (error) => {
+                        console.warn(error)
+                      }, {
+                          enableHighAccuracy: true,
+                          timeout: 20000
+                      });
+                  } else if (result === 'blocked') {
+                      console.warn("App is not permitted to access location.");
+                      
+                  }
+              });
+          }
+      });
   }
 }
 
@@ -264,13 +353,25 @@ class MapModal extends Component {
     this.props.onPressClose();
   }
   getCurrentLocation=()=>{
-    Geolocation.getCurrentPosition(pos=>{
-        this.getAddressByLatANDLng(pos.coords.latitude, pos.coords.longitude)
-    },err=>{
-      //console.log(err);
-      alert("Feteching the Position failed ,please pick one manually !")
-    }
-  )
+    this.requestPermission()
+    // alert('hi')
+    // Geolocation.getCurrentPosition(pos=>{
+    //   console.log(pos, 'my current location');
+    //     this.getAddressByLatANDLng(pos.coords.latitude, pos.coords.longitude)
+        
+    // },err=>{
+    //   console.log(err);
+    //   alert("Feteching the Position failed ,please pick one manually !")
+    // }
+    /*Geolocation.getCurrentPosition(
+      (position) => {
+        console.log(position ,'my current locationnnnnnnnnnnnnnnnnnnnnnnnnnnnn');
+      },
+      (error) => {
+        // See error code charts below.
+        console.log(error.code, error.message, 'hhhhhhhhhhhhhhhhhhhhhhh');
+      }*/
+  //)
 
 
   }
@@ -347,14 +448,15 @@ class MapModal extends Component {
                     style={{ height: "100%", width: "100%", marginBottom: this.state.marginMap }}
                     mapPadding={{ top: 120, right: 25, bottom: 0, left: 0 }}
                     // region={this.state.initialRegion}
-                    followUserLocation={true}
-                    ref={ref => this.map = ref}
-                    zoomEnabled={true}
+                    followUserLocation={true} 
+                    //showsMyLocationButton={false}
+                    ref={ref => this.map = ref}  
+                    zoomEnabled={true} 
                     showsUserLocation={true}
                     initialRegion={{...locationData}}
-                    onMapReady={this.goToInitialLocation}
-                    >
-                    <Circle
+                    onMapReady={this.goToInitialLocation} 
+                    > 
+                  <Circle
                       center={{
                         latitude: parseFloat(locationData.latitude),
                         longitude: parseFloat(locationData.longitude),
@@ -363,7 +465,7 @@ class MapModal extends Component {
                       strokeWidth = { 1 }
                       strokeColor = { '#1a66ff' }
                       fillColor = { 'rgba(230,238,255,0.5)' }
-                    />
+                    />  
                     {locationData.latitude && locationData.longitude &&
                       <Marker
                         coordinate={{
@@ -373,24 +475,25 @@ class MapModal extends Component {
                       />
                     }
                   </MapView>
-                <View style={{ height: Deviceheight / 2.2, width: Devicewidth / 1.18, alignItems: "center", justifyContent: 'center', position: "absolute", top: 20, }}>
 
-                  <View style={styles.inputContainer}>
+                <View style={{ height: Deviceheight / 2.2, width: Devicewidth / 1.18, alignItems: "center", justifyContent: 'center', position: "absolute", top: 50, marginTop:25     }}>     
+ 
+                  <View style={styles.inputContainer}>  
                     <View style={styles.inputContainer1}>
-                      <FontAwesomeIcon name='search' style={{ color: '#ccc', fontSize: 20, position: 'absolute', left: 5, top: 10, padding: 5, height: 32, }} />
-                      <TextInput
-                        placeholder={'Search'}
+                      <FontAwesomeIcon name='search' style={{ color: '#ccc', fontSize: 20, position: 'absolute', left: 5,  top: 7, padding: 5, }} />    
+                      <TextInput 
+                        placeholder={'Search'} 
                         placeholderTextColor={'#acacac'}
                         style={styles.Input}
-                        autoCapitalize="none"
-                        value={locationData.wholeAddress}
+                        autoCapitalize="none" 
+                        value={locationData.wholeAddress} 
                         onTouchStart={this.onFocus}
                         onChangeText={(text) => this.searchLocation(text)}
                       >
-                      </TextInput>
+                      </TextInput>   
                     </View>
                   </View>
-                  <View style={{ alignItems: 'center', alignSelf: 'center', justifyContent: 'center', width: Devicewidth - 50, height: 250, }}>
+                  <View style={{ alignItems: 'center', alignSelf: 'center', justifyContent: 'center', paddingBottom:10, width: Devicewidth - 50, height: 250, }}> 
                     {this.state.isShowingResults && (
                       <FlatList
                         keyboardShouldPersistTaps='always'
@@ -409,15 +512,15 @@ class MapModal extends Component {
                         style={styles.searchResultsContainer}
                       />
                     )}
-                  </View>
-                </View>
-
-
-                {/* need to implement cuerrent location feature here */}
+                  </View> 
+                  {/* need to implement cuerrent location feature here */}
                 <TouchableOpacity onPress={this.getCurrentLocation}
-                style={{ backgroundColor: "#fff", alignItems: "center", justifyContent: "center", height: Deviceheight / 20, width: Devicewidth / 10, position: "absolute", top: 120, right: 30, borderRadius: 360,elevation:10, }}>
+                style={{ backgroundColor: "transparent", alignItems: "center", justifyContent: "center", height: Deviceheight / 20, width: Devicewidth / 10, position: "absolute", top: 45, right: 40, borderRadius:0,elevation:10,   }}> 
                   <Ionicons name='md-locate' size={30} color={"#2d3d53"} />
                 </TouchableOpacity>
+                </View> 
+
+                  
 
 
               </View>
@@ -492,29 +595,34 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     // zIndex:10,
     width: Devicewidth / 1.2,
-    height: Deviceheight / 11.5,
+  //  height: Deviceheight / 11.5,
     borderRadius: 10,
     justifyContent: 'center',
     elevation: 5
   },
   inputContainer1: {
-    marginTop: 5,
+    marginTop: 0, 
+    marginBottom:5,  
+   
     backgroundColor: '#fff',
     // zIndex:10,
     width: Devicewidth / 1.25,
-    height: Deviceheight / 14,
-    borderRadius: 10,
+   // height: Deviceheight / 14,  
+      height: 45,  
+    borderRadius: 10,  
     justifyContent: 'center',
-    elevation: 10
-  },
-  Input: {
+    elevation: 5, 
+
+  
+  }, 
+  Input: { 
     marginLeft: 30,
     width: Devicewidth / 1.4,
-    height: Deviceheight / 14,
+ //height: Deviceheight / 14,
     borderRadius: 10,
     fontSize: 14,
-    paddingLeft: 15,
-    textAlign: 'left',
+    paddingLeft: 10, 
+    textAlign: 'left', 
     // borderWidth:1,
     backgroundColor: '#fff',
     // borderTopColor:"#fff",
@@ -523,7 +631,11 @@ const styles = StyleSheet.create({
     // borderBottomWidth:1,
     borderRadius: 10,
     // borderColor: '#acacac',
-    color: '#000',
+    color: '#000',   
+    //whiteSace:'nowrap',
+    //overflow:'hidden',
+   // textOverflow:'ellipsis',
+
   },
   ImageStyle: {
     padding: 5,

@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, Image, ScrollView, TextInput, StyleSheet, Dimensions, FlatList, TouchableOpacity, Alert, Platform, PermissionsAndroid, ActivityIndicator, ToastAndroid, StatusBar, BackHandler, SafeAreaView } from 'react-native';
+
+import { KeyboardAvoidingView, TouchableWithoutFeedback, Button, Keyboard } from 'react-native';
+
 import Header from "../../Component/HeaderBack"
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Geolocation from '@react-native-community/geolocation';
@@ -13,15 +16,19 @@ import CarMakeModal from "../../Component/CarMakeModal"
 import CarModelModal from "../../Component/CarModelModal"
 import CarTrimModal from "../../Component/CarTrimModal"
 import CatagoryModal from "../../Component/Catagorymodal"
-import MapModal from '../../Component/MapModal';
+import MapModal from '../../Component/MapModal/oldmap';
 import HeaderBackModal from '../../Component/ProductUploadBackModal';
+
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
 import {
     launchCamera,
     launchImageLibrary
 } from 'react-native-image-picker';
 const axios = require('axios');
-import {connect} from 'react-redux';
-import {RNS3} from "react-native-s3-upload/src/RNS3";
+import { connect } from 'react-redux';
+import { RNS3 } from "react-native-s3-upload/src/RNS3";
+
 
 const { width: WIDTH } = Dimensions.get('window');
 const Devicewidth = Dimensions.get('window').width;
@@ -31,31 +38,31 @@ const API_KEY = 'AIzaSyCPCwSH6Wtnu0dAJUapPeU2NWTwCmlNQhY';
 
 const Data = [
     {
-        id:1, key: '0',
+        id: 1, key: '0',
     },
     {
-        id:2, key: '1',
+        id: 2, key: '1',
     },
     {
-        id:3, key: '2',
+        id: 3, key: '2',
     },
     {
-        id:4, key: '3',
+        id: 4, key: '3',
     },
     {
-        id:5, key: '4',
+        id: 5, key: '4',
     },
     {
-        id:6, key: '5',
+        id: 6, key: '5',
     },
     {
-        id:7, key: '6',
+        id: 7, key: '6',
     },
     {
-        id:8, key: '7',
+        id: 8, key: '7',
     },
     {
-        id:9, key: '8',
+        id: 9, key: '8',
     },
 ];
 class ListingDetails extends Component {
@@ -116,7 +123,8 @@ class ListingDetails extends Component {
             region: "us-east-1",
             accessKey: "AKIAI2XID245DD7OSKQA",
             secretKey: "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",
-            successActionStatus: 201};
+            successActionStatus: 201
+        };
 
         this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
     }
@@ -154,12 +162,12 @@ class ListingDetails extends Component {
                     let Year, Mileage
                     response.data.data.product.sub_category_number.map((sub_numberdata, sub_numberindex) => {
                         if (sub_numberdata.key === 'year') {
-                            Year = (sub_numberdata.value>0)?sub_numberdata.value:1
+                            Year = (sub_numberdata.value > 0) ? sub_numberdata.value : 1
                         }
                         if (sub_numberdata.key === 'range') {
                             Mileages = sub_numberdata.value.split(" ");
-                            console.log('hii',Mileages)
-                            Mileage = (Mileages[0]>0)?Mileages[0]:1
+                            console.log('hii', Mileages)
+                            Mileage = (Mileages[0] > 0) ? Mileages[0] : 1
                         }
                         return true
                     })
@@ -270,6 +278,7 @@ class ListingDetails extends Component {
     componentDidMount() {
         this.getDetails();
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+
     }
 
     componentWillUnmount() {
@@ -301,15 +310,15 @@ class ListingDetails extends Component {
     }
 
     componentDidUpdate = (prevProps, prevState) => {
-        if(this.props.savedLocation.latitude && this.props.savedLocation.latitude &&
-            ((this.props.savedLocation.latitude != prevProps.savedLocation.latitude) || (this.props.savedLocation.longitude != prevProps.savedLocation.longitude) || (this.props.sliderDistance != prevProps.sliderDistance))){
-                this.setState({
-                    lat: this.props.savedLocation.latitude,
-                    lng: this.props.savedLocation.longitude,
-                    sellerAddress: this.props.savedLocation.wholeAddress
-                })
-                this.getCurrency(this.props.savedLocation.country)
-            }
+        if (this.props.savedLocation.latitude && this.props.savedLocation.latitude &&
+            ((this.props.savedLocation.latitude != prevProps.savedLocation.latitude) || (this.props.savedLocation.longitude != prevProps.savedLocation.longitude) || (this.props.sliderDistance != prevProps.sliderDistance))) {
+            this.setState({
+                lat: this.props.savedLocation.latitude,
+                lng: this.props.savedLocation.longitude,
+                sellerAddress: this.props.savedLocation.wholeAddress
+            })
+            this.getCurrency(this.props.savedLocation.country)
+        }
     }
 
 
@@ -440,13 +449,13 @@ class ListingDetails extends Component {
     };
 
     getFileFromGallery = async (data) => {
-        this.setState({ImageOptionVisible: false});
+        this.setState({ ImageOptionVisible: false });
         let options = {
             mediaType: data,
             maxWidth: 300,
             maxHeight: 550,
             quality: 1,
-            rotation : 360
+            rotation: 360
         };
         launchImageLibrary(options, (response) => {
             //console.log('Response = ', response);
@@ -483,7 +492,7 @@ class ListingDetails extends Component {
                     type: image.type,
                     uri: image.uri
                 }
-                console.log("my IMG 3",JSON.stringify(img));
+                console.log("my IMG 3", JSON.stringify(img));
                 data.append('file', img);
                 await axios.post("https://trademylist.com:8936/app_seller/upload", data, {
                     headers: {
@@ -524,16 +533,16 @@ class ListingDetails extends Component {
                         'x-access-token': value.token,
                     }
                 })
-                .then(response => {
-                    this.setState({
-                        coverImage: response.data.data.image,
-                        ImageOptionVisible: false,
-                        ImageSpinnerVisible: false
+                    .then(response => {
+                        this.setState({
+                            coverImage: response.data.data.image,
+                            ImageOptionVisible: false,
+                            ImageSpinnerVisible: false
+                        })
                     })
-                })
-                .catch(error => {
-                    console.log('errr', error)
-                })
+                    .catch(error => {
+                        console.log('errr', error)
+                    })
                 // setFilePath(response);
 
             }
@@ -643,7 +652,7 @@ class ListingDetails extends Component {
         ImagePicker.openCamera({
             multiple: false,
         }).then(image => {
-            this.setState({ImageOptionVisible: false});
+            this.setState({ ImageOptionVisible: false });
             let file = {
                 uri: image.path,
                 fileName: image.path.replace(/^.*[\\\/]/, ''),
@@ -686,12 +695,12 @@ class ListingDetails extends Component {
         //             alert(response.errorMessage);
         //             return;
         //         }
-                // this.getImageupload(response)
-                // this.setState({
-                //     ImageOptionVisible: false,
-                //     ImageSpinnerVisible: true
-                // })
-            // });
+        // this.getImageupload(response)
+        // this.setState({
+        //     ImageOptionVisible: false,
+        //     ImageSpinnerVisible: true
+        // })
+        // });
         // }
     }
 
@@ -729,15 +738,31 @@ class ListingDetails extends Component {
 
 
     selectImageGallery() {
-        ImagePicker.openPicker({
-            width: 300,
-            height: 400,
-            multiple: true,
-            compressImageQuality: 0.99
-        }).then(image => {
-            this.uploadFileToS3(image, true);
-            // this.getImageaddupload(image)
-            //console.log("my image from camera", image);
+        let options = {
+            mediaType: 'photo',
+            maxWidth: 300,
+            maxHeight: 550,
+            quality: 1,
+            rotation: 360
+        };
+        launchImageLibrary(options, (response) => {
+            //console.log('Response = ', response);
+
+            if (response.didCancel) {
+                // alert('User cancelled camera picker');
+                return;
+            } else if (response.errorCode == 'camera_unavailable') {
+                alert('Camera not available on device');
+                return;
+            } else if (response.errorCode == 'permission') {
+                alert('Permission not satisfied');
+                return;
+            } else if (response.errorCode == 'others') {
+                alert(response.errorMessage);
+                return;
+            }
+
+            this.uploadFileToS3(response, true);
         });
     }
 
@@ -842,7 +867,7 @@ class ListingDetails extends Component {
                 this.setState({
                     Submitloder: true
                 })
-                console.log('state ',this.state)
+                console.log('state ', this.state)
                 const { coverImage, AdditionalImages, Productname, Productprice, ProductDescription, lat, lng, sellerAddress, selectedProdCategory, Jobname, JobDescription, Jobtype, TypeofhousingProperty, TypeOfhousingListing, noofBedrooms, noofBathRooms, CarMake, CarModel, CarTrim, sellerType, TransMission, slider1value, slider2value, currency, country } = this.state;
                 let Data = {}
                 const coordinatesDiff = [
@@ -1035,14 +1060,12 @@ class ListingDetails extends Component {
         })
     }
     uploadFileToS3 = async (response, isAdditionalImage) => {
-        if(isAdditionalImage) {
+        if (isAdditionalImage) {
             const { ImageLoadingState, AdditionalIndex } = this.state
             var h = AdditionalIndex
             var imagestate = []
-            for (var k = 0; k < response.length; k++) {
-                imagestate.push(h)
-                h++
-            }
+            imagestate.push(h)
+            h++
             this.setState({
                 AdditionalImageSpinnerVisible: true,
                 ImageLoadingState: imagestate
@@ -1053,28 +1076,25 @@ class ListingDetails extends Component {
                 const value = await JSON.parse(await AsyncStorage.getItem('UserData'))
                 if (value !== null) {
                     var j = AdditionalIndex
-                    let MyLength = response.length
-                    for (var i = 0; i < MyLength; i++) {
-                        const formattedFile = {
-                            uri: response[i].path,
-                            name: (new Date().getTime()) + response[i].path.replace(/^.*[\\\/]/, ''),
-                            type: response[i].mime
-                        }
-                        await RNS3.put(formattedFile, this.bucketOptions).then(response => {
-                            if (response.status !== 201) {
-                                throw new Error("Failed to upload to S3");
-                            } else {
-                                AdditionalImages[j] = response.body.postResponse.location;
-                            }
-                        });
-                        j++
+                    const formattedFile = {
+                        uri: response.uri,
+                        name: (new Date().getTime()) + response.fileName,
+                        type: response.type
                     }
-                    this.setState({
-                        AdditionalImages,
-                        AdditionalImageSpinnerVisible: false,
-                    })
+                    await RNS3.put(formattedFile, this.bucketOptions).then(response => {
+                        if (response.status !== 201) {
+                            throw new Error("Failed to upload to S3");
+                        } else {
+                            AdditionalImages[j] = response.body.postResponse.location;
+                        }
+                    });
+                    j++
                 }
-            } catch (e) {}
+                this.setState({
+                    AdditionalImages,
+                    AdditionalImageSpinnerVisible: false,
+                })
+            } catch (e) { }
         } else {
             const formattedFile = {
                 uri: response.uri,
@@ -1097,450 +1117,473 @@ class ListingDetails extends Component {
 
     render() {
         return (
-            <SafeAreaView style={styles.Container}>
-                <View style={styles.HeaderContainer}>
-                    <StatusBar backgroundColor="#000000" />
-                    <View style={styles.HeadrIconContainer}>
-                        <TouchableOpacity onPress={() => this.HandelBack()} style={{
-                            height: Deviceheight / 50,
-                            width: Devicewidth / 25, alignItems: "center", justifyContent: "center", alignSelf: "center", marginLeft: 20, marginBottom: 5,
-                        }}>
-                            <Image source={require("../../Assets/BackIconLeft.png")} style={{ height: "100%", width: "100%" }}></Image>
-                        </TouchableOpacity>
-                        <Text style={{ fontFamily:"Roboto-Bold" , color: '#434343', fontSize: 20, lineHeight: 20, fontWeight: 'bold', textAlign: 'left', marginLeft: 20}}>Listing Details</Text>
+            <SafeAreaView edges={['left', 'right']} style={styles.Container}>
+
+                <KeyboardAwareScrollView
+                    enableOnAndroid={true}
+                    enableResetScrollToCoords={false}
+                    bounces={false}
+                    contentInsetAdjustmentBehavior="always"
+                    overScrollMode="always"
+                    showsVerticalScrollIndicator={true}
+                >
+                    {/* <ScrollView
+      bounces={false}
+      contentInsetAdjustmentBehavior="always"
+      overScrollMode="always"
+      showsVerticalScrollIndicator={true}
+      > */}
+
+                    <View style={styles.HeaderContainer}>
+                        <StatusBar backgroundColor="#000000" />
+                        <View style={styles.HeadrIconContainer}>
+                            <TouchableOpacity onPress={() => this.HandelBack()} style={{
+                                height: Deviceheight / 50,
+                                width: Devicewidth / 25, alignItems: "center", justifyContent: "center", alignSelf: "center", marginLeft: 20, marginBottom: 5,
+                            }}>
+                                <Image source={require("../../Assets/BackIconLeft.png")} style={{ height: "100%", width: "100%" }}></Image>
+                            </TouchableOpacity>
+                            <Text style={{ fontFamily: "Roboto-Bold", color: '#434343', fontSize: 20, lineHeight: 20, fontWeight: 'bold', textAlign: 'left', marginLeft: 20 }}>Listing Details</Text>
+                        </View>
                     </View>
-                </View>
-                <HeaderBackModal
-                    modalProps={this.state.HeaderBackModalStatus}
-                    onPressClose={() => this.closeHeaderBackModal()}
-                    Process="general"
-                    navigation={this.props.navigation}
-                ></HeaderBackModal>
-                <ImageOptionModal
-                    modalProps={this.state.ImageOptionVisible}
-                    onPressClose={() => this.closeImageOptionModal()}
-                    getchooseFile={this.getFileFromGallery}
-                    getcaptureFile={this.getCaptureFromCamera}
-                    navigation={this.props.navigation}
-                ></ImageOptionModal>
+                    <HeaderBackModal
+                        modalProps={this.state.HeaderBackModalStatus}
+                        onPressClose={() => this.closeHeaderBackModal()}
+                        Process="general"
+                        navigation={this.props.navigation}
+                    ></HeaderBackModal>
+                    <ImageOptionModal
+                        modalProps={this.state.ImageOptionVisible}
+                        onPressClose={() => this.closeImageOptionModal()}
+                        getchooseFile={this.getFileFromGallery}
+                        getcaptureFile={this.getCaptureFromCamera}
+                        navigation={this.props.navigation}
+                    ></ImageOptionModal>
 
-                <AdditionalImageOption
-                    modalProps={this.state.AdditionalOptionVisible}
-                    onPressClose={() => this.closeaddModal()}
-                    getchooseFileData={this.getAddFileFromGallery}
-                    getcaptureFileData={this.getaddCaptureFromCamera}
-                    navigation={this.props.navigation}
-                >
-                </AdditionalImageOption>
+                    <AdditionalImageOption
+                        modalProps={this.state.AdditionalOptionVisible}
+                        onPressClose={() => this.closeaddModal()}
+                        getchooseFileData={this.getAddFileFromGallery}
+                        getcaptureFileData={this.getaddCaptureFromCamera}
+                        navigation={this.props.navigation}
+                    >
+                    </AdditionalImageOption>
 
-                <CarMakeModal
-                    modalProps={this.state.CarMakeStatus}
-                    onPressClose={() => this.closeCarMakeModal()}
-                    selectedMake={this.state.CarMake}
-                    makeCategory={this.state.selectedProdCategory}
-                    getcarmake={this.selectcarMake}
-                    navigation={this.props.navigation}
-                >
-                </CarMakeModal>
-                <CarModelModal
-                    modalProps={this.state.CarModelStatus}
-                    onPressClose={() => this.closeCarModelModal()}
-                    selectedMake={this.state.CarMake}
-                    makeCategory={this.state.selectedProdCategory}
-                    selectedModel={this.state.CarModel}
-                    getcarmodel={this.selectcarModal}
-                    navigation={this.props.navigation}
-                >
-                </CarModelModal>
-                <CarTrimModal
-                    modalProps={this.state.CarTrimStatus}
-                    onPressClose={() => this.closeCarTrimModal()}
-                    selectedModal={this.state.CarModel}
-                    makeCategory={this.state.selectedProdCategory}
-                    selectedTrim={this.state.CarTrim}
-                    getcartrim={this.selectcarTrim}
-                    navigation={this.props.navigation}
-                >
-                </CarTrimModal>
-                <CatagoryModal
-                    modalProps={this.state.CatagoryModalVisibal}
-                    onPressClose={() => this.closeCatagoryModal()}
-                    categoryList={this.state.categoryList}
-                    categoryImg={this.state.categoryImgLink}
-                    selectedProdCat={this.state.selectedProdCategory}
-                    getCategory={this.selectedCat}
-                    navigation={this.props.navigation}
-                >
-                </CatagoryModal>
-                <MapModal
-                    modalProps={this.state.mapVisible}
-                    onPressClose={() => this.closeModal()}
-                    updateLocation={this.getUpdatelocProd}
-                    navigation={this.props.navigation}
-                ></MapModal>
-                {this.state.Submitloder == true ?
-                    <ActivityIndicator style={{ alignSelf: "center", marginTop: Deviceheight / 3  }} animating={this.state.loder} color={"#383ebd"} size="large" />
-                    :
-                    <>
-                    <ScrollView
-                        keyboardShouldPersistTaps='always' contentContainerStyle={{ width: Devicewidth, alignSelf: 'center' }}>
-                        <View style={{ flexDirection: "row", alignItems: "center", alignSelf: "center", justifyContent: 'center', width: Devicewidth, marginTop: 15 }}>
+                    <CarMakeModal
+                        modalProps={this.state.CarMakeStatus}
+                        onPressClose={() => this.closeCarMakeModal()}
+                        selectedMake={this.state.CarMake}
+                        makeCategory={this.state.selectedProdCategory}
+                        getcarmake={this.selectcarMake}
+                        navigation={this.props.navigation}
+                    >
+                    </CarMakeModal>
+                    <CarModelModal
+                        modalProps={this.state.CarModelStatus}
+                        onPressClose={() => this.closeCarModelModal()}
+                        selectedMake={this.state.CarMake}
+                        makeCategory={this.state.selectedProdCategory}
+                        selectedModel={this.state.CarModel}
+                        getcarmodel={this.selectcarModal}
+                        navigation={this.props.navigation}
+                    >
+                    </CarModelModal>
+                    <CarTrimModal
+                        modalProps={this.state.CarTrimStatus}
+                        onPressClose={() => this.closeCarTrimModal()}
+                        selectedModal={this.state.CarModel}
+                        makeCategory={this.state.selectedProdCategory}
+                        selectedTrim={this.state.CarTrim}
+                        getcartrim={this.selectcarTrim}
+                        navigation={this.props.navigation}
+                    >
+                    </CarTrimModal>
+                    <CatagoryModal
+                        modalProps={this.state.CatagoryModalVisibal}
+                        onPressClose={() => this.closeCatagoryModal()}
+                        categoryList={this.state.categoryList}
+                        categoryImg={this.state.categoryImgLink}
+                        selectedProdCat={this.state.selectedProdCategory}
+                        getCategory={this.selectedCat}
+                        navigation={this.props.navigation}
+                    >
+                    </CatagoryModal>
+                    <MapModal
+                        modalProps={this.state.mapVisible}
+                        onPressClose={() => this.closeModal()}
+                        updateLocation={this.getUpdatelocProd}
+                        navigation={this.props.navigation}
+                    ></MapModal>
 
-                            {/* For cover image */}
-                            <TouchableOpacity
-                                onPress={() => this.selectImage()}
-                                style={styles.ProfileImageMainContainer}>
-                                {this.state.ImageSpinnerVisible == true ?
-                                    <ActivityIndicator animating={this.state.ImageSpinnerVisible} color={"#383ebd"} size="large" />
-                                    :
-                                    this.state.coverImage ?
-                                    <>
-                                        <Image style={{ height: '100%', width: '100%', resizeMode: 'cover' }} source={{ uri: this.state.coverImage }} />
-                                        <TouchableOpacity onPress={() => this.HandelImageCross(this.state.coverImage, "cover", null)} style={{ alignItems: 'center', justifyContent: 'center', height: Deviceheight / 50, width: Devicewidth / 25, marginTop: 10, backgroundColor: "#fff", position: "absolute", borderRadius: 360, top: -8, right: 3 }}>
-                                            <Image source={require('../../Assets/Cross.png')} style={{ width: "70%", height: "70%", resizeMode: 'contain', }}></Image>
-                                        </TouchableOpacity>
-                                    </>
-                                    :
-                                    (this.state.selectedProdCategory == "Jobs" || this.state.selectedProdCategory == "Services") ?
-                                    <>
-                                        <Image style={{ height: '100%', width: '100%', resizeMode: 'cover' }} source={{ uri: this.state.selectedProdCategory == "Jobs" ? "https://trademylist.com:8936/jobs.jpg" : "https://trademylist.com:8936/services.jpg" }} />
-                                        {/* <TouchableOpacity onPress={() => this.HandelImageCross(this.state.coverImage, "cover", null)} style={{ alignItems: 'center', justifyContent: 'center', height: Deviceheight / 50, width: Devicewidth / 25, marginTop: 10, backgroundColor: "#fff", position: "absolute", borderRadius: 360, top: -8, right: 3 }}>
+
+                    {this.state.Submitloder == true ?
+                        <ActivityIndicator style={{ alignSelf: "center", marginTop: Deviceheight / 3 }} animating={this.state.loder} color={"#383ebd"} size="large" />
+                        :
+                        <>
+                            <View style={{ flexDirection: "row", alignItems: "center", alignSelf: "center", justifyContent: 'center', width: Devicewidth, marginTop: 15 }}>
+                                {/* For cover image */}
+                                {this.props.route.params.category != "Jobs" && this.props.route.params.category != "Services" ?
+
+
+                                    < TouchableOpacity
+                                        onPress={() => this.selectImage()}
+                                        style={styles.ProfileImageMainContainer}>
+                                        {this.state.ImageSpinnerVisible == true ?
+                                            <ActivityIndicator animating={this.state.ImageSpinnerVisible} color={"#383ebd"} size="large" />
+                                            :
+                                            this.state.coverImage ?
+                                                <>
+                                                    <Image style={{ height: '100%', width: '100%', resizeMode: 'cover' }} source={{ uri: this.state.coverImage }} />
+                                                    <TouchableOpacity onPress={() => this.HandelImageCross(this.state.coverImage, "cover", null)} style={{ alignItems: 'center', justifyContent: 'center', height: Deviceheight / 50, width: Devicewidth / 25, marginTop: 10, backgroundColor: "#fff", position: "absolute", borderRadius: 360, top: -8, right: 3 }}>
+                                                        <Image source={require('../../Assets/Cross.png')} style={{ width: "70%", height: "70%", resizeMode: 'contain', }}></Image>
+                                                    </TouchableOpacity>
+                                                </>
+                                                :
+                                                (this.state.selectedProdCategory == "Jobs" || this.state.selectedProdCategory == "Services") ?
+                                                    <>
+                                                        <Image style={{ height: '100%', width: '100%', resizeMode: 'cover' }} source={{ uri: this.state.selectedProdCategory == "Jobs" ? "https://trademylist.com:8936/jobs.jpg" : "https://trademylist.com:8936/services.jpg" }} />
+                                                        {/* <TouchableOpacity onPress={() => this.HandelImageCross(this.state.coverImage, "cover", null)} style={{ alignItems: 'center', justifyContent: 'center', height: Deviceheight / 50, width: Devicewidth / 25, marginTop: 10, backgroundColor: "#fff", position: "absolute", borderRadius: 360, top: -8, right: 3 }}>
                                             <Image source={require('../../Assets/Cross.png')} style={{ width: "70%", height: "70%", resizeMode: 'contain', }}></Image>
                                         </TouchableOpacity> */}
-                                    </>
-                                    :
-                                    <Text style={styles.Plus}>+</Text>
-                                }
-                                <View style={{ backgroundColor: "grey", alignSelf: "center", alignItems: "center", justifyContent: "center", position: "absolute", padding: 3, borderRadius: 5, bottom: 3 }}>
-                                    <Text style={{ fontFamily:"Roboto-Bold" , color: "#fff", fontSize: 10, textAlign: 'center' }}>Cover Image</Text>
-                                </View>
-                            </TouchableOpacity>
-
-                            {/* For additional Image */}
-                            <View style={styles.FlatListContainer}>
-                                <FlatList
-                                    data={Data}
-                                    scrollEnabled={true}
-                                    horizontal={true}
-                                    showsHorizontalScrollIndicator={false}
-                                    renderItem={({ item, index }) => (
-                                        <TouchableOpacity style={styles.AdditionalImageMainContainer} onPress={() => this.selectAdditionalImage(index)}>
-                                            {this.state.AdditionalImageSpinnerVisible == true && this.state.ImageLoadingState.indexOf(index) !== -1 ?
-                                                <ActivityIndicator animating={this.state.AdditionalImageSpinnerVisible} color={"#383ebd"} size="large" />
-                                                :
-                                                this.state.AdditionalImages[index]
-                                                    ?
-                                                    <>
-                                                        <Image style={{ height: '100%', width: '100%', resizeMode: 'cover' }} source={{ uri: this.state.AdditionalImages[index] }} />
-                                                        <TouchableOpacity onPress={() => this.HandelImageCross(this.state.AdditionalImages[index], "additional", index)} style={{ alignItems: 'center', justifyContent: 'center', height: Deviceheight / 50, width: Devicewidth / 25, marginTop: 10, backgroundColor: "#fff", position: "absolute", borderRadius: 360, top: -8, right: 3 }}>
-                                                            <Image source={require('../../Assets/Cross.png')} style={{ width: "70%", height: "70%", resizeMode: 'contain', }}></Image>
-                                                        </TouchableOpacity>
                                                     </>
                                                     :
                                                     <Text style={styles.Plus}>+</Text>
-                                            }
-
-
-                                        </TouchableOpacity>
-                                    )}
-                                    keyExtractor={item => item.id.toString()}
-                                />
-                            </View>
-                        </View>
-
-                        {
-                            this.state.selectedProdCategory === 'Jobs'
-                                ?
-                                <View style={styles.inputContainer}>
-                                    <TextInput
-                                        placeholder={'Job name'}
-                                        placeholderTextColor={'#000'}
-                                        style={styles.Input}
-                                        onChangeText={(val) => this.setState({
-                                            Jobname: val,
-                                            ProductnameLength: val.length
-                                        })}
-                                        value={this.state.Jobname}
-                                    >
-                                    </TextInput>
-                                    <View style={{
-                                        height: Deviceheight / 28, alignItems: "center", justifyContent: "center", alignSelf: "flex-end", backgroundColor: "#b2b2b2", padding: 2, position: 'absolute', right: 10, bottom: 15, borderRadius: 2
-                                    }}>
-                                        <Text style={{ fontFamily:"Roboto-Bold" , color: "#fff", fontSize: 18, textAlign: "center", }}>{this.state.ProductnameLength}/80</Text>
-                                    </View>
-                                </View>
-                                :
-                                <View style={styles.inputContainer}>
-                                    <TextInput
-                                        placeholder={this.state.selectedProdCategory != 'Services'?'Product name':'Service name'}
-                                        placeholderTextColor={'#000'}
-                                        style={styles.Input}
-                                        onChangeText={(val) => this.setState({
-                                            Productname: val,
-                                            ProductnameLength: val.length
-                                        })}
-                                        value={this.state.Productname}
-                                    >
-                                    </TextInput>
-                                    <View style={{
-                                        height: Deviceheight / 28, alignItems: "center", justifyContent: "center", alignSelf: "flex-end", backgroundColor: "#b2b2b2", padding: 2, position: 'absolute', right: 10, bottom: 15, borderRadius: 2
-                                    }}>
-                                        <Text style={{ fontFamily:"Roboto-Bold" , color: "#fff", fontSize: 18, textAlign: "center", }}>{this.state.ProductnameLength}/80</Text>
-                                    </View>
-                                </View>
-
-                        }
-
-                        <TouchableOpacity onPress={() => this.OpenCatagoryModal()} style={styles.inputContainer}>
-                            <View style={styles.CatagoryContainer}>
-                                <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 14, color: '#000', marginTop: 5, marginBottom: 5, width: Devicewidth / 1.2, }}>Select Category</Text>
-                                <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 16, color: "#000", width: Devicewidth / 1.2, }}>{this.state.selectedProdCategory}</Text>
-                            </View>
-                        </TouchableOpacity>
-
-                        {
-                            this.state.selectedProdCategory === 'Car'
-                                ?
-                                <>
-                                    <TouchableOpacity onPress={() => this.OpenCarMakeModal()} style={styles.DescContainer}>
-                                        <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 16, color: '#000', marginTop: 5, marginBottom: 5 }}>{this.state.CarMake === '' ? 'Make' : this.state.CarMake}</Text>
-                                        <Icon name="angle-right" size={30} color="#7f818e" />
+                                        }
+                                        <View style={{ backgroundColor: "grey", alignSelf: "center", alignItems: "center", justifyContent: "center", position: "absolute", padding: 3, borderRadius: 5, bottom: 3 }}>
+                                            <Text style={{ fontFamily: "Roboto-Bold", color: "#fff", fontSize: 10, textAlign: 'center' }}>Cover Image</Text>
+                                        </View>
                                     </TouchableOpacity>
 
-                                    <TouchableOpacity
-                                        onPress={() => this.OpenCarModelModal()}
-                                        style={styles.DescContainer}>
-                                        <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 16, color: '#000', marginTop: 5, marginBottom: 5 }}>{this.state.CarModel === '' ? 'Model' : this.state.CarModel}</Text>
-                                        <Icon name="angle-right" size={30} color="#7f818e" />
-                                    </TouchableOpacity>
-
-                                    <TouchableOpacity
-                                        onPress={() => this.OpenCarTrimModal()}
-                                        style={styles.DescContainer}>
-                                        <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 16, color: '#000', marginTop: 5, marginBottom: 5 }}>{this.state.CarTrim === '' ? 'Trim' : this.state.CarTrim}</Text>
-                                        <Icon name="angle-right" size={30} color="#7f818e" />
-                                    </TouchableOpacity>
-
-                                    <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 16, color: '#000', marginTop: 20, marginBottom: 5, paddingLeft: 15 }}>Seller</Text>
-                                    <View style={styles.SellerContainer}>
-                                        <TouchableOpacity style={[styles.SingleSeller, this.state.sellerType === 'Individual' ? styles.active : '']} onPress={() => this.setState({ sellerType: 'Individual' })}>
-                                            <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 13, color: this.state.sellerType === "Individual" ? '#fff' : '#000', textAlign: 'center', marginTop: 6 }}>Individual</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity style={[styles.SingleSeller, this.state.sellerType === 'Dealer' ? styles.active : '']} onPress={() => this.setState({ sellerType: 'Dealer' })}>
-                                            <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 13, color: '#000', textAlign: "center", marginTop: 6 }}>Dealer</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                    <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 16, color: '#000', marginTop: 20, marginBottom: 5, paddingLeft: 15 }}>Year</Text>
-                                    {this.state.slider1Value == 0 ?
-                                        <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 16, color: '#000', fontWeight: 'bold', marginTop: 5, marginBottom: 5, paddingLeft: 20 }}>Any Year</Text>
-                                        :
-                                        <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 16, color: '#000', fontWeight: 'bold', marginTop: 5, marginBottom: 5, paddingLeft: 20 }}>{this.state.slider1value}</Text>
-                                    }
-
-                                    {/* {/ implement slider here /} */}
-                                    <View style={styles.SingleSliderMainContainer}>
-                                        <MultiSlider
-                                            values={[this.state.slider1value]}
-                                            sliderLength={Devicewidth / 1.18}
-                                            onValuesChangeStart={this.sliderOneValuesChangeStart}
-                                            onValuesChange={this.sliderOneValuesChange}
-                                            onValuesChangeFinish={this.sliderOneValuesChangeFinish}
-                                            customMarker={CustomMarker}
-                                            min={1990}
-                                            max={2022}
-                                            step={1}
-                                            selectedStyle={{ backgroundColor: "#232427" }}
-                                            snapped
-                                        />
-                                    </View>
-
-                                    <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 16, color: '#000', marginTop: 20, marginBottom: 5, paddingLeft: 15 }}>Mileage</Text>
-                                    {this.state.slider2value == 0 ?
-                                    <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 16, color: '#000', fontWeight: 'bold', marginTop: 5, marginBottom: 5, paddingLeft: 20 }}>{this.state.country == 'United States' ? ' miles' : ' km'}</Text>
                                     :
-                                    <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 16, color: '#000', fontWeight: 'bold', marginTop: 5, marginBottom: 5, paddingLeft: 20 }}>{this.state.slider2value} </Text>
-                                    }
-                                    {/* {/ implement slider here /} */}
-                                    <View style={styles.SingleSliderMainContainer}>
-                                        <MultiSlider
-                                            values={[this.state.slider2value]}
-                                            sliderLength={Devicewidth / 1.18}
-                                            onValuesChangeStart={this.sliderTwoValuesChangeStart}
-                                            onValuesChange={this.sliderTwoValuesChange}
-                                            onValuesChangeFinish={this.sliderTwoValuesChangeFinish}
-                                            customMarker={CustomMarker}
-                                            min={1}
-                                            max={200000}
-                                            step={1}
-                                            selectedStyle={{ backgroundColor: "#232427" }}
-                                            snapped
-                                        />
+                                    null}
+                                {/* For additional Image */}
+                                <View style={styles.FlatListContainer}>
+                                    <FlatList
+                                        data={Data}
+                                        scrollEnabled={true}
+                                        horizontal={true}
+                                        showsHorizontalScrollIndicator={false}
+                                        renderItem={({ item, index }) => (
+                                            <TouchableOpacity style={styles.AdditionalImageMainContainer} onPress={() => this.selectAdditionalImage(index)}>
+                                                {this.state.AdditionalImageSpinnerVisible == true && this.state.ImageLoadingState.indexOf(index) !== -1 ?
+                                                    <ActivityIndicator animating={this.state.AdditionalImageSpinnerVisible} color={"#383ebd"} size="large" />
+                                                    :
+                                                    this.state.AdditionalImages[index]
+                                                        ?
+                                                        <>
+                                                            <Image style={{ height: '100%', width: '100%', resizeMode: 'cover' }} source={{ uri: this.state.AdditionalImages[index] }} />
+                                                            <TouchableOpacity onPress={() => this.HandelImageCross(this.state.AdditionalImages[index], "additional", index)} style={{ alignItems: 'center', justifyContent: 'center', height: Deviceheight / 50, width: Devicewidth / 25, marginTop: 10, backgroundColor: "#fff", position: "absolute", borderRadius: 360, top: -8, right: 3 }}>
+                                                                <Image source={require('../../Assets/Cross.png')} style={{ width: "70%", height: "70%", resizeMode: 'contain', }}></Image>
+                                                            </TouchableOpacity>
+                                                        </>
+                                                        :
+                                                        <Text style={styles.Plus}>+</Text>
+                                                }
+
+
+                                            </TouchableOpacity>
+                                        )}
+                                        keyExtractor={item => item.id.toString()}
+                                    />
+                                </View>
+                            </View>
+
+                            {
+                                this.state.selectedProdCategory === 'Jobs'
+                                    ?
+                                    <View style={styles.inputContainer}>
+                                        <TextInput
+                                            returnKeyType="done"
+                                            placeholder={'Job name'}
+                                            placeholderTextColor={'#000'}
+                                            style={styles.Input}
+                                            onChangeText={(val) => this.setState({
+                                                Jobname: val,
+                                                ProductnameLength: val.length
+                                            })}
+                                            value={this.state.Jobname}
+                                        >
+                                        </TextInput>
+                                        <View style={{
+                                            height: Deviceheight / 28, alignItems: "center", justifyContent: "center", alignSelf: "flex-end", backgroundColor: "#b2b2b2", padding: 2, position: 'absolute', right: 10, bottom: 15, borderRadius: 2
+                                        }}>
+                                            <Text style={{ fontFamily: "Roboto-Bold", color: "#fff", fontSize: 18, textAlign: "center", }}>{this.state.ProductnameLength}/80</Text>
+                                        </View>
+                                    </View>
+                                    :
+                                    <View style={styles.inputContainer}>
+                                        <TextInput
+                                            returnKeyType="done"
+                                            placeholder={this.state.selectedProdCategory != 'Services' ? 'Productd name' : 'Service name'}
+                                            placeholderTextColor={'#000'}
+                                            style={styles.Input}
+                                            onChangeText={(val) => this.setState({
+                                                Productname: val,
+                                                ProductnameLength: val.length
+                                            })}
+                                            value={this.state.Productname}
+                                        >
+                                        </TextInput>
+                                        <View style={{
+                                            height: Deviceheight / 28, alignItems: "center", justifyContent: "center", alignSelf: "flex-end", backgroundColor: "#b2b2b2", padding: 2, position: 'absolute', right: 10, bottom: 15, borderRadius: 2
+                                        }}>
+                                            <Text style={{ fontFamily: "Roboto-Bold", color: "#fff", fontSize: 18, textAlign: "center", }}>{this.state.ProductnameLength}/80</Text>
+                                        </View>
                                     </View>
 
-                                    <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 16, color: '#000', marginTop: 20, marginBottom: 5, paddingLeft: 15 }}>Transmission</Text>
-                                    <View style={styles.TransmissionContainer}>
-                                        <TouchableOpacity style={[styles.SingleTransmission, this.state.TransMission === 'Manual' ? styles.active : '']} onPress={() => this.setState({ TransMission: 'Manual' })}>
-                                            <TouchableOpacity style={styles.transmission} >
-                                                <Image source={require("../../Assets/Manual.png")} style={{ height: "100%", width: "100%" }}></Image>
-                                            </TouchableOpacity>
-                                            <Text style={{ fontSize: 13, color: this.state.TransMission === 'Manual' ? '#fff' : '#000', textAlign: 'center', }}>Manual</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity style={[styles.SingleTransmission, this.state.TransMission === 'Automatic' ? styles.active : '']} onPress={() => this.setState({ TransMission: 'Automatic' })}>
-                                            <TouchableOpacity style={styles.transmission}  >
-                                                <Image source={require("../../Assets/Automatic.png")} style={{ height: "95%", width: "70%" }}></Image>
-                                            </TouchableOpacity>
-                                            <Text style={{ fontSize: 13, color: this.state.TransMission === 'Automatic' ? '#fff' : '#000', textAlign: "center", }}>Automatic</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                </>
-                                :
-                                this.state.selectedProdCategory === 'Housing'
+                            }
+
+                            <TouchableOpacity onPress={() => this.OpenCatagoryModal()} style={styles.inputContainer}>
+                                <View style={styles.CatagoryContainer}>
+                                    <Text style={{ fontFamily: "Roboto-Bold", fontSize: 14, color: '#000', marginTop: 5, marginBottom: 5, width: Devicewidth / 1.2, }}>Select Category</Text>
+                                    <Text style={{ fontFamily: "Roboto-Bold", fontSize: 16, color: "#000", width: Devicewidth / 1.2, }}>{this.state.selectedProdCategory}</Text>
+                                </View>
+                            </TouchableOpacity>
+
+                            {
+                                this.state.selectedProdCategory === 'Car'
                                     ?
                                     <>
-                                        <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 16, color: '#000', marginTop: 20, marginBottom: 5, paddingLeft: 15 }}>Type Of Listing</Text>
+                                        <TouchableOpacity onPress={() => this.OpenCarMakeModal()} style={styles.DescContainer}>
+                                            <Text style={{ fontFamily: "Roboto-Bold", fontSize: 16, color: '#000', marginTop: 5, marginBottom: 5 }}>{this.state.CarMake === '' ? 'Make' : this.state.CarMake}</Text>
+                                            <Icon name="angle-right" size={30} color="#7f818e" />
+                                        </TouchableOpacity>
+
+                                        <TouchableOpacity
+                                            onPress={() => this.OpenCarModelModal()}
+                                            style={styles.DescContainer}>
+                                            <Text style={{ fontFamily: "Roboto-Bold", fontSize: 16, color: '#000', marginTop: 5, marginBottom: 5 }}>{this.state.CarModel === '' ? 'Model' : this.state.CarModel}</Text>
+                                            <Icon name="angle-right" size={30} color="#7f818e" />
+                                        </TouchableOpacity>
+
+                                        <TouchableOpacity
+                                            onPress={() => this.OpenCarTrimModal()}
+                                            style={styles.DescContainer}>
+                                            <Text style={{ fontFamily: "Roboto-Bold", fontSize: 16, color: '#000', marginTop: 5, marginBottom: 5 }}>{this.state.CarTrim === '' ? 'Trim' : this.state.CarTrim}</Text>
+                                            <Icon name="angle-right" size={30} color="#7f818e" />
+                                        </TouchableOpacity>
+
+                                        <Text style={{ fontFamily: "Roboto-Bold", fontSize: 16, color: '#000', marginTop: 20, marginBottom: 5, paddingLeft: 15 }}>Seller</Text>
+                                        <View style={styles.SellerContainer}>
+                                            <TouchableOpacity style={[styles.SingleSeller, this.state.sellerType === 'Individual' ? styles.active : '']} onPress={() => this.setState({ sellerType: 'Individual' })}>
+                                                <Text style={{ fontFamily: "Roboto-Bold", fontSize: 13, color: this.state.sellerType === "Individual" ? '#fff' : '#000', textAlign: 'center', marginTop: 6 }}>Individual</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={[styles.SingleSeller, this.state.sellerType === 'Dealer' ? styles.active : '']} onPress={() => this.setState({ sellerType: 'Dealer' })}>
+                                                <Text style={{ fontFamily: "Roboto-Bold", fontSize: 13, color: '#000', textAlign: "center", marginTop: 6 }}>Dealer</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                        <Text style={{ fontFamily: "Roboto-Bold", fontSize: 16, color: '#000', marginTop: 20, marginBottom: 5, paddingLeft: 15 }}>Year</Text>
+                                        {this.state.slider1Value == 0 ?
+                                            <Text style={{ fontFamily: "Roboto-Bold", fontSize: 16, color: '#000', fontWeight: 'bold', marginTop: 5, marginBottom: 5, paddingLeft: 20 }}>Any Year</Text>
+                                            :
+                                            <Text style={{ fontFamily: "Roboto-Bold", fontSize: 16, color: '#000', fontWeight: 'bold', marginTop: 5, marginBottom: 5, paddingLeft: 20 }}>{this.state.slider1value}</Text>
+                                        }
+
+                                        {/* {/ implement slider here /} */}
+                                        <View style={styles.SingleSliderMainContainer}>
+                                            <MultiSlider
+                                                values={[this.state.slider1value]}
+                                                sliderLength={Devicewidth / 1.18}
+                                                onValuesChangeStart={this.sliderOneValuesChangeStart}
+                                                onValuesChange={this.sliderOneValuesChange}
+                                                onValuesChangeFinish={this.sliderOneValuesChangeFinish}
+                                                customMarker={CustomMarker}
+                                                min={1990}
+                                                max={2022}
+                                                step={1}
+                                                selectedStyle={{ backgroundColor: "#232427" }}
+                                                snapped
+                                            />
+                                        </View>
+
+                                        <Text style={{ fontFamily: "Roboto-Bold", fontSize: 16, color: '#000', marginTop: 20, marginBottom: 5, paddingLeft: 15 }}>Mileage</Text>
+                                        {this.state.slider2value == 0 ?
+                                            <Text style={{ fontFamily: "Roboto-Bold", fontSize: 16, color: '#000', fontWeight: 'bold', marginTop: 5, marginBottom: 5, paddingLeft: 20 }}>{this.state.country == 'United States' ? ' miles' : ' km'}</Text>
+                                            :
+                                            <Text style={{ fontFamily: "Roboto-Bold", fontSize: 16, color: '#000', fontWeight: 'bold', marginTop: 5, marginBottom: 5, paddingLeft: 20 }}>{this.state.slider2value} </Text>
+                                        }
+                                        {/* {/ implement slider here /} */}
+                                        <View style={styles.SingleSliderMainContainer}>
+                                            <MultiSlider
+                                                values={[this.state.slider2value]}
+                                                sliderLength={Devicewidth / 1.18}
+                                                onValuesChangeStart={this.sliderTwoValuesChangeStart}
+                                                onValuesChange={this.sliderTwoValuesChange}
+                                                onValuesChangeFinish={this.sliderTwoValuesChangeFinish}
+                                                customMarker={CustomMarker}
+                                                min={1}
+                                                max={200000}
+                                                step={1}
+                                                selectedStyle={{ backgroundColor: "#232427" }}
+                                                snapped
+                                            />
+                                        </View>
+
+                                        <Text style={{ fontFamily: "Roboto-Bold", fontSize: 16, color: '#000', marginTop: 20, marginBottom: 5, paddingLeft: 15 }}>Transmission</Text>
                                         <View style={styles.TransmissionContainer}>
-                                            <TouchableOpacity style={[styles.SingleTransmission, this.state.TypeOfhousingListing === 'rent' ? styles.active : '']} onPress={() => this.setState({ TypeOfhousingListing: 'rent' })}>
-                                                <TouchableOpacity style={{
-                                                    height: Deviceheight / 34,
-                                                    width: Devicewidth / 17, alignItems: "center", justifyContent: "center", alignSelf: "center", marginBottom: 5
-                                                }} onPress={() => this.setState({ TypeOfhousingListing: 'rent' })}>
-                                                    <Image source={require("../../Assets/Manual.png")} style={{ height: "80%", width: "80%" }}></Image>
+                                            <TouchableOpacity style={[styles.SingleTransmission, this.state.TransMission === 'Manual' ? styles.active : '']} onPress={() => this.setState({ TransMission: 'Manual' })}>
+                                                <TouchableOpacity style={styles.transmission} >
+                                                    <Image source={require("../../Assets/Manual.png")} style={{ height: "100%", width: "100%" }}></Image>
                                                 </TouchableOpacity>
-                                                <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 13, color: this.state.TypeOfhousingListing === 'rent' ? '#fff' : '#000', textAlign: 'center', }}>For Rent</Text>
+                                                <Text style={{ fontSize: 13, color: this.state.TransMission === 'Manual' ? '#fff' : '#000', textAlign: 'center', }}>Manual</Text>
                                             </TouchableOpacity>
-                                            <TouchableOpacity style={[styles.SingleTransmission, this.state.TypeOfhousingListing === 'sell' ? styles.active : '']} onPress={() => this.setState({ TypeOfhousingListing: 'sell' })}>
-                                                <TouchableOpacity style={{
-                                                    height: Deviceheight / 36,
-                                                    width: Devicewidth / 18, alignItems: "center", justifyContent: "center", alignSelf: "center", marginBottom: 5
-                                                }} onPress={() => this.setState({ TypeOfhousingListing: 'sell' })}>
-                                                    <Image source={require("../../Assets/Automatic.png")} style={{ height: "90%", width: "60%" }}></Image>
+                                            <TouchableOpacity style={[styles.SingleTransmission, this.state.TransMission === 'Automatic' ? styles.active : '']} onPress={() => this.setState({ TransMission: 'Automatic' })}>
+                                                <TouchableOpacity style={styles.transmission}  >
+                                                    <Image source={require("../../Assets/Automatic.png")} style={{ height: "95%", width: "70%" }}></Image>
                                                 </TouchableOpacity>
-                                                <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 13, color: this.state.TypeOfhousingListing === 'sell' ? '#fff' : '#000', textAlign: "center", }}>For Sell</Text>
-                                            </TouchableOpacity>
-                                        </View>
-
-                                        <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 16, color: '#000', marginTop: 20, marginBottom: 5, paddingLeft: 15 }}>Type Of Property</Text>
-                                        <View style={styles.TransmissionContainerProperty}>
-                                            <TouchableOpacity style={[styles.SingleTransmission, this.state.TypeofhousingProperty === 'Appartment' ? styles.active : '']} onPress={() => this.setState({ TypeofhousingProperty: 'Appartment' })}>
-                                                <View style={{
-                                                    height: Deviceheight / 34,
-                                                    width: Devicewidth / 17, alignItems: "center", justifyContent: "center", alignSelf: "center", marginBottom: 5
-                                                }}>
-                                                    <Image source={require("../../Assets/Manual.png")} style={{ height: "80%", width: "80%" }}></Image>
-                                                </View>
-                                                <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 13, color: this.state.TypeofhousingProperty === 'Appartment' ? '#fff' : '#000', textAlign: 'center', }}>Appartment</Text>
-                                            </TouchableOpacity>
-
-                                            <TouchableOpacity style={[styles.SingleTransmission, this.state.TypeofhousingProperty === 'Room' ? styles.active : '']} onPress={() => this.setState({ TypeofhousingProperty: 'Room' })}>
-                                                <TouchableOpacity style={{
-                                                    height: Deviceheight / 36,
-                                                    width: Devicewidth / 18, alignItems: "center", justifyContent: "center", alignSelf: "center", marginBottom: 5
-                                                }} onPress={() => this.setState({ TypeofhousingProperty: 'Room' })}>
-                                                    <Image source={require("../../Assets/Automatic.png")} style={{ height: "90%", width: "60%" }}></Image>
-                                                </TouchableOpacity>
-                                                <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 13, color: this.state.TypeofhousingProperty === 'Room' ? '#fff' : '#000', textAlign: "center", }}>Room</Text>
-                                            </TouchableOpacity>
-
-
-                                            <TouchableOpacity style={[styles.SingleTransmission, this.state.TypeofhousingProperty === 'House' ? styles.active : '']} onPress={() => this.setState({ TypeofhousingProperty: 'House' })}>
-                                                <TouchableOpacity style={{
-                                                    height: Deviceheight / 36,
-                                                    width: Devicewidth / 18, alignItems: "center", justifyContent: "center", alignSelf: "center", marginBottom: 5
-                                                }} onPress={() => this.setState({ TypeofhousingProperty: 'House' })}>
-                                                    <Image source={require("../../Assets/Automatic.png")} style={{ height: "90%", width: "60%" }}></Image>
-                                                </TouchableOpacity>
-                                                <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 13, color: this.state.TypeofhousingProperty === 'House' ? '#fff' : '#000', textAlign: "center", }}>House</Text>
-                                            </TouchableOpacity>
-
-                                        </View>
-                                        <View style={styles.TransmissionContainer}>
-
-
-                                            <TouchableOpacity style={[styles.SingleTransmission, this.state.TypeofhousingProperty === 'Commercial' ? styles.active : '']} onPress={() => this.setState({ TypeofhousingProperty: 'Commercial' })}>
-                                                <TouchableOpacity style={{
-                                                    height: Deviceheight / 36,
-                                                    width: Devicewidth / 18, alignItems: "center", justifyContent: "center", alignSelf: "center", marginBottom: 5
-                                                }} onPress={() => this.setState({ TypeofhousingProperty: 'Commercial' })}>
-                                                    <Image source={require("../../Assets/Automatic.png")} style={{ height: "90%", width: "60%" }}></Image>
-                                                </TouchableOpacity>
-                                                <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 13, color: this.state.TypeofhousingProperty === 'Commercial' ? '#fff' : '#000', textAlign: "center", }}>Commercial</Text>
-                                            </TouchableOpacity>
-
-
-                                            <TouchableOpacity style={[styles.SingleTransmission, this.state.TypeofhousingProperty === 'Other' ? styles.active : '']} onPress={() => this.setState({ TypeofhousingProperty: 'Other' })}>
-                                                <TouchableOpacity style={{
-                                                    height: Deviceheight / 36,
-                                                    width: Devicewidth / 18, alignItems: "center", justifyContent: "center", alignSelf: "center", marginBottom: 5
-                                                }} onPress={() => this.setState({ TypeofhousingProperty: 'Other' })}>
-                                                    <Image source={require("../../Assets/Automatic.png")} style={{ height: "90%", width: "60%" }}></Image>
-                                                </TouchableOpacity>
-                                                <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 13, color: this.state.TypeofhousingProperty === 'Other' ? '#fff' : '#000', textAlign: "center", }}>Other</Text>
-                                            </TouchableOpacity>
-                                        </View>
-
-                                        <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 16, color: '#000', marginTop: 20, marginBottom: 5, paddingLeft: 15 }}>No Of Bedrooms</Text>
-                                        <View style={styles.TransmissionsmallContainerBedroom}>
-                                            <TouchableOpacity style={[styles.SinglesmallTransmission, this.state.noofBedrooms === 1 ? styles.active : '']} onPress={() => this.setState({ noofBedrooms: 1 })}>
-                                                <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 13, color: this.state.noofBedrooms === 1 ? '#fff' : '#000', textAlign: "center", }}>1</Text>
-                                            </TouchableOpacity>
-
-
-                                            <TouchableOpacity style={[styles.SinglesmallTransmission, this.state.noofBedrooms === 2 ? styles.active : '']} onPress={() => this.setState({ noofBedrooms: 2 })}>
-                                                <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 13, color: this.state.noofBedrooms === 2 ? '#fff' : '#000', textAlign: "center", }}>2</Text>
-                                            </TouchableOpacity>
-
-
-                                            <TouchableOpacity style={[styles.SinglesmallTransmission, this.state.noofBedrooms === 3 ? styles.active : '']} onPress={() => this.setState({ noofBedrooms: 3 })}>
-                                                <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 13, color: this.state.noofBedrooms === 3 ? '#fff' : '#000', textAlign: "center", }}>3</Text>
-                                            </TouchableOpacity>
-
-
-                                            <TouchableOpacity style={[styles.SinglesmallTransmission, this.state.noofBedrooms === 4 ? styles.active : '']} onPress={() => this.setState({ noofBedrooms: 4 })}>
-                                                <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 13, color: this.state.noofBedrooms === 4 ? '#fff' : '#000', textAlign: "center", }}>4</Text>
-                                            </TouchableOpacity>
-
-                                        </View>
-
-                                        <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 16, color: '#000', marginTop: 20, marginBottom: 5, paddingLeft: 15 }}>No Of Bathrooms</Text>
-                                        <View style={styles.TransmissionsmallContainerBathroom}>
-
-                                            <TouchableOpacity style={[styles.SinglesmallTransmission, this.state.noofBathRooms === 1 ? styles.active : '']} onPress={() => this.setState({ noofBathRooms: 1 })}>
-                                                <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 13, color: this.state.noofBathRooms === 1 ? '#fff' : '#000', textAlign: "center", }}>1</Text>
-                                            </TouchableOpacity>
-
-                                            <TouchableOpacity style={[styles.SinglesmallTransmission, this.state.noofBathRooms === 1.5 ? styles.active : '']} onPress={() => this.setState({ noofBathRooms: 1.5 })}>
-                                                <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 13, color: this.state.noofBathRooms === 1.5 ? '#fff' : '#000', textAlign: "center", }}>1.5</Text>
-                                            </TouchableOpacity>
-
-                                            <TouchableOpacity style={[styles.SinglesmallTransmission, this.state.noofBathRooms === 2 ? styles.active : '']} onPress={() => this.setState({ noofBathRooms: 2 })}>
-                                                <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 13, color: this.state.noofBathRooms === 2 ? '#fff' : '#000', textAlign: "center", }}>2</Text>
-                                            </TouchableOpacity>
-
-                                            <TouchableOpacity style={[styles.SinglesmallTransmission, this.state.noofBathRooms === 2.5 ? styles.active : '']} onPress={() => this.setState({ noofBathRooms: 2.5 })}>
-                                                <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 13, color: this.state.noofBathRooms === 2.5 ? '#fff' : '#000', textAlign: "center", }}>2.5</Text>
-                                            </TouchableOpacity>
-
-                                            <TouchableOpacity style={[styles.SinglesmallTransmission, this.state.noofBathRooms === 3 ? styles.active : '']} onPress={() => this.setState({ noofBathRooms: 3 })}>
-                                                <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 13, color: this.state.noofBathRooms === 3 ? '#fff' : '#000', textAlign: "center", }}>3</Text>
-                                            </TouchableOpacity>
-
-                                        </View>
-                                        <View style={styles.TransmissionsmallContainer}>
-                                            <TouchableOpacity style={[styles.SinglesmallTransmission, this.state.noofBathRooms === 3.5 ? styles.active : '']} onPress={() => this.setState({ noofBathRooms: 3.5 })}>
-                                                <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 13, color: this.state.sellerType === "Individual" ? '#fff' : '#000', textAlign: "center", }}>3.5</Text>
-                                            </TouchableOpacity>
-                                            <TouchableOpacity style={[styles.SinglesmallTransmission, this.state.noofBathRooms === 4 ? styles.active : '']} onPress={() => this.setState({ noofBathRooms: 4 })}>
-                                                <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 13, color: this.state.noofBathRooms === 4 ? '#fff' : '#000', textAlign: "center", }}>4+</Text>
+                                                <Text style={{ fontSize: 13, color: this.state.TransMission === 'Automatic' ? '#fff' : '#000', textAlign: "center", }}>Automatic</Text>
                                             </TouchableOpacity>
                                         </View>
                                     </>
                                     :
-                                    null
-                        }
-                        {
-                            this.state.selectedProdCategory === 'Jobs' &&
+                                    this.state.selectedProdCategory === 'Housing'
+                                        ?
+                                        <>
+                                            <Text style={{ fontFamily: "Roboto-Bold", fontSize: 16, color: '#000', marginTop: 20, marginBottom: 5, paddingLeft: 15 }}>Type Of Listing</Text>
+                                            <View style={styles.TransmissionContainer}>
+                                                <TouchableOpacity style={[styles.SingleTransmission, this.state.TypeOfhousingListing === 'rent' ? styles.active : '']} onPress={() => this.setState({ TypeOfhousingListing: 'rent' })}>
+                                                    <TouchableOpacity style={{
+                                                        height: Deviceheight / 34,
+                                                        width: Devicewidth / 17, alignItems: "center", justifyContent: "center", alignSelf: "center", marginBottom: 5
+                                                    }} onPress={() => this.setState({ TypeOfhousingListing: 'rent' })}>
+                                                        <Image source={require("../../Assets/Manual.png")} style={{ height: "80%", width: "80%" }}></Image>
+                                                    </TouchableOpacity>
+                                                    <Text style={{ fontFamily: "Roboto-Bold", fontSize: 13, color: this.state.TypeOfhousingListing === 'rent' ? '#fff' : '#000', textAlign: 'center', }}>For Rent</Text>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity style={[styles.SingleTransmission, this.state.TypeOfhousingListing === 'sell' ? styles.active : '']} onPress={() => this.setState({ TypeOfhousingListing: 'sell' })}>
+                                                    <TouchableOpacity style={{
+                                                        height: Deviceheight / 36,
+                                                        width: Devicewidth / 18, alignItems: "center", justifyContent: "center", alignSelf: "center", marginBottom: 5
+                                                    }} onPress={() => this.setState({ TypeOfhousingListing: 'sell' })}>
+                                                        <Image source={require("../../Assets/Automatic.png")} style={{ height: "90%", width: "60%" }}></Image>
+                                                    </TouchableOpacity>
+                                                    <Text style={{ fontFamily: "Roboto-Bold", fontSize: 13, color: this.state.TypeOfhousingListing === 'sell' ? '#fff' : '#000', textAlign: "center", }}>For Sell</Text>
+                                                </TouchableOpacity>
+                                            </View>
+
+                                            <Text style={{ fontFamily: "Roboto-Bold", fontSize: 16, color: '#000', marginTop: 20, marginBottom: 5, paddingLeft: 15 }}>Type Of Property</Text>
+                                            <View style={styles.TransmissionContainerProperty}>
+                                                <TouchableOpacity style={[styles.SingleTransmission, this.state.TypeofhousingProperty === 'Appartment' ? styles.active : '']} onPress={() => this.setState({ TypeofhousingProperty: 'Appartment' })}>
+                                                    <View style={{
+                                                        height: Deviceheight / 34,
+                                                        width: Devicewidth / 17, alignItems: "center", justifyContent: "center", alignSelf: "center", marginBottom: 5
+                                                    }}>
+                                                        <Image source={require("../../Assets/Manual.png")} style={{ height: "80%", width: "80%" }}></Image>
+                                                    </View>
+                                                    <Text style={{ fontFamily: "Roboto-Bold", fontSize: 13, color: this.state.TypeofhousingProperty === 'Appartment' ? '#fff' : '#000', textAlign: 'center', }}>Appartment</Text>
+                                                </TouchableOpacity>
+
+                                                <TouchableOpacity style={[styles.SingleTransmission, this.state.TypeofhousingProperty === 'Room' ? styles.active : '']} onPress={() => this.setState({ TypeofhousingProperty: 'Room' })}>
+                                                    <TouchableOpacity style={{
+                                                        height: Deviceheight / 36,
+                                                        width: Devicewidth / 18, alignItems: "center", justifyContent: "center", alignSelf: "center", marginBottom: 5
+                                                    }} onPress={() => this.setState({ TypeofhousingProperty: 'Room' })}>
+                                                        <Image source={require("../../Assets/Automatic.png")} style={{ height: "90%", width: "60%" }}></Image>
+                                                    </TouchableOpacity>
+                                                    <Text style={{ fontFamily: "Roboto-Bold", fontSize: 13, color: this.state.TypeofhousingProperty === 'Room' ? '#fff' : '#000', textAlign: "center", }}>Room</Text>
+                                                </TouchableOpacity>
+
+
+                                                <TouchableOpacity style={[styles.SingleTransmission, this.state.TypeofhousingProperty === 'House' ? styles.active : '']} onPress={() => this.setState({ TypeofhousingProperty: 'House' })}>
+                                                    <TouchableOpacity style={{
+                                                        height: Deviceheight / 36,
+                                                        width: Devicewidth / 18, alignItems: "center", justifyContent: "center", alignSelf: "center", marginBottom: 5
+                                                    }} onPress={() => this.setState({ TypeofhousingProperty: 'House' })}>
+                                                        <Image source={require("../../Assets/Automatic.png")} style={{ height: "90%", width: "60%" }}></Image>
+                                                    </TouchableOpacity>
+                                                    <Text style={{ fontFamily: "Roboto-Bold", fontSize: 13, color: this.state.TypeofhousingProperty === 'House' ? '#fff' : '#000', textAlign: "center", }}>House</Text>
+                                                </TouchableOpacity>
+
+                                            </View>
+                                            <View style={styles.TransmissionContainer}>
+
+
+                                                <TouchableOpacity style={[styles.SingleTransmission, this.state.TypeofhousingProperty === 'Commercial' ? styles.active : '']} onPress={() => this.setState({ TypeofhousingProperty: 'Commercial' })}>
+                                                    <TouchableOpacity style={{
+                                                        height: Deviceheight / 36,
+                                                        width: Devicewidth / 18, alignItems: "center", justifyContent: "center", alignSelf: "center", marginBottom: 5
+                                                    }} onPress={() => this.setState({ TypeofhousingProperty: 'Commercial' })}>
+                                                        <Image source={require("../../Assets/Automatic.png")} style={{ height: "90%", width: "60%" }}></Image>
+                                                    </TouchableOpacity>
+                                                    <Text style={{ fontFamily: "Roboto-Bold", fontSize: 13, color: this.state.TypeofhousingProperty === 'Commercial' ? '#fff' : '#000', textAlign: "center", }}>Commercial</Text>
+                                                </TouchableOpacity>
+
+
+                                                <TouchableOpacity style={[styles.SingleTransmission, this.state.TypeofhousingProperty === 'Other' ? styles.active : '']} onPress={() => this.setState({ TypeofhousingProperty: 'Other' })}>
+                                                    <TouchableOpacity style={{
+                                                        height: Deviceheight / 36,
+                                                        width: Devicewidth / 18, alignItems: "center", justifyContent: "center", alignSelf: "center", marginBottom: 5
+                                                    }} onPress={() => this.setState({ TypeofhousingProperty: 'Other' })}>
+                                                        <Image source={require("../../Assets/Automatic.png")} style={{ height: "90%", width: "60%" }}></Image>
+                                                    </TouchableOpacity>
+                                                    <Text style={{ fontFamily: "Roboto-Bold", fontSize: 13, color: this.state.TypeofhousingProperty === 'Other' ? '#fff' : '#000', textAlign: "center", }}>Other</Text>
+                                                </TouchableOpacity>
+                                            </View>
+
+                                            <Text style={{ fontFamily: "Roboto-Bold", fontSize: 16, color: '#000', marginTop: 20, marginBottom: 5, paddingLeft: 15 }}>No Of Bedrooms</Text>
+                                            <View style={styles.TransmissionsmallContainerBedroom}>
+                                                <TouchableOpacity style={[styles.SinglesmallTransmission, this.state.noofBedrooms === 1 ? styles.active : '']} onPress={() => this.setState({ noofBedrooms: 1 })}>
+                                                    <Text style={{ fontFamily: "Roboto-Bold", fontSize: 13, color: this.state.noofBedrooms === 1 ? '#fff' : '#000', textAlign: "center", }}>1</Text>
+                                                </TouchableOpacity>
+
+
+                                                <TouchableOpacity style={[styles.SinglesmallTransmission, this.state.noofBedrooms === 2 ? styles.active : '']} onPress={() => this.setState({ noofBedrooms: 2 })}>
+                                                    <Text style={{ fontFamily: "Roboto-Bold", fontSize: 13, color: this.state.noofBedrooms === 2 ? '#fff' : '#000', textAlign: "center", }}>2</Text>
+                                                </TouchableOpacity>
+
+
+                                                <TouchableOpacity style={[styles.SinglesmallTransmission, this.state.noofBedrooms === 3 ? styles.active : '']} onPress={() => this.setState({ noofBedrooms: 3 })}>
+                                                    <Text style={{ fontFamily: "Roboto-Bold", fontSize: 13, color: this.state.noofBedrooms === 3 ? '#fff' : '#000', textAlign: "center", }}>3</Text>
+                                                </TouchableOpacity>
+
+
+                                                <TouchableOpacity style={[styles.SinglesmallTransmission, this.state.noofBedrooms === 4 ? styles.active : '']} onPress={() => this.setState({ noofBedrooms: 4 })}>
+                                                    <Text style={{ fontFamily: "Roboto-Bold", fontSize: 13, color: this.state.noofBedrooms === 4 ? '#fff' : '#000', textAlign: "center", }}>4</Text>
+                                                </TouchableOpacity>
+
+                                            </View>
+
+                                            <Text style={{ fontFamily: "Roboto-Bold", fontSize: 16, color: '#000', marginTop: 20, marginBottom: 5, paddingLeft: 15 }}>No Of Bathrooms</Text>
+                                            <View style={styles.TransmissionsmallContainerBathroom}>
+
+                                                <TouchableOpacity style={[styles.SinglesmallTransmission, this.state.noofBathRooms === 1 ? styles.active : '']} onPress={() => this.setState({ noofBathRooms: 1 })}>
+                                                    <Text style={{ fontFamily: "Roboto-Bold", fontSize: 13, color: this.state.noofBathRooms === 1 ? '#fff' : '#000', textAlign: "center", }}>1</Text>
+                                                </TouchableOpacity>
+
+                                                <TouchableOpacity style={[styles.SinglesmallTransmission, this.state.noofBathRooms === 1.5 ? styles.active : '']} onPress={() => this.setState({ noofBathRooms: 1.5 })}>
+                                                    <Text style={{ fontFamily: "Roboto-Bold", fontSize: 13, color: this.state.noofBathRooms === 1.5 ? '#fff' : '#000', textAlign: "center", }}>1.5</Text>
+                                                </TouchableOpacity>
+
+                                                <TouchableOpacity style={[styles.SinglesmallTransmission, this.state.noofBathRooms === 2 ? styles.active : '']} onPress={() => this.setState({ noofBathRooms: 2 })}>
+                                                    <Text style={{ fontFamily: "Roboto-Bold", fontSize: 13, color: this.state.noofBathRooms === 2 ? '#fff' : '#000', textAlign: "center", }}>2</Text>
+                                                </TouchableOpacity>
+
+                                                <TouchableOpacity style={[styles.SinglesmallTransmission, this.state.noofBathRooms === 2.5 ? styles.active : '']} onPress={() => this.setState({ noofBathRooms: 2.5 })}>
+                                                    <Text style={{ fontFamily: "Roboto-Bold", fontSize: 13, color: this.state.noofBathRooms === 2.5 ? '#fff' : '#000', textAlign: "center", }}>2.5</Text>
+                                                </TouchableOpacity>
+
+                                                <TouchableOpacity style={[styles.SinglesmallTransmission, this.state.noofBathRooms === 3 ? styles.active : '']} onPress={() => this.setState({ noofBathRooms: 3 })}>
+                                                    <Text style={{ fontFamily: "Roboto-Bold", fontSize: 13, color: this.state.noofBathRooms === 3 ? '#fff' : '#000', textAlign: "center", }}>3</Text>
+                                                </TouchableOpacity>
+
+                                            </View>
+                                            <View style={styles.TransmissionsmallContainer}>
+                                                <TouchableOpacity style={[styles.SinglesmallTransmission, this.state.noofBathRooms === 3.5 ? styles.active : '']} onPress={() => this.setState({ noofBathRooms: 3.5 })}>
+                                                    <Text style={{ fontFamily: "Roboto-Bold", fontSize: 13, color: this.state.sellerType === "Individual" ? '#fff' : '#000', textAlign: "center", }}>3.5</Text>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity style={[styles.SinglesmallTransmission, this.state.noofBathRooms === 4 ? styles.active : '']} onPress={() => this.setState({ noofBathRooms: 4 })}>
+                                                    <Text style={{ fontFamily: "Roboto-Bold", fontSize: 13, color: this.state.noofBathRooms === 4 ? '#fff' : '#000', textAlign: "center", }}>4+</Text>
+                                                </TouchableOpacity>
+                                            </View>
+                                        </>
+                                        :
+                                        null
+                            }
+                            {
+                                this.state.selectedProdCategory === 'Jobs' &&
                                 <View style={styles.inputContainer}>
                                     <TextInput
+                                        //returnKeyType="done"
                                         placeholder={'Type Of Job'}
                                         placeholderTextColor={'#000'}
                                         style={styles.Input}
@@ -1551,157 +1594,185 @@ class ListingDetails extends Component {
                                     >
                                     </TextInput>
                                 </View>
-                        }
-                        {
-                            this.state.selectedProdCategory != 'Jobs' && this.state.selectedProdCategory != 'Freebies' && this.state.selectedProdCategory != 'Services' &&
-                            <View style={styles.PriceinputContainer}>
-                                {this.state.Productprice != '' ?
-                                    <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 15, color: "#000", textAlign: "left", alignSelf: "center" }}>{this.state.currency == "INR" ? "₹ " : this.state.currency == "USD" ? "$ " : `${this.state.currency} ` }</Text>
-                                    :
-                                    null
-                                }
-                                <TextInput
-                                    placeholder={`Price ( ${this.state.currency == "INR" ? "₹ " : this.state.currency == "USD" ? "$ " : `${this.state.currency} `})`}
-                                    placeholderTextColor={'#000'}
-                                    style={this.state.Productprice == '' ? styles.PriceInput : styles.PriceInputSelect}
-                                    keyboardType={'numeric'}
-                                    onChangeText={(val) => this.setState({
-                                        Productprice: val
-                                    })}
-                                    value={this.state.Productprice.toString()}
-                                >
-                                </TextInput>
+                            }
+                            {
+                                this.state.selectedProdCategory != 'Jobs' && this.state.selectedProdCategory != 'Freebies' && this.state.selectedProdCategory != 'Services' &&
+                                <View style={styles.PriceinputContainer}>
+                                    {this.state.Productprice != '' ?
+                                        <Text style={{ fontFamily: "Roboto-Bold", fontSize: 15, color: "#000", textAlign: "left", alignSelf: "center" }}>{this.state.currency == "INR" ? "₹ " : this.state.currency == "USD" ? "$" : `${this.state.currency} `} </Text>
+                                        :
+                                        null
+                                    }
+                                    <TextInput autoFocus={true}
+                                        placeholder={`Price ( ${this.state.currency == "INR" ? "₹ " : this.state.currency == "USD" ? "$ " : `${this.state.currency} `})`}
+                                        placeholderTextColor={'#000'}
+                                        style={this.state.Productprice == '' ? styles.PriceInput : styles.PriceInputSelect}
+                                        keyboardType={'numeric'}
+                                        onChangeText={(val) => this.setState({
+                                            Productprice: val
+                                        })}
+                                        value={this.state.Productprice.toString()}
+                                        returnKeyType="done"
+                                    >
+                                    </TextInput>
 
+                                </View>
+                            }
+
+                            <View style={styles.Address}>
+                                <TouchableOpacity onPress={() => this.handelMap()} style={{ flexDirection: "row", width: Devicewidth / 1.2, height: Deviceheight / 20, alignItems: "center", alignSelf: "center", backgroundColor: "#fff", borderRadius: 10, elevation: 2 }}>
+                                    <View style={styles.SearchIcon} >
+                                        <Image source={require("../../Assets/SearchIcon.png")} style={{ height: "50%", width: "50%" }}></Image>
+                                    </View>
+                                    <Text style={styles.SearchContainer} numberOfLines={1}>{this.state.sellerAddress.length < 35 ? `${this.state.sellerAddress}` : `${this.state.sellerAddress.substring(0, 35)}...`}</Text>
+                                </TouchableOpacity>
                             </View>
-                        }
-
-                        <View style={styles.Address}>
-                            <TouchableOpacity onPress={() => this.handelMap()} style={{ flexDirection: "row", width: Devicewidth / 1.2, height: Deviceheight / 20, alignItems: "center", alignSelf: "center", backgroundColor: "#fff", borderRadius: 10, elevation: 2 }}>
-                                <View style={styles.SearchIcon} >
-                                    <Image source={require("../../Assets/SearchIcon.png")} style={{ height: "50%", width: "50%" }}></Image>
-                                </View>
-                                <Text style={styles.SearchContainer} numberOfLines={1}>{this.state.sellerAddress.length < 35 ? `${this.state.sellerAddress}`  : `${this.state.sellerAddress.substring(0, 35)}...`}</Text>
-                            </TouchableOpacity>
-                        </View>
-                        {
-                            this.state.selectedProdCategory === 'Jobs'
-                                ?
-                                <View style={styles.ProductDescContainer}>
-                                    <TextInput
-                                        maxLength={1500}
-                                        placeholder={'Job description'}
-                                        placeholderTextColor={'#000'}
-                                        style={styles.ProductDesc}
-                                        onChangeText={(val) => this.setState({
-                                            JobDescription: val,
-                                            ProductDescriptionLength: val.length
-                                        })}
-                                        value={this.state.JobDescription}
-                                    >
-                                    </TextInput>
-                                    <View style={{
-                                        height: Deviceheight / 28, alignItems: "center", justifyContent: "center", alignSelf: "flex-end", backgroundColor: "#b2b2b2", padding: 2, position: 'absolute', right: 10, bottom: 10, borderRadius: 2
-                                    }}>
-                                        <Text style={{ fontFamily:"Roboto-Bold" , color: "#fff", fontSize: 18, textAlign: "center", }}>{this.state.ProductDescriptionLength}/1500</Text>
+                            {
+                                this.state.selectedProdCategory === 'Jobs'
+                                    ?
+                                    <View style={styles.ProductDescContainer}>
+                                        <TextInput
+                                            maxLength={1500}
+                                            placeholder={'Job description'}
+                                            placeholderTextColor={'#000'}
+                                            style={styles.ProductDesc}
+                                            onChangeText={(val) => this.setState({
+                                                JobDescription: val,
+                                                ProductDescriptionLength: val.length
+                                            })}
+                                            value={this.state.JobDescription}
+                                            // returnKeyType="done"
+                                            multiline
+                                            numberOfLines={2}
+                                            returnKeyType="done"
+                                        //  keyboardType="numeric"
+                                        >
+                                        </TextInput>
+                                        <View style={{
+                                            height: Deviceheight / 28, alignItems: "center", justifyContent: "center", alignSelf: "flex-end", backgroundColor: "#b2b2b2", padding: 2, position: 'absolute', right: 10, bottom: 10, borderRadius: 2
+                                        }}>
+                                            <Text style={{ fontFamily: "Roboto-Bold", color: "#fff", fontSize: 18, textAlign: "center", }}>{this.state.ProductDescriptionLength}/1500</Text>
+                                        </View>
                                     </View>
-                                </View>
-                                :
-                                <View style={styles.ProductDescContainer}>
-                                    <TextInput
-                                        maxLength={1500}
-                                        placeholder={ this.state.selectedProdCategory != 'Services'?'Product description':'Service description'}
-                                        placeholderTextColor={'#000'}
-                                        style={styles.ProductDesc}
-                                        onChangeText={(val) => this.setState({
-                                            ProductDescription: val,
-                                            ProductDescriptionLength: val.length
-                                        })}
-                                        value={this.state.ProductDescription}
-                                    >
-                                    </TextInput>
-                                    <View style={{
-                                        height: Deviceheight / 28, alignItems: "center", justifyContent: "center", alignSelf: "flex-end", backgroundColor: "#b2b2b2", padding: 2, position: 'absolute', right: 10, bottom: 10, borderRadius: 2
-                                    }}>
-                                        <Text style={{ fontFamily:"Roboto-Bold" , color: "#fff", fontSize: 18, textAlign: "center", }}>{this.state.ProductDescriptionLength}/1500</Text>
+                                    :
+
+                                    <View style={styles.ProductDescContainer}>
+                                        <TextInput
+                                            maxLength={1500}
+                                            placeholder={this.state.selectedProdCategory != 'Services' ? 'Product description' : 'Service description'}
+                                            placeholderTextColor={'#000'}
+                                            style={styles.ProductDesc}
+                                            onChangeText={(val) => this.setState({
+                                                ProductDescription: val,
+                                                ProductDescriptionLength: val.length
+                                            })}
+                                            value={this.state.ProductDescription}
+
+                                            multiline
+                                            //  numberOfLines={2}
+                                            //retrnKeyType="default"
+                                            returnKeyType="done"
+                                        //  keyboardType="numeric"
+                                        >
+                                        </TextInput>
+                                        <View style={{
+                                            height: Deviceheight / 28, alignItems: "center", justifyContent: "center", alignSelf: "flex-end", backgroundColor: "#b2b2b2", padding: 2, position: 'absolute', right: 10, bottom: 10, borderRadius: 2
+                                        }}>
+                                            <Text style={{ fontFamily: "Roboto-Bold", color: "#fff", fontSize: 18, textAlign: "center", }}>{this.state.ProductDescriptionLength}/1500</Text>
+                                        </View>
                                     </View>
-                                </View>
-                        }
-                        {
-                            this.state.selectedProdCategory == "Jobs" &&
-                            (
-                                this.state.coverImage == '' || this.state.Jobname == '' || this.state.Jobtype == '' || this.state.sellerAddress == '' || this.state.JobDescription == '' ?
-                                <View style={styles.btnContainer} >
-                                    <Text style={styles.btnText} >{this.props.route.params.productId !== undefined ? 'Update' : 'Submit'}</Text>
-                                </View>
-                                :
-                                <TouchableOpacity style={styles.btnContainer1} onPress={this.submitProd} >
-                                    <Text style={styles.btnText} >{this.props.route.params.productId !== undefined ? 'Update' : 'Submit'}</Text>
-                                </TouchableOpacity>
-                            )
-                        }
-                        {
-                            this.state.selectedProdCategory != "Jobs" && this.state.selectedProdCategory != "Freebies" && this.state.selectedProdCategory != "Services" &&
-                            (
-                                this.state.coverImage == '' || this.state.Productname == '' || this.state.Productprice == '' || this.state.sellerAddress == '' || this.state.ProductDescription == '' ?
-                                <View style={styles.btnContainer} >
-                                    <Text style={styles.btnText} >{this.props.route.params.productId !== undefined ? 'Update' : 'Submit'}</Text>
-                                </View>
-                                :
-                                <TouchableOpacity style={styles.btnContainer1} onPress={this.submitProd} >
-                                    <Text style={styles.btnText} >{this.props.route.params.productId !== undefined ? 'Update' : 'Submit'}</Text>
-                                </TouchableOpacity>
-                            )
-                        }
-                        {
-                            this.state.selectedProdCategory == "Freebies" &&
-                            (
-                                this.state.coverImage == '' || this.state.Productname == '' || this.state.sellerAddress == '' || this.state.ProductDescription == '' ?
-                                <View style={styles.btnContainer} >
-                                    <Text style={styles.btnText} >{this.props.route.params.productId !== undefined ? 'Update' : 'Submit'}</Text>
-                                </View>
-                                :
-                                <TouchableOpacity style={styles.btnContainer1} onPress={this.submitProd} >
-                                    <Text style={styles.btnText} >{this.props.route.params.productId !== undefined ? 'Update' : 'Submit'}</Text>
-                                </TouchableOpacity>
-                            )
-                        }
 
-{
-                            this.state.selectedProdCategory == "Services" &&
-                            (
-                                this.state.Productname == '' || this.state.sellerAddress == '' || this.state.ProductDescription == '' ?
-                                <View style={styles.btnContainer} >
-                                    <Text style={styles.btnText} >{this.props.route.params.productId !== undefined ? 'Update' : 'Submit'}</Text>
-                                </View>
-                                :
-                                <TouchableOpacity style={styles.btnContainer1} onPress={this.submitProd} >
-                                    <Text style={styles.btnText} >{this.props.route.params.productId !== undefined ? 'Update' : 'Submit'}</Text>
-                                </TouchableOpacity>
-                            )
-                        }
+                            }
+                            {
+                                this.state.selectedProdCategory == "Jobs" &&
+                                (
+                                    this.state.coverImage == '' || this.state.Jobname == '' || this.state.Jobtype == '' || this.state.sellerAddress == '' || this.state.JobDescription == '' ?
+                                        <View style={styles.btnContainer} >
+                                            <Text style={styles.btnText} >{this.props.route.params.productId !== undefined ? 'Update' : 'Submit'}</Text>
+                                        </View>
+                                        :
+                                        <TouchableOpacity style={styles.btnContainer1} onPress={this.submitProd} >
+                                            <Text style={styles.btnText} >{this.props.route.params.productId !== undefined ? 'Update' : 'Submit'}</Text>
+                                        </TouchableOpacity>
+                                )
+                            }
+                            {
+                                this.state.selectedProdCategory != "Jobs" && this.state.selectedProdCategory != "Freebies" && this.state.selectedProdCategory != "Services" &&
+                                (
+                                    this.state.coverImage == '' || this.state.Productname == '' || this.state.Productprice == '' || this.state.sellerAddress == '' || this.state.ProductDescription == '' ?
+                                        <View style={styles.btnContainer} >
+                                            <Text style={styles.btnText} >{this.props.route.params.productId !== undefined ? 'Update' : 'Submit'}</Text>
+                                        </View>
+                                        :
+                                        <TouchableOpacity style={styles.btnContainer1} onPress={this.submitProd} >
+                                            <Text style={styles.btnText} >{this.props.route.params.productId !== undefined ? 'Update' : 'Submit'}</Text>
+                                        </TouchableOpacity>
+                                )
+                            }
+                            {
+                                this.state.selectedProdCategory == "Freebies" &&
+                                (
+                                    this.state.coverImage == '' || this.state.Productname == '' || this.state.sellerAddress == '' || this.state.ProductDescription == '' ?
+                                        <View style={styles.btnContainer} >
+                                            <Text style={styles.btnText} >{this.props.route.params.productId !== undefined ? 'Update' : 'Submit'}</Text>
+                                        </View>
+                                        :
+                                        <TouchableOpacity style={styles.btnContainer1} onPress={this.submitProd} >
+                                            <Text style={styles.btnText} >{this.props.route.params.productId !== undefined ? 'Update' : 'Submit'}</Text>
+                                        </TouchableOpacity>
+                                )
+                            }
 
-                    </ScrollView>
-                    </>
-                }
-            </SafeAreaView>
+                            {
+                                this.state.selectedProdCategory == "Services" &&
+                                (
+                                    this.state.Productname == '' || this.state.sellerAddress == '' || this.state.ProductDescription == '' ?
+                                        <View style={styles.btnContainer} >
+                                            <Text style={styles.btnText} >{this.props.route.params.productId !== undefined ? 'Update' : 'Submit'}</Text>
+                                        </View>
+                                        :
+                                        <TouchableOpacity style={styles.btnContainer1} onPress={this.submitProd} >
+                                            <Text style={styles.btnText} >{this.props.route.params.productId !== undefined ? 'Update' : 'Submit'}</Text>
+                                        </TouchableOpacity>
+                                )
+                            }
+
+                        </>
+                    }
+
+                    {/*  </ScrollView> */}
+                </ KeyboardAwareScrollView>
+            </SafeAreaView >
         )
     }
 }
 
 const styles = StyleSheet.create({
     Container: {
-        flex: 1,
-        backgroundColor: '#FFF'
+        alignItems: 'flex-start',
+        backgroundColor: '#FFF',
+        // flex: 1
+    },
+    Container2: {
+
+        backgroundColor: '#FFF',
+        // flex: 1, 
+
+    },
+    keyboard: {
+        // flex: 1,
+        //flexDirection: 'column',
+        //justifyContent: 'center',
     },
     ProfileImageMainContainer: {
         // marginBottom: 10,
-        alignItems: 'center',
+        //alignItems: 'center',
         justifyContent: 'center',
         height: Deviceheight / 10,
         width: Devicewidth / 5,
         alignSelf: 'flex-start',
         // marginLeft: 20,
-        borderColor: '#000',
+        borderColor: '#ffa500',
         borderWidth: 0.6,
         // backgroundColor:'green'
     },
@@ -1712,7 +1783,7 @@ const styles = StyleSheet.create({
         height: Deviceheight / 10,
         width: Devicewidth / 5,
         alignSelf: 'flex-start',
-        borderColor: '#000',
+        borderColor: '#d9d9d9',
         borderWidth: 0.6,
         marginRight: 15
         // backgroundColor:'green'
@@ -1742,7 +1813,7 @@ const styles = StyleSheet.create({
         width: Devicewidth / 1.10,
         height: Deviceheight / 13,
         fontSize: 15,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#fbfbfb',
         alignSelf: 'center',
         borderRadius: 10,
         paddingLeft: 20,
@@ -1750,7 +1821,7 @@ const styles = StyleSheet.create({
     PriceinputContainer: {
         alignSelf: 'center',
         marginTop: 20,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#fbfbfb',
         width: Devicewidth / 1.10,
         height: Deviceheight / 13,
         justifyContent: 'center',
@@ -1761,7 +1832,7 @@ const styles = StyleSheet.create({
         width: Devicewidth / 1.10,
         height: Deviceheight / 13,
         fontSize: 15,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#fbfbfb',
         alignSelf: 'flex-start',
         borderRadius: 10,
         paddingLeft: 20,
@@ -1770,7 +1841,7 @@ const styles = StyleSheet.create({
         width: Devicewidth / 1.3,
         height: Deviceheight / 13,
         fontSize: 15,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#fbfbfb',
         alignSelf: 'flex-start',
         borderRadius: 10,
         paddingLeft: 10,
@@ -1782,21 +1853,25 @@ const styles = StyleSheet.create({
         height: Deviceheight / 8,
         justifyContent: 'center',
         borderRadius: 10,
-        marginBottom: 10
+        marginBottom: 10,
+        height: 80
     },
     ProductDesc: {
         width: Devicewidth / 1.10,
-        height: Deviceheight / 8,
+        //height: Deviceheight / 8,
         fontSize: 15,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#fbfbfb',
         alignSelf: 'center',
         borderRadius: 10,
         paddingLeft: 20,
+
+        height: 80
+
     },
     Address: {
         width: Devicewidth / 1.10,
         height: Deviceheight / 13,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#fbfbfb',
         alignSelf: 'center',
         borderRadius: 10,
         marginTop: 20,
@@ -1806,9 +1881,9 @@ const styles = StyleSheet.create({
     CatagoryContainer: {
         // borderWidth: 1,
         width: Devicewidth / 1.10,
-        // height: Deviceheight / 13,
+        height: Deviceheight / 13,
         paddingVertical: 10,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#fbfbfb',
         alignSelf: 'center',
         borderRadius: 10,
         paddingLeft: 20,
@@ -1817,7 +1892,7 @@ const styles = StyleSheet.create({
     DescContainer: {
         width: Devicewidth / 1.10,
         height: Deviceheight / 22,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#fbfbfb',
         alignSelf: 'center',
         borderRadius: 10,
         paddingLeft: 20,
@@ -1843,7 +1918,7 @@ const styles = StyleSheet.create({
     SingleSeller: {
         width: Devicewidth / 5,
         height: Deviceheight / 24,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#fbfbfb',
         alignSelf: 'center',
         borderRadius: 20,
         alignItems: 'center',
@@ -1923,7 +1998,7 @@ const styles = StyleSheet.create({
     SingleTransmission: {
         width: Devicewidth / 5,
         height: Deviceheight / 10,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#fbfbfb',
         alignSelf: 'center',
         borderRadius: 360,
         alignItems: 'center',
@@ -1935,7 +2010,7 @@ const styles = StyleSheet.create({
     SinglesmallTransmission: {
         width: Devicewidth / 9,
         height: Deviceheight / 17,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#fbfbfb',
         alignSelf: 'center',
         borderRadius: 50,
         alignItems: 'center',

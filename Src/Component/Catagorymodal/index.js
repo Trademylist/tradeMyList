@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Modal, TouchableOpacity, StyleSheet, Dimensions, Image, FlatList } from 'react-native';
+import {SafeAreaView,View, Text, Modal, TouchableOpacity, StyleSheet, Dimensions, Image, FlatList } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 const Devicewidth = Dimensions.get('window').width;
@@ -76,7 +76,7 @@ const CatagoryModal = (props) => {
 
   // console.warn(props.categoryList)
   return (
-    <View>
+    <SafeAreaView style={styles.container}>
       {
         modalProps ?
           <Modal
@@ -90,16 +90,16 @@ const CatagoryModal = (props) => {
               <View style={styles.modalBody}>
                 <ScrollView showsVerticalScrollIndicator={false}>
 
-                  <View style={styles.HeadrIconContainer}>
+                <View style={styles.HeadrIconContainer}>
 
-                    <TouchableOpacity onPress={() => props.onPressClose()} style={{
-                      height: Deviceheight / 50,
-                      width: Devicewidth / 25, alignItems: "center", justifyContent: "center", alignSelf: "center", marginLeft: 20, marginBottom: 5,
-                    }}>
-                      <Image source={require("../../Assets/BackIconLeft.png")} style={{ height: "100%", width: "100%" }}></Image>
-                    </TouchableOpacity>
-                    <Text style={{ fontFamily:"Roboto-Bold" , color: '#434343', fontSize: 18, textAlign: 'left', fontWeight: 'bold', alignSelf: 'flex-start', width: Devicewidth / 3, marginTop: 19, marginLeft: 120, }}>Categories</Text>
-                  </View>
+<TouchableOpacity onPress={() => props.onPressClose()} style={{
+  height: Deviceheight / 50,
+  width: Devicewidth / 25, alignItems: "center", justifyContent: "center", alignSelf: "center", marginLeft: 20, marginBottom: 5,
+}}>
+  <Image source={require("../../Assets/BackIconLeft.png")} style={{ height: "100%", width: "100%" }}></Image>
+</TouchableOpacity>
+<Text style={{ fontFamily:"Roboto-Bold" , color: '#434343', fontSize: 18, textAlign: 'left', fontWeight: 'bold', alignSelf: 'flex-start', width: Devicewidth / 3, marginTop: 19, marginLeft: 120, }}>Categories</Text>
+</View>
 
 
 
@@ -109,17 +109,17 @@ const CatagoryModal = (props) => {
                       showsVerticalScrollIndicator={false}
                       renderItem={({ item }) => (
                         <TouchableOpacity style={{ flexDirection: "row", width: Devicewidth / 1.08, height: Deviceheight / 18, alignItems: "center", alignSelf: "center", borderRadius: 5, paddingLeft: 5, marginTop: 10 }} onPress={()=>props.getCategory(item.category_name,props.categoryImg,item.category_image)}>
-                          <View style={{ alignSelf: 'center', alignItems: 'center', justifyContent: 'center', height: Deviceheight / 24, width: Devicewidth / 12, backgroundColor: item.Color, borderRadius: 360, marginRight: 15 }} >
+                          <View style={{ alignSelf: 'center', alignItems: 'center', justifyContent: 'center', height: 50, width: 50, backgroundColor: item.Color, borderRadius: 360, marginRight: 15 }} >
                             <Image source={{uri: props.categoryImg+item.category_image}} style={{ height: "85%", width: "85%", resizeMode: "contain", borderRadius: 360 }}></Image>
                           </View>
-                          <Text style={{ fontFamily:"Roboto-Bold" , color: "#000", textAlign: "left", fontSize: 16, fontWeight: "bold" }}>{item.category_name}</Text>
+                          <Text style={{ fontFamily:"Roboto-Bold" , color: "#000", textAlign: "left", fontSize: 15, fontWeight: "bold" }}>{item.category_name}</Text>
                           {
                             item.category_name === props.selectedProdCat ?
                             <FontAwesomeIcon name='check'  style={{position:'absolute',right:20,top:15,fontSize:15}} />
                             :
-                            null
+                            null 
                           }
-                        </TouchableOpacity>
+                        </TouchableOpacity>  
                       )}
                       keyExtractor={item => item._id}
                     />
@@ -132,7 +132,8 @@ const CatagoryModal = (props) => {
           </Modal>
           : null
       }
-    </View>
+    
+    </SafeAreaView>
   );
 }
 
@@ -141,12 +142,17 @@ export default CatagoryModal;
 
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },  
+
   modalBody: {
     alignItems: 'flex-start',
     flex: 1,
     width: Devicewidth,
     backgroundColor: '#fff',
-    paddingBottom: 10
+    paddingBottom: 10,
+    paddingTop:40
   },
   modalContainer: {
     justifyContent: 'center',

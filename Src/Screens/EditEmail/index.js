@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ImageBackground, StyleSheet, Dimensions, TextInput, TouchableOpacity } from 'react-native';
+import { SafeAreaView,View, Text, Image, ImageBackground, StyleSheet, Dimensions, TextInput, TouchableOpacity } from 'react-native';
 const { width: WIDTH } = Dimensions.get('window');
 const Devicewidth = Dimensions.get('window').width;
 const Deviceheight = Dimensions.get('window').height;
@@ -79,6 +79,7 @@ export default class EditEmail extends Component {
         //console.log("email length", this.state.length)
         return (
             <>
+                 <SafeAreaView style={{ flex: 1 }}>
                 <View style={styles.Container}>
                     <Header navigation={this.props.navigation} Desc={"Change email"} />
                     <View style={{ flexDirection: 'row', width: Devicewidth / 1.13, alignSelf: 'center', alignItems: 'flex-start', marginTop: 20 }}>
@@ -115,6 +116,7 @@ export default class EditEmail extends Component {
                         </TouchableOpacity>
                     }
                 </View>
+                </SafeAreaView>
             </>
         )
     }

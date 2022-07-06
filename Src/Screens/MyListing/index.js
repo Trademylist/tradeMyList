@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ActivityIndicator, ScrollView, FlatList, StyleSheet, Dimensions, TextInput, TouchableOpacity, SafeAreaView } from 'react-native';
+import {View, Text, Image, ActivityIndicator, ScrollView, FlatList, StyleSheet, Dimensions, TextInput, TouchableOpacity, SafeAreaView } from 'react-native';
 const { width: WIDTH } = Dimensions.get('window');
-const Devicewidth = Dimensions.get('window').width;
+const Devicewidth = Dimensions.get('window').width;   
 const Deviceheight = Dimensions.get('window').height;
 import FavouriteListing from "../../Component/FavouriteListing"
 import MyProductListing from "../../Component/MyProductListing"
@@ -470,7 +470,8 @@ export default class MyListing extends Component {
     render() {
         //console.log('sssss', this.state.ProductList);
         return (
-            <>
+            <SafeAreaView style={{ flex: 1 }}>
+
                 <View style={styles.Container}>
                     <Header navigation={this.props.navigation} Heading={"Listings"} />
                     <MarkAsSoldModal
@@ -490,52 +491,52 @@ export default class MyListing extends Component {
                         ></MySubscriptionModal>
                     }
                     <View style={{ width: Devicewidth, height: Deviceheight / 18, alignItems: 'center', justifyContent: 'space-around', flexDirection: 'row', backgroundColor: '#fff', }}>
-                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={{ justifyContent: 'space-around', height: Deviceheight / 18 }}>
+                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={{ justifyContent: 'space-around', paddingLeft:20 , paddingRight:20 }}>
                             {this.state.Favourite == true ?
-                                <TouchableOpacity style={{ width: Devicewidth / 4, height: Deviceheight / 18, alignItems: 'center', justifyContent: "center", borderBottomColor: "#383ec1", borderBottomWidth: 2 }}>
+                                <TouchableOpacity style={{marginRight:20, alignItems: 'center', justifyContent: "center", borderBottomColor: "#383ec1", borderBottomWidth: 2 }}>
                                     <Text style={{ fontFamily:"Roboto-Bold" , color: '#383ec1', textAlign: 'center', fontSize: 16, fontWeight: 'bold',letterSpacing:1 }}>Favourite</Text>
                                 </TouchableOpacity>
                                 :
-                                <TouchableOpacity onPress={() => this.handelFavourite()} style={{ width: Devicewidth / 4, height: Deviceheight / 18, alignItems: 'center', justifyContent: "center", }}>
+                                <TouchableOpacity onPress={() => this.handelFavourite()} style={{ marginRight:20, alignItems: 'center',justifyContent: "center", }}>
                                     <Text style={{ fontFamily:"Roboto-Bold" , color: '#606160', textAlign: 'center', fontSize: 16, fontWeight: 'bold',letterSpacing:1 }}>Favourite</Text>
                                 </TouchableOpacity>
                             }
 
                             {this.state.Product == true ?
-                                <TouchableOpacity style={{ width: Devicewidth / 4, height: Deviceheight / 18, alignItems: 'center', justifyContent: "center", borderBottomColor: "#383ec1", borderBottomWidth: 2 }}>
+                                <TouchableOpacity style={{ marginRight:20,alignItems: 'center', justifyContent: "center", borderBottomColor: "#383ec1", borderBottomWidth: 2 }}>
                                     <Text style={{ fontFamily:"Roboto-Bold" , color: '#383ec1', textAlign: 'center', fontSize: 16, fontWeight: 'bold',letterSpacing:1 }}>Product</Text>
                                 </TouchableOpacity>
                                 :
-                                <TouchableOpacity onPress={() => this.handelProduct()} style={{ width: Devicewidth / 4, height: Deviceheight / 18, alignItems: 'center', justifyContent: "center", }}>
+                                <TouchableOpacity onPress={() => this.handelProduct()} style={{marginRight:20,  alignItems: 'center', justifyContent: "center", }}>
                                     <Text style={{ fontFamily:"Roboto-Bold" , color: '#606160', textAlign: 'center', fontSize: 16, fontWeight: 'bold',letterSpacing:1 }}>Product</Text>
                                 </TouchableOpacity>
                             }
 
                             {this.state.Commercial == true ?
-                                <TouchableOpacity style={{ width: Devicewidth / 3.5, height: Deviceheight / 18, alignItems: 'center', justifyContent: "center", borderBottomColor: "#383ec1", borderBottomWidth: 2 }}>
+                                <TouchableOpacity style={{ marginRight:20, alignItems: 'center', justifyContent: "center", borderBottomColor: "#383ec1", borderBottomWidth: 2 }}>
                                     <Text style={{ fontFamily:"Roboto-Bold" , color: '#383ec1', textAlign: 'center', fontSize: 16, fontWeight: 'bold' ,letterSpacing:1}}>Commercial</Text>
                                 </TouchableOpacity>
                                 :
-                                <TouchableOpacity onPress={() => this.handelCommmercial()} style={{ width: Devicewidth / 3.5, height: Deviceheight / 18, alignItems: 'center', justifyContent: "center", }}>
+                                <TouchableOpacity onPress={() => this.handelCommmercial()} style={{marginRight:20,  alignItems: 'center', justifyContent: "center", }}>
                                     <Text style={{ fontFamily:"Roboto-Bold" , color: '#606160', textAlign: 'center', fontSize: 16, fontWeight: 'bold',letterSpacing:1 }}>Commercial</Text>
                                 </TouchableOpacity>
                             }
 
                             {this.state.Sold == true ?
-                                <TouchableOpacity style={{ width: Devicewidth / 4, height: Deviceheight / 18, alignItems: 'center', justifyContent: "center", borderBottomColor: "#383ec1", borderBottomWidth: 2 }}>
+                                <TouchableOpacity style={{ marginRight:20,alignItems: 'center', justifyContent: "center", borderBottomColor: "#383ec1", borderBottomWidth: 2 }}>
                                     <Text style={{ fontFamily:"Roboto-Bold" , color: '#383ec1', textAlign: 'center', fontSize: 16, fontWeight: 'bold',letterSpacing:1 }}>Sold</Text>
                                 </TouchableOpacity>
                                 :
-                                <TouchableOpacity onPress={() => this.handelSold()} style={{ width: Devicewidth / 4, height: Deviceheight / 18, alignItems: 'center', justifyContent: "center" }}>
+                                <TouchableOpacity onPress={() => this.handelSold()} style={{ marginRight:20,alignItems: 'center', justifyContent: "center" }}>
                                     <Text style={{ fontFamily:"Roboto-Bold" , color: '#606160', textAlign: 'center', fontSize: 16, fontWeight: 'bold',letterSpacing:1 }}>Sold</Text>
                                 </TouchableOpacity>
                             }
                             {this.state.Expired == true ?
-                                <TouchableOpacity style={{ width: Devicewidth / 4, height: Deviceheight / 18, alignItems: 'center', justifyContent: "center", borderBottomColor: "#383ec1", borderBottomWidth: 2 }}>
+                                <TouchableOpacity style={{ marginRight:20,alignItems: 'center', justifyContent: "center", borderBottomColor: "#383ec1", borderBottomWidth: 2 }}>
                                     <Text style={{ fontFamily:"Roboto-Bold" , color: '#383ec1', textAlign: 'center', fontSize: 16, fontWeight: 'bold',letterSpacing:1 }}>Expired</Text>
                                 </TouchableOpacity>
                                 :
-                                <TouchableOpacity onPress={() => this.handelExpired()} style={{ width: Devicewidth / 4, height: Deviceheight / 18, alignItems: 'center', justifyContent: "center", }}>
+                                <TouchableOpacity onPress={() => this.handelExpired()} style={{ marginRight:20,alignItems: 'center', justifyContent: "center", }}>
                                     <Text style={{ fontFamily:"Roboto-Bold" , color: '#606160', textAlign: 'center', fontSize: 16, fontWeight: 'bold',letterSpacing:1 }}>Expired</Text>
                                 </TouchableOpacity>
                             }
@@ -681,7 +682,7 @@ export default class MyListing extends Component {
                     }
                     <Footer navigation={this.props.navigation} catdata={this.state.Commercial ? "freebies" : "product"} />
                 </View>
-            </>
+           </SafeAreaView>
         )
     }
 }

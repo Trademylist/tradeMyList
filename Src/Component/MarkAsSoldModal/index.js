@@ -60,7 +60,7 @@ const MarkAsSoldModal = (props) => {
                     : null
             }
         </View>
-    );
+    );   
 }
 
 

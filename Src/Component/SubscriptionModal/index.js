@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Modal, TouchableOpacity, StyleSheet, Dimensions, Image, Platform } from 'react-native';
+import { View, Text, Modal, TouchableOpacity, StyleSheet, Dimensions, Image, Platform, Alert } from 'react-native';
 import * as RNIap from 'react-native-iap';
 import AsyncStorage from '@react-native-community/async-storage';
 const axios = require('axios');
@@ -17,6 +17,7 @@ const SubscribeModal = (props) => {
   const [SubChoice, SetSubChoice] = useState('');
 
   useEffect(() => {
+    console.warn('submodal=====>>>>>')
     getSubDetails()
   }, [])
 
@@ -24,10 +25,12 @@ const SubscribeModal = (props) => {
     if(subscription.length == 0){
       const itemSkus = ['sub1day', 'sub1week', 'sub1month']
       RNIap.getSubscriptions(itemSkus).then((sub_res) => {
-        console.log(" get Subscriptions", sub_res);
+        console.warn(" get Subscriptions", sub_res);
+        Alert.alert('Subscription',sub_res)
         SetSubscription(sub_res)
       }).catch((error) => {
         console.log('errorA',error);
+        Alert.alert('IAP Error',error)
       })
     }
   }

@@ -27,6 +27,7 @@ class Menu extends Component {
             profileImg: '',
             LoginType:'',
             loading:true,
+            
         }
         this.HandelReload = this.HandelReload.bind(this)
     }
@@ -52,7 +53,7 @@ class Menu extends Component {
                     }
                 })
                     .then(response => {
-                        console.log("my login data at menu modal res", response);
+                        //console.log("my login data at menu modal res", response);
                         // SetUserData(response.data.data)
 
                         this.setState({
@@ -60,7 +61,9 @@ class Menu extends Component {
                             LoginType:LoginType,
                             loading:false,
                         })
-                        console.log("my login data at menu modal", this.state.userData)
+                        //console.log("my login data at menu modal", this.state.userData)
+                        //console.log(response.data.data.socialId)
+                        
 
                     })
             } else {
@@ -364,8 +367,8 @@ class Menu extends Component {
 
                         <View style={{ height: Deviceheight / 4, width: Devicewidth, backgroundColor: "#eeeeee", alignItems: "center", justifyContent: 'center' }}>
                             <TouchableOpacity style={{
-                                height: Deviceheight / 10,
-                                width: Devicewidth / 5, alignItems: "center", justifyContent: "center", alignSelf: "center", borderRadius: 360, backgroundColor: '#fff', marginTop: 5
+                                height: 70,
+                                width: 70, alignItems: "center", justifyContent: "center", alignSelf: "center", borderRadius: 360, backgroundColor: '#fff', marginTop: 5
                             }} onPress={this.changeimage}>
                                 {
                                     this.state.profileImg === ''
@@ -400,26 +403,26 @@ class Menu extends Component {
                                 width: Devicewidth / 2.7, alignItems: "center", justifyContent: "center", alignSelf: "center", flexDirection: 'row', justifyContent: "space-around"
                             }}>
                                 <View style={{
-                                    height: Deviceheight / 40,
-                                    width: Devicewidth / 20, alignItems: "center", justifyContent: "center", alignSelf: "center",
+                                    height:60, 
+                                    width: 20, marginRight:5, alignItems: "center", justifyContent: "center", alignSelf: "center",
                                 }}>
-                                    <Image source={require("../../Assets/Verified.png")} style={{ height: "90%", width: "90%" }}></Image>
+                                    <Image source={require("../../Assets/Verified.png")} style={{ height: 20, width: 20}}></Image>
                                 </View>
                                 <Text style={{ fontFamily:"Roboto-Regular" , color: "#000", fontSize: 16, textAlign: 'center', alignSelf: 'center',fontWeight:"400" }}> Verified with : </Text>
 
                                 <TouchableOpacity style={{
-                                    height: Deviceheight / 50,
-                                    width: Devicewidth / 20, alignItems: "center", justifyContent: "center", alignSelf: "center",
+                                    height: 60,
+                                    width: 20, marginLeft:5, alignItems: "center", justifyContent: "center", alignSelf: "center",
                                 }}>
                                     {
                                         this.state.LoginType == null ?
-                                            <Image source={require("../../Assets/Email_Black.png")} style={{ height: "80%", width: "80%" }}></Image>
+                                            <Image source={require("../../Assets/Email_Black.png")} style={{ height:15, width: 16 }}></Image>
                                             :
                                             this.state.LoginType == "facebook" ?
-                                                <FbIcon name='facebook-square' style={{ fontSize: 15, marginTop: 4 }} />
+                                                <FbIcon name='facebook-square' style={{ fontSize: 12, marginTop: 0 }} />
                                                 :
                                                 (String(this.state.LoginType).toLowerCase() == "google" || String(this.state.LoginType).toLowerCase() == "g") ?
-                                                    <Icon name='google' style={{ fontSize: 15, marginTop: 4 }} />
+                                                    <Icon name='google' style={{ fontSize: 12, marginTop: 0 }} />
                                                     :
                                                     null
                                     }

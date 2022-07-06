@@ -125,9 +125,8 @@ const Header = (props) => {
     SetLoginModalFirst(false)
   }
   const redcLoginModal = () => {
+    SetLoginModal(true);
     SetLoginModalFirst(false);
-    SetLoginModal(false);
-    navigation.push('auth');
   }
 
   const getfilterDetails = (distance, sortBy, lat, lng, selectedProdCategory, fromInr, toInr, country, obj) => {
@@ -160,8 +159,10 @@ const Header = (props) => {
           <View style={styles.HeadrIconContainer}>
 
             <TouchableOpacity onPress={() => handelMenu()} style={{
-              height: Deviceheight / 20,
-              width: Devicewidth / 10, alignItems: "center", justifyContent: "center", alignSelf: "center", marginLeft: 10, borderRadius: 360,
+              height: 40 ,
+              width: 40, alignItems: "center", justifyContent: "center", alignSelf: "center", marginLeft: 15, borderRadius: 360,
+
+          
             }}>
             {
                 (userDetails !== '' && userDetails !== null) ?
@@ -220,7 +221,7 @@ const Header = (props) => {
           </View>
         </View>
   )
-}
+} 
 
 const styles = StyleSheet.create({
   Container: {
@@ -241,12 +242,13 @@ const styles = StyleSheet.create({
   SearchContainer: {
     borderRadius: 5,
     // height: Deviceheight / 20,
-    width: Devicewidth / 2,
+    ///width: Devicewidth / 2,
     alignSelf: 'center',
     justifyContent: "flex-end",
     fontSize: 16,
     textAlign: "left",
-    paddingLeft:10
+    paddingLeft:10,
+    flex:1
     // backgroundColor:"green"
   },
   SearchIcon: {
@@ -259,6 +261,7 @@ const styles = StyleSheet.create({
   closeButton: {
     height: 16,
     width: 16,
+    marginRight:12,
   },
 })
 

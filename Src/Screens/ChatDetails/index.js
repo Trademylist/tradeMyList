@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { GiftedChat, Send, Bubble } from 'react-native-gifted-chat'
-import { View, Text, Image, ImageBackground, StyleSheet, Dimensions, FlatList, TouchableOpacity } from 'react-native';
+import {ScrollView, View, Text, Image, ImageBackground, StyleSheet, Dimensions,SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { itemWidth } from '../ProductDetailsBannerSlider/slideEntryStyle';
@@ -13,7 +13,7 @@ const Devicewidth = Dimensions.get('window').width;
 const Deviceheight = Dimensions.get('window').height;
 import {connect} from 'react-redux';
 
-const Data = [
+const Data = [ 
   {
     key: '1',
     name: 'Is it still available?',
@@ -308,8 +308,18 @@ function ChatDetails(props) {
   }
   console.log('errorA',productData);
   return (
-    <>
-      <View
+  
+    <SafeAreaView style={styles.container}>
+      <View style={{ height: "100%" }}>
+        <View style={{ flex: 1 }}>
+            <View style={{ height: "100%" }}>
+                <View style={{ flex: 1 }}>
+                <ScrollView
+                style={{
+                    width: "100%",
+                }}
+                >
+                 <View
       style={{ alignSelf: "center", alignItems: "center", width: Devicewidth, height: Deviceheight / 12, flexDirection: "row", backgroundColor: "#fff", elevation: 5 }}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={{
           height: Deviceheight / 42,
@@ -353,6 +363,8 @@ function ChatDetails(props) {
           }
         </TouchableOpacity>
       </View>
+
+    
 
       <View style={{ alignSelf: "center", alignItems: "center", width: Devicewidth / 1.05, height: Deviceheight / 5, marginTop: 15, borderRadius: 20, backgroundColor: "#fff", borderWidth: 1, borderColor: "#e9e9e9" }}>
         <TouchableOpacity
@@ -415,7 +427,7 @@ function ChatDetails(props) {
       </View>
 
       <View style={{
-        flex: 2,  marginBottom:40,padding:10,
+        flex: 2,  marginBottom:40,padding:10,height:Deviceheight/2,
       }}>
         <GiftedChat
           messages={messages}
@@ -454,32 +466,57 @@ function ChatDetails(props) {
           }}
         />
       </View>
-       {console.log('Chat details',Data)}
-      <View style={styles.FlatListContainer}>
-        <FlatList
-          data={Data}
-          scrollEnabled={true}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          renderItem={({ item }) => (
-            <TouchableOpacity style={{ borderRadius: 50, alignItems: 'center', justifyContent: "center", backgroundColor: '#373ec2', marginRight: 20, height: Deviceheight / 21, padding: 10, }} onPress={() => handleSendQuickMessage(item.name)}>
-              <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 14, textAlign: 'center', color: "#fff" }}>{item.name}</Text>
-            </TouchableOpacity>
-          )}
-          keyExtractor={item => item.key}
-        />
-      </View>
-    </>
+                </ScrollView>
+                </View>
+                  <View
+                      style={{
+                          borderTopColor: "#dadada",
+                          height:60,
+                          borderTopWidth: 1,
+                          width: "100%",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          paddingBottom: 10,
+                      }}
+                    > 
+                         {console.log('Chat details',Data)}
+                      <View style={styles.FlatListContainer}>
+                        <FlatList
+                          data={Data}
+                          scrollEnabled={true}
+                          horizontal={true}
+                          showsHorizontalScrollIndicator={false}
+                          renderItem={({ item }) => (
+                            <TouchableOpacity style={{ borderRadius: 50, alignItems: 'center', justifyContent: "center", backgroundColor: '#373ec2', marginRight: 20, height: 48, padding: 10, }} onPress={() => handleSendQuickMessage(item.name)}>
+                              <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 14, textAlign: 'center', color: "#fff" }}>{item.name}</Text>
+                            </TouchableOpacity>
+                          )}
+                          keyExtractor={item => item.key}
+                        />
+                      </View>
+                </View>
+            </View>
+        </View>
+        </View>
+      </SafeAreaView>
+
+  
   )
 }
 
 const styles = StyleSheet.create({
+  Container: {
+    flex: 1,
+    backgroundColor: '#fff',
+},
+
   FlatListContainer: {
     position: 'absolute',
     zIndex: 10001,
     bottom: 0,
     paddingHorizontal: 10,
     width: Devicewidth,
+
     alignSelf: 'center',
     // height: Deviceheight / 14,
     //alignItems: 'center',

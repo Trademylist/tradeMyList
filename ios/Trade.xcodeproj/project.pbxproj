@@ -33,6 +33,8 @@
 		C417C2BA4F6644859355B675 /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A704F927080D4E8CB6279DAE /* Roboto-ThinItalic.ttf */; };
 		C800E9C0997AB58A157CF132 /* libPods-Trade.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F39584B04FC08671A61FC72 /* libPods-Trade.a */; };
 		D489FDAF275546C5883CE7F2 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5D920B29105E4904B57EFC28 /* Roboto-Regular.ttf */; };
+		DEBB63AF2875AF6B00F6C618 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEBB63AE2875AF6B00F6C618 /* StoreKit.framework */; };
+		F5D5742A2859A8B5000CD2FD /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D574292859A8B5000CD2FD /* Location.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 2D02E47A1E0B4A5D006451C7;
 			remoteInfo = "Trade-tvOS";
+		};
+		F5679BE52836481800775E9E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
+			remoteInfo = Trade;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -103,9 +112,12 @@
 		CF02B7B2BCA74751A7F538AA /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		D794366D788745ABAB5069C2 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Medium.ttf"; path = "../assets/fonts/Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		DC9E4839C3E9457DA8896D3A /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
+		DEBB63AE2875AF6B00F6C618 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		E4F307CDE95B435C8E49A828 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		F5D574282859A8B4000CD2FD /* Trade-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Trade-Bridging-Header.h"; sourceTree = "<group>"; };
+		F5D574292859A8B5000CD2FD /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		F962AFA4CA74484D899F0A55 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		F9B39EF04C7AAEC23F843461 /* Pods-Trade-TradeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trade-TradeTests.release.xcconfig"; path = "Target Support Files/Pods-Trade-TradeTests/Pods-Trade-TradeTests.release.xcconfig"; sourceTree = "<group>"; };
 		FACAF85AC3D440FABBB33EE6 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
@@ -126,6 +138,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C800E9C0997AB58A157CF132 /* libPods-Trade.a in Frameworks */,
+				DEBB63AF2875AF6B00F6C618 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,6 +231,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DEBB63AE2875AF6B00F6C618 /* StoreKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				2F39584B04FC08671A61FC72 /* libPods-Trade.a */,
@@ -253,6 +267,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				F5D574292859A8B5000CD2FD /* Location.swift */,
 				0FE461092793315B00983844 /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* Trade */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -261,6 +276,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				27B3E22B1A78415CA2C043C2 /* Resources */,
 				7210B1778B7763448A92AAF9 /* Pods */,
+				F5D574282859A8B4000CD2FD /* Trade-Bridging-Header.h */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -358,6 +374,7 @@
 			);
 			dependencies = (
 				2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */,
+				F5679BE62836481800775E9E /* PBXTargetDependency */,
 			);
 			name = "Trade-tvOSTests";
 			productName = "Trade-tvOSTests";
@@ -378,7 +395,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = J2JUP5DTK9;
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1330;
 						ProvisioningStyle = Manual;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
@@ -388,7 +405,7 @@
 					2D02E48F1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
-						TestTargetID = 2D02E47A1E0B4A5D006451C7;
+						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 				};
 			};
@@ -820,6 +837,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				F5D5742A2859A8B5000CD2FD /* Location.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -854,6 +872,11 @@
 			target = 2D02E47A1E0B4A5D006451C7 /* Trade-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
 		};
+		F5679BE62836481800775E9E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 13B07F861A680F5B00A75B9A /* Trade */;
+			targetProxy = F5679BE52836481800775E9E /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -861,6 +884,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 744C094930A9761D5BAABC5A /* Pods-Trade-TradeTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -884,6 +908,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F9B39EF04C7AAEC23F843461 /* Pods-Trade-TradeTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = TradeTests/Info.plist;
@@ -909,12 +934,13 @@
 				CODE_SIGN_ENTITLEMENTS = Trade/Trade.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = J2JUP5DTK9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Trade/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.0.7;
+				MARKETING_VERSION = 1.0.10;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -922,7 +948,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.TradeReact;
 				PRODUCT_NAME = Trade;
-				PROVISIONING_PROFILE_SPECIFIER = trade;
+				PROVISIONING_PROFILE_SPECIFIER = Trade_adhoc;
+				SWIFT_OBJC_BRIDGING_HEADER = "Trade-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -936,13 +963,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Trade/Trade.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 7;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = J2JUP5DTK9;
 				INFOPLIST_FILE = Trade/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.0.7;
+				MARKETING_VERSION = 1.0.10;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -950,7 +979,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.TradeReact;
 				PRODUCT_NAME = Trade;
-				PROVISIONING_PROFILE_SPECIFIER = trade;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Trade-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1016,6 +1046,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 677CC5ADA369015C8F1C723A /* Pods-Trade-tvOSTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -1034,7 +1065,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.Trade-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Trade-tvOS.app/Trade-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Trade.app/Trade";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Debug;
@@ -1043,6 +1074,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 841C0C9204C8BF7F881450F4 /* Pods-Trade-tvOSTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -1061,7 +1093,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.Trade-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Trade-tvOS.app/Trade-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Trade.app/Trade";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Release;

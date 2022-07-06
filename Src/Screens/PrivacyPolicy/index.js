@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ImageBackground, StyleSheet, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
+import {SafeAreaView, View, Text, Image, ImageBackground, StyleSheet, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
 const { width: WIDTH } = Dimensions.get('window');
 const Devicewidth = Dimensions.get('window').width;
 const Deviceheight = Dimensions.get('window').height;
@@ -45,12 +45,14 @@ export default class PrivacyPolicy extends Component {
     render() {
         return (
             <>
+            <SafeAreaView style={{ flex: 1 }}>
                 <View style={styles.Container}>
                     <Header navigation={this.props.navigation} Desc={"Privacy Policy"} />
                     <ScrollView showsVerticalScrollIndicator={false} >
                     <Text style={{color:"#818181",fontSize:16,textAlign:'left',alignSelf:'center',marginTop:10,paddingHorizontal:5}}>{this.state.MyData.page_desc}</Text>
                     </ScrollView>
                 </View>
+                </SafeAreaView>
             </>
         )
     }

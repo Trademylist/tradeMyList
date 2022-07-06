@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ImageBackground, StyleSheet, Dimensions, FlatList, TouchableOpacity } from 'react-native';
+import {SafeAreaView, View, Text, Image, ImageBackground, StyleSheet, Dimensions, FlatList, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import StarRating from 'react-native-star-rating';
 import Header from "../../Component/HeaderBack"
@@ -168,6 +168,9 @@ export default class AllReview extends Component {
     render() {
         console.log('errorA',this.state.ReviewList)
         return (
+
+                                <SafeAreaView style={{ flex: 1 }}>
+
             <View style={styles.Container}>
                 <Header navigation={this.props.navigation} Desc={"All Reviews"} />
                 <View style={styles.FlatListContainer}>
@@ -179,8 +182,8 @@ export default class AllReview extends Component {
                             <View style={styles.MainContainer}>
                                 <View style={{ alignItems: 'center', flexDirection: 'row', width: Devicewidth, height: Deviceheight / 8, alignSelf: 'flex-start', paddingTop: 10, }}>
                                     <TouchableOpacity style={{
-                                        height: Deviceheight / 10,
-                                        width: Devicewidth / 5, alignItems: "center", justifyContent: "center", alignSelf: "center", borderRadius: 360, marginLeft: 20
+                                        height: 70,
+                                        width:70, alignItems: "center", justifyContent: "center", alignSelf: "center", borderRadius: 360, marginLeft: 20
                                     }}>
                                         {
                                         item.sender_id.image == ''
@@ -228,6 +231,8 @@ export default class AllReview extends Component {
                     />
                 </View>
             </View>
+                        </SafeAreaView>
+
         )
     }
 }

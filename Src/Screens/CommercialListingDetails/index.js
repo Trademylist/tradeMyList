@@ -784,14 +784,31 @@ class CommercialListingDetails extends Component {
     }
 
     selectImageGallery() {
-        ImagePicker.openPicker({
-            width: 300,
-            height: 400,
-            multiple: true
-        }).then(image => {
-            this.uploadFileToS3(image, true);
-            // this.getImageaddupload(image)
-            // //console.log("my image from camera", image);
+        let options = {
+            mediaType: 'photo',
+            maxWidth: 300,
+            maxHeight: 550,
+            quality: 1,
+            rotation : 360
+        };
+        launchImageLibrary(options, (response) => {
+            //console.log('Response = ', response);
+
+            if (response.didCancel) {
+                // alert('User cancelled camera picker');
+                return;
+            } else if (response.errorCode == 'camera_unavailable') {
+                alert('Camera not available on device');
+                return;
+            } else if (response.errorCode == 'permission') {
+                alert('Permission not satisfied');
+                return;
+            } else if (response.errorCode == 'others') {
+                alert(response.errorMessage);
+                return;
+            }
+
+            this.uploadFileToS3(response, true);
         });
     }
 
@@ -1150,10 +1167,8 @@ class CommercialListingDetails extends Component {
             const { ImageLoadingState, AdditionalIndex } = this.state
             var h = AdditionalIndex
             var imagestate = []
-            for (var k = 0; k < response.length; k++) {
-                imagestate.push(h)
-                h++
-            }
+            imagestate.push(h)
+            h++
             this.setState({
                 AdditionalImageSpinnerVisible: true,
                 ImageLoadingState: imagestate
@@ -1164,27 +1179,24 @@ class CommercialListingDetails extends Component {
                 const value = await JSON.parse(await AsyncStorage.getItem('UserData'))
                 if (value !== null) {
                     var j = AdditionalIndex
-                    let MyLength = response.length
-                    for (var i = 0; i < MyLength; i++) {
-                        const formattedFile = {
-                            uri: response[i].path,
-                            name: (new Date().getTime()) + response[i].path.replace(/^.*[\\\/]/, ''),
-                            type: response[i].mime
-                        }
-                        await RNS3.put(formattedFile, this.bucketOptions).then(response => {
-                            if (response.status !== 201) {
-                                throw new Error("Failed to upload to S3");
-                            } else {
-                                AdditionalImages[j] = response.body.postResponse.location;
-                            }
-                        });
-                        j++
+                    const formattedFile = {
+                        uri: response.uri,
+                        name: (new Date().getTime()) + response.fileName,
+                        type: response.type
                     }
-                    this.setState({
-                        AdditionalImages,
-                        AdditionalImageSpinnerVisible: false,
-                    })
+                    await RNS3.put(formattedFile, this.bucketOptions).then(response => {
+                        if (response.status !== 201) {
+                            throw new Error("Failed to upload to S3");
+                        } else {
+                            AdditionalImages[j] = response.body.postResponse.location;
+                        }
+                    });
+                    j++
                 }
+                this.setState({
+                    AdditionalImages,
+                    AdditionalImageSpinnerVisible: false,
+                })
             } catch (e) {}
         } else {
             const formattedFile = {

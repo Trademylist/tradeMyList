@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ActivityIndicator, StyleSheet, Dimensions, TextInput, TouchableOpacity,ToastAndroid } from 'react-native';
+import { SafeAreaView,View, Text, Image, ActivityIndicator, StyleSheet, Dimensions, TextInput, TouchableOpacity,ToastAndroid } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
@@ -208,6 +208,7 @@ export default class ForgotPassword extends Component {
     render() {
         return (
             <>
+            <SafeAreaView style={{ flex: 1 }}>
                 <View style={styles.Container}>
 
                     <Header navigation={this.props.navigation} Desc={"Forgot Password"} />
@@ -335,6 +336,7 @@ export default class ForgotPassword extends Component {
 
                     }
                 </View>
+                </SafeAreaView>
             </>
         )
     }

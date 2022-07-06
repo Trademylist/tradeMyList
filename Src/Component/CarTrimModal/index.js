@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Modal, TouchableOpacity, StyleSheet, Dimensions, Image,TextInput } from 'react-native';
+import {SafeAreaView,View, Text, Modal, TouchableOpacity, StyleSheet, Dimensions, Image,TextInput } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/Feather';
@@ -54,6 +54,7 @@ const TrimModal = (props) => {
             onRequestClose={() => {
               modalVisible(!modal)
             }}>
+                      <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.modalContainer}>
               <View style={styles.modalBody}>
                 <ScrollView showsVerticalScrollIndicator={false}>
@@ -85,7 +86,7 @@ const TrimModal = (props) => {
                     trimList.map((makeitem, makeindex) => {
                       return(
                         <View style={{flexDirection:'row'}} key={makeindex}>
-                          <TouchableOpacity onPress={()=>props.getcartrim(makeitem)}><Text style={{ fontFamily:"Roboto-Bold" , fontSize: 20, fontWeight: "bold", color: "#000", textAlign: 'left', alignSelf: "flex-start", marginLeft: 28, marginTop: 15}}>{makeitem}</Text></TouchableOpacity>
+                          <TouchableOpacity onPress={()=>props.getcartrim(makeitem)}><Text style={{ fontFamily:"Roboto-Bold" , fontSize: 16, fontWeight: "bold", color: "#000", textAlign: 'left', alignSelf: "flex-start", marginLeft: 28, marginTop: 15}}>{makeitem}</Text></TouchableOpacity>
                           {
                             makeitem === props.selectedTrim ?
                             <Icon name='check' size={20}  style={{position:'absolute',right:20,top:20,}} />
@@ -97,7 +98,7 @@ const TrimModal = (props) => {
                       )
                     })
                     :
-                    <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 20, fontWeight: "bold", color: "#000", textAlign: 'left', alignSelf: "flex-start", marginLeft: 28, marginTop: 25 }}>Nothing In List</Text>
+                    <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 16, fontWeight: "bold", color: "#000", textAlign: 'left', alignSelf: "flex-start", marginLeft: 28, marginTop: 25 }}>Nothing In List</Text>
                   }
 
 
@@ -106,6 +107,7 @@ const TrimModal = (props) => {
                 </ScrollView>
               </View>
             </View>
+            </SafeAreaView>
           </Modal>
           : null
       }
@@ -143,7 +145,7 @@ const styles = StyleSheet.create({
     width: Devicewidth / 1.3,
     alignSelf: 'center',
     justifyContent: "flex-end",
-    fontSize: 13,
+    fontSize: 15,
     // backgroundColor:"yellow"
   },
   SearchIcon: {

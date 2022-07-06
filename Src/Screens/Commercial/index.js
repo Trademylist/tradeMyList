@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ActivityIndicator, ScrollView, FlatList, StyleSheet, Dimensions, TextInput, TouchableOpacity, Platform } from 'react-native';
+import {SafeAreaView, View, Text, Image, ActivityIndicator, ScrollView, FlatList, StyleSheet, Dimensions, TextInput, TouchableOpacity, Platform } from 'react-native';
 import admob, { MaxAdContentRating, InterstitialAd, AdEventType, RewardedAd, BannerAd, TestIds, BannerAdSize } from '@react-native-firebase/admob';
 const { width: WIDTH } = Dimensions.get('window');
 const Devicewidth = Dimensions.get('window').width;
@@ -730,15 +730,20 @@ class CommercialList extends Component {
                                     <Image source={require("../../Assets/no_product.png")} style={{ height: Deviceheight/3, width: Deviceheight/3, resizeMode: "contain" }}></Image>
                                 </View>
                                 :
-                                <FlatList
-                                    keyExtractor={(item, index) => index.toString()}
-                                    data={newData}
-                                    showsVerticalScrollIndicator={false}
-                                    onEndReached={() => this.GetReched()}
-                                    onEndReachedThreshold={0.005}
-                                    ListFooterComponent={this.RenderLoadMore}
-                                    renderItem={({ item, index }) => this.renderItem(item, index)}
-                                />
+                                <SafeAreaView style={{ flex: 1 }}>
+
+                                    <FlatList
+                                        keyExtractor={(item, index) => index.toString()}
+                                        data={newData}
+                                        scrollEnabled={true}
+                                        showsVerticalScrollIndicator={false}
+                                        onEndReached={() => this.GetReched()}
+                                        onEndReachedThreshold={0.005}
+                                        ListFooterComponent={this.RenderLoadMore}
+                                        renderItem={({ item, index }) => this.renderItem(item, index)}
+                                    />
+                                </SafeAreaView>
+
                         }
                     </View>
                     <Footer pageName={this.props.route.name} onShowAllProducts={this.onShowAllProductsHandler} navigation={this.props.navigation} catdata="freebies" />

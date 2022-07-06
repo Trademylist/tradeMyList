@@ -151,20 +151,20 @@ const ProductListing = (props) => {
                 :
                 null
             }
-            <View style={{ width: '100%', alignSelf: 'flex-start', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', flexWrap: 'wrap',}}>
+            <View style={{ width: '100%', paddingTop:10, alignSelf: 'flex-start', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', flexWrap: 'wrap',}}>
                 {
                     props.category == "Freebies" ?
-                    <Text style={{ fontFamily:"Roboto-Bold" , color: "#333", fontSize: 14, textAlign: 'center', alignSelf: 'center', fontWeight: 'bold', marginRight: 10 }}>{"Free"}</Text>
+                    <Text style={{ fontFamily:"Roboto-Bold" , color: "#333", fontSize: 12, textAlign: 'center', alignSelf: 'center', fontWeight: 'bold', marginRight: 10 }}>{"Free"}</Text>
                     :
-                    <Text style={{ fontFamily:"Roboto-Bold" , color: "#333", fontSize: 14, textAlign: 'center', alignSelf: 'center', fontWeight: 'bold', marginRight: 10 }}>{(props.category != "Jobs" && props.category != "Freebies" && props.category != "Services") && (props.currency == "INR" ? "₹ " : props.currency == "USD" ? "$ " : `${props.currency} `)} {(props.category != "Jobs" && props.category != "Freebies" && props.category != "Services") && props.inr}</Text>
+                    <Text style={{ fontFamily:"Roboto-Bold" , color: "#333", fontSize: 12, textAlign: 'center', alignSelf: 'center', fontWeight: 'bold', marginRight: 10 }}>{(props.category != "Jobs" && props.category != "Freebies" && props.category != "Services") && (props.currency == "INR" ? "₹ " : props.currency == "USD" ? "$ " : `${props.currency} `)} {(props.category != "Jobs" && props.category != "Freebies" && props.category != "Services") && props.inr}</Text>
                 }
                 {/* {
                     props.inr &&
                     
                 } */}
-                <Text style={{ fontFamily:"Roboto-Bold" , color: "#333", fontSize: 14, textAlign: 'center', alignSelf: 'center', fontWeight: 'bold', }}>{getDate(props.date)} ago </Text>
+                <Text style={{ fontFamily:"Roboto-Bold" , color: "#333", fontSize: 12, textAlign: 'center', alignSelf: 'center', fontWeight: 'bold', }}>{getDate(props.date)} ago </Text>
             </View>
-            <Text style={{ fontFamily:"Roboto-Bold", marginTop: 2, color: "#333", fontSize: 12, textAlign: 'left', alignSelf: 'center', width: Devicewidth / 2.2, paddingLeft: 13,}}>{props.desc}</Text>
+            <Text style={{ fontFamily:"Roboto-Bold", marginTop: 8, color: "#333", fontSize: 12, textAlign: 'left', alignSelf: 'center', width: Devicewidth / 2.2, paddingLeft: 13,}}>{props.desc}</Text>
             
         </TouchableOpacity>
     )
