@@ -17,6 +17,11 @@ target 'Trade' do
   pod 'RNImageCropPicker', :path => '../node_modules/react-native-image-crop-picker'
 
   pod 'RNIap', :path => '../node_modules/react-native-iap'
+  
+  pod "Firebase/Messaging"
+  pod 'RNFBApp', :path => '../node_modules/@react-native-firebase/app'
+  pod 'RNFBMessaging', :path => '../node_modules/@react-native-firebase/messaging'
+  pod 'RNCPushNotificationIOS', :path => '../node_modules/@react-native-community/push-notification-ios'
 
   target 'TradeTests' do
     inherit! :complete

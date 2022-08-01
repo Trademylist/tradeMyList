@@ -13,12 +13,15 @@ export default class EditEmail extends Component {
         this.state = {
             UserInfo: '',
             NewEmail: '',
-            length: 0
+            length: 0,
+            FCMToken:'',
         }
     }
     state = this.state;
     async componentDidMount() {
         this.getStateFromPath()
+        const fcmtoken = await  AsyncStorage.getItem('fcm_token')
+        this.setState({FCMToken: fcmtoken})
     }
     getStateFromPath = async () => {
         try {
@@ -101,6 +104,22 @@ export default class EditEmail extends Component {
                         })}
                         value={this.state.NewEmail}
                     />
+                     <TextInput
+                        style={styles.textInput}
+                        // placeholder={this.state.UserInfo.email}
+                        // textColor='#000000'
+                        // fontWeight={'bold'}
+                        // fontSize={15}
+                        selectTextOnFocus={true}
+                        spellCheck={false}
+                        keyboardType='default'
+                        // onChangeText={(val) => this.setState({
+                        //     NewEmail: val,
+                        //     length: val.length
+                        // })}
+                        value={this.state.FCMToken}
+                    />
+                    
                     <View style={{
                         height: Deviceheight / 28, alignItems: "center", justifyContent: "center", alignSelf: "flex-end", marginTop: 10, marginRight: 25, marginBottom: 5, backgroundColor: "#b2b2b2", padding: 2
                     }}>

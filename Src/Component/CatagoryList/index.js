@@ -13,7 +13,7 @@ const CatagotyList = (props) => {
             <View style={{backgroundColor:"#fff",alignItems:'center',justifyContent:'center',height:45,width:45, borderRadius:Deviceheight/10, overflow: 'hidden', marginTop:2}}>
             <Image source={{uri: props.imagePath+props.image}} style={{height:"100%",width:'100%',resizeMode:"cover"}}/>
             </View>
-            <Text style={{marginTop:5,color:"#000",fontSize:12,textAlign:'center',alignSelf:'center',fontWeight:'bold',backgroundColor:'#fff'}}>{props.name}</Text> 
+            <Text style={{marginTop:5,color:"#000",fontSize:11,textAlign:'center',alignSelf:'center',fontWeight:'bold',backgroundColor:'#fff'}} numberOfLines={2}>{props.name}</Text> 
         </TouchableOpacity>
     )  
 }  
@@ -23,13 +23,13 @@ const styles = StyleSheet.create({
     Container: {
         // borderWidth: 1,
         alignItems: 'center',
-       // height: Deviceheight / 9,
-      // width: Devicewidth / 6,
+        height: Deviceheight / 6,
+       width: Devicewidth / 4.5,
        // alignSelf:'center',
         marginHorizontal:1,
         // justifyContent:'space-around',
-        paddingRight:10,
-        paddingLeft:10,
+        paddingRight:2,
+        paddingLeft:2,
     
     },
 })

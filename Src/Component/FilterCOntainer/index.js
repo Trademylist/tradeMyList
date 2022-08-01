@@ -22,7 +22,9 @@ import {connect} from 'react-redux';
 import { RESET_SLIDER_DISTANCE, STORE_SLIDER_DISTANCE } from '../../store/actions';
 
 Geocoder.init("AIzaSyAsJT9SLCfV4wvyd2jvG7AUgXYsaTTx1D4");
-const API_KEY = 'AIzaSyCPCwSH6Wtnu0dAJUapPeU2NWTwCmlNQhY';
+//const API_KEY = 'AIzaSyCPCwSH6Wtnu0dAJUapPeU2NWTwCmlNQhY';
+const API_KEY = 'AIzaSyCZ9kuVUyhZxeFR3cPnebauMlffVOhoM1Y'
+
 
 class FilterCOntainer  extends Component {
 

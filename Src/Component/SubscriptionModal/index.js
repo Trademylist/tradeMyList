@@ -23,14 +23,15 @@ const SubscribeModal = (props) => {
 
   const getSubDetails = () => {
     if(subscription.length == 0){
-      const itemSkus = ['sub1day', 'sub1week', 'sub1month']
+      //const itemSkus = ['sub1day', 'sub1week', 'sub1month']
+      const itemSkus = ['com.TradeReact.daily', 'com.TradeReact.weekly','com.TradeReact.monthly']
       RNIap.getSubscriptions(itemSkus).then((sub_res) => {
         console.warn(" get Subscriptions", sub_res);
-        Alert.alert('Subscription',sub_res)
+       // Alert.alert('Subscription',sub_res)
         SetSubscription(sub_res)
       }).catch((error) => {
         console.log('errorA',error);
-        Alert.alert('IAP Error',error)
+       // Alert.alert('IAP Error',error)
       })
     }
   }
@@ -42,9 +43,11 @@ const SubscribeModal = (props) => {
       Subscription_Id = subscription[0].productId
     }
     else if (SubChoice === 'two') {
+      //console.warn('sub',subscription[1].description)
       Subscription_Id = subscription[2].productId
     }
     else if (SubChoice === 'three') {
+     // console.warn('sub',subscription[2].price)
       Subscription_Id = subscription[1].productId
     }
     else {
@@ -167,31 +170,31 @@ const SubscribeModal = (props) => {
                     {SubChoice != "one" ?
                       <TouchableOpacity onPress={() => SetSubChoice('one')} style={styles.subscriptionBox}>
                         <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#4e00b5", textAlign: "center", alignSelf: 'center', fontWeight: "bold", }}>Daily</Text>
-                        <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#4e00b5", textAlign: "center", alignSelf: 'center', fontWeight: "bold", marginTop: 10 }}>{subscription[2].currency == 'INR' ? '₹' : '$'} {subscription[0].originalPrice}</Text>
+                        <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#0000FF", textAlign: "center", alignSelf: 'center', fontWeight: "bold", marginTop: 10 }}>{subscription[0].currency == 'INR' ? '₹' : '$'} {subscription[0].price}</Text>
                       </TouchableOpacity>
                       :
                       <TouchableOpacity style={styles.subscriptionSelectedBox}>
                         <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#4e00b5", textAlign: "center", alignSelf: 'center', fontWeight: "bold", }}>Daily</Text>
-                        <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#4e00b5", textAlign: "center", alignSelf: 'center', fontWeight: "bold", marginTop: 10 }}>{subscription[2].currency == 'INR' ? '₹' : '$'} {subscription[0].originalPrice}</Text>
+                        <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#0000FF", textAlign: "center", alignSelf: 'center', fontWeight: "bold", marginTop: 10 }}>{subscription[0].currency == 'INR' ? '₹' : '$'} {subscription[0].price}</Text>
                       </TouchableOpacity>
                     }
 
-                    {SubChoice != "two" ?
+                   {SubChoice != "two" ?
                       <TouchableOpacity onPress={() => SetSubChoice('two')} style={styles.subscriptionBox}>
                         <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#4e00b5", textAlign: "center", alignSelf: 'center', fontWeight: "bold", }}>Weekly</Text>
-                        <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#4e00b5", textAlign: "center", alignSelf: 'center', fontWeight: "bold", marginTop: 10 }}>{subscription[2].currency == 'INR' ? '₹' : '$'} {subscription[1].originalPrice}</Text>
+                        <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#0000FF", textAlign: "center", alignSelf: 'center', fontWeight: "bold", marginTop: 10 }}>{subscription[2].currency == 'INR' ? '₹' : '$'} {subscription[2].price}</Text>
                       </TouchableOpacity>
                       :
                       <TouchableOpacity style={styles.subscriptionSelectedBox}>
                         <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#4e00b5", textAlign: "center", alignSelf: 'center', fontWeight: "bold", }}>Weekly</Text>
-                        <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#4e00b5", textAlign: "center", alignSelf: 'center', fontWeight: "bold", marginTop: 10 }}>{subscription[2].currency == 'INR' ? '₹' : '$'} {subscription[1].originalPrice}</Text>
+                        <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#0000FF", textAlign: "center", alignSelf: 'center', fontWeight: "bold", marginTop: 10 }}>{subscription[2].currency == 'INR' ? '₹' : '$'} {subscription[2].price}</Text>
                       </TouchableOpacity>
                     }
-
+ 
                     {SubChoice != "three" ?
                       <TouchableOpacity onPress={() => SetSubChoice('three')} style={styles.subscriptionBox}>
                         <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#4e00b5", textAlign: "center", alignSelf: 'center', fontWeight: "bold", }}>Monthly</Text>
-                        <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#4e00b5", textAlign: "center", alignSelf: 'center', fontWeight: "bold", marginTop: 10 }}>{subscription[2].currency == 'INR' ? '₹' : '$'} {subscription[2].originalPrice}</Text>
+                        <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#0000FF", textAlign: "center", alignSelf: 'center', fontWeight: "bold", marginTop: 10 }}>{subscription[1].currency == 'INR' ? '₹' : '$'} {subscription[1].price}</Text>
                         <View style={{ backgroundColor: '#4e00b5', width: Devicewidth / 4.5, height: Deviceheight / 30, borderRadius: 50, alignItems: "center", justifyContent: "center", position: 'absolute', top: -10 }}>
                           <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 14, color: "#fff", textAlign: "center", alignSelf: 'center', fontWeight: "bold", }}>Best Value</Text>
                         </View>
@@ -199,7 +202,7 @@ const SubscribeModal = (props) => {
                       :
                       <TouchableOpacity style={styles.subscriptionSelectedBox}>
                         <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#4e00b5", textAlign: "center", alignSelf: 'center', fontWeight: "bold", }}>Monthly</Text>
-                        <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#4e00b5", textAlign: "center", alignSelf: 'center', fontWeight: "bold", marginTop: 10 }}>{subscription[2].currency == 'INR' ? '₹' : '$'} {subscription[2].originalPrice}</Text>
+                        <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#0000FF", textAlign: "center", alignSelf: 'center', fontWeight: "bold", marginTop: 10 }}>{subscription[1].currency == 'INR' ? '₹' : '$'} {subscription[1].price}</Text>
                         <View style={{ backgroundColor: '#4e00b5', width: Devicewidth / 4.5, height: Deviceheight / 30, borderRadius: 50, alignItems: "center", justifyContent: "center", position: 'absolute', top: -10 }}>
                           <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 14, color: "#fff", textAlign: "center", alignSelf: 'center', fontWeight: "bold", }}>Best Value</Text>
                         </View>

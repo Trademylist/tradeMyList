@@ -11,7 +11,7 @@ class LocalNotificationService {
       // (optional) Called when Token is generated (iOS and Android)
       onRegister: function (token) {
         console.log('TOKEN:', token);
-        AsyncStorage.setItem('fcm_token', token.token);
+        //AsyncStorage.setItem('fcm_token', token.token);
       },
       // (required) Called when a remote is received or opened, or local notification is opened
       onNotification: function (notification) {

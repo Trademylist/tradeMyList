@@ -10,7 +10,7 @@ import firebase from '@react-native-firebase/app';
 import messaging from '@react-native-firebase/messaging';
 import {localNotificationService} from './Src/Common/firebase/PushController';
 import {fcmService} from './Src/Common/firebase/FcmService';
-import { Alert } from 'react-native';
+import { Alert,Platform } from 'react-native';
 
 const store = createStore(reducer);
 
@@ -64,8 +64,9 @@ const App = () => {
   
    function onRegister(token) {
      console.log('App onRegister1', token);
-     Alert.alert('FcmToken',token)
-     AsyncStorage.setItem('fcm_token', token);
+     //Alert.alert('FcmToken',token,)
+     //Alert.alert('Alert Title', token, [ {text: 'Copy message', onPress: () => CopyAlertMessage(token), style: 'cancel'}, ], { cancelable: true});
+     //AsyncStorage.setItem('fcm_token', token);
  
    }
  
@@ -93,6 +94,9 @@ const App = () => {
     //isReadyRef.current = false;
     requestUserPermission()
    }
+   const CopyAlertMessage =(val) =>{
+    Clipboard.setString(val)
+   }
    const requestUserPermission = async() => {
     if (Platform.OS === 'ios') {
       const authStatus = await messaging().requestPermission();
@@ -100,14 +104,25 @@ const App = () => {
         authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
         authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
-      if (enabled) {
-        console.log('Authorization status:', authStatus);
+      // if (enabled) {
+      //   console.log('Authorization status:', authStatus);
+      //   const fcmToken = await firebase.messaging().getToken();  
+      //   if (fcmToken) {
+      //   // user has a device token set it into store
+      //   console.warn('fcmiOS', fcmToken)
+      //   await AsyncStorage.setItem('fcm_token', fcmToken);;  
+      // }
+      // else{
+      //   NotificationService.error(constant.error, 'Could not get the FCM token');
+      // }
 
         messaging()
           .getToken()
           .then(fcmToken => {
             if (fcmToken) {
-              console.warn('have tok=====', fcmToken);
+              console.warn('fcmiOS tok=====', fcmToken);
+              AsyncStorage.setItem('fcm_token', fcmToken)
+              
             } else {
               console.warn('have tok=====', 'Not registered');
             }
@@ -117,7 +132,7 @@ const App = () => {
           });
       }
     }
-  }
+  
   // const requestUserPermission = async ()=> {
   //   const authStatus = await messaging().requestPermission();
   //   const enabled =

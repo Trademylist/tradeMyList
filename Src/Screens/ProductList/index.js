@@ -28,7 +28,9 @@ import FilterCOntainer from '../../Component/FilterCOntainer';
 
 Geocoder.init("AIzaSyAsJT9SLCfV4wvyd2jvG7AUgXYsaTTx1D4");
 
-const API_KEY = 'AIzaSyCPCwSH6Wtnu0dAJUapPeU2NWTwCmlNQhY';
+//const API_KEY = 'AIzaSyCPCwSH6Wtnu0dAJUapPeU2NWTwCmlNQhY';
+const API_KEY = 'AIzaSyCZ9kuVUyhZxeFR3cPnebauMlffVOhoM1Y'
+
 
 class ProductList extends Component {
     constructor(props) {
@@ -512,7 +514,8 @@ class ProductList extends Component {
             return (
                 <View key={index} style={{ width: WIDTH - 10, flexDirection: 'row', marginLeft: 10, marginRight: 10, marginBottom: 30, marginTop: 20, height: 40, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center' }}>
                     <BannerAd size={BannerAdSize.SMART_BANNER}
-                        unitId={Platform.OS == 'ios' ? 'ca-app-pub-7489460627950788/2002515682' : 'ca-app-pub-3940256099942544/6300978111'}
+                        //unitId={Platform.OS == 'ios' ? 'ca-app-pub-7489460627950788/2002515682' : 'ca-app-pub-3940256099942544/6300978111'}
+                        unitId={'ca-app-pub-3940256099942544/6300978111'}
                         onAdLoaded={() => {
                             console.log('Advert loaded')
                           }}
@@ -658,11 +661,12 @@ class ProductList extends Component {
             <>
                 {this.state.ProductList.length >= 10 ?
                     this.state.LoadMore == true ?
-                        <View style={{ alignSelf: 'center', alignItems: "center", justifyContent: "center",marginRight:20, }}>
-                            <ActivityIndicator color={"#383ebd"} size='small' />
-                            <Text style={{ fontFamily:"Roboto-Bold" , fontFamily:"Roboto-Bold", alignSelf: "center", textAlign: "center", fontSize: 14, fontWeight: "bold", color: "#ed661c", marginTop: 10 }}>Loading more data...</Text>
+                        // <View style={{ alignSelf: 'center', alignItems: "center", justifyContent: "center",marginRight:20, }}>
+                        //     <ActivityIndicator color={"#383ebd"} size='small' />
+                        //     <Text style={{ fontFamily:"Roboto-Bold" , fontFamily:"Roboto-Bold", alignSelf: "center", textAlign: "center", fontSize: 14, fontWeight: "bold", color: "#ed661c", marginTop: 10 }}>Loading more data...</Text>
 
-                        </View>
+                        // </View>
+                        null
                         :
                         null
                     :
@@ -820,7 +824,7 @@ class ProductList extends Component {
                                         scrollEnabled={true}
                                         showsVerticalScrollIndicator={false}
                                         onEndReached={() => this.GetReched()}
-                                        onEndReachedThreshold={0.005} 
+                                        onEndReachedThreshold={0.5} 
                                         ListFooterComponent={this.RenderLoadMore}
                                         renderItem={({ item, index }) => this.renderItem(item, index)}
                                         showsHorizontalScrollIndicator={false}  
