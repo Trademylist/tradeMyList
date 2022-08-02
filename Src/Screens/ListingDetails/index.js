@@ -763,7 +763,7 @@ class ListingDetails extends Component {
                 alert(response.errorMessage);
                 return;
             }
-
+            console.warn('response',response)
             this.uploadFileToS3(response, true);
         });
     }
@@ -771,15 +771,37 @@ class ListingDetails extends Component {
     selectImageCamera() {
         ImagePicker.openCamera({
             cropping: false,
+            multiple:false,
         }).then(image => {
             this.setState({
                 AdditionalOptionVisible: false
             })
-            let array = [image];
+            let array = {
+                uri: image.path,
+                fileName: image.path.replace(/^.*[\\\/]/, ''),
+                type: image.mime
+            }
             this.uploadFileToS3(array, true);
             // this.getImageaddupload(array)
             //console.log("my image from camera", image);
         });
+        // ImagePicker.openCamera({
+        //     multiple: false,
+        // }).then(image => {
+        //     this.setState({ ImageOptionVisible: false });
+        //     let file = {
+        //         uri: image.path,
+        //         fileName: image.path.replace(/^.*[\\\/]/, ''),
+        //         type: image.mime
+        //     }
+        //     this.uploadFileToS3(file, false);
+        //     // this.getImageupload(image)
+        //     this.setState({
+        //         ImageSpinnerVisible: true
+        //     })
+        //     // this.getImageaddupload(image)
+        //     //console.log("my image from camera", image);
+        // });
     }
 
     HandelImageCross = async (ImageFile, fromWhere, ImageIndex) => {

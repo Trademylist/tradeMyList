@@ -292,6 +292,7 @@ class ProductList extends Component {
             }
             axios.post(`https://trademylist.com:8936/app_seller/all_product?page=${this.state.page}`, object, { headers: { 'x-access-token': value.token } })
                 .then(response => {
+                    console.warn('url',`https://trademylist.com:8936/app_seller/all_product?page=${this.state.page}`)
                     this.setState({
                         ProductList: response.data.data.product,
                         country: country,
@@ -372,7 +373,9 @@ class ProductList extends Component {
         try {
             const { latitude, longitude, country } = this.props.savedLocation;
             const value = await JSON.parse(await AsyncStorage.getItem('UserData'))
+            
             if (this.state.searchKey === '') {
+                this.setState({page:1})
                 if (value !== null) {
                     const object = {
                         "latitude": latitude,
@@ -381,6 +384,8 @@ class ProductList extends Component {
                     }
                     axios.post(`https://trademylist.com:8936/app_seller/all_product?page=${this.state.page}`, object, { headers: { 'x-access-token': value.token } })
                     .then(response => {
+                        // console.warn('url1',`https://trademylist.com:8936/app_seller/all_product?page=${this.state.page}`)
+                        // console.warn('res',response.data.data)
                         this.setState({
                             productListType: '',
                             ProductList: response.data.data.product,

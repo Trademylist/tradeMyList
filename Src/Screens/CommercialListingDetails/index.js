@@ -15,6 +15,7 @@ import CarTrimModal from "../../Component/CarTrimModal"
 import CatagoryModal from "../../Component/Catagorymodal"
 import MapModal from '../../Component/MapModal';
 import HeaderBackModal from '../../Component/ProductUploadBackModal';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import {
     launchCamera,
     launchImageLibrary
@@ -821,7 +822,11 @@ class CommercialListingDetails extends Component {
             this.setState({
                 AdditionalOptionVisible: false
             })
-            let array = [image];
+            let array = {
+                uri: image.path,
+                fileName: image.path.replace(/^.*[\\\/]/, ''),
+                type: image.mime
+            }
             this.uploadFileToS3(array, true);
             // this.getImageaddupload(array)
             // //console.log("my image from camera", image);
@@ -1222,6 +1227,7 @@ class CommercialListingDetails extends Component {
     render() {
         return (
             <SafeAreaView style={styles.Container}>
+                
                 <View style={styles.HeaderContainer}>
                     <StatusBar backgroundColor="#000000" />
 
@@ -1306,7 +1312,14 @@ class CommercialListingDetails extends Component {
                 {this.state.Submitloder == true ?
                     <ActivityIndicator style={{ alignSelf: "center", marginTop: Deviceheight / 2 }} animating={this.state.loder} color={"#383ebd"} size="large" />
                     :
-                    <ScrollView keyboardShouldPersistTaps='always' contentContainerStyle={{ width: Devicewidth, alignSelf: 'center' }}>
+                    <KeyboardAwareScrollView
+                    enableOnAndroid={true}
+                    enableResetScrollToCoords={false}
+                    bounces={false}
+                    contentInsetAdjustmentBehavior="always"
+                    overScrollMode="always"
+                    showsVerticalScrollIndicator={true}
+                >
                         <View style={{ flexDirection: "row", alignItems: "center", alignSelf: "center", justifyContent: 'center', width: Devicewidth, marginTop: 15, }}>
 
                             {/* For cover image */}
@@ -1674,7 +1687,7 @@ class CommercialListingDetails extends Component {
                         {/* <TouchableOpacity style={styles.btnContainer} onPress={this.submitProd} >
                             <Text style={styles.btnText} >{this.props.route.params.productId !== undefined ? 'Update' : 'Submit'}</Text>
                         </TouchableOpacity> */}
-                    </ScrollView>
+                    </KeyboardAwareScrollView>
                 }
             </SafeAreaView>
         )
