@@ -343,6 +343,7 @@ class ProductList extends Component {
                     categories : response.data.data.category,
                     imagePath : response.data.data.categoryImageUrl
                 }
+                console.warn('catlist',response.data.data.categoryImageUrl)
                 this.props.onStoreCategoryList(obj);
             } else {
                 console.log('category fetch error', error.message);
@@ -740,7 +741,7 @@ class ProductList extends Component {
         const newData = this.modifyData(this.state.ProductList);
         const {savedLocation, categoryList, categoryImageBaseUrl} = this.props;
 
-
+        console.warn('categorylist',categoryList)
         return (
             <>
                 <View style={styles.Container}>

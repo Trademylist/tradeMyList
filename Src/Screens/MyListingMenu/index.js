@@ -208,6 +208,7 @@ export default class MyListingMenu extends Component {
     getStateFromPath = async () => {
         try {
             const userdata = JSON.parse(await AsyncStorage.getItem('UserData'));
+            console.warn('image',userdata.login_type)
             this.setState({
                 UserData: userdata
             })
@@ -391,12 +392,13 @@ export default class MyListingMenu extends Component {
                                 }}>
                                     {this.state.UserData.login_type == null ?
                                         <Image source={require("../../Assets/Email_Black.png")} style={{ height: 15, width: 16 }}></Image>
+                                        
                                         :
                                         this.state.UserData.login_type == "facebook" ?
-                                            <FbIcon name='facebook-square' style={{ fontSize: 12, marginTop: 0 }} />
+                                        <FbIcon name='facebook-square' style={{height:25,width:23}} size={20} />
                                             :
                                             this.state.UserData.login_type == "google" ?
-                                                <Icon name='google' style={{ fontSize: 12, marginTop: 0 }} />
+                                            <Icon name='google' style={{height:25,width:23 }} size={20}/>
                                                 :
                                                 null
                                     }
@@ -407,7 +409,7 @@ export default class MyListingMenu extends Component {
                             height: 80,
                             width: 80, alignItems: "center", justifyContent: "center", alignSelf: "center", borderRadius: 360, backgroundColor: '#fff', padding: 2
                         }}>
-                            {this.state.UserData.image !== '' ?
+                            {this.state.UserData.image !== '' && this.state.UserData.image!=null?
                                 <Image source={{ uri: this.state.UserData.image }} style={{ height: "100%", width: "100%", borderRadius: 360 }}></Image>
                                 :
                                 <Image source={require("../../Assets/default-avatar.png")} style={{ height: "100%", width: "100%", borderRadius: 360 }}></Image>

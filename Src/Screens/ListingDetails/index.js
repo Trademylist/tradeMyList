@@ -16,7 +16,8 @@ import CarMakeModal from "../../Component/CarMakeModal"
 import CarModelModal from "../../Component/CarModelModal"
 import CarTrimModal from "../../Component/CarTrimModal"
 import CatagoryModal from "../../Component/Catagorymodal"
-import MapModal from '../../Component/MapModal/oldmap';
+//import MapModal from '../../Component/MapModal/oldmap';
+import MapModal from '../../Component/MapModal';
 import HeaderBackModal from '../../Component/ProductUploadBackModal';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -891,7 +892,7 @@ class ListingDetails extends Component {
                 this.setState({
                     Submitloder: true
                 })
-                console.log('state ', this.state)
+                console.log('state ', this.state.coverImage)
                 const { coverImage, AdditionalImages, Productname, Productprice, ProductDescription, lat, lng, sellerAddress, selectedProdCategory, Jobname, JobDescription, Jobtype, TypeofhousingProperty, TypeOfhousingListing, noofBedrooms, noofBathRooms, CarMake, CarModel, CarTrim, sellerType, TransMission, slider1value, slider2value, currency, country } = this.state;
                 let Data = {}
                 const coordinatesDiff = [
@@ -1710,7 +1711,7 @@ class ListingDetails extends Component {
                             {
                                 this.state.selectedProdCategory == "Jobs" &&
                                 (
-                                    this.state.coverImage == '' || this.state.Jobname == '' || this.state.Jobtype == '' || this.state.sellerAddress == '' || this.state.JobDescription == '' ?
+                                     this.state.Jobname == '' || this.state.Jobtype == '' || this.state.sellerAddress == '' || this.state.JobDescription == '' ?
                                         <View style={styles.btnContainer} >
                                             <Text style={styles.btnText} >{this.props.route.params.productId !== undefined ? 'Update' : 'Submit'}</Text>
                                         </View>

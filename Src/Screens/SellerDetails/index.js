@@ -10,6 +10,7 @@ import ProductListing from "../../Component/SellerProductListing"
 import AsyncStorage from '@react-native-community/async-storage';
 import StarRating from 'react-native-star-rating';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import FbIcon from 'react-native-vector-icons/AntDesign';
 import DotIcon from 'react-native-vector-icons/Entypo';
 import BlockandReportOptionModal from "../../Component/ReportBlockChooseModal/index"
 import BlockModal from "../../Component/BlockModal/index"
@@ -276,7 +277,7 @@ export default class SellerDetails extends Component {
                                         fullStarColor={'#ffffff'}
                                     />
                                 </TouchableOpacity>
-                                <Text style={{ fontFamily:"Roboto-Regular" , color: '#000', fontSize: 16, fontWeight: 'bold', textAlign: 'left', marginTop: 5, marginLeft: 5 }}>({this.state.UserReviewCount})</Text>
+                                <Text style={{ fontFamily:"Roboto-Regular" , color: '#000', fontSize: 16, fontWeight: 'bold', textAlign: 'left', marginTop: 5, marginLeft: 5 }}>{this.state.UserReviewCount}</Text>
                             </View>
                             <View style={{
                                 height: Deviceheight / 28,
@@ -297,13 +298,13 @@ export default class SellerDetails extends Component {
                                         <Image source={require("../../Assets/Email_Black.png")} style={{ height:15, width: 16}}></Image>
                                         :
                                         this.state.UserData.login_type == "facebook" ?
-                                            <Icon name='facebook' style={{ fontSize: 12, marginTop: 0 }} />
+                                        <FbIcon name='facebook-square' style={{height:25,width:23}} size={20} />
                                             :
                                             this.state.UserData.login_type == "google" ?
-                                                <Icon name='google' style={{ fontSize: 12, marginTop: 0 }} />
+                                                <Icon name='google' style={{height:25,width:23}} size={20} />
                                                 :
                                                 null
-                                    }h
+                                    }
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -311,7 +312,7 @@ export default class SellerDetails extends Component {
                             height: 90,
                             width: 90, alignItems: "center", justifyContent: "center", alignSelf: "center", borderRadius: 360, backgroundColor: '#fff', padding: 2
                         }}>
-                            {this.state.UserData.image !== '' ?
+                            {this.state.UserData.image !== '' && this.state.UserData.image!=null ?
                                 <Image source={{ uri: this.state.UserData.image }} style={{ height: "100%", width: "100%", borderRadius: 360 }}></Image>
                                 :
                                 <Image source={require("../../Assets/default-avatar.png")} style={{ height: "100%", width: "100%", borderRadius: 360 }}></Image>

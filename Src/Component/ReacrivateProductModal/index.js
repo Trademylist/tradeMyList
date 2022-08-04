@@ -21,9 +21,9 @@ const ReactiveProductModal = (props) => {
   },[])
   const getSubDetails = () => {
     
-    const itemSkus = ['reactive_product']
+    const itemSkus = ['reactivate_product']
     RNIap.getProducts(itemSkus).then((sub_res) => {
-      //console.log(" get Subscriptions products", sub_res);
+      console.log(" get Subscriptions products", sub_res);
       SetProduct(sub_res)
     }).catch((error) => {
       //console.log(error.message);

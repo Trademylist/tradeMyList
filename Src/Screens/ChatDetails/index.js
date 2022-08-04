@@ -314,11 +314,11 @@ function ChatDetails(props) {
         <View style={{ flex: 1 }}>
             <View style={{ height: "100%" }}>
                 <View style={{ flex: 1 }}>
-                <ScrollView
+                {/* <ScrollView
                 style={{
                     width: "100%",
                 }}
-                >
+                > */}
                  <View
       style={{ alignSelf: "center", alignItems: "center", width: Devicewidth, height: Deviceheight / 12, flexDirection: "row", backgroundColor: "#fff", elevation: 5 }}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={{
@@ -427,7 +427,7 @@ function ChatDetails(props) {
       </View>
 
       <View style={{
-        flex: 2,  marginBottom:40,padding:10,height:Deviceheight/2,
+        flex:2,  marginBottom:0,padding:10,height:Deviceheight/1.45,
       }}>
         <GiftedChat
           messages={messages}
@@ -466,7 +466,7 @@ function ChatDetails(props) {
           }}
         />
       </View>
-                </ScrollView>
+                {/* </ScrollView> */}
                 </View>
                   <View
                       style={{

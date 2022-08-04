@@ -8,7 +8,8 @@ import {
     Dimensions,
     StatusBar,
     TouchableOpacity,
-    ToastAndroid
+    ToastAndroid,
+    SafeAreaView
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import Header from "../../Component/HeaderBack"
@@ -282,15 +283,15 @@ export default class SelectBuyer extends Component {
     render() {
         return (
             <>
-                <View style={styles.Container}>
+                <SafeAreaView style={styles.Container}>
                     <View style={styles.HeaderContainer}>
                         <StatusBar backgroundColor="#000000" />
                         <View style={styles.HeadrIconContainer}>
                             <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{
-                                height: Deviceheight / 50,
-                                width: Devicewidth / 25, alignItems: "center", justifyContent: "center", alignSelf: "center", marginLeft: 20,
+                                height: Deviceheight / 30,
+                                width: Devicewidth / 15, alignItems: "center", justifyContent: "center", alignSelf: "center", marginLeft: 20, 
                             }}>
-                                <Icon name='close-a' size={12} color={'#000'} />
+                                <Icon name='close-a' size={15} color={'#000'} />
                             </TouchableOpacity>
                             <Text style={{ fontFamily:"Roboto-Bold" , color: '#434343', fontSize: 20, fontWeight: 'bold', textAlign: 'center', alignSelf: 'center', width: Devicewidth / 1.9, marginLeft: 60, }}>Select a buyer</Text>
                         </View>
@@ -328,7 +329,7 @@ export default class SelectBuyer extends Component {
                     <TouchableOpacity onPress={() => this.submitFinal()} style={{ height: Deviceheight / 12, width: Devicewidth / 1.01, paddingHorizontal: 5, alignSelf: 'flex-end', alignItems: 'center', justifyContent: "center" }}>
                         <Text style={{ fontFamily:"Roboto-Bold" , color: "#000", fontSize: 17, fontWeight: 'bold', textAlign: 'center', alignSelf: 'center', }}>Sold it somewhere else</Text>
                     </TouchableOpacity>
-                </View>
+                </SafeAreaView>
             </>
         )
     }

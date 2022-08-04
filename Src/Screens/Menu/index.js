@@ -419,10 +419,10 @@ class Menu extends Component {
                                             <Image source={require("../../Assets/Email_Black.png")} style={{ height:15, width: 16 }}></Image>
                                             :
                                             this.state.LoginType == "facebook" ?
-                                                <FbIcon name='facebook-square' style={{ fontSize: 12, marginTop: 0 }} />
+                                                <FbIcon name='facebook-square' sstyle={{height:25,width:23}} size={20} />
                                                 :
                                                 (String(this.state.LoginType).toLowerCase() == "google" || String(this.state.LoginType).toLowerCase() == "g") ?
-                                                    <Icon name='google' style={{ fontSize: 12, marginTop: 0 }} />
+                                                    <Icon name='google' style={{height:25,width:23}} size={20} />
                                                     :
                                                     null
                                     }
