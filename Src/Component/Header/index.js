@@ -203,7 +203,8 @@ const Header = (props) => {
               {/*{ cancelIcon && */}
                 <TouchableOpacity
                   style={styles.closeButtonParent}
-                  onPress={() => ref_input.current.clear()}>
+                  onPress={() => {ref_input.current.clear(),
+                   props.getsearchKey('')}}>
                   <Image
                     style={styles.closeButton}
                     source={require('../../Assets/cancel.png')}

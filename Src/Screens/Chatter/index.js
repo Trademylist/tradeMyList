@@ -202,6 +202,7 @@ export default class Chatter extends Component {
         }
         const productData = await Promise.all([...array]);
         const userData = await Promise.all([...users]);
+        console.warn('productdata',productData)
         const updatedChatHeads = chatHeads.map(chatHead => {
             productData.forEach(pro => {
                 if(chatHead.product_id == pro.data.data.product._id){

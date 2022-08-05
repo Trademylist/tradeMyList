@@ -797,7 +797,7 @@ class ProductList extends Component {
                         />
                     </View>
 
-                    <View style={{ flexDirection: 'row', width: Devicewidth, alignItems: 'center', justifyContent: 'space-between', alignSelf: 'center', marginTop: 10, paddingLeft: 20 }}>
+                    <View style={{ flexDirection: 'row', width: Devicewidth, alignItems: 'center', justifyContent: 'space-between', alignSelf: 'center', top:-10, paddingLeft: 20 }}>
                         <Text style={{ fontFamily:"Roboto-Regular",fontWeight:'bold', fontSize: 18, textAlign: 'left', width: Devicewidth / 1.4 }}>{savedLocation.address}</Text>
                         <View style={{ width: Devicewidth / 6, alignItems: "center", flexDirection: 'row', }}>
                             <TouchableOpacity onPress={() => this.handelMap()}><Text style={{ fontFamily:"Roboto-Bold" , fontFamily:"Roboto-Bold", color: '#ed661c', fontSize: 16, fontWeight: 'bold', textAlign: 'left' }}>Edit</Text></TouchableOpacity>
