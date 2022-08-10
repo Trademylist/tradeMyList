@@ -45,6 +45,7 @@ class Menu extends Component {
         try {
             const value = await JSON.parse(await AsyncStorage.getItem('UserData'))
             const LoginType = await AsyncStorage.getItem('LoginType')
+            console.warn('logintype',LoginType)
             if (value !== null) {
 
                 await axios.get("https://trademylist.com:8936/user/" + value.userid, {
@@ -514,9 +515,10 @@ class Menu extends Component {
                             </View>
                         </TouchableOpacity>
 
-                        {String(this.state.LoginType).toLowerCase() === "facebook" || String(this.state.LoginType).toLowerCase() === "google" ?
+                        {/* {String(this.state.LoginType).toLowerCase() === "facebook" || String(this.state.LoginType).toLowerCase() === "google" ?
                             null
-                            :
+                            : */}
+                             {this.state.LoginType == null  &&
                             <>
                                 {/* Edit Email */}
                                 <TouchableOpacity onPress={() => this.HandelEditEmail()} style={{ flexDirection: 'row', alignSelf: "center", borderBottomColor: "#dedede", borderBottomWidth: 1, width: Devicewidth / 1.1, height: Deviceheight / 14, justifyContent: 'space-between' }}>
@@ -538,6 +540,7 @@ class Menu extends Component {
                                 </TouchableOpacity>
 
                                 {/* Change Password */}
+                                
                                 <TouchableOpacity onPress={() => this.HandelChangePasswword()} style={{ flexDirection: 'row', alignSelf: "center", borderBottomColor: "#dedede", borderBottomWidth: 1, width: Devicewidth / 1.1, height: Deviceheight / 14, justifyContent: 'space-between' }}>
                                     <View style={{ flexDirection: 'row', alignSelf: "center", width: Devicewidth / 1.5, height: Deviceheight / 14, justifyContent: 'flex-start', paddingLeft: 10 }}>
                                         <View style={{

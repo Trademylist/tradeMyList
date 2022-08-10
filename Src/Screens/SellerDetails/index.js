@@ -271,13 +271,13 @@ export default class SellerDetails extends Component {
                                         halfStar={'star-half-full'}
                                         iconSet={'FontAwesome'}
                                         maxStars={5}
-                                        containerStyle={{ width: Devicewidth / 4, justifyContent: 'space-around', height: Deviceheight / 50, alignItems: "center", }}
+                                        containerStyle={{ width: Devicewidth / 4, justifyContent: 'space-around', height: Deviceheight / 40, alignItems: "center", }}
                                         starSize={18}
                                         rating={this.state.UserStarCount}
                                         fullStarColor={'#ffffff'}
                                     />
                                 </TouchableOpacity>
-                                <Text style={{ fontFamily:"Roboto-Regular" , color: '#000', fontSize: 16, fontWeight: 'bold', textAlign: 'left', marginTop: 5, marginLeft: 5 }}>{this.state.UserReviewCount}</Text>
+                                <Text style={{ fontFamily:"Roboto-Regular" , color: '#000', fontSize: 16, fontWeight: 'bold', textAlign: 'left', marginTop: 10, marginLeft: 8 }}>{this.state.UserReviewCount}</Text>
                             </View>
                             <View style={{
                                 height: Deviceheight / 28,

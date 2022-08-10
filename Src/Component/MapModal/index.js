@@ -33,7 +33,7 @@ class MapModal extends Component {
     super(props)
     this.state = {
       sliderOneChanging: false,
-      slider1value: 1,
+      slider1value: 500,
       isShowingResults: false,
       searchResults: [],
       locationNow: '',
