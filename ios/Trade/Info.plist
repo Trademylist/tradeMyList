@@ -25,6 +25,16 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.TradeReact</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>trade</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.googleusercontent.apps.1093260793182-lfhsk45esfqbr6cuogds4sqnanp6mda6</string>

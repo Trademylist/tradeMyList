@@ -193,7 +193,7 @@ export default class ProductDetails extends Component {
             const productId = this.props.route.params.productId;
             const process = this.props.route.params.process
             //const ProductLink = 'https://trademylist.com/product-details/?id=' + productId;
-            const ProductLink = 'https://trademylist.com/product-details/' + productId + "/" + process;
+            const ProductLink = 'trade://trademylist.com/product-details/' + productId + "/" + process;
             const ShareLink = ProductName !== undefined ? ProductName + "" + ProductLink : ProductLink
             await Share.share({
                 title: ProductName,
@@ -614,7 +614,7 @@ export default class ProductDetails extends Component {
                                         images={this.state.productImages}
                                         sliderBoxHeight={Deviceheight / 2.8}
                                         resizeMethod={'resize'}
-                                        resizeMode={'cover'}
+                                        resizeMode={'stretch'}
                                         currentImageEmitter={index =>
                                             this.setState({
                                                 ImageCurrentIndex: index
@@ -877,8 +877,8 @@ export default class ProductDetails extends Component {
                                                 horizontal={true}
                                                 showsHorizontalScrollIndicator={false}
                                                 renderItem={({ item }) => (
-                                                    <TouchableOpacity style={{ borderRadius: 50, alignItems: 'center', justifyContent: "center", backgroundColor: '#363ed9', marginRight: 20, height:48, padding: 10, }} onPress={() => this.getMessage(item.name)}>
-                                                        <Text style={{ fontFamily: "Roboto-Medium", fontSize: 14, textAlign: 'center', color: "#fff" }}>{item.name}</Text>
+                                                    <TouchableOpacity style={{ borderRadius: 50, alignItems: 'center', justifyContent: "center", backgroundColor: '#363ed9', marginRight: 20, height:42,paddingHorizontal:18  }} onPress={() => this.getMessage(item.name)}>
+                                                        <Text style={{ fontFamily: "Roboto-Medium", fontSize: 15, textAlign: 'center', color: "#fff",}}>{item.name}</Text>
                                                     </TouchableOpacity>
                                                 )}
                                                 keyExtractor={item => item.key}

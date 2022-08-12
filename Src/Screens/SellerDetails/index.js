@@ -257,12 +257,12 @@ export default class SellerDetails extends Component {
                         seller_Id={this.props.route.params.sellerId}
                     ></ReportModal>
                     <View style={{ backgroundColor: 'orange', height: Deviceheight / 6, width: Devicewidth, paddingHorizontal: 20, alignSelf: 'center', alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <View style={{ alignItems: 'flex-start', height: Deviceheight / 8, width: Devicewidth / 2.5 }}>
+                        <View style={{ alignItems: 'flex-start', height: Deviceheight / 6, width: "65%",justifyContent:"space-around",flexDirection:"column" }}>
                             <Text style={{ fontFamily:"Roboto-Bold" , color: "#000", fontSize: 20, fontWeight: 'bold', textAlign: 'left', alignSelf: 'flex-start', marginTop: 5 }}>{this.state.UserData.username}</Text>
                             <View style={{ alignItems: 'flex-start', alignSelf: 'flex-start', width: Devicewidth / 2.5, height: Deviceheight / 26, flexDirection: 'row', }}>
                                 <TouchableOpacity style={{
                                     height: Deviceheight / 50,
-                                    width: Devicewidth / 4, alignSelf: 'flex-start', marginTop: 10
+                                    width: Devicewidth / 4, alignSelf: 'flex-start'
                                 }}>
                                     <StarRating
                                         disabled={false}
@@ -277,11 +277,11 @@ export default class SellerDetails extends Component {
                                         fullStarColor={'#ffffff'}
                                     />
                                 </TouchableOpacity>
-                                <Text style={{ fontFamily:"Roboto-Regular" , color: '#000', fontSize: 16, fontWeight: 'bold', textAlign: 'left', marginTop: 10, marginLeft: 8 }}>{this.state.UserReviewCount}</Text>
+                                <Text style={{ fontFamily:"Roboto-Regular" , color: '#000', fontSize: 16, fontWeight: 'bold', textAlign: 'left', marginLeft: 8 }}>{this.state.UserReviewCount}</Text>
                             </View>
                             <View style={{
                                 height: Deviceheight / 28,
-                                width: Devicewidth / 3, alignItems: "center", justifyContent: "center", alignSelf: 'flex-start', flexDirection: 'row', justifyContent: "space-around", marginTop: 2
+                                width: Devicewidth / 3, alignItems: "center", justifyContent: "center", alignSelf: 'flex-start', flexDirection: 'row', justifyContent: "space-around", 
                             }}>
                                <View style={{
                                     height: 60,
@@ -290,6 +290,7 @@ export default class SellerDetails extends Component {
                                     <Image source={require("../../Assets/Verified1.png")} style={{ height: 20, width: 20 }}></Image>
                                 </View> 
                                 <Text style={{ fontFamily:"Roboto-Regular" , color: "#000", fontSize: 14, textAlign: 'center', alignSelf: 'center', }}>Verified with :</Text>
+                                <View style={{width:"35%"}}>
                                 <TouchableOpacity style={{
                                     height:60,
                                     width: 20,marginLeft:5, alignItems: "center", justifyContent: "center", alignSelf: "center",
@@ -306,6 +307,7 @@ export default class SellerDetails extends Component {
                                                 null
                                     }
                                 </TouchableOpacity>
+                                </View>
                             </View>
                         </View>
                         <TouchableOpacity style={{

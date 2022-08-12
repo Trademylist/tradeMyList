@@ -487,8 +487,8 @@ function ChatDetails(props) {
                           horizontal={true}
                           showsHorizontalScrollIndicator={false}
                           renderItem={({ item }) => (
-                            <TouchableOpacity style={{ borderRadius: 50, alignItems: 'center', justifyContent: "center", backgroundColor: '#373ec2', marginRight: 20, height: 48, padding: 10, }} onPress={() => handleSendQuickMessage(item.name)}>
-                              <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 14, textAlign: 'center', color: "#fff" }}>{item.name}</Text>
+                            <TouchableOpacity style={{ borderRadius: 50, alignItems: 'center', justifyContent: "center", backgroundColor: '#373ec2', marginRight: 20, height: 48,  }} onPress={() => handleSendQuickMessage(item.name)}>
+                              <Text style={{ fontFamily:"Roboto-Bold" ,padding: 15, fontSize: 14, textAlign: 'center', color: "#fff" }}>{item.name}</Text>
                             </TouchableOpacity>
                           )}
                           keyExtractor={item => item.key}

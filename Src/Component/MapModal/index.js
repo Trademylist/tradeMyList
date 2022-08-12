@@ -3,16 +3,16 @@ import { View, Text, Modal, TouchableOpacity, StyleSheet, Dimensions, Image, Tex
 import AsyncStorage from '@react-native-community/async-storage';
 import Geocoder from 'react-native-geocoding';
 import Geolocation from 'react-native-geolocation-service';
- //import Geolocation from '@react-native-community/geolocation';
+//import Geolocation from '@react-native-community/geolocation';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import CustomMarker from '../MultiSlider/index'
 import MapView, { Marker, Circle, AnimatedRegion } from 'react-native-maps';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { STORE_SLIDER_DISTANCE } from '../../store/actions';
-import {Platform,Alert} from 'react-native';
+import { Platform, Alert } from 'react-native';
 import {
   check,
   PERMISSIONS,
@@ -28,7 +28,7 @@ const axios = require('axios');
 const API_KEY = 'AIzaSyCZ9kuVUyhZxeFR3cPnebauMlffVOhoM1Y'
 
 class MapModal extends Component {
-  
+
   constructor(props) {
     super(props)
     this.state = {
@@ -58,28 +58,28 @@ class MapModal extends Component {
   }
 
   componentDidUpdate = (prevProps, prevState) => {
-    if(this.props.savedLocation.latitude && this.props.savedLocation.latitude &&
-        ((this.props.savedLocation.latitude != prevProps.savedLocation.latitude) || (this.props.savedLocation.longitude != prevProps.savedLocation.longitude))){
-        this.setState({
-          locationData: this.props.savedLocation
-        })
+    if (this.props.savedLocation.latitude && this.props.savedLocation.latitude &&
+      ((this.props.savedLocation.latitude != prevProps.savedLocation.latitude) || (this.props.savedLocation.longitude != prevProps.savedLocation.longitude))) {
+      this.setState({
+        locationData: this.props.savedLocation
+      })
     }
-    if((this.props.sliderDistance != prevProps.sliderDistance)){
+    if ((this.props.sliderDistance != prevProps.sliderDistance)) {
       this.setState({
         slider1value: this.props.sliderDistance,
       })
+    }
   }
-}
-requestPermission = () =>{
-  if (Platform.OS === 'ios') {
-    request(PERMISSIONS.IOS.LOCATION_ALWAYS).then((result)=>{
+  requestPermission = () => {
+    if (Platform.OS === 'ios') {
+      request(PERMISSIONS.IOS.LOCATION_ALWAYS).then((result) => {
         console.warn(result)
         if (result === 'granted') {
           //Alert.alert("Location Permission Granted.");
           this.checkPermission();
         }
-        else if(result === 'unavailable' || result === 'blocked'){
-          request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE).then((result)=>{
+        else if (result === 'unavailable' || result === 'blocked') {
+          request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE).then((result) => {
             console.warn(result)
             if (result === 'granted') {
               //Alert.alert("Location Permission Granted.");
@@ -88,75 +88,78 @@ requestPermission = () =>{
           })
         }
         else {
-          Alert.alert("Oops..","Location Permission Not Granted");
+          Alert.alert("Oops..", "Location Permission Not Granted");
           //setAddress('4505 Roane Avenue, Hous.. ')
         }
-    });
-}
-}
-
-checkPermission = () => {
- 
-  if (Platform.OS === 'android') {
-      check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION).then((result) => {
-          if (result === 'granted') {
-              Geolocation.getCurrentPosition((position) => {
-                  const { coords } = position;
-                  console.warn(position)
-                 
-              }, (error) => {
-                  //Toast.show(error["message"]);
-                  console.warn(error)
-                  
-              }, {
-                  enableHighAccuracy: true,
-                  timeout: 20000
-              });
-          } else if (result === 'blocked') {
-              console.warn("App is not permitted to access location.");
-             
-          }
       });
-  } else {
-      check(PERMISSIONS.IOS.LOCATION_ALWAYS).then((result) => {
-          if (result === 'granted') {
-              Geolocation.getCurrentPosition((position) => {
-                  const { coords } = position;
-                  console.warn(position)
-                  this.getAddressByLatANDLng(coords.latitude,coords.longitude)
-              }, (error) => {
-                  console.warn(error)
-              }, {
-                  enableHighAccuracy: true,
-                  timeout: 20000
-              });
-          } else if (result === 'blocked' || result === 'unavailable') {
-            console.warn('hello1')
-              check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE).then((result) => {
-                  if (result === 'granted') {
-                      Geolocation.getCurrentPosition((position) => {
-                          const { coords } = position;
-                          console.warn(position)
-                          this.getAddressByLatANDLng(coords.latitude,coords.longitude)
-                      }, (error) => {
-                        console.warn(error)
-                      }, {
-                          enableHighAccuracy: true,
-                          timeout: 20000
-                      });
-                  } else if (result === 'blocked') {
-                      console.warn("App is not permitted to access location.");
-                      
-                  }
-              });
-          }
-      });
+    }
   }
-}
+
+  checkPermission = () => {
+
+    if (Platform.OS === 'android') {
+      check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION).then((result) => {
+        if (result === 'granted') {
+          Geolocation.getCurrentPosition((position) => {
+            const { coords } = position;
+            console.warn(position)
+
+          }, (error) => {
+            //Toast.show(error["message"]);
+            console.warn(error)
+
+          }, {
+            enableHighAccuracy: true,
+            timeout: 20000
+          });
+        } else if (result === 'blocked') {
+          console.warn("App is not permitted to access location.");
+
+        }
+      });
+    } else {
+      check(PERMISSIONS.IOS.LOCATION_ALWAYS).then((result) => {
+        if (result === 'granted') {
+          Geolocation.getCurrentPosition((position) => {
+            const { coords } = position;
+            console.warn(position)
+            this.getAddressByLatANDLng(coords.latitude, coords.longitude)
+          }, (error) => {
+            console.warn(error)
+          }, {
+            enableHighAccuracy: true,
+            timeout: 20000
+          });
+        } else if (result === 'blocked' || result === 'unavailable') {
+          console.warn('hello1')
+          check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE).then((result) => {
+            if (result === 'granted') {
+              Geolocation.getCurrentPosition((position) => {
+                const { coords } = position;
+                console.warn(position)
+                this.getAddressByLatANDLng(coords.latitude, coords.longitude)
+              }, (error) => {
+                console.warn(error)
+              }, {
+                enableHighAccuracy: true,
+                timeout: 20000
+              });
+            } else if (result === 'blocked') {
+              console.warn("App is not permitted to access location.");
+
+            }
+          });
+        }
+      });
+    }
+  }
 
   getAllData = async () => {
+    // this.setState({
+    //   slider1value: this.props.sliderDistance,
+    // })
     this.setState({
-      slider1value: this.props.sliderDistance,
+      slider1value: 500,
     })
     this.fetchWholeAddressToLocalState();
   }
@@ -172,7 +175,7 @@ checkPermission = () => {
   }
 
   onFocus = async () => {
-    let obj = {...this.state.locationData};
+    let obj = { ...this.state.locationData };
     obj.wholeAddress = '';
     this.setState({
       locationData: obj
@@ -186,7 +189,7 @@ checkPermission = () => {
           method: 'post',
           url: `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${API_KEY}&input=${searchText}`,
         })
-        if(response.data.predictions.length > 0){
+        if (response.data.predictions.length > 0) {
           this.setState({
             isShowingResults: true,
             searchResults: response.data.predictions,
@@ -203,7 +206,7 @@ checkPermission = () => {
   }
 
   searchLocation = async (searchText) => {
-    let obj = {...this.state.locationData};
+    let obj = { ...this.state.locationData };
     obj.wholeAddress = searchText;
     this.setState({
       locationData: obj
@@ -218,92 +221,92 @@ checkPermission = () => {
         method: 'post',
         url: `https://maps.googleapis.com/maps/api/geocode/json?address=${item.description}&key=${API_KEY}`,
       });
-        //console.log('india', response);
-        const latitude = response.data.results[0].geometry.location.lat;
-        const longitude = response.data.results[0].geometry.location.lng;
-        const wholeAddress = item.description;
-        const addresses = response.data.results[0].address_components;
-        let address = '';
-        let country = '';
-        for (let i = 0; i < addresses.length; i++) {
-          const element = addresses[i];
-          if(element.types.includes("country") && country == ''){
-            country = element.long_name;
-          }
-          if(element.types.includes("locality")){
-            address = element.long_name;
-          } else if(element.types.includes("administrative_area_level_1") && address == ''){
-            address = element.long_name;
-          } else if(element.types.includes("country") && address == ''){
-            address = element.long_name;
-          }
+      //console.log('india', response);
+      const latitude = response.data.results[0].geometry.location.lat;
+      const longitude = response.data.results[0].geometry.location.lng;
+      const wholeAddress = item.description;
+      const addresses = response.data.results[0].address_components;
+      let address = '';
+      let country = '';
+      for (let i = 0; i < addresses.length; i++) {
+        const element = addresses[i];
+        if (element.types.includes("country") && country == '') {
+          country = element.long_name;
         }
+        if (element.types.includes("locality")) {
+          address = element.long_name;
+        } else if (element.types.includes("administrative_area_level_1") && address == '') {
+          address = element.long_name;
+        } else if (element.types.includes("country") && address == '') {
+          address = element.long_name;
+        }
+      }
 
-        let regionToAnimate = {
-          latitude: parseFloat(latitude),
-          longitude: parseFloat(longitude),
-          latitudeDelta: 0.0222 * this.state.slider1value,
-          longitudeDelta: 0.0222 * this.state.slider1value,
-          wholeAddress: wholeAddress,
-          country: country,
-          address: address
-        };
-        this.map.animateToRegion({
-          ...regionToAnimate
-        });
-        this.setState({
-          locationData: regionToAnimate,
-          isShowingResults: false,
-          searchResults: [],
-        })
+      let regionToAnimate = {
+        latitude: parseFloat(latitude),
+        longitude: parseFloat(longitude),
+        latitudeDelta: 0.0222 * this.state.slider1value,
+        longitudeDelta: 0.0222 * this.state.slider1value,
+        wholeAddress: wholeAddress,
+        country: country,
+        address: address
+      };
+      this.map.animateToRegion({
+        ...regionToAnimate
+      });
+      this.setState({
+        locationData: regionToAnimate,
+        isShowingResults: false,
+        searchResults: [],
+      })
     } catch (error) {
       console.log('err', error);
     }
 
-      // .then(response => {
+    // .then(response => {
 
-      //   const lng = response.data.results[0].geometry.location.lng
-      //   var CountryString = response.data.results[0].formatted_address
-      //   var SplitedCountry = CountryString.split(" ")
-      //   var MyCountry = SplitedCountry[SplitedCountry.length - 1]
+    //   const lng = response.data.results[0].geometry.location.lng
+    //   var CountryString = response.data.results[0].formatted_address
+    //   var SplitedCountry = CountryString.split(" ")
+    //   var MyCountry = SplitedCountry[SplitedCountry.length - 1]
 
-      //   let region = {
-      //     latitude: parseFloat(response.data.results[0].geometry.location.lat),
-      //     longitude: parseFloat(response.data.results[0].geometry.location.lng),
-      //     latitudeDelta: 6,
-      //     longitudeDelta: 6
-      //   };
-      //   this.map.animateToRegion({
-      //     ...this.state.initialRegion,
-      //     latitude: parseFloat(response.data.results[0].geometry.location.lat),
-      //     longitude: parseFloat(response.data.results[0].geometry.location.lng),
-      //   });
-      //   this.setState({
-      //     initialRegion: region,
-      //     lat: parseFloat(response.data.results[0].geometry.location.lat),
-      //     lng: parseFloat(response.data.results[0].geometry.location.lng),
-      //     locationNow: item.description,
-      //     isShowingResults: false,
-      //     searchResults: [],
-      //     country: MyCountry
+    //   let region = {
+    //     latitude: parseFloat(response.data.results[0].geometry.location.lat),
+    //     longitude: parseFloat(response.data.results[0].geometry.location.lng),
+    //     latitudeDelta: 6,
+    //     longitudeDelta: 6
+    //   };
+    //   this.map.animateToRegion({
+    //     ...this.state.initialRegion,
+    //     latitude: parseFloat(response.data.results[0].geometry.location.lat),
+    //     longitude: parseFloat(response.data.results[0].geometry.location.lng),
+    //   });
+    //   this.setState({
+    //     initialRegion: region,
+    //     lat: parseFloat(response.data.results[0].geometry.location.lat),
+    //     lng: parseFloat(response.data.results[0].geometry.location.lng),
+    //     locationNow: item.description,
+    //     isShowingResults: false,
+    //     searchResults: [],
+    //     country: MyCountry
 
-      //   });
-      //   let LocationObj = {
-      //     latitude: this.state.lat,
-      //     longitude: this.state.lng
-      //   }
-      //   // AsyncStorage.setItem('UserLocation', JSON.stringify(LocationObj))
-      //   // // SetLat(lat)
-      //   // // SetLng(lng)
-      //   // // SetSearchResults([])
-      //   // // SetIsShowingResults(false)
-      //   // // SetLocationNow(searchText)
-      //   // // // SetIsShowingResults(true)
-      //   // // // SetSearchResults(response.data.predictions)
-      // })
-      // .catch((e) => {
-      //   // //console.log(e.response);
-      // });
+    //   });
+    //   let LocationObj = {
+    //     latitude: this.state.lat,
+    //     longitude: this.state.lng
+    //   }
+    //   // AsyncStorage.setItem('UserLocation', JSON.stringify(LocationObj))
+    //   // // SetLat(lat)
+    //   // // SetLng(lng)
+    //   // // SetSearchResults([])
+    //   // // SetIsShowingResults(false)
+    //   // // SetLocationNow(searchText)
+    //   // // // SetIsShowingResults(true)
+    //   // // // SetSearchResults(response.data.predictions)
+    // })
+    // .catch((e) => {
+    //   // //console.log(e.response);
+    // });
   }
 
   setFinalLocation = async () => {
@@ -353,13 +356,13 @@ checkPermission = () => {
     this.fetchWholeAddressToLocalState();
     this.props.onPressClose();
   }
-  getCurrentLocation=()=>{
+  getCurrentLocation = () => {
     this.requestPermission()
     // alert('hi')
     // Geolocation.getCurrentPosition(pos=>{
     //   console.log(pos, 'my current location');
     //     this.getAddressByLatANDLng(pos.coords.latitude, pos.coords.longitude)
-        
+
     // },err=>{
     //   console.log(err);
     //   alert("Feteching the Position failed ,please pick one manually !")
@@ -372,26 +375,26 @@ checkPermission = () => {
         // See error code charts below.
         console.log(error.code, error.message, 'hhhhhhhhhhhhhhhhhhhhhhh');
       }*/
-  //)
+    //)
 
 
   }
-  getAddressByLatANDLng = async (latitude,longitude)=>{
+  getAddressByLatANDLng = async (latitude, longitude) => {
     const response = await axios
-    .request({
+      .request({
         method: 'post',
         'Content-Type': 'application/json',
         url: `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${API_KEY}`,
-    });
+      });
 
     const wholeAddress = response.data.results[0].formatted_address;
     const addresses = response.data.results[0].address_components;
 
     for (let i = 0; i < addresses.length; i++) {
       const element = addresses[i];
-      if(element.types.includes("locality")){
+      if (element.types.includes("locality")) {
         var address = element.long_name;
-      } else if(element.types.includes("country")){
+      } else if (element.types.includes("country")) {
         var country = element.long_name;
       }
     }
@@ -412,7 +415,7 @@ checkPermission = () => {
       isShowingResults: false,
       searchResults: [],
     })
-      // AsyncStorage.setItem('UserLocation', JSON.stringify(LocationObj))
+    // AsyncStorage.setItem('UserLocation', JSON.stringify(LocationObj))
   }
 
   goToInitialLocation = () => {
@@ -423,7 +426,7 @@ checkPermission = () => {
   }
 
   render() {
-    const {locationData, latitudeDelta, longitudeDelta} = this.state;
+    const { locationData, latitudeDelta, longitudeDelta } = this.state;
     return (
       <View>
         <Modal
@@ -435,38 +438,38 @@ checkPermission = () => {
           }}>
           <View style={styles.modalContainer}>
             {
-                locationData &&
-                <View style={styles.modalBody}>
-              <View style={styles.HeadrIconContainer}>
-                <TouchableOpacity onPress={() => this.HandelBack()} style={{ alignItems: 'center', justifyContent: 'center', marginTop: 5, backgroundColor: "#f5f5f5", padding: 4 }}>
-                  <Fontisto name='close-a' size={12} color={"#000000"} />
-                </TouchableOpacity>
-                <View style={{ alignItems: 'center', justifyContent: 'center', height: Deviceheight / 20, paddingBottom: 8 }}>
-                  <Text style={{ fontFamily:"Roboto-Bold" , color: '#000', fontWeight: 'bold', fontSize: 18, textAlign: 'left', marginLeft: 40, marginTop: -55 }}>Set Location</Text></View>
-              </View>
-              <View style={{ height: Deviceheight / 1.4, width: Devicewidth, alignItems: "center", justifyContent: 'center', }}>
+              locationData &&
+              <View style={styles.modalBody}>
+                <View style={styles.HeadrIconContainer}>
+                  <TouchableOpacity onPress={() => this.HandelBack()} style={{ alignItems: 'center', justifyContent: 'center', marginTop: 5, backgroundColor: "#f5f5f5", padding: 4 }}>
+                    <Fontisto name='close-a' size={12} color={"#000000"} />
+                  </TouchableOpacity>
+                  <View style={{ alignItems: 'center', justifyContent: 'center', height: Deviceheight / 20, paddingBottom: 8 }}>
+                    <Text style={{ fontFamily: "Roboto-Bold", color: '#000', fontWeight: 'bold', fontSize: 18, textAlign: 'left', marginLeft: 40, marginTop: -55 }}>Set Location</Text></View>
+                </View>
+                <View style={{ height: Deviceheight / 1.4, width: Devicewidth, alignItems: "center", justifyContent: 'center', }}>
                   <MapView
                     style={{ height: "100%", width: "100%", marginBottom: this.state.marginMap }}
                     mapPadding={{ top: 120, right: 25, bottom: 0, left: 0 }}
                     // region={this.state.initialRegion}
-                    followUserLocation={true} 
+                    followUserLocation={true}
                     //showsMyLocationButton={false}
-                    ref={ref => this.map = ref}  
-                    zoomEnabled={true} 
+                    ref={ref => this.map = ref}
+                    zoomEnabled={true}
                     showsUserLocation={true}
-                    initialRegion={{...locationData}}
-                    onMapReady={this.goToInitialLocation} 
-                    > 
-                  <Circle
+                    initialRegion={{ ...locationData }}
+                    onMapReady={this.goToInitialLocation}
+                  >
+                    <Circle
                       center={{
                         latitude: parseFloat(locationData.latitude),
                         longitude: parseFloat(locationData.longitude),
                       }}
                       radius={this.state.slider1value * 1000}
-                      strokeWidth = { 1 }
-                      strokeColor = { '#1a66ff' }
-                      fillColor = { 'rgba(230,238,255,0.5)' }
-                    />  
+                      strokeWidth={1}
+                      strokeColor={'#1a66ff'}
+                      fillColor={'rgba(230,238,255,0.5)'}
+                    />
                     {locationData.latitude && locationData.longitude &&
                       <Marker
                         coordinate={{
@@ -477,85 +480,85 @@ checkPermission = () => {
                     }
                   </MapView>
 
-                <View style={{ height: Deviceheight / 2.2, width: Devicewidth / 1.18, alignItems: "center", justifyContent: 'center', position: "absolute", top: 50, marginTop:25     }}>     
- 
-                  <View style={styles.inputContainer}>  
-                    <View style={styles.inputContainer1}>
-                      <FontAwesomeIcon name='search' style={{ color: '#ccc', fontSize: 20, position: 'absolute', left: 5,  top: 7, padding: 5, }} />    
-                      <TextInput 
-                        placeholder={'Search'} 
-                        placeholderTextColor={'#acacac'}
-                        style={styles.Input}
-                        autoCapitalize="none" 
-                        value={locationData.wholeAddress} 
-                        onTouchStart={this.onFocus}
-                        onChangeText={(text) => this.searchLocation(text)}
-                      >
-                      </TextInput>   
+                  <View style={{ height: Deviceheight / 2.2, width: Devicewidth / 1.18, alignItems: "center", justifyContent: 'space-between', position: "absolute", top: 50, marginTop: 25 }}>
+
+                    <View style={styles.inputContainer}>
+                      <View style={styles.inputContainer1}>
+                        <FontAwesomeIcon name='search' style={{ color: '#ccc', fontSize: 20, position: 'absolute', left: 5, top: 7, padding: 5, }} />
+                        <TextInput
+                          placeholder={'Search'}
+                          placeholderTextColor={'#acacac'}
+                          style={styles.Input}
+                          autoCapitalize="none"
+                          value={locationData.wholeAddress}
+                          onTouchStart={this.onFocus}
+                          onChangeText={(text) => this.searchLocation(text)}
+                        >
+                        </TextInput>
+                      </View>
                     </View>
+                    <View style={{ alignItems: 'center', alignSelf: 'center', justifyContent: 'center', paddingBottom: 10, width: Devicewidth - 50, height: 250, }}>
+                      {this.state.isShowingResults && (
+                        <FlatList
+                          keyboardShouldPersistTaps='always'
+                          data={this.state.searchResults}
+                          renderItem={({ item, index }) => {
+                            return (
+                              <TouchableOpacity
+                                style={styles.resultItem}
+                                onPress={() => this.showUpdatedAddress(item)
+                                }>
+                                <Text>{item.description}</Text>
+                              </TouchableOpacity>
+                            );
+                          }}
+                          keyExtractor={(item) => item.id}
+                          style={styles.searchResultsContainer}
+                        />
+                      )}
+                    </View>
+                    {/* need to implement cuerrent location feature here */}
+                    <TouchableOpacity onPress={this.getCurrentLocation}
+                      style={{ backgroundColor: "transparent", alignItems: "center", justifyContent: "center",top:"2.5%",  width: Devicewidth / 10,borderRadius: 0, elevation: 10,position:"absolute",right:10}}>
+                      <Ionicons name='md-locate' size={28} color={"#2d3d53"} />
+                    </TouchableOpacity>
                   </View>
-                  <View style={{ alignItems: 'center', alignSelf: 'center', justifyContent: 'center', paddingBottom:10, width: Devicewidth - 50, height: 250, }}> 
-                    {this.state.isShowingResults && (
-                      <FlatList
-                        keyboardShouldPersistTaps='always'
-                        data={this.state.searchResults}
-                        renderItem={({ item, index }) => {
-                          return (
-                            <TouchableOpacity
-                              style={styles.resultItem}
-                              onPress={() => this.showUpdatedAddress(item)
-                            }>
-                              <Text>{item.description}</Text>
-                            </TouchableOpacity>
-                          );
-                        }}
-                        keyExtractor={(item) => item.id}
-                        style={styles.searchResultsContainer}
-                      />
-                    )}
-                  </View> 
-                  {/* need to implement cuerrent location feature here */}
-                <TouchableOpacity onPress={this.getCurrentLocation}
-                style={{ backgroundColor: "transparent", alignItems: "center", justifyContent: "center", height: Deviceheight / 20, width: Devicewidth / 10, position: "absolute", top: 45, right: 40, borderRadius:0,elevation:10,   }}> 
-                  <Ionicons name='md-locate' size={30} color={"#2d3d53"} />
-                </TouchableOpacity>
-                </View> 
-
-                  
 
 
-              </View>
-              <View style={styles.RangeContainer}>
-                <Text style={{ fontFamily:"Roboto-Bold" , fontWeight: 'bold', fontSize: 12 }}>
-                  {this.state.slider1value ? this.state.slider1value : 1 } {((this.state.locationData.country == 'USA') ||
-                (this.state.locationData.country == 'United States')) ? ' miles' : ' km'}</Text>
-                <View style={styles.SingleSliderMainContainer}>
-                  <MultiSlider
-                    values={[this.state.slider1value]}
-                    sliderLength={Devicewidth / 1.8}
-                    onValuesChangeStart={this.sliderOneValuesChangeStart}
-                    onValuesChange={this.sliderOneValuesChange}
-                    onValuesChangeFinish={this.sliderOneValuesChangeFinish}
-                    customMarker={CustomMarker}
-                    min={1}
-                    max={500}
-                    step={1}
-                    selectedStyle={{ backgroundColor: "#232427" }}
-                    snapped
-                  />
+
+
                 </View>
-                <Text style={{ fontFamily:"Roboto-Bold" , fontWeight: 'bold', fontSize: 12 }}>500{((this.state.locationData.country == 'USA') ||
-                (this.state.locationData.country == 'United States')) ? ' miles' : ' km'}</Text>
+                <View style={styles.RangeContainer}>
+                  <Text style={{ fontFamily: "Roboto-Bold", fontWeight: 'bold', fontSize: 12 }}>
+                    {this.state.slider1value ? this.state.slider1value : 1} {((this.state.locationData.country == 'USA') ||
+                      (this.state.locationData.country == 'United States')) ? ' miles' : ' km'}</Text>
+                  <View style={styles.SingleSliderMainContainer}>
+                    <MultiSlider
+                      values={[this.state.slider1value]}
+                      sliderLength={Devicewidth / 1.8}
+                      onValuesChangeStart={this.sliderOneValuesChangeStart}
+                      onValuesChange={this.sliderOneValuesChange}
+                      onValuesChangeFinish={this.sliderOneValuesChangeFinish}
+                      customMarker={CustomMarker}
+                      min={1}
+                      max={500}
+                      step={1}
+                      selectedStyle={{ backgroundColor: "#232427" }}
+                      snapped
+                    />
+                  </View>
+                  <Text style={{ fontFamily: "Roboto-Bold", fontWeight: 'bold', fontSize: 12 }}>500{((this.state.locationData.country == 'USA') ||
+                    (this.state.locationData.country == 'United States')) ? ' miles' : ' km'}</Text>
+                </View>
+
+                <View style={{ width: Devicewidth / 1.05, height: Deviceheight / 14, alignItems: 'center', alignSelf: 'center', justifyContent: 'center', }}>
+                  <TouchableOpacity style={{ width: Devicewidth / 1.1, height: Deviceheight / 20, alignItems: 'center', alignSelf: 'center', justifyContent: 'center', backgroundColor: "#ff6801", borderRadius: 20 }} onPress={() => this.setFinalLocation()} >
+                    <Text style={{ fontFamily: "Roboto-Bold", color: '#fff', fontWeight: 'bold', fontSize: 16, textAlign: 'center' }}>Set Location</Text>
+
+                  </TouchableOpacity>
+
+                </View>
               </View>
-
-              <View style={{ width: Devicewidth / 1.05, height: Deviceheight / 14, alignItems: 'center', alignSelf: 'center', justifyContent: 'center', }}>
-                <TouchableOpacity style={{ width: Devicewidth / 1.1, height: Deviceheight / 20, alignItems: 'center', alignSelf: 'center', justifyContent: 'center', backgroundColor: "#ff6801", borderRadius: 20 }} onPress={() => this.setFinalLocation()} >
-                  <Text style={{ fontFamily:"Roboto-Bold" , color: '#fff', fontWeight: 'bold', fontSize: 16, textAlign: 'center' }}>Set Location</Text>
-
-                </TouchableOpacity>
-
-              </View>
-            </View>
             }
           </View>
         </Modal>
@@ -596,34 +599,34 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     // zIndex:10,
     width: Devicewidth / 1.2,
-  //  height: Deviceheight / 11.5,
+    //  height: Deviceheight / 11.5,
     borderRadius: 10,
     justifyContent: 'center',
     elevation: 5
   },
   inputContainer1: {
-    marginTop: 0, 
-    marginBottom:5,  
-   
+    marginTop: 0,
+    marginBottom: 5,
+
     backgroundColor: '#fff',
     // zIndex:10,
     width: Devicewidth / 1.25,
-   // height: Deviceheight / 14,  
-      height: 45,  
-    borderRadius: 10,  
+    // height: Deviceheight / 14,  
+    height: 45,
+    borderRadius: 10,
     justifyContent: 'center',
-    elevation: 5, 
+    elevation: 5,
 
-  
-  }, 
-  Input: { 
+
+  },
+  Input: {
     marginLeft: 30,
     width: Devicewidth / 1.4,
- //height: Deviceheight / 14,
+    //height: Deviceheight / 14,
     borderRadius: 10,
     fontSize: 14,
-    paddingLeft: 10, 
-    textAlign: 'left', 
+    paddingLeft: 10,
+    textAlign: 'left',
     // borderWidth:1,
     backgroundColor: '#fff',
     // borderTopColor:"#fff",
@@ -632,10 +635,10 @@ const styles = StyleSheet.create({
     // borderBottomWidth:1,
     borderRadius: 10,
     // borderColor: '#acacac',
-    color: '#000',   
+    color: '#000',
     //whiteSace:'nowrap',
     //overflow:'hidden',
-   // textOverflow:'ellipsis',
+    // textOverflow:'ellipsis',
 
   },
   ImageStyle: {
@@ -684,15 +687,15 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = dispatch => {
   return {
-      onUpdateLocation: (val) => dispatch({type: 'LOCATION_SELECTED', payload: val}),
-      onSliderUpdate: (val) => dispatch({type: STORE_SLIDER_DISTANCE, payload: val}),
+    onUpdateLocation: (val) => dispatch({ type: 'LOCATION_SELECTED', payload: val }),
+    onSliderUpdate: (val) => dispatch({ type: STORE_SLIDER_DISTANCE, payload: val }),
   }
 }
 
 const mapStateToProps = state => {
   return {
-      savedLocation: state.savedLocation,
-      sliderDistance: state.sliderDistance
+    savedLocation: state.savedLocation,
+    sliderDistance: state.sliderDistance
   }
 }
 

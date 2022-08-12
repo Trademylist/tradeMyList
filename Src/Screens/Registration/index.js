@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ImageBackground, StyleSheet, Dimensions, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, Image, ImageBackground, SafeAreaView,StyleSheet, Dimensions, TextInput, TouchableOpacity } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
 const { width: WIDTH } = Dimensions.get('window');
@@ -57,7 +57,7 @@ export default class Registration extends Component {
     }
     handlePasswordChange = async (val) => {
         //console.log("my pass val ", val);
-        if (val.trim().length >= 6) {
+        if (val.trim().length >= 8) {
             this.setState({
                 isValidPassword: true,
                 password: val
@@ -72,7 +72,7 @@ export default class Registration extends Component {
 
     handleConfirmPasswordChange = async (val) => {
         // //console.log("my  confr pass val ",val);
-        if (val.trim().length >= 6) {
+        if (val.trim().length >= 8) {
             this.setState({
                 isValidConfirmPassword: true,
                 confirmpass: val
@@ -144,7 +144,8 @@ export default class Registration extends Component {
 
     render() {
         return (
-            <>
+            <SafeAreaView style={{flex: 1,
+                backgroundColor: '#FFF'}}>
                 <View style={styles.Container}>
                     <Header navigation={this.props.navigation} Desc={"Registration"} />
                     <View style={{ height: Deviceheight / 12, width: Devicewidth / 2, alignItems: 'center', justifyContent: 'center', alignSelf: 'center', marginTop: 50, marginBottom: 30 }}>
@@ -243,7 +244,7 @@ export default class Registration extends Component {
                     </View>
 
                 </View>
-            </>
+            </SafeAreaView>
         )
     }
 }
@@ -309,7 +310,7 @@ const styles = StyleSheet.create({
         marginLeft: 30,
         paddingLeft: 5,
         paddingTop: 12,
-        fontFamily: 'Raleway; Medium',
+        fontFamily: 'Roboto-Medium',
         // backgroundColor:'yellow',
         alignSelf: 'flex-end'
     },
@@ -320,7 +321,7 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         paddingTop: 12,
         marginLeft: 15,
-        fontFamily: 'Raleway; Medium',
+        fontFamily: 'Roboto-Medium',
         alignSelf: 'flex-end'
     },
     Input2: {
@@ -330,7 +331,7 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         paddingTop: 12,
         marginLeft: 30,
-        fontFamily: 'Raleway; Medium',
+        fontFamily: 'Roboto-Medium',
         alignSelf: 'flex-end'
     },
     ImageStyle: {
@@ -345,7 +346,7 @@ const styles = StyleSheet.create({
     signinText: {
         color: "#000000",
         fontSize: 16,
-        fontFamily: 'Raleway; Medium',
+        fontFamily: 'Raleway Medium',
 
     },
     headingContainer: {
@@ -379,7 +380,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     },
     forgotText: {
-        fontFamily: 'Raleway; Medium',
+        fontFamily: 'Roboto-Medium',
         fontSize: 14,
         color: "#acacac",
         marginTop: 30,
@@ -392,7 +393,7 @@ const styles = StyleSheet.create({
         marginTop: 20
     },
     AccountText: {
-        fontFamily: 'Raleway; Medium',
+        fontFamily: 'Roboto-Medium',
         fontSize: 14,
         color: "#9d9d9d",
     },
@@ -405,7 +406,7 @@ const styles = StyleSheet.create({
         // backgroundColor:'green'
     },
     signup: {
-        fontFamily: 'Raleway; Medium',
+        fontFamily: 'Roboto-Medium',
         fontSize: 15,
         textAlign: "center",
         color: "#383ebd",

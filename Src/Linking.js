@@ -4,11 +4,11 @@ const config={
             path:'',
             screens: {
                 productDetails: {
-                    path: 'https://trademylist.com/product-details/:id/:process',
+                    path: 'trade://trademylist.com/product-details/:id/:process',
                     exact: true,
                 },
                 reviewExperience: {
-                    path: 'https://trademylist.com:8936/app_seller/buyer_tag',
+                    path: 'trade://trademylist.com:8936/app_seller/buyer_tag',
                     exact: true,
                 }
               },
@@ -18,6 +18,7 @@ const config={
 }
 
 const linking={
+   // prefixes:["https://trademylist.com"],
     config
 }
 
