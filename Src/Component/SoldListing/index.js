@@ -25,7 +25,7 @@ const MyProductListing = (props) => {
             null
             :
             <View style={{ width: Devicewidth / 2.2, alignSelf: 'center', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 5 }}>
-                <Text style={{ fontFamily:"Roboto-Regular" , marginTop: 5, color: "#000", fontSize: 14, textAlign: 'center', alignSelf: 'center', fontWeight: 'bold',marginLeft:5 }}>{props.currencyCode == "INR" ? "₹ " : props.currencyCode == "USD" ? "$ " : `${props.currencyCode} `} {props.inr}</Text>
+                <Text style={{ fontFamily:"Roboto-Regular" , marginTop: 5, color: "#000", fontSize: 14, textAlign: 'center', alignSelf: 'center', fontWeight: 'bold',marginLeft:5 }}>{props.currencyCode == "INR" ? "₹ " : props.currencyCode == "USD" ? "$" : `${props.currencyCode} `} {props.inr}</Text>
                 {/* <TouchableOpacity style={{
                     height: Deviceheight / 60,
                     width: Devicewidth / 28, alignItems: "center", justifyContent: "center", alignSelf: "center", marginLeft: 20, backgroundColor: "#9e9e9e"

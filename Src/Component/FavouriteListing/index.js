@@ -24,7 +24,7 @@ const FavouriteListing = (props) => {
             <TouchableOpacity  style={{
           height: Deviceheight / 24,
           width: Devicewidth / 12, alignItems: "center", justifyContent: "center", alignSelf: "center", marginLeft: 20,borderRadius:360,position:'absolute',right:2,top:2,backgroundColor:'#fff',elevation:5}} onPress={() => getunLike(props.ProductId)}>
-          <FontAwesomeIcon name="heart" size={16} style={styles.favoriteIcon} style={{ height: "52%", width: "60%",marginLeft:5 }}  color="#fb7700" />
+          <FontAwesomeIcon name="heart" size={16} style={{ height: "52%", width: "60%",marginLeft:5 }}  color="#fb7700" />
         </TouchableOpacity>
         </View>
     )

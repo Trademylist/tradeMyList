@@ -259,6 +259,36 @@ const FilterModal = (props) => {
     return (
    
     <View>
+      
+    
+      
+      {
+        modalProps ?
+          <Modal
+            animationType="slide"
+            transparent={false}
+            visible={modalProps}
+            onRequestClose={() => {
+              modalVisible(!modal)
+            }}>
+              
+              
+              <MapModal
+        modalProps={mapVisible}
+        onPressClose={() => closeModal()}
+        updateLocation={getUpdatelocProd}
+      ></MapModal>
+            <View style={styles.modalContainer}>
+              <View style={styles.modalBody}>
+              <CatagoryModal
+        modalProps={catagoryModalVisibal}
+        onPressClose={() => closeCatagoryModal()}
+        categoryList={categoryList}
+        categoryImg={categoryImgLink}
+        selectedProdCat={selectedProdCategory}
+        getCategory={selectedCat}
+        navigation={props.navigation}
+      ></CatagoryModal>
       <CarMakeModal
           modalProps={carMakeStatus}
           onPressClose={() => closeCarMakeModal()}
@@ -288,31 +318,6 @@ const FilterModal = (props) => {
           navigation={props.navigation}
       >
       </CarTrimModal>
-      <CatagoryModal
-        modalProps={catagoryModalVisibal}
-        onPressClose={() => closeCatagoryModal()}
-        categoryList={categoryList}
-        categoryImg={categoryImgLink}
-        selectedProdCat={selectedProdCategory}
-        getCategory={selectedCat}
-        navigation={props.navigation}
-      ></CatagoryModal>
-      <MapModal
-        modalProps={mapVisible}
-        onPressClose={() => closeModal()}
-        updateLocation={getUpdatelocProd}
-      ></MapModal>
-      {
-        modalProps ?
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={modalProps}
-            onRequestClose={() => {
-              modalVisible(!modal)
-            }}>
-            <View style={styles.modalContainer}>
-              <View style={styles.modalBody}>
                 <ScrollView showsVerticalScrollIndicator={false}>
                   <View style={styles.HeadrIconContainer}
                   >
@@ -633,12 +638,12 @@ const FilterModal = (props) => {
 
                   <View style={styles.DescContainer2}>
                     {fromInr != '' ?
-                      <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 15, color: "#000", textAlign: "left", alignSelf: "center",marginLeft:5 }}>{currency == "INR" ? "₹ " : currency == "USD" ? "$ " : `${currency} `}</Text>
+                      <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 15, color: "#000", textAlign: "left", alignSelf: "center",marginLeft:5 }}>{currency == "INR" ? "₹ " : currency == "USD" ? "$" : `${currency} `}</Text>
                       :
                       null
                     }
                     <TextInput
-                      placeholder={`From (${currency == "INR" ? "₹ " : currency == "USD" ? "$ " : `${currency} `})`}
+                      placeholder={`From (${currency == "INR" ? "₹ " : currency == "USD" ? "$" : `${currency} `})`}
                       placeholderTextColor={'black'}
                       style={fromInr==''?styles.Input:styles.InputSelect}
                       onChangeText={(val) => setFromInr(val)}
@@ -650,12 +655,12 @@ const FilterModal = (props) => {
                   <View style={styles.DescContainer2}>
                     {toInr != '' ?
                       <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 15, color: "#000", textAlign: "left", alignSelf: "center",marginLeft:5 }}>
-                        {`${currency == "INR" ? "₹ " : currency == "USD" ? "$ " : `${currency} `}`}</Text>
+                        {`${currency == "INR" ? "₹ " : currency == "USD" ? "$" : `${currency} `}`}</Text>
                       :
                       null
                     }
                     <TextInput
-                      placeholder={`To (${currency == "INR" ? "₹ " : currency == "USD" ? "$ " : `${currency} `})`}
+                      placeholder={`To (${currency == "INR" ? "₹ " : currency == "USD" ? "$" : `${currency} `})`}
                       placeholderTextColor={'black'}
                       style={toInr==''?styles.Input:styles.InputSelect}
                       onChangeText={(val) => setToInr(val)}
@@ -834,7 +839,7 @@ SingleSeller: {
     alignItems: 'center',
     flex: 1,
     paddingTop: Platform.OS == 'ios' ? 35 : 0,
-    backgroundColor: ' rgba(0,0,0,0.8)'
+    // backgroundColor: ' rgba(0,0,0,0.8)'
   },
   HeadrIconContainer: {
     paddingTop: 20,

@@ -518,12 +518,12 @@ class MapModal extends Component {
                       )}
                     </View>
                     {/* need to implement cuerrent location feature here */}
-                    <TouchableOpacity onPress={this.getCurrentLocation}
-                      style={{ backgroundColor: "transparent", alignItems: "center", justifyContent: "center",top:"2.5%",  width: Devicewidth / 10,borderRadius: 0, elevation: 10,position:"absolute",right:10}}>
+                   
+                  <TouchableOpacity onPress={this.getCurrentLocation}
+                      style={{ backgroundColor: "transparent", alignItems: "center", justifyContent: "center",top:"2.5%",position:"absolute", width: "15%",borderRadius: 0, elevation: 10,alignSelf:"flex-end"}}>
                       <Ionicons name='md-locate' size={28} color={"#2d3d53"} />
                     </TouchableOpacity>
-                  </View>
-
+                        </View>
 
 
 
@@ -620,8 +620,8 @@ const styles = StyleSheet.create({
 
   },
   Input: {
-    marginLeft: 30,
-    width: Devicewidth / 1.4,
+     marginLeft: 30,
+    width: "85%",
     //height: Deviceheight / 14,
     borderRadius: 10,
     fontSize: 14,

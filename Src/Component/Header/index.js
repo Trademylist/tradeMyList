@@ -31,6 +31,7 @@ const Header = (props) => {
   const ref_input = useRef();
 
   const [cancelIcon, SetCancelIcon] = useState(false)
+  const [cancelpressed,Setcancelpressed] = useState(false)
   ShowCancelButton = () => {
     SetCancelIcon(true)
   }
@@ -44,6 +45,7 @@ const Header = (props) => {
     setBox(false)
   }
 
+ 
   const handelMenu = async () => {
     try {
       const value = await AsyncStorage.getItem('UserData');
@@ -184,8 +186,19 @@ const Header = (props) => {
 
 
 
-                    <TextInput
-                      placeholder={props.categoryName || "All Product"}
+                    {/* <TextInput
+                      placeholder={ cancelpressed ?
+                       "" : props.categoryName || "All Product" }
+                      placeholderTextColor={"#000"}
+                      style={styles.SearchContainer}
+                      autoFocus={false}
+                      keyboardType={"default"}
+                      onChangeText={(value) => props.getsearchKey(value)}
+                      ref={ref_input}
+                    /> */}
+
+                      <TextInput
+                      placeholder={ props.categoryName || "All Product" }
                       placeholderTextColor={"#000"}
                       style={styles.SearchContainer}
                       autoFocus={false}
@@ -199,12 +212,11 @@ const Header = (props) => {
 
 
 
-
               {/*{ cancelIcon && */}
                 <TouchableOpacity
                   style={styles.closeButtonParent}
                   onPress={() => {ref_input.current.clear(),
-                   props.getsearchKey('')}}>
+                   props.getsearchKey(''),Setcancelpressed(true)}}>
                   <Image
                     style={styles.closeButton}
                     source={require('../../Assets/cancel.png')}

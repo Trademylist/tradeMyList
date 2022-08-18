@@ -30,10 +30,10 @@ const ReactiveProductModal = (props) => {
     })
   }
   const purchaseProduct = () => {
-   const Product_Id =Product[0].productId
-    //console.log("my choose Product_id",Product[0].productId);
+    const Product_Id =Product[0].productId
+    console.log("my choose Product_id",Product[0].productId);
     RNIap.requestPurchase(Product_Id).then(purchase => {
-      //console.log(JSON.stringify(purchase));
+      console.log(JSON.stringify(purchase));
       props.reactiveProduct(props.ProductId)
     })
   }
@@ -54,7 +54,7 @@ const ReactiveProductModal = (props) => {
             }}>
             <View style={styles.modalContainer}>
               <View style={styles.modalBody}>
-                <View style={{ backgroundColor: "#fff", elevation: 10, alignSelf: 'flex-start', width: Devicewidth, height: Deviceheight / 14, alignItems: "center", flexDirection: "row" }}>
+                <View style={{ backgroundColor: "#fff", elevation: 10, alignSelf: 'flex-start', width: Devicewidth, height: Deviceheight / 14, alignItems: "center", flexDirection: "row",marginTop:5 }}>
                 <TouchableOpacity style={{ marginBottom: 10, marginTop: 15, height: Deviceheight / 30, width: Devicewidth / 16, alignSelf: 'flex-start', alignItems: "center", justifyContent: "center", marginLeft: 10 }}
                   onPress={() => props.onPressClose()}
                 >
@@ -66,7 +66,7 @@ const ReactiveProductModal = (props) => {
 
 
                 <View style={{ height: Deviceheight / 5, width: Devicewidth / 1.1, alignItems: 'center', justifyContent: "center", alignSelf: "center", backgroundColor: "#ffd2b3" }}>
-                  <Icon name="flash" size={50} style={styles.favoriteIcon} style={{ height: Deviceheight / 14, width: Devicewidth / 8, alignSelf: "center", }} color="#15b89b" />
+                  <Icon name="flash" size={50}  style={{ height: Deviceheight / 14, width: Devicewidth / 8, alignSelf: "center", }} color="#15b89b" />
                   <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 19, color: "#000", textAlign: "center", alignSelf: 'center', fontWeight: 'bold', marginTop: 10 }}>Save money on reactivation</Text>
 
                 </View>
@@ -89,7 +89,7 @@ const ReactiveProductModal = (props) => {
                  onPress={() => purchaseProduct()}
                   style={{ width: Devicewidth / 1.1, borderRadius: 5, height: Deviceheight / 8, alignSelf: "center", justifyContent: 'center', alignItems: "center", marginTop: 10, backgroundColor: "#eeeeee" }}>
                   <View style={{ alignSelf: 'flex-start', width: Devicewidth / 1.1, height: Deviceheight / 18, alignItems: "center", justifyContent: "center", borderBottomWidth: 1, borderBottomColor: "#dddddd", }}>
-                    <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#000", textAlign: "center", alignSelf: 'center', fontWeight: 'bold', }}>Buy Reactivate product</Text>
+                    <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#000", textAlign: "center", alignSelf: 'center', fontWeight: 'bold',}}>Buy Reactivate product</Text>
                   </View>
                   <View style={{ alignSelf: 'flex-start', width: Devicewidth / 1.1, height: Deviceheight / 18, alignItems: "center", justifyContent: "center", }}>
                     <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#000", textAlign: "center", alignSelf: 'center', fontWeight: 'bold', }}>{Product[0].localizedPrice}</Text>
@@ -120,7 +120,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
-    backgroundColor: '#000000'
+    backgroundColor: '#000000',
+    marginTop:30
 
   },
 })

@@ -156,7 +156,7 @@ const ProductListing = (props) => {
                     props.category == "Freebies" ?
                     <Text style={{ fontFamily:"Roboto-Bold" , color: "#333", fontSize: 12, textAlign: 'center', alignSelf: 'center', fontWeight: 'bold', marginRight: 10 }}>{"Free"}</Text>
                     :
-                    <Text style={{ fontFamily:"Roboto-Bold" , color: "#333", fontSize: 12, textAlign: 'center', alignSelf: 'center', fontWeight: 'bold', marginRight: 10 }}>{(props.category != "Jobs" && props.category != "Freebies" && props.category != "Services") && (props.currency == "INR" ? "₹ " : props.currency == "USD" ? "$ " : `${props.currency} `)} {(props.category != "Jobs" && props.category != "Freebies" && props.category != "Services") && props.inr}</Text>
+                    <Text style={{ fontFamily:"Roboto-Bold" , color: "#333", fontSize: 12, textAlign: 'center', alignSelf: 'center', fontWeight: 'bold', marginRight: 10 }}>{(props.category != "Jobs" && props.category != "Freebies" && props.category != "Services") && (props.currency == "INR" ? "₹ " : props.currency == "USD" ? "$" : `${props.currency}`)}{(props.category != "Jobs" && props.category != "Freebies" && props.category != "Services") && props.inr}</Text>
                 }
                 {/* {
                     props.inr &&
