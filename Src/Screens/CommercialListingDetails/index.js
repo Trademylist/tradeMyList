@@ -1629,12 +1629,12 @@ class CommercialListingDetails extends Component {
                             }
                             <View style={styles.PriceinputContainer}>
                                 {this.state.Productprice != '' ?
-                                    <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 15, color: "#000", textAlign: "left", alignSelf: "center" }}>{this.state.currency == "INR" ? "₹ " : this.state.currency == "USD" ? "$" : `${this.state.currency} `}</Text>
+                                    <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 15, color: "#000", textAlign: "left", alignSelf: "center" }}>{this.state.currency == "INR" ? "₹" : this.state.currency == "USD" ? "$" : `${this.state.currency}`}</Text>
                                     :
                                     null
                                 }
                                 <TextInput
-                                    placeholder={`Price ( ${this.state.currency == "INR" ? "₹ " : this.state.currency == "USD" ? "$" : `${this.state.currency} `})`}
+                                    placeholder={`Price ( ${this.state.currency == "INR" ? "₹ " : this.state.currency == "USD" ? "$" : `${this.state.currency}`})`}
                                     placeholderTextColor={'#000'}
                                     style={this.state.Productprice == '' ? styles.PriceInput : styles.PriceInputSelect}
                                     keyboardType={'numeric'}

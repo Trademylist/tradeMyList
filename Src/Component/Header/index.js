@@ -9,6 +9,7 @@ import {
   Dimensions,
   StatusBar,
   Platform,
+  Alert,
 } from 'react-native';
 import LoginModal from '../LoginModal';
 import LoginModalFirst from '../LoginModalFirst';
@@ -29,13 +30,18 @@ const Header = (props) => {
   const [loginModalFirst, SetLoginModalFirst] = useState(false)
   const { navigation } = props
   const ref_input = useRef();
-
   const [cancelIcon, SetCancelIcon] = useState(false)
+  const [searchval,setSearchVal] = useState('')
+  //setSearchVal(props.categoryName)
+   {/* useState cancelpressed is not in the initial stage, done by Arnab(1/3) */}
   const [cancelpressed,Setcancelpressed] = useState(false)
   ShowCancelButton = () => {
     SetCancelIcon(true)
   }
 
+  const categoryPressed =()=>{
+   return("All Product")
+  }
   const [box, setBox] = useState(false)
   showBlankTextBox = () => {
     setBox(true)
@@ -68,9 +74,9 @@ const Header = (props) => {
   }
   useEffect(() => {
     getStateFromPath();
-    const unsubscribe = props.navigation.addListener('focus', () => {
+     const unsubscribe = props.navigation.addListener('focus', () => {
       getStateFromPath();
-    });
+     });
     // return unsubscribe
   }, [])
 
@@ -184,12 +190,11 @@ const Header = (props) => {
                 <SearchIcon name={'search'} size={22} color={'#000'} />
               </TouchableOpacity>
 
-
+{/* Below Text Input Done By Arnab Commented section was the initial Text Input (2/3) */}
 
                     {/* <TextInput
-                      placeholder={ cancelpressed ?
-                       "" : props.categoryName || "All Product" }
-                      placeholderTextColor={"#000"}
+                      placeholder={ cancelpressed ?  "All Product" :  props.categoryName || "All Product"}
+                      placeholderTextColor={"#383838"}
                       style={styles.SearchContainer}
                       autoFocus={false}
                       keyboardType={"default"}
@@ -198,7 +203,8 @@ const Header = (props) => {
                     /> */}
 
                       <TextInput
-                      placeholder={ props.categoryName || "All Product" }
+                      placeholder={'Search Product'}
+                     // value={searchval}
                       placeholderTextColor={"#000"}
                       style={styles.SearchContainer}
                       autoFocus={false}
@@ -213,10 +219,14 @@ const Header = (props) => {
 
 
               {/*{ cancelIcon && */}
+
+              {/* OnPress=> setCancelled == true is not in the initial stage, done by Arnab (3/3)*/}
                 <TouchableOpacity
                   style={styles.closeButtonParent}
                   onPress={() => {ref_input.current.clear(),
-                   props.getsearchKey(''),Setcancelpressed(true)}}>
+                   props.getsearchKey('')
+                  // ,setSearchVal('')
+                   }}>
                   <Image
                     style={styles.closeButton}
                     source={require('../../Assets/cancel.png')}

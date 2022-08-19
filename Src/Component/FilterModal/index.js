@@ -638,12 +638,12 @@ const FilterModal = (props) => {
 
                   <View style={styles.DescContainer2}>
                     {fromInr != '' ?
-                      <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 15, color: "#000", textAlign: "left", alignSelf: "center",marginLeft:5 }}>{currency == "INR" ? "₹ " : currency == "USD" ? "$" : `${currency} `}</Text>
+                      <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 15, color: "#000", textAlign: "left", alignSelf: "center",marginLeft:5 }}>{currency == "INR" ? "₹" : currency == "USD" ? "$" : `${currency}`}</Text>
                       :
                       null
                     }
                     <TextInput
-                      placeholder={`From (${currency == "INR" ? "₹ " : currency == "USD" ? "$" : `${currency} `})`}
+                      placeholder={`From (${currency == "INR" ? "₹" : currency == "USD" ? "$" : `${currency}`})`}
                       placeholderTextColor={'black'}
                       style={fromInr==''?styles.Input:styles.InputSelect}
                       onChangeText={(val) => setFromInr(val)}
@@ -655,12 +655,12 @@ const FilterModal = (props) => {
                   <View style={styles.DescContainer2}>
                     {toInr != '' ?
                       <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 15, color: "#000", textAlign: "left", alignSelf: "center",marginLeft:5 }}>
-                        {`${currency == "INR" ? "₹ " : currency == "USD" ? "$" : `${currency} `}`}</Text>
+                        {`${currency == "INR" ? "₹" : currency == "USD" ? "$" : `${currency}`}`}</Text>
                       :
                       null
                     }
                     <TextInput
-                      placeholder={`To (${currency == "INR" ? "₹ " : currency == "USD" ? "$" : `${currency} `})`}
+                      placeholder={`To (${currency == "INR" ? "₹" : currency == "USD" ? "$" : `${currency}`})`}
                       placeholderTextColor={'black'}
                       style={toInr==''?styles.Input:styles.InputSelect}
                       onChangeText={(val) => setToInr(val)}

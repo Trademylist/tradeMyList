@@ -85,14 +85,25 @@ const ReactiveProductModal = (props) => {
                   <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 16, color: "#000", textAlign: "center", alignSelf: 'center', marginLeft: 10, }}>{Product[0].description}</Text>
                 </View>
 
-                <TouchableOpacity
+                 {/* <TouchableOpacity
                  onPress={() => purchaseProduct()}
-                  style={{ width: Devicewidth / 1.1, borderRadius: 5, height: Deviceheight / 8, alignSelf: "center", justifyContent: 'center', alignItems: "center", marginTop: 10, backgroundColor: "#eeeeee" }}>
+                  style={{ width: Devicewidth / 1.1, borderRadius: 5, height: Deviceheight / 8, alignSelf: "center", justifyContent: 'center', alignItems: "center", marginTop: 10, backgroundColor: "#16255c" }}>
                   <View style={{ alignSelf: 'flex-start', width: Devicewidth / 1.1, height: Deviceheight / 18, alignItems: "center", justifyContent: "center", borderBottomWidth: 1, borderBottomColor: "#dddddd", }}>
-                    <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#000", textAlign: "center", alignSelf: 'center', fontWeight: 'bold',}}>Buy Reactivate product</Text>
+                    <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#fff", textAlign: "center", alignSelf: 'center', fontWeight: 'bold',}}>Buy Reactivate product</Text>
                   </View>
                   <View style={{ alignSelf: 'flex-start', width: Devicewidth / 1.1, height: Deviceheight / 18, alignItems: "center", justifyContent: "center", }}>
-                    <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#000", textAlign: "center", alignSelf: 'center', fontWeight: 'bold', }}>{Product[0].localizedPrice}</Text>
+                    <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#fff", textAlign: "center", alignSelf: 'center', fontWeight: 'bold', }}>{Product[0].localizedPrice}</Text>
+                  </View>
+                </TouchableOpacity>  */}
+                
+                    <TouchableOpacity
+                 onPress={() => purchaseProduct()}
+                  style={{ width: Devicewidth / 1.1, borderRadius: 5, height: Deviceheight / 8, alignSelf: "center", justifyContent: 'center', alignItems: "center", marginTop: 10, backgroundColor: "#ffd2b3" }}>
+                  <View style={{ alignSelf: 'flex-start', width: Devicewidth / 1.1, height: Deviceheight / 18, alignItems: "center", justifyContent: "center", borderBottomWidth: 1, borderBottomColor: "#dddddd", }}>
+                    <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#380347", textAlign: "center", alignSelf: 'center', fontWeight: 'bold',}}>Buy Reactivate product</Text>
+                  </View>
+                  <View style={{ alignSelf: 'flex-start', width: Devicewidth / 1.1, height: Deviceheight / 18, alignItems: "center", justifyContent: "center", }}>
+                    <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 18, color: "#0000FF", textAlign: "center", alignSelf: 'center', fontWeight: 'bold', }}>{Product[0].localizedPrice}</Text>
                   </View>
                 </TouchableOpacity>
 

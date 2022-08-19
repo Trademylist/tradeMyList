@@ -93,7 +93,7 @@ const MyProductListing = (props) => {
                         props.category == "Freebies" ?
                             <Text style={{ fontFamily: "Roboto-Regular", marginTop: 5, color: "#000", fontSize: 15, textAlign: 'center', alignSelf: 'center', marginLeft: 5 }}>{"Free"}</Text>
                             :
-                            <Text style={{ fontFamily: "Roboto-Regular", marginTop: 5, color: "#000", fontSize: 15, textAlign: 'center', alignSelf: 'center', marginLeft: 5 }}>{(props.category != "Jobs" && props.category != "Freebies" && props.category != "Services") && (props.currencyCode == "INR" ? "₹ " : props.currencyCode == "USD" ? "$" : `${props.currencyCode}`)}{props.inr}</Text>
+                            <Text style={{ fontFamily: "Roboto-Regular", marginTop: 5, color: "#000", fontSize: 15, textAlign: 'center', alignSelf: 'center', marginLeft: 5 }}>{(props.category != "Jobs" && props.category != "Freebies" && props.category != "Services") && (props.currencyCode == "INR" ? "₹" : props.currencyCode == "USD" ? "$" : `${props.currencyCode}`)}{props.inr}</Text>
                     }
                     <TouchableOpacity style={{
                         height: Deviceheight / 60,

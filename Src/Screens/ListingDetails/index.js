@@ -1339,7 +1339,7 @@ class ListingDetails extends Component {
                                     <View style={styles.inputContainer}>
                                         <TextInput
                                             returnKeyType="done"
-                                            placeholder={this.state.selectedProdCategory != 'Services' ? 'Productd name' : 'Service name'}
+                                            placeholder={this.state.selectedProdCategory != 'Services' ? 'Product name' : 'Service name'}
                                             placeholderTextColor={'#000'}
                                             style={styles.Input}
                                             onChangeText={(val) => this.setState({

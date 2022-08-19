@@ -37,6 +37,7 @@ class CatProductList extends Component {
             ProductList: [],
             likesProduct: [],
             mapVisible: false,
+           
         }
     }
     state = this.state;
@@ -279,6 +280,7 @@ class CatProductList extends Component {
                         navigation={this.props.navigation}
                         getDataFilter={this.checkFilter}
                         process={this.props.route.params.process}
+                       
                     />
                     <MapModal
                         modalProps={this.state.mapVisible}
@@ -292,6 +294,7 @@ class CatProductList extends Component {
                             horizontal={true}
                             showsHorizontalScrollIndicator={false}
                             renderItem={({ item }) => (
+                               
                                 <CatagoryList
                                     productList={this.state.allProducts}
                                     name={item.category_name}
@@ -301,6 +304,7 @@ class CatProductList extends Component {
                                     color='#42f59e'
                                     process={this.props.route.params.process}
                                 />
+                               
                             )}
                             keyExtractor={(item, index) => index.toString()}
                         />

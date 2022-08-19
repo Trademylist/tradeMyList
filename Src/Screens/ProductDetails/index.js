@@ -44,16 +44,16 @@ const Data = [
     },
     {
         key: '2',
-        name: 'Is the price negotiable',
+        name: 'Is the price negotiable?',
     },
-    {
-        key: '3',
-        name: 'Is it still available?',
-    },
-    {
-        key: '4',
-        name: 'Is the price negotiable',
-    },
+    // {
+    //     key: '3',
+    //     name: 'Is it still available?',
+    // },
+    // {
+    //     key: '4',
+    //     name: 'Is the price negotiable',
+    // },
 ];
 
 var unitmapping = {
@@ -732,7 +732,7 @@ export default class ProductDetails extends Component {
                                     this.state.productDetails.category == "Freebies" ?
                                         <Text style={{ fontFamily: "Roboto-Black", color: "#2c384e", fontSize: 22, fontWeight: 'bold', textAlign: 'left', alignSelf: 'center' }}>{'Free'}</Text>
                                         :
-                                        <Text style={{ fontFamily: "Roboto-Black", color: "#2c384e", fontSize: 22, fontWeight: 'bold', textAlign: 'left', alignSelf: 'center' }}>{(this.state.productDetails.category != "Jobs" && this.state.productDetails.category != "Freebies" && this.state.productDetails.category != "Services") ? this.state.productDetails.currencyCode == "INR" ? "₹ " : this.state.productDetails.currencyCode == "USD" ? "$" : `${this.state.productDetails.currencyCode} ` : null} {(this.state.productDetails.category != "Jobs" && this.state.productDetails.category != "Freebies" && this.state.productDetails.category != "Services") && this.state.productDetails.product_price}</Text>
+                                        <Text style={{ fontFamily: "Roboto-Black", color: "#2c384e", fontSize: 22, fontWeight: 'bold', textAlign: 'left', alignSelf: 'center' }}>{(this.state.productDetails.category != "Jobs" && this.state.productDetails.category != "Freebies" && this.state.productDetails.category != "Services") ? this.state.productDetails.currencyCode == "INR" ? "₹" : this.state.productDetails.currencyCode == "USD" ? "$" : `${this.state.productDetails.currencyCode}` : null}{(this.state.productDetails.category != "Jobs" && this.state.productDetails.category != "Freebies" && this.state.productDetails.category != "Services") && this.state.productDetails.product_price}</Text>
                                 }
                                 {this.state.loggedUserId === this.state.sellerId ?
                                     <TouchableOpacity style={{
@@ -877,7 +877,7 @@ export default class ProductDetails extends Component {
                                                 horizontal={true}
                                                 showsHorizontalScrollIndicator={false}
                                                 renderItem={({ item }) => (
-                                                    <TouchableOpacity style={{ borderRadius: 50, alignItems: 'center', justifyContent: "center", backgroundColor: '#363ed9', marginRight: 20, height:42,paddingHorizontal:18  }} onPress={() => this.getMessage(item.name)}>
+                                                    <TouchableOpacity style={{ borderRadius: 100, alignItems: 'center', justifyContent: "center", backgroundColor: '#363ed9', marginRight: 20, height:42,paddingHorizontal:18 ,marginBottom:5 }} onPress={() => this.getMessage(item.name)}>
                                                         <Text style={{ fontFamily: "Roboto-Medium", fontSize: 15, textAlign: 'center', color: "#fff",}}>{item.name}</Text>
                                                     </TouchableOpacity>
                                                 )}

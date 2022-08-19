@@ -1573,7 +1573,7 @@ class ListingDetails extends Component {
                                                      behavior="position"
                                                      keyboardVerticalOffset="100"
                                                      enabled>
-                                    <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 15, color: "#000", textAlign: "left", alignSelf: "center" }}>{this.state.currency == "INR" ? "₹ " : this.state.currency == "USD" ? "$" : `${this.state.currency} ` } </Text></KeyboardAvoidingView> 
+                                    <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 15, color: "#000", textAlign: "left", alignSelf: "center" }}>{this.state.currency == "INR" ? "₹" : this.state.currency == "USD" ? "$" : `${this.state.currency}`} </Text></KeyboardAvoidingView> 
                                     :
                                     null
                                 }
@@ -1582,7 +1582,7 @@ class ListingDetails extends Component {
         keyboardVerticalOffset="100"
         enabled>
                                 <TextInput autoFocus={true} 
-                                    placeholder={`Price ( ${this.state.currency == "INR" ? "₹ " : this.state.currency == "USD" ? "$" : `${this.state.currency} `})`}
+                                    placeholder={`Price ( ${this.state.currency == "INR" ? "₹" : this.state.currency == "USD" ? "$" : `${this.state.currency}`})`}
                                     placeholderTextColor={'#000'}
                                     style={this.state.Productprice == '' ? styles.PriceInput : styles.PriceInputSelect}
                                     keyboardType={'numeric'}

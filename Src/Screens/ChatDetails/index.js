@@ -20,16 +20,16 @@ const Data = [
   },
   {
     key: '2',
-    name: 'Is the price negotiable',
+    name: 'Is the price negotiable?',
   },
-  {
-    key: '3',
-    name: 'Is it still available?',
-  },
-  {
-    key: '4',
-    name: 'Is the price negotiable',
-  },
+  // {
+  //   key: '3',
+  //   name: 'Is it still available?',
+  // },
+  // {
+  //   key: '4',
+  //   name: 'Is the price negotiable',
+  // },
 ];
 
 const ref = firestore().collection('Trade_Message');
@@ -359,7 +359,7 @@ function ChatDetails(props) {
           <Text style={{ fontFamily:"Roboto-Bold" , color: "#000", fontSize: 16, fontWeight: "bold", textAlign: "left", marginBottom: 2, marginTop: 5 }}>{productData.product_name && productData.product_name}</Text>
           {
             (productData.category != "Jobs" && productData.category != "Freebies" && productData.category != "Services") &&
-            <Text style={{ fontFamily:"Roboto-Bold" , color: "#434343", fontSize: 12, textAlign: "left", }}>{productData.currencyCode && productData.currencyCode == "INR" ? "₹ " : productData.currencyCode == "USD" ? "$" : `${productData.currencyCode} `} {productData.product_price &&productData.product_price}</Text>
+            <Text style={{ fontFamily:"Roboto-Bold" , color: "#434343", fontSize: 12, textAlign: "left", }}>{productData.currencyCode && productData.currencyCode == "INR" ? "₹ " : productData.currencyCode == "USD" ? "$" : `${productData.currencyCode}`}{productData.product_price &&productData.product_price}</Text>
           }
         </TouchableOpacity>
       </View>
