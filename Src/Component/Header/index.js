@@ -203,9 +203,9 @@ const Header = (props) => {
                     /> */}
 
                       <TextInput
-                      placeholder={'Search Product'}
+                      placeholder={'All Product'}
                      // value={searchval}
-                      placeholderTextColor={"#000"}
+                      placeholderTextColor={"#383838"}
                       style={styles.SearchContainer}
                       autoFocus={false}
                       keyboardType={"default"}
