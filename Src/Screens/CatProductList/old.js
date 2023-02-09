@@ -18,9 +18,9 @@ import Loading from '../Loading/Loading';
 const axios = require('axios');
 Geocoder.init("AIzaSyAsJT9SLCfV4wvyd2jvG7AUgXYsaTTx1D4");
 //const API_KEY = 'AIzaSyCPCwSH6Wtnu0dAJUapPeU2NWTwCmlNQhY';
-const API_KEY = 'AIzaSyCZ9kuVUyhZxeFR3cPnebauMlffVOhoM1Y'
-
-
+// const API_KEY = 'AIzaSyCZ9kuVUyhZxeFR3cPnebauMlffVOhoM1Y'
+const API_KEY = 'AIzaSyAsJT9SLCfV4wvyd2jvG7AUgXYsaTTx1D4'
+// const API_KEY = 'AIzaSyCMDLepAKckVIr8TWkM5Mq5SawWH0B6Bfw'
 export default class CatProductList extends Component {
     constructor(props) {
         super(props)

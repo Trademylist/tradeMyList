@@ -19,7 +19,7 @@ import MapModal from '../../Component/MapModal';
 import Loading from '../Loading/Loading';
 import LoginModal from '../../Component/LoginModal';
 const axios = require('axios');
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import MySubscriptionModal from "../../Component/SubscriptionModal"
 import FilterContainer from '../../Component/FilterCOntainer'
 import FilterModal from '../../Component/FilterModal';
@@ -29,9 +29,9 @@ import FilterCOntainer from '../../Component/FilterCOntainer';
 Geocoder.init("AIzaSyAsJT9SLCfV4wvyd2jvG7AUgXYsaTTx1D4");
 
 //const API_KEY = 'AIzaSyCPCwSH6Wtnu0dAJUapPeU2NWTwCmlNQhY';
-const API_KEY = 'AIzaSyCZ9kuVUyhZxeFR3cPnebauMlffVOhoM1Y'
-
-
+// const API_KEY = 'AIzaSyCZ9kuVUyhZxeFR3cPnebauMlffVOhoM1Y'
+const API_KEY = 'AIzaSyAsJT9SLCfV4wvyd2jvG7AUgXYsaTTx1D4'
+// const API_KEY = 'AIzaSyCMDLepAKckVIr8TWkM5Mq5SawWH0B6Bfw'
 class ProductList extends Component {
     constructor(props) {
         super(props);
@@ -88,17 +88,17 @@ class ProductList extends Component {
         //     this.backAction
         // );
         this.setState({
-            ProductLoder : true
+            ProductLoder: true
         })
         admob()
-        .setRequestConfiguration({
-            maxAdContentRating: MaxAdContentRating.PG,
-            tagForChildDirectedTreatment: true,
-            tagForUnderAgeOfConsent: true,
-        })
-        .then(() => {
-            console.warn('add set')
-        });
+            .setRequestConfiguration({
+                maxAdContentRating: MaxAdContentRating.PG,
+                tagForChildDirectedTreatment: true,
+                tagForUnderAgeOfConsent: true,
+            })
+            .then(() => {
+                console.warn('add set')
+            });
         const value = JSON.parse(await AsyncStorage.getItem('UserData'));
         if (value !== null) {
             this.setState({
@@ -117,15 +117,15 @@ class ProductList extends Component {
     }
 
     componentDidUpdate = (prevProps, prevState) => {
-        if(this.props.savedLocation.latitude && this.props.savedLocation.latitude &&
-            ((this.props.savedLocation.latitude != prevProps.savedLocation.latitude) || (this.props.savedLocation.longitude != prevProps.savedLocation.longitude) || (this.props.sliderDistance != prevProps.sliderDistance))){
-                this.setState({
-                    page: 1,
-                    productListType: 'location'
-                }, () => {
-                    this.getlocationProduct();
-                })
-            }
+        if (this.props.savedLocation.latitude && this.props.savedLocation.latitude &&
+            ((this.props.savedLocation.latitude != prevProps.savedLocation.latitude) || (this.props.savedLocation.longitude != prevProps.savedLocation.longitude) || (this.props.sliderDistance != prevProps.sliderDistance))) {
+            this.setState({
+                page: 1,
+                productListType: 'location'
+            }, () => {
+                this.getlocationProduct();
+            })
+        }
     }
 
     HandelReload() {
@@ -135,18 +135,18 @@ class ProductList extends Component {
                 page: 1
             })
             admob()
-            .setRequestConfiguration({
-                maxAdContentRating: MaxAdContentRating.PG,
-                tagForChildDirectedTreatment: true,
-                tagForUnderAgeOfConsent: true,
-            })
-            .then(() => {
-            });
-            if(this.state.productListType == 'search') {
+                .setRequestConfiguration({
+                    maxAdContentRating: MaxAdContentRating.PG,
+                    tagForChildDirectedTreatment: true,
+                    tagForUnderAgeOfConsent: true,
+                })
+                .then(() => {
+                });
+            if (this.state.productListType == 'search') {
                 this.ProdSearch()
-            } else if(this.state.productListType == 'filter') {
+            } else if (this.state.productListType == 'filter') {
                 this.filteredProducts();
-            } else if(this.state.productListType == 'location'){
+            } else if (this.state.productListType == 'location') {
                 this.getlocationProduct();
             } else {
                 this.ProdSearch('')
@@ -197,7 +197,7 @@ class ProductList extends Component {
                     }
                 })
                     .then(response => {
-                         //console.warn('unlike ',response.data)
+                        //console.warn('unlike ',response.data)
                         this.getAllLikes()
 
                     })
@@ -255,22 +255,22 @@ class ProductList extends Component {
             LoadMore: false,
             filterData: undefined,
         })
-        const {latitude, longitude, country} = this.props.savedLocation;
+        const { latitude, longitude, country } = this.props.savedLocation;
         let myRange = 0
-        if(!this.props.sliderDistance){
-            if(country=="United States"){
-                myRange=500 * 1609.344
+        if (!this.props.sliderDistance) {
+            if (country == "United States") {
+                myRange = 500 * 1609.344
             }
-            else{
-                myRange=500 * 1000
+            else {
+                myRange = 500 * 1000
             }
         }
-        else{
-            if(country=="United States"){
-                myRange=this.props.sliderDistance * 1609.344
+        else {
+            if (country == "United States") {
+                myRange = this.props.sliderDistance * 1609.344
             }
-            else{
-                myRange=this.props.sliderDistance * 1000
+            else {
+                myRange = this.props.sliderDistance * 1000
             }
         }
 
@@ -287,12 +287,12 @@ class ProductList extends Component {
                 "latitude": latitude,
                 "longitude": longitude,
                 "country": country,
-                "distance":myRange,
+                "distance": myRange,
                 "category": this.state.selectedCategoryName
             }
             axios.post(`https://trademylist.com:8936/app_seller/all_product?page=${this.state.page}`, object, { headers: { 'x-access-token': value.token } })
                 .then(response => {
-                    console.warn('url',`https://trademylist.com:8936/app_seller/all_product?page=${this.state.page}`)
+                    console.warn('url', `https://trademylist.com:8936/app_seller/all_product?page=${this.state.page}`)
                     this.setState({
                         ProductList: response.data.data.product,
                         country: country,
@@ -313,37 +313,37 @@ class ProductList extends Component {
                 "latitude": latitude,
                 "longitude": longitude,
                 "country": country,
-                "distance":myRange,
+                "distance": myRange,
                 "category": this.state.selectedCategoryName
             }
             axios.post(`https://trademylist.com:8936/app_user/all_product?page=${this.state.page}`, object)
-            .then(response => {
-                //console.log('ss', response);
-                this.setState({
-                    ProductList: response.data.data.product,
-                    country: country,
-                    ProductLoder: false,
-                    productListType: 'location',
-                    filterData: undefined,
+                .then(response => {
+                    //console.log('ss', response);
+                    this.setState({
+                        ProductList: response.data.data.product,
+                        country: country,
+                        ProductLoder: false,
+                        productListType: 'location',
+                        filterData: undefined,
+                    })
                 })
-            })
-            .catch(error => {
-                this.setState({
-                    ProductLoder: false,
+                .catch(error => {
+                    this.setState({
+                        ProductLoder: false,
+                    })
                 })
-            })
         }
     }
 
     getCatList = async () => {
         try {
             const response = await axios.get("https://trademylist.com:8936/app_user/category_list/product");
-            if(response.data.success){
+            if (response.data.success) {
                 const obj = {
-                    categories : response.data.data.category,
-                    imagePath : response.data.data.categoryImageUrl
+                    categories: response.data.data.category,
+                    imagePath: response.data.data.categoryImageUrl
                 }
-                console.warn('catlist',response.data.data.categoryImageUrl)
+                console.warn('catlist', response.data.data.categoryImageUrl)
                 this.props.onStoreCategoryList(obj);
             } else {
                 console.log('category fetch error', error.message);
@@ -366,7 +366,7 @@ class ProductList extends Component {
     }
 
     onSearchProduct = async (val) => {
-        this.setState({searchKey: val});
+        this.setState({ searchKey: val });
         this.ProdSearch();
     }
 
@@ -374,9 +374,9 @@ class ProductList extends Component {
         try {
             const { latitude, longitude, country } = this.props.savedLocation;
             const value = await JSON.parse(await AsyncStorage.getItem('UserData'))
-            
+
             if (this.state.searchKey === '') {
-                this.setState({page:1})
+                this.setState({ page: 1 })
                 if (value !== null) {
                     const object = {
                         "latitude": latitude,
@@ -384,19 +384,19 @@ class ProductList extends Component {
                         "country": country
                     }
                     axios.post(`https://trademylist.com:8936/app_seller/all_product?page=${this.state.page}`, object, { headers: { 'x-access-token': value.token } })
-                    .then(response => {
-                        // console.warn('url1',`https://trademylist.com:8936/app_seller/all_product?page=${this.state.page}`)
-                        // console.warn('res',response.data.data)
-                        this.setState({
-                            productListType: '',
-                            ProductList: response.data.data.product,
-                            ProdSearch: 'search',
-                            filterData: undefined,
+                        .then(response => {
+                            // console.warn('url1',`https://trademylist.com:8936/app_seller/all_product?page=${this.state.page}`)
+                            // console.warn('res',response.data.data)
+                            this.setState({
+                                productListType: '',
+                                ProductList: response.data.data.product,
+                                ProdSearch: 'search',
+                                filterData: undefined,
+                            })
                         })
-                    })
-                    .catch(error => {
-                        //console.log(error.data)
-                    })
+                        .catch(error => {
+                            //console.log(error.data)
+                        })
                 }
                 else {
                     const object = {
@@ -405,17 +405,17 @@ class ProductList extends Component {
                         "country": country
                     }
                     axios.post(`https://trademylist.com:8936/app_user/all_product?page=${this.state.page}`, object)
-                    .then(response => {
-                        this.setState({
-                            productListType: '',
-                            ProductList: response.data.data.product,
-                            ProdSearch: false,
-                            filterData: undefined,
+                        .then(response => {
+                            this.setState({
+                                productListType: '',
+                                ProductList: response.data.data.product,
+                                ProdSearch: false,
+                                filterData: undefined,
+                            })
                         })
-                    })
-                    .catch(error => {
-                        //console.log(error.data)
-                    })
+                        .catch(error => {
+                            //console.log(error.data)
+                        })
                 }
             } else {
                 const object = {
@@ -453,8 +453,8 @@ class ProductList extends Component {
                 "price": [{ "lower": fromInr, "upper": toInr }],
                 "sortBy": sortBy
             }
-            if(obj){
-                object = {...object, ...obj}
+            if (obj) {
+                object = { ...object, ...obj }
             }
             this.setState({
                 filterData: object,
@@ -520,15 +520,15 @@ class ProductList extends Component {
             return (
                 <View key={index} style={{ width: WIDTH - 10, flexDirection: 'row', marginLeft: 10, marginRight: 10, marginBottom: 30, marginTop: 20, height: 40, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center' }}>
                     <BannerAd size={BannerAdSize.SMART_BANNER}
-                        //unitId={Platform.OS == 'ios' ? 'ca-app-pub-7489460627950788/2002515682' : 'ca-app-pub-3940256099942544/6300978111'}
-                        unitId={'ca-app-pub-3940256099942544/6300978111'}
+                        unitId={Platform.OS == 'ios' ? 'ca-app-pub-2276215775107260/1748397647' : 'ca-app-pub-3940256099942544/6300978111'}
+                        // unitId={'ca-app-pub-3940256099942544/6300978111'}
                         onAdLoaded={() => {
                             console.log('Advert loaded')
-                          }}
-                          onAdFailedToLoad={(result) => {
-                            console.log('Advert failed to load!!!!',result)
-                          }}
-                        >
+                        }}
+                        onAdFailedToLoad={(result) => {
+                            console.log('Advert failed to load!!!!', result)
+                        }}
+                    >
                     </BannerAd>
                 </View>
             )
@@ -588,20 +588,20 @@ class ProductList extends Component {
 
     getlocationProductForLoadMore = async () => {
         let myRange = 0
-        if(!this.props.sliderDistance){
-            if(this.props.savedLocation.country=="United States"){
-                myRange=500 * 1609.344
+        if (!this.props.sliderDistance) {
+            if (this.props.savedLocation.country == "United States") {
+                myRange = 500 * 1609.344
             }
-            else{
-                myRange=500 * 1000
+            else {
+                myRange = 500 * 1000
             }
         }
-        else{
-            if(this.props.savedLocation.country=="United States"){
-                myRange=this.props.sliderDistance * 1609.344
+        else {
+            if (this.props.savedLocation.country == "United States") {
+                myRange = this.props.sliderDistance * 1609.344
             }
-            else{
-                myRange=this.props.sliderDistance * 1000
+            else {
+                myRange = this.props.sliderDistance * 1000
             }
         }
         const value = JSON.parse(await AsyncStorage.getItem('UserData'))
@@ -611,7 +611,7 @@ class ProductList extends Component {
                 "latitude": latitude,
                 "longitude": longitude,
                 "country": country,
-                "distance":myRange,
+                "distance": myRange,
                 "category": this.state.selectedCategoryName
             }
             axios.post(`https://trademylist.com:8936/app_seller/all_product?page=${this.state.page}`, object, { headers: { 'x-access-token': value.token } })
@@ -631,7 +631,7 @@ class ProductList extends Component {
                 "latitude": latitude,
                 "longitude": longitude,
                 "country": country,
-                "distance":myRange,
+                "distance": myRange,
                 "category": this.state.selectedCategoryName
             }
             axios.post(`https://trademylist.com:8936/app_user/all_product?page=${this.state.page}`, object)
@@ -649,14 +649,14 @@ class ProductList extends Component {
     }
 
     GetReched = () => {
-        if(this.state.productListType !== 'filter'){
+        if (this.state.productListType !== 'filter') {
             this.setState({
                 LoadMore: true,
                 page: this.state.page + 1
             }, () => {
-                if(this.state.productListType == 'search') {
+                if (this.state.productListType == 'search') {
                     this.ProdSearch();
-                } else if(this.state.productListType == 'location') {
+                } else if (this.state.productListType == 'location') {
                     this.getlocationProductForLoadMore();
                 }
             })
@@ -720,7 +720,7 @@ class ProductList extends Component {
 
     onSelectCategoryHandler = (category, process) => {
         this.setState({
-            selectedCategoryName : category,
+            selectedCategoryName: category,
             page: 1
         }, () => {
             this.getlocationProduct()
@@ -730,7 +730,7 @@ class ProductList extends Component {
     onShowAllProductsHandler = () => {
 
         this.setState({
-            selectedCategoryName : null,
+            selectedCategoryName: null,
             page: 1
         }, () => {
             this.getlocationProduct()
@@ -739,21 +739,21 @@ class ProductList extends Component {
 
     render() {
         const newData = this.modifyData(this.state.ProductList);
-        const {savedLocation, categoryList, categoryImageBaseUrl} = this.props;
+        const { savedLocation, categoryList, categoryImageBaseUrl } = this.props;
 
-        console.warn('categorylist',categoryList)
+        console.warn('categorylist', categoryList)
         return (
             <>
                 <View style={styles.Container}>
-                {
-                    this.state.showSubModal &&
-                    <MySubscriptionModal
-                        modalProps={this.state.showSubModal}
-                        onPressCloseSub={() => this.onCloseModal()}
-                        Product_Id={this.state.selectedProdId}
-                        Process={this.state.selectedProdProcess}
-                    ></MySubscriptionModal>
-                }
+                    {
+                        this.state.showSubModal &&
+                        <MySubscriptionModal
+                            modalProps={this.state.showSubModal}
+                            onPressCloseSub={() => this.onCloseModal()}
+                            Product_Id={this.state.selectedProdId}
+                            Process={this.state.selectedProdProcess}
+                        ></MySubscriptionModal>
+                    }
                     <Header
                         categoryName={this.state.selectedCategoryName}
                         navigation={this.props.navigation}
@@ -777,10 +777,10 @@ class ProductList extends Component {
 
                     <View style={styles.FlatlistContainer}>
                         <FlatList
-                        data={categoryList}
-                        horizontal={true}
-                        showsHorizontalScrollIndicator={false}
-                        keyExtractor={(item, index) => index.toString()}
+                            data={categoryList}
+                            horizontal={true}
+                            showsHorizontalScrollIndicator={false}
+                            keyExtractor={(item, index) => index.toString()}
                             renderItem={({ item }) => (
                                 <CatagoryList
                                     // productList={this.state.ProductList}
@@ -797,10 +797,10 @@ class ProductList extends Component {
                         />
                     </View>
 
-                    <View style={{ flexDirection: 'row', width: Devicewidth, alignItems: 'center', justifyContent: 'space-between', alignSelf: 'center', top:-10, paddingLeft: 20 }}>
-                        <Text style={{ fontFamily:"Roboto-Regular",fontWeight:'bold', fontSize: 18, textAlign: 'left', width: Devicewidth / 1.4 }}>{savedLocation.address}</Text>
+                    <View style={{ flexDirection: 'row', width: Devicewidth, alignItems: 'center', justifyContent: 'space-between', alignSelf: 'center', top: -10, paddingLeft: 20 }}>
+                        <Text style={{ fontFamily: "Roboto-Regular", fontWeight: 'bold', fontSize: 18, textAlign: 'left', width: Devicewidth / 1.4 }}>{savedLocation.address}</Text>
                         <View style={{ width: Devicewidth / 6, alignItems: "center", flexDirection: 'row', }}>
-                            <TouchableOpacity onPress={() => this.handelMap()}><Text style={{ fontFamily:"Roboto-Bold" , fontFamily:"Roboto-Bold", color: '#ed661c', fontSize: 16, fontWeight: 'bold', textAlign: 'left' }}>Edit</Text></TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.handelMap()}><Text style={{ fontFamily: "Roboto-Bold", fontFamily: "Roboto-Bold", color: '#ed661c', fontSize: 16, fontWeight: 'bold', textAlign: 'left' }}>Edit</Text></TouchableOpacity>
                             <View style={{
                                 height: Deviceheight / 30,
                                 width: Devicewidth / 18, alignItems: "center", justifyContent: "center", alignSelf: "center", marginLeft: 5
@@ -816,99 +816,88 @@ class ProductList extends Component {
                             <Loading />
                             :
                             this.state.ProductList.length == 0 ?
-                                <View style={{  WebkitTouchCallout: 'none', alignItems: 'center', justifyContent: 'flex-start', alignSelf: 'center', height: '100%', width: Devicewidth / 1.5,
+                                <View style={{
+                                    WebkitTouchCallout: 'none', alignItems: 'center', justifyContent: 'flex-start', alignSelf: 'center', height: '100%', width: Devicewidth / 1.5,
                                 }}>
-                                    <Image source={require("../../Assets/no_product.png")} style={{ height: Deviceheight/3, width: Deviceheight/3, resizeMode: "contain" }}></Image>
+                                    <Image source={require("../../Assets/no_product.png")} style={{ height: Deviceheight / 3, width: Deviceheight / 3, resizeMode: "contain" }}></Image>
                                 </View>
                                 :
                                 <>
-                                <SafeAreaView style={{ flex: 1 }}>
+                                    <SafeAreaView style={{ flex: 1 }}>
 
-                                <FlatList
-                                       // horizontal
-                                        data={newData}
-                                        scrollEnabled={true}
-                                        showsVerticalScrollIndicator={false}
-                                        onEndReached={() => this.GetReched()}
-                                        onEndReachedThreshold={0.5} 
-                                        ListFooterComponent={this.RenderLoadMore}
-                                        renderItem={({ item, index }) => this.renderItem(item, index)}
-                                        showsHorizontalScrollIndicator={false}  
-
-                                        keyExtractor={(item, index) => index.toString()}
-
-                          
-                                        /> 
-                                </SafeAreaView>
-                                
-
-                  
-                                    
-                                    {/* <View  style={{width: WIDTH-20, flexDirection: 'row', marginLeft: 10, marginRight:10, marginBottom: 10, height: 60, backgroundColor: 'blue', justifyContent: 'center', alignItems: 'center'}}>
-                            <BannerAd size={BannerAdSize.SMART_BANNER}
-                                      unitId={Platform.OS == 'ios' ? 'ca-app-pub-7489460627950788/2002515682' : 'ca-app-pub-3940256099942544/6300978111'}>
-                            </BannerAd>
-                          </View> */}
+                                        <FlatList
+                                            // horizontal
+                                            data={newData}
+                                            scrollEnabled={true}
+                                            showsVerticalScrollIndicator={false}
+                                            onEndReached={() => this.GetReched()}
+                                            onEndReachedThreshold={0.5}
+                                            ListFooterComponent={this.RenderLoadMore}
+                                            renderItem={({ item, index }) => this.renderItem(item, index)}
+                                            showsHorizontalScrollIndicator={false}
+                                            keyExtractor={(item, index) => index.toString()}
+                                        />
+                                    </SafeAreaView>
                                 </>
-
                         }
                     </View>
-                  <Footer pageName={this.props.route.name} onShowAllProducts={this.onShowAllProductsHandler} navigation={this.props.navigation} catdata="product" /> 
+                    <Footer pageName={this.props.route.name} onShowAllProducts={this.onShowAllProductsHandler} navigation={this.props.navigation} catdata="product" />
                 </View>
 
-                
+
             </>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    
+
 
     Container: {
         flex: 1,
         alignItems: 'center',
         backgroundColor: '#fff',
-       },
+    },
     FlatlistContainer: {
         // borderWidth: 1,
-marginTop: Platform.OS == 'ios' ? 50 : 0,
-        padding: 5,
-       // height: Deviceheight/8,        
-      width: Devicewidth,
+        marginTop: Platform.OS == 'ios' ? 50 : 0,
+        paddingTop: 5,
+        paddingBottom: 5,
+        // height: Deviceheight/8,        
+        width: Devicewidth, 
         alignItems: 'center',
-       justifyContent: 'center',
+        justifyContent: 'center',
     },
     FilterViewContainer: {
         padding: 10,
-      // height: Deviceheight/8,
-       width: Devicewidth,
+        // height: Deviceheight/8,
+        width: Devicewidth,
     },
     FlatlistContainer1: {
         padding: 5,
-        margin:12,
-       width: Devicewidth,
+        margin: 12,
+        width: Devicewidth,
         alignItems: 'center',
         justifyContent: 'center',
-       flex: 1, 
-       /// WebkitTouchCallout: 'none',
+        flex: 1,
+        /// WebkitTouchCallout: 'none',
 
         // marginBottom: 20,  
     },
-    
+
 })
 
 const mapDispatchToProps = dispatch => {
     return {
-        onStoreCategoryList: (data) => dispatch({type: 'STORE_CATEGORY_LIST', payload: data})
+        onStoreCategoryList: (data) => dispatch({ type: 'STORE_CATEGORY_LIST', payload: data })
     }
 }
 
 const mapStateToProps = state => {
     return {
         savedLocation: state.savedLocation,
-        categoryList : state.categoryList,
-        categoryImageBaseUrl : state.categoryImageBaseUrl,
+        categoryList: state.categoryList,
+        categoryImageBaseUrl: state.categoryImageBaseUrl,
         sliderDistance: state.sliderDistance
     }
 }

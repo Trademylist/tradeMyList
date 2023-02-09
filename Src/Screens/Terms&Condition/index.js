@@ -21,7 +21,7 @@ export default class TermsCondition extends Component {
      getData=async()=>{
         const { email, password } = this.state;
         const value = await JSON.parse(await AsyncStorage.getItem('UserData'))
-		await axios.get("https://trademylist.com:8936/get_cms/Terms & Condition")
+		await axios.get("https://trademylist.com:8936/get_cms/Privacy Policy")
 			.then(response => {
                 console.log('errorA',response)
 				if (response.data.success === true) {

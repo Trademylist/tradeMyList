@@ -16,6 +16,8 @@ import CarMakeModal from "../../Component/CarMakeModal"
 import CarModelModal from "../../Component/CarModelModal"
 import CarTrimModal from "../../Component/CarTrimModal"
 import CatagoryModal from "../../Component/Catagorymodal"
+import Toast from 'react-native-simple-toast';
+
 //import MapModal from '../../Component/MapModal/oldmap';
 import MapModal from '../../Component/MapModal';
 import HeaderBackModal from '../../Component/ProductUploadBackModal';
@@ -35,9 +37,9 @@ const { width: WIDTH } = Dimensions.get('window');
 const Devicewidth = Dimensions.get('window').width;
 const Deviceheight = Dimensions.get('window').height;
 //const API_KEY = 'AIzaSyCPCwSH6Wtnu0dAJUapPeU2NWTwCmlNQhY';
-const API_KEY = 'AIzaSyCZ9kuVUyhZxeFR3cPnebauMlffVOhoM1Y'
-
-
+// const API_KEY = 'AIzaSyCZ9kuVUyhZxeFR3cPnebauMlffVOhoM1Y'
+const API_KEY = 'AIzaSyAsJT9SLCfV4wvyd2jvG7AUgXYsaTTx1D4'
+// const API_KEY = 'AIzaSyCMDLepAKckVIr8TWkM5Mq5SawWH0B6Bfw'
 
 const Data = [
     {
@@ -989,12 +991,12 @@ class ListingDetails extends Component {
                             this.setState({
                                 Submitloder: false
                             })
-                            ToastAndroid.showWithGravity(
+                            Toast.showWithGravity(
                                 "Product Successfully Updated",
-                                ToastAndroid.SHORT,
-                                ToastAndroid.BOTTOM,
+                                Toast.SHORT,
+                                Toast.BOTTOM,
                             );
-                            this.props.navigation.navigate('productList', { "process": 'Product' })
+                            this.props.navigation.replace('productList', { "process": 'Product' })
                         })
                         .catch(error => {
                             //console.log(error.data)
@@ -1012,12 +1014,12 @@ class ListingDetails extends Component {
                                 this.setState({
                                     Submitloder: false
                                 })
-                                ToastAndroid.showWithGravity(
+                                Toast.showWithGravity(
                                     "Product Successfully added",
-                                    ToastAndroid.SHORT,
-                                    ToastAndroid.BOTTOM
+                                    Toast.SHORT,
+                                    Toast.BOTTOM
                                 );
-                                this.props.navigation.navigate('productList', { "process": 'Product' })
+                                this.props.navigation.replace('productList', { "process": 'Product' })
                             }
                         })
                         .catch(error => {
@@ -1259,7 +1261,8 @@ class ListingDetails extends Component {
                                             this.state.coverImage ?
                                                 <>
                                                     <Image style={{ height: '100%', width: '100%', resizeMode: 'cover' }} source={{ uri: this.state.coverImage }} />
-                                                    <TouchableOpacity onPress={() => this.HandelImageCross(this.state.coverImage, "cover", null)} style={{ alignItems: 'center', justifyContent: 'center', height: Deviceheight / 50, width: Devicewidth / 25, marginTop: 10, backgroundColor: "#fff", position: "absolute", borderRadius: 360, top: -8, right: 3 }}>
+                                                    <TouchableOpacity onPress={() => this.HandelImageCross(this.state.coverImage, "cover", null)} style={{ alignItems: 'center', justifyContent: 'center', height: Deviceheight / 50, width: Devicewidth / 25, marginTop: 10, backgroundColor: "#fff", position: "absolute", borderRadius: 360, top: -8, right: 3 ,
+                                                zIndex:50}}>
                                                         <Image source={require('../../Assets/Cross.png')} style={{ width: "70%", height: "70%", resizeMode: 'contain', }}></Image>
                                                     </TouchableOpacity>
                                                 </>
@@ -1318,6 +1321,7 @@ class ListingDetails extends Component {
                                     ?
                                     <View style={styles.inputContainer}>
                                         <TextInput
+                                        // autoFocus={true}
                                             returnKeyType="done"
                                             placeholder={'Job name'}
                                             placeholderTextColor={'#000'}
@@ -1341,6 +1345,7 @@ class ListingDetails extends Component {
                                             returnKeyType="done"
                                             placeholder={this.state.selectedProdCategory != 'Services' ? 'Product name' : 'Service name'}
                                             placeholderTextColor={'#000'}
+                                            autoFocus={true}
                                             style={styles.Input}
                                             onChangeText={(val) => this.setState({
                                                 Productname: val,
@@ -1357,6 +1362,10 @@ class ListingDetails extends Component {
                                     </View>
 
                             }
+
+
+
+                            
 
                             <TouchableOpacity onPress={() => this.OpenCatagoryModal()} style={styles.inputContainer}>
                                 <View style={styles.CatagoryContainer}>
@@ -1628,8 +1637,9 @@ class ListingDetails extends Component {
                                         :
                                         null
                                     }
-                                    <TextInput autoFocus={true}
-                                        placeholder={`Price ( ${this.state.currency == "INR" ? "₹" : this.state.currency == "USD" ? "$" : `${this.state.currency}`})`}
+                                    <TextInput 
+                                    //  autoFocus={true}
+                                        placeholder={`Price ( ${this.state.currency == "INR" ? "₹" : this.state.currency == "USD" ? "$" : `${this.state.currency} `})`}
                                         placeholderTextColor={'#000'}
                                         style={this.state.Productprice == '' ? styles.PriceInput : styles.PriceInputSelect}
                                         keyboardType={'numeric'}

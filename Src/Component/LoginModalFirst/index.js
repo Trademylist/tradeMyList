@@ -130,7 +130,7 @@ const LoginModalFirst = (props) => {
                     </View>
                   </TouchableOpacity>
 
-                  <TouchableOpacity style={{ width: Devicewidth / 1.1, height: Deviceheight / 20, alignItems: 'center', alignSelf: 'center', justifyContent: 'center', backgroundColor: "#ff6801", borderRadius: 20, marginTop: 15 }} onPress={redirectlogin}>
+                  <TouchableOpacity style={{ width: Devicewidth / 1.1, height: Deviceheight / 20, alignItems: 'center', alignSelf: 'center', justifyContent: 'center', backgroundColor: "#ff6801", borderRadius: 30, marginTop: 15 }} onPress={redirectlogin}>
                     <Text style={{ fontFamily:"Roboto-Bold" , color: '#fff', fontWeight: 'bold', fontSize: 16, textAlign: 'center' }}>Login</Text>
                   </TouchableOpacity>
 

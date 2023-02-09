@@ -57,7 +57,7 @@ export default class Registration extends Component {
     }
     handlePasswordChange = async (val) => {
         //console.log("my pass val ", val);
-        if (val.trim().length >= 8) {
+        if (val.trim().length >= 6) {
             this.setState({
                 isValidPassword: true,
                 password: val
@@ -72,7 +72,7 @@ export default class Registration extends Component {
 
     handleConfirmPasswordChange = async (val) => {
         // //console.log("my  confr pass val ",val);
-        if (val.trim().length >= 8) {
+        if (val.trim().length >= 6) {
             this.setState({
                 isValidConfirmPassword: true,
                 confirmpass: val
@@ -191,7 +191,7 @@ export default class Registration extends Component {
                             </View>
                             {this.state.isValidPassword || this.state.isValidPassword === '' ? null :
                                 <Animatable.View animation="fadeInLeft" duration={500}>
-                                    <Text style={styles.errorMsg}>Password must be 8 characters long.</Text>
+                                    <Text style={styles.errorMsg}>Password must be 6 characters long.</Text>
                                 </Animatable.View>
                             }
                             <View style={styles.inputContainer1}>
@@ -212,7 +212,7 @@ export default class Registration extends Component {
                             </View>
                             {this.state.isValidConfirmPassword || this.state.isValidConfirmPassword === '' ? null :
                                 <Animatable.View animation="fadeInLeft" duration={500}>
-                                    <Text style={styles.errorMsg}>Password must be 8 characters long.</Text>
+                                    <Text style={styles.errorMsg}>Password must be 6 characters long.</Text>
                                 </Animatable.View>
                             }
                         </View>
@@ -346,7 +346,7 @@ const styles = StyleSheet.create({
     signinText: {
         color: "#000000",
         fontSize: 16,
-        fontFamily: 'Raleway Medium',
+       // fontFamily: 'Rubik',
 
     },
     headingContainer: {
@@ -357,20 +357,20 @@ const styles = StyleSheet.create({
     },
     btnContainer: {
         width: Devicewidth / 1.05,
-        height: Deviceheight / 19,
+        height: Deviceheight / 20,
         alignItems: "center",
         justifyContent: 'center',
         backgroundColor: "#d7d7d7",
-        borderRadius: 20,
+        borderRadius: 30,
         marginTop: 40
     },
     btnContainer1: {
         width: Devicewidth / 1.05,
-        height: Deviceheight / 19,
+        height: Deviceheight / 20,
         alignItems: "center",
         justifyContent: 'center',
         backgroundColor: "#383ebd",
-        borderRadius: 20,
+        borderRadius: 30,
         marginTop: 40
     },
     btnText: {

@@ -15,6 +15,8 @@ import firestore from '@react-native-firebase/firestore';
 import Header from "../../Component/HeaderBack"
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/Fontisto';
+import Toast from 'react-native-simple-toast';
+
 const axios = require('axios');
 const { width: WIDTH } = Dimensions.get('window');
 const Devicewidth = Dimensions.get('window').width;
@@ -266,10 +268,10 @@ export default class SelectBuyer extends Component {
             })
                 .then(response => {
                     if (response.data.success) {
-                        ToastAndroid.showWithGravity(
+                        Toast.showWithGravity(
                             "Product successfully updated",
-                            ToastAndroid.SHORT,
-                            ToastAndroid.BOTTOM,
+                            Toast.SHORT,
+                            Toast.BOTTOM,
                         );
                         this.props.navigation.navigate('myListing', {"process": 'sold'})
                     }

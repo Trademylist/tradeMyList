@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Modal, TouchableOpacity, StyleSheet, Dimensions, ToastAndroid } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Dropdown } from 'react-native-material-dropdown-v2-fixed';
+import Toast from 'react-native-simple-toast';
 
 const Devicewidth = Dimensions.get('window').width;
 const Deviceheight = Dimensions.get('window').height;
@@ -67,18 +68,18 @@ const ReportModal = (props) => {
                 })
                     .then(response => {
                         if(response.data.success==true){
-                            ToastAndroid.showWithGravity(
+                            Toast.showWithGravity(
                                 "Report submitted successfully",
-                                ToastAndroid.SHORT,
-                                ToastAndroid.BOTTOM,
+                                Toast.SHORT,
+                                Toast.BOTTOM,
                             );
                             props.onPressReportClose()
                         }
                         else{
-                            ToastAndroid.showWithGravity(
+                            Toast.showWithGravity(
                                 "Report coudn't be submitted",
-                                ToastAndroid.SHORT,
-                                ToastAndroid.BOTTOM,
+                                Toast.SHORT,
+                                Toast.BOTTOM,
                             );
                         }
                     })

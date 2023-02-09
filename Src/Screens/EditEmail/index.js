@@ -157,5 +157,6 @@ const styles = StyleSheet.create({
         color: "#000000",
         fontWeight: "bold",
         // backgroundColor:'pink'
+        // height:40
     },
 })

@@ -14,6 +14,7 @@ const FavouriteListing = (props) => {
         //console.log("my product id",props.ProductId)
         //console.log("my process",props.process)
         // props.navigation.navigate('productDetails',{"productId":props.ProductId,"process":props.process})
+        console.log("bbbb",props.ProductId)
         props.navigation.navigate('productDetails', { "productId": props.ProductId, "process": props.process })
     }
     return (

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, Dimensions, TouchableOpacity, FlatList, StyleSheet,StatusBar, SafeAreaView } from 'react-native';
+import { View, Text, Image, Dimensions, TouchableOpacity, FlatList, StyleSheet, StatusBar, SafeAreaView } from 'react-native';
 import Header from "../../Component/HeaderOne"
 import Footer from "../../Component/Footer"
 import NotificationListing from "../../Component/NotificationList/index"
@@ -17,7 +17,7 @@ export default class Chatter extends Component {
         this.state = {
             chatHeaderList: null,
             chatSellingList: null,
-            chatBuyingList:null,
+            chatBuyingList: null,
             Message: true,
             Notification: false,
             All: true,
@@ -27,7 +27,7 @@ export default class Chatter extends Component {
             BuyingChat: [],
             AllChat: [],
             AllNotification: [],
-            chatLoader:false,
+            chatLoader: false,
             token: null,
             userId: null
         }
@@ -62,7 +62,7 @@ export default class Chatter extends Component {
 
     getChat = async () => {
         this.setState({
-            chatLoader:true
+            chatLoader: true
         })
         try {
             const value = JSON.parse(await AsyncStorage.getItem('UserData'));
@@ -94,35 +94,35 @@ export default class Chatter extends Component {
         allData[1].docs.map(doc => {
             received.push(doc.data());
         })
-        const all = [...sent, ...received].sort((a,b) => b.created - a.created);
+        const all = [...sent, ...received].sort((a, b) => b.created - a.created);
         for (let i = 0; i < all.length; i++) {
             let product_id = all[i].product_id;
-            if(newHeaders.length == 0){
-                newHeaders.push({product_id: all[i].product_id, data: [all[i]]});
+            if (newHeaders.length == 0) {
+                newHeaders.push({ product_id: all[i].product_id, data: [all[i]] });
             } else {
                 let found = false;
                 for (let j = 0; j < newHeaders.length; j++) {
                     const headerElement = newHeaders[j];
-                    if(headerElement.product_id == product_id){
+                    if (headerElement.product_id == product_id) {
                         found = true;
                         let unique = true;
                         for (let k = 0; k < headerElement.data.length; k++) {
                             const element = headerElement.data[k];
-                            let idToBeCheckedIn = (currentUserId == element.sender_id) ? element.receiver_id: element.sender_id;
-                            let idToBeCheckedOut = (currentUserId == all[i].sender_id) ? all[i].receiver_id: all[i].sender_id;
-                            if(idToBeCheckedOut == idToBeCheckedIn){
+                            let idToBeCheckedIn = (currentUserId == element.sender_id) ? element.receiver_id : element.sender_id;
+                            let idToBeCheckedOut = (currentUserId == all[i].sender_id) ? all[i].receiver_id : all[i].sender_id;
+                            if (idToBeCheckedOut == idToBeCheckedIn) {
                                 unique = false;
                                 break;
                             }
                         }
-                        if(unique){
+                        if (unique) {
                             newHeaders[j].data.push(all[i]);
                             break;
                         }
                     }
                 }
-                if(!found){
-                    newHeaders.push({product_id: all[i].product_id, data: [all[i]]});
+                if (!found) {
+                    newHeaders.push({ product_id: all[i].product_id, data: [all[i]] });
                 }
             }
         }
@@ -134,7 +134,7 @@ export default class Chatter extends Component {
             }
         }
 
-        headerChats = [...headerChats].sort((a,b) => b.created - a.created);
+        headerChats = [...headerChats].sort((a, b) => b.created - a.created);
 
         // for (let i = 0; i < newHeaders.length; i++) {
         //     let main = newHeaders[i];
@@ -188,33 +188,61 @@ export default class Chatter extends Component {
     }
 
     getApiData = async (chatHeads, currentUserId, token) => {
+         console.log("=====getApiData======")
         let array = [];
         let users = [];
         for (let i = 0; i < chatHeads.length; i++) {
-            let userIdToBeFetched = (currentUserId == chatHeads[i].sender_id) ? chatHeads[i].receiver_id: chatHeads[i].sender_id;
+            let userIdToBeFetched = (currentUserId == chatHeads[i].sender_id) ? chatHeads[i].receiver_id : chatHeads[i].sender_id;
+            //   console.log(`https://trademylist.com:8936/app_user/${url}/${chatHeads[i].product_id}`,"=====getApiData======", chatHeads[i].product_id)
+           
             const url = chatHeads[i].prod_type == 'p' ? 'product' : 'freebies';
-            array.push(axios.get(`https://trademylist.com:8936/app_user/${url}/` + chatHeads[i].product_id));
+            array.push(axios.get(`https://trademylist.com:8936/app_user/${url}/${chatHeads[i].product_id}`));
+            // var config = {
+            //     method: "get",
+            //     url: `https://trademylist.com:8936/app_user/${url}/${chatHeads[i].product_id}`,
+            //     headers: {
+            //         'x-access-token': `${token}`,
+            //     },
+            //     data: {},
+            // };
+            // var config = {
+            //     method: "get",
+            //     url: `https://trademylist.com:8936/user/${userIdToBeFetched}`,
+            //     headers: {
+            //         'x-access-token': `${token}`,
+            //     },
+            //     data: {},
+            // };
+            // const res = await axios(config);
+            // users.push(res)
             users.push(axios.get("https://trademylist.com:8936/user/" + userIdToBeFetched, {
                 headers: {
                     'x-access-token': token,
                 }
             }));
+            // console.warn("api2======+++++",token,"https://trademylist.com:8936/user/" + userIdToBeFetched)
         }
+        
         const productData = await Promise.all([...array]);
         const userData = await Promise.all([...users]);
-        console.warn('productdata',productData)
+        
         const updatedChatHeads = chatHeads.map(chatHead => {
             productData.forEach(pro => {
-                if(chatHead.product_id == pro.data.data.product._id){
+                if (pro.data.data && pro.data.data.product && pro.data.data.product._id && chatHead.product_id == pro.data.data.product._id) {
                     chatHead.product_name = pro.data.data.product.product_name;
                 }
             });
             userData.forEach(user => {
-                let toBeShownUserId = (currentUserId == chatHead.sender_id) ? chatHead.receiver_id: chatHead.sender_id;
-                if(toBeShownUserId == user.data.data._id){
+                let toBeShownUserId = (currentUserId == chatHead.sender_id) ? chatHead.receiver_id : chatHead.sender_id;
+                console.log("user ====",user.data.data)
+                if(user.data.data == null){
+                    null
+                }else{
+                if (toBeShownUserId == user.data.data._id) {
                     chatHead.userName = user.data.data.username;
                     chatHead.userImage = user.data.data.image;
                 }
+            }
             });
             return chatHead;
         })
@@ -227,7 +255,7 @@ export default class Chatter extends Component {
             chatBuyingList: buyingList,
             chatSellingList: sellingList
         })
-        //console.log("chatHeads", updatedChatHeads);
+      
     }
 
     changeMessageTabState = type => {
@@ -240,55 +268,58 @@ export default class Chatter extends Component {
 
 
     getSellingData = async (data) => {
-        //console.log('selling Data',data)
+       
         try {
+           
             var sellingData = []
             const value = JSON.parse(await AsyncStorage.getItem('UserData'));
             let getSameByProdId = this.groupBy(data, 'product_id');
+           
             getSameByProdId.map((data, index) => {
-            axios.get("https://trademylist.com:8936/app_user/product/" + data.product_id)
-            .then(response => {
-                if(response.data.data.product !== null){
-                    const productname = response.data.data.product.product_name
-                    var getUser;
-                    if (data.sender_id === value.userid) {
-                        getUser = data.receiver_id
-                    } else {
-                        getUser = data.sender_id
-                    }
-                    //console.log('product name',productname)
-                    //console.log('user',getUser)
-
-                    axios.get("https://trademylist.com:8936/user/" + getUser, {
-                        headers: {
-                            'x-access-token': value.token,
-                        }
-                    })
+                axios.get("https://trademylist.com:8936/app_user/product/" + data.product_id)
+                
                     .then(response => {
-                        const object= {
-                            talkerFirstname:response.data.data.username,
-                            image:response.data.data.image,
-                            message:data.message,
-                            date:data.created,
-                            sender_id:data.sender_id,
-                            receiver_id:data.receiver_id,
-                            product_id:data.product_id,
-                            product_name:productname
+                        
+                        if (response.data.data.product !== null) {
+                            const productname = response.data.data.product.product_name
+                            var getUser;
+                            if (data.sender_id === value.userid) {
+                                getUser = data.receiver_id
+                            } else {
+                                getUser = data.sender_id
+                            }
+                            
+
+                            axios.get("https://trademylist.com:8936/user/" + getUser, {
+                                headers: {
+                                    'x-access-token': value.token,
+                                }
+                            })
+                                .then(response => {
+                                    const object = {
+                                        talkerFirstname: response.data.data.username,
+                                        image: response.data.data.image,
+                                        message: data.message,
+                                        date: data.created,
+                                        sender_id: data.sender_id,
+                                        receiver_id: data.receiver_id,
+                                        product_id: data.product_id,
+                                        product_name: productname
+                                    }
+                                    //console.log('message object',index,object)
+                                    this.setState({
+                                        SellingChat: [...this.state.SellingChat, object],
+                                        AllChat: [...this.state.AllChat, object]
+                                    })
+                                })
+                                .catch(error => {
+                                    //console.log(error.data)
+                                })
                         }
-                        //console.log('message object',index,object)
-                        this.setState({
-                            SellingChat:[...this.state.SellingChat,object],
-                            AllChat:[...this.state.AllChat,object]
-                        })
                     })
                     .catch(error => {
                         //console.log(error.data)
                     })
-                }
-            })
-            .catch(error => {
-                //console.log(error.data)
-            })
             })
             // const newChat = [getSameByProdId, ...this.state.AllChat]
             // this.setState({
@@ -315,14 +346,14 @@ export default class Chatter extends Component {
             //     })
 
             ref.where('seller_id', '!=', value.userid)
-            .get()
-            .then(querySnapshot => {
-                var checkSelling = []
-                querySnapshot.docs.map(doc => {
-                    checkSelling.push(doc.data())
-                })
-                this.getBuyingData(checkSelling)
-            });
+                .get()
+                .then(querySnapshot => {
+                    var checkSelling = []
+                    querySnapshot.docs.map(doc => {
+                        checkSelling.push(doc.data())
+                    })
+                    this.getBuyingData(checkSelling)
+                });
         } catch (e) {
             // error reading value
         }
@@ -330,6 +361,7 @@ export default class Chatter extends Component {
 
     getBuyingData = async (buydata) => {
         try {
+             console.log("Buying ....................")
             // //console.log(buydata)
             var buyingData = []
             const value = await JSON.parse(await AsyncStorage.getItem('UserData'))
@@ -353,26 +385,26 @@ export default class Chatter extends Component {
                                     'x-access-token': value.token,
                                 }
                             })
-                            .then(response => {
-                                const object= {
-                                    talkerFirstname:response.data.data.username,
-                                    image:response.data.data.image,
-                                    message:data.message,
-                                    date:data.created,
-                                    sender_id:data.sender_id,
-                                    receiver_id:data.receiver_id,
-                                    product_id:data.product_id,
-                                    product_name:productname
-                               }
-                               buyingData.push(object)
-                               this.setState({
-                                BuyingChat:[...this.state.BuyingChat,object],
-                                AllChat:[...this.state.AllChat,object]
-                            })
-                            })
-                            .catch(error => {
-                                //console.log(error.data)
-                            })
+                                .then(response => {
+                                    const object = {
+                                        talkerFirstname: response.data.data.username,
+                                        image: response.data.data.image,
+                                        message: data.message,
+                                        date: data.created,
+                                        sender_id: data.sender_id,
+                                        receiver_id: data.receiver_id,
+                                        product_id: data.product_id,
+                                        product_name: productname
+                                    }
+                                    buyingData.push(object)
+                                    this.setState({
+                                        BuyingChat: [...this.state.BuyingChat, object],
+                                        AllChat: [...this.state.AllChat, object]
+                                    })
+                                })
+                                .catch(error => {
+                                    //console.log(error.data)
+                                })
 
                         })
                         .catch(error => {
@@ -421,20 +453,20 @@ export default class Chatter extends Component {
         try {
             const value = await JSON.parse(await AsyncStorage.getItem('UserData'))
             const object = { "_id": notifyid, "seen": true }
-            await axios.delete("https://trademylist.com:8936/app_seller/notification/"+notifyid, {
+            await axios.delete("https://trademylist.com:8936/app_seller/notification/" + notifyid, {
                 headers: {
                     'x-access-token': value.token,
                 }
             })
-            .then(response => {
-                //console.log(response.data)
-                if (response.data.success) {
-                    this.notificationdata()
-                }
-            })
-            .catch(error => {
-                //console.log(error.data)
-            })
+                .then(response => {
+                    //console.log(response.data)
+                    if (response.data.success) {
+                        this.notificationdata()
+                    }
+                })
+                .catch(error => {
+                    //console.log(error.data)
+                })
 
         } catch (e) {
             // error reading value
@@ -450,15 +482,15 @@ export default class Chatter extends Component {
                     'x-access-token': value.token,
                 }
             })
-            .then(response => {
-                //console.log(response.data)
-                if (response.data.success) {
-                    this.notificationdata()
-                }
-            })
-            .catch(error => {
-                //console.log(error.data)
-            })
+                .then(response => {
+                    //console.log(response.data)
+                    if (response.data.success) {
+                        this.notificationdata()
+                    }
+                })
+                .catch(error => {
+                    //console.log(error.data)
+                })
 
         } catch (e) {
             // error reading value
@@ -476,7 +508,7 @@ export default class Chatter extends Component {
                 .then(response => {
                     this.setState({
                         AllNotification: response.data.data,
-                        chatLoader:false
+                        chatLoader: false
                     })
                 })
                 .catch(error => {
@@ -532,28 +564,28 @@ export default class Chatter extends Component {
         return (
             <>
                 <View style={styles.Container}>
-                    <StatusBar barStyle={"light-content"}/>
+                    <StatusBar barStyle={"light-content"} />
                     <Header navigation={this.props.navigation} Heading={"Chat"} />
 
 
-                    <View style={{ width: Devicewidth,  alignItems: 'center', justifyContent: 'space-around', flexDirection: 'row', backgroundColor: '#fff', borderBottomColor: '#e6e6e6', borderBottomWidth: 1 }}>
+                    <View style={{ width: Devicewidth, alignItems: 'center', justifyContent: 'space-around', flexDirection: 'row', backgroundColor: '#fff', borderBottomColor: '#e6e6e6', borderBottomWidth: 1 }}>
                         {this.state.Message == true ?
                             <TouchableOpacity onPress={() => this.handelMessage()} style={{ width: Devicewidth / 2, height: Deviceheight / 18, alignItems: 'center', justifyContent: "center", borderBottomColor: "#383ec1", borderBottomWidth: 1 }}>
-                                <Text style={{ fontFamily:"Roboto-Bold" , color: '#383ec1', textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>Message</Text>
+                                <Text style={{ fontFamily: "Roboto-Bold", color: '#383ec1', textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>Message</Text>
                             </TouchableOpacity>
                             :
                             <TouchableOpacity onPress={() => this.handelMessage()} style={{ width: Devicewidth / 2, height: Deviceheight / 18, alignItems: 'center', justifyContent: "center", }}>
-                                <Text style={{ fontFamily:"Roboto-Bold" , color: '#606160', textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>Message</Text>
+                                <Text style={{ fontFamily: "Roboto-Bold", color: '#606160', textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>Message</Text>
                             </TouchableOpacity>
                         }
 
                         {this.state.Notification == true ?
                             <TouchableOpacity onPress={() => this.handelNotification()} style={{ width: Devicewidth / 2, height: Deviceheight / 18, alignItems: 'center', justifyContent: "center", borderBottomColor: "#383ec1", borderBottomWidth: 1 }}>
-                                <Text style={{ fontFamily:"Roboto-Bold" , color: '#383ec1', textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>Notification</Text>
+                                <Text style={{ fontFamily: "Roboto-Bold", color: '#383ec1', textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>Notification</Text>
                             </TouchableOpacity>
                             :
                             <TouchableOpacity onPress={() => this.handelNotification()} style={{ width: Devicewidth / 2, height: Deviceheight / 18, alignItems: 'center', justifyContent: "center", }}>
-                                <Text style={{ fontFamily:"Roboto-Bold" , color: '#606160', textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>Notification</Text>
+                                <Text style={{ fontFamily: "Roboto-Bold", color: '#606160', textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>Notification</Text>
                             </TouchableOpacity>
                         }
                     </View>
@@ -561,176 +593,176 @@ export default class Chatter extends Component {
 
                     {this.state.Message == true ?
                         <>
-                            <View style={{ width: Devicewidth,  alignItems: 'center', justifyContent: 'space-around', flexDirection: 'row', backgroundColor: '#fff', borderBottomColor: '#e6e6e6', borderBottomWidth: 1 }}>
+                            <View style={{ width: Devicewidth, alignItems: 'center', justifyContent: 'space-around', flexDirection: 'row', backgroundColor: '#fff', borderBottomColor: '#e6e6e6', borderBottomWidth: 1 }}>
                                 {this.state.All == true ?
                                     <TouchableOpacity onPress={() => this.changeMessageTabState('all')} style={{ width: Devicewidth / 3, height: Deviceheight / 18, alignItems: 'center', justifyContent: "center", borderBottomColor: "#383ec1", borderBottomWidth: 1 }}>
-                                        <Text style={{ fontFamily:"Roboto-Bold" , color: '#383ec1', textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>All</Text>
+                                        <Text style={{ fontFamily: "Roboto-Bold", color: '#383ec1', textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>All</Text>
                                     </TouchableOpacity>
                                     :
                                     <TouchableOpacity onPress={() => this.changeMessageTabState('all')} style={{ width: Devicewidth / 3, height: Deviceheight / 18, alignItems: 'center', justifyContent: "center", }}>
-                                        <Text style={{ fontFamily:"Roboto-Bold" , color: '#606160', textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>All</Text>
+                                        <Text style={{ fontFamily: "Roboto-Bold", color: '#606160', textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>All</Text>
                                     </TouchableOpacity>
                                 }
                                 {this.state.Selling == true ?
                                     <TouchableOpacity onPress={() => this.changeMessageTabState('sell')} style={{ width: Devicewidth / 3, height: Deviceheight / 18, alignItems: 'center', justifyContent: "center", borderBottomColor: "#383ec1", borderBottomWidth: 1 }}>
-                                        <Text style={{ fontFamily:"Roboto-Bold" , color: '#383ec1', textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>Selling</Text>
+                                        <Text style={{ fontFamily: "Roboto-Bold", color: '#383ec1', textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>Selling</Text>
                                     </TouchableOpacity>
                                     :
                                     <TouchableOpacity onPress={() => this.changeMessageTabState('sell')} style={{ width: Devicewidth / 3, height: Deviceheight / 18, alignItems: 'center', justifyContent: "center", }}>
-                                        <Text style={{ fontFamily:"Roboto-Bold" , color: '#606160', textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>Selling</Text>
+                                        <Text style={{ fontFamily: "Roboto-Bold", color: '#606160', textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>Selling</Text>
                                     </TouchableOpacity>
                                 }
                                 {this.state.Buying == true ?
                                     <TouchableOpacity onPress={() => this.changeMessageTabState('buy')} style={{ width: Devicewidth / 3, height: Deviceheight / 18, alignItems: 'center', justifyContent: "center", borderBottomColor: "#383ec1", borderBottomWidth: 1 }}>
-                                        <Text style={{ fontFamily:"Roboto-Bold" , color: '#383ec1', textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>Buying</Text>
+                                        <Text style={{ fontFamily: "Roboto-Bold", color: '#383ec1', textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>Buying</Text>
                                     </TouchableOpacity>
                                     :
                                     <TouchableOpacity onPress={() => this.changeMessageTabState('buy')} style={{ width: Devicewidth / 3, height: Deviceheight / 18, alignItems: 'center', justifyContent: "center", }}>
-                                        <Text style={{ fontFamily:"Roboto-Bold" , color: '#606160', textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>Buying</Text>
+                                        <Text style={{ fontFamily: "Roboto-Bold", color: '#606160', textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>Buying</Text>
                                     </TouchableOpacity>
                                 }
 
                             </View>
                             {
                                 <View style={styles.FlatListContainer}>
-                                    { 
+                                    {
                                         this.state.All &&
                                         <>
-                                        {
-                                            this.state.chatHeaderList !== null &&
-                                            <>
-                                                {
-                                                    this.state.chatHeaderList.length > 0 ?
-                                                    <FlatList
-                                                    data={this.state.chatHeaderList}
-                                                    scrollEnabled={true}
-                                                    showsVerticalScrollIndicator={false}
-                                                    renderItem={({ item }) => (
-                                                        <TouchableOpacity onPress={() => this.getNavigation(item)} style={styles.MainContainer}>
-                                                            <View style={styles.ImageContainer}>
-                                                            {
-                                                                item.userImage ?
-                                                                <Image source={{ uri: item.userImage }} style={styles.Image}></Image>
-                                                                :
-                                                                <Image source={require("../../Assets/default-avatar.png")} style={styles.Image}></Image>
-                                                            }
-                                                            </View>
-                                                            <View style={styles.DescriptionContainer}>
-                                                                <Text style={styles.Name}>{!item.userName ? 'Test User' : item.userName}</Text>
-                                                                <Text style={((item.receiver_id == this.state.userId) && !item.seen) ? styles.DescriptionUnseen :styles.Description}>{item.product_name}</Text>
-                                                                <Text style={((item.receiver_id == this.state.userId) && !item.seen) ? styles.Description2Unseen : styles.Description2}>{item.message}</Text>
-                                                            </View>
-                                                            {/* <View style={styles.DateMainContainer}>
+                                            {
+                                                this.state.chatHeaderList !== null &&
+                                                <>
+                                                    {
+                                                        this.state.chatHeaderList.length > 0 ?
+                                                            <FlatList
+                                                                data={this.state.chatHeaderList}
+                                                                scrollEnabled={true}
+                                                                showsVerticalScrollIndicator={false}
+                                                                renderItem={({ item }) => (
+                                                                    <TouchableOpacity onPress={() => this.getNavigation(item)} style={styles.MainContainer}>
+                                                                        <View style={styles.ImageContainer}>
+                                                                            {
+                                                                                item.userImage ?
+                                                                                    <Image source={{ uri: item.userImage }} style={styles.Image}></Image>
+                                                                                    :
+                                                                                    <Image source={require("../../Assets/default-avatar.png")} style={styles.Image}></Image>
+                                                                            }
+                                                                        </View>
+                                                                        <View style={styles.DescriptionContainer}>
+                                                                            <Text style={styles.Name}>{!item.userName ? 'Test User' : item.userName}</Text>
+                                                                            <Text style={((item.receiver_id == this.state.userId) && !item.seen) ? styles.DescriptionUnseen : styles.Description}>{item.product_name}</Text>
+                                                                            <Text style={((item.receiver_id == this.state.userId) && !item.seen) ? styles.Description2Unseen : styles.Description2}>{item.message}</Text>
+                                                                        </View>
+                                                                        {/* <View style={styles.DateMainContainer}>
                                                                 <Text style={styles.Date}>{item.Days}</Text>
                                                             </View> */}
-                                                        </TouchableOpacity>
-                                                    )}
+                                                                    </TouchableOpacity>
+                                                                )}
 
-                                                    keyExtractor={item => item.messageId}
-                                                    />
-                                                    :
-                                                    <>
-                                                        <View style={{ alignItems: 'center', justifyContent: 'center', alignSelf: 'center', height: Deviceheight / 4, width: Devicewidth / 1.5, marginBottom: 10, marginTop: 10 }}>
-                                                            <Image source={require("../../Assets/selling.jpg")} style={{ height: "100%", width: "100%", resizeMode: "contain" }}></Image>
-                                                        </View>
-                                                        <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 20, color: "#000", fontWeight: "bold", textAlign: "center" }}>No Chatted User</Text>
-                                                    </>
-                                                }
-                                            </>
-                                        }
+                                                                keyExtractor={item => item.messageId}
+                                                            />
+                                                            :
+                                                            <>
+                                                                <View style={{ alignItems: 'center', justifyContent: 'center', alignSelf: 'center', height: Deviceheight / 4, width: Devicewidth / 1.5, marginBottom: 10, marginTop: 10 }}>
+                                                                    <Image source={require("../../Assets/selling.jpg")} style={{ height: "100%", width: "100%", resizeMode: "contain" }}></Image>
+                                                                </View>
+                                                                <Text style={{ fontFamily: "Roboto-Bold", fontSize: 20, color: "#000", fontWeight: "bold", textAlign: "center" }}>No chats available</Text>
+                                                            </>
+                                                    }
+                                                </>
+                                            }
                                         </>
                                     }
                                     {
                                         this.state.Selling &&
                                         <>
-                                        {
-                                            this.state.chatSellingList !== null &&
-                                            <>
-                                                {
-                                                    this.state.chatSellingList.length > 0 ?
-                                                    <FlatList
-                                                        data={this.state.chatSellingList}
-                                                        scrollEnabled={true}
-                                                        showsVerticalScrollIndicator={false}
-                                                        renderItem={({ item }) => (
-                                                            <TouchableOpacity onPress={() => this.getNavigation(item)} style={styles.MainContainer}>
-                                                                <View style={styles.ImageContainer}>
-                                                                {
-                                                                    item.userImage ?
-                                                                    <Image source={{ uri: item.userImage }} style={styles.Image}></Image>
-                                                                    :
-                                                                    <Image source={require("../../Assets/default-avatar.png")} style={styles.Image}></Image>
-                                                                }
-                                                                </View>
-                                                                <View style={styles.DescriptionContainer}>
-                                                                    <Text style={styles.Name}>{!item.userName ? 'Test User' : item.userName}</Text>
-                                                                    <Text style={((item.receiver_id == this.state.userId) && !item.seen) ? styles.DescriptionUnseen :styles.Description}>{item.product_name}</Text>
-                                                                    <Text style={((item.receiver_id == this.state.userId) && !item.seen) ? styles.Description2Unseen : styles.Description2}>{item.message}</Text>
-                                                                </View>
-                                                                {/* <View style={styles.DateMainContainer}>
+                                            {
+                                                this.state.chatSellingList !== null &&
+                                                <>
+                                                    {
+                                                        this.state.chatSellingList.length > 0 ?
+                                                            <FlatList
+                                                                data={this.state.chatSellingList}
+                                                                scrollEnabled={true}
+                                                                showsVerticalScrollIndicator={false}
+                                                                renderItem={({ item }) => (
+                                                                    <TouchableOpacity onPress={() => this.getNavigation(item)} style={styles.MainContainer}>
+                                                                        <View style={styles.ImageContainer}>
+                                                                            {
+                                                                                item.userImage ?
+                                                                                    <Image source={{ uri: item.userImage }} style={styles.Image}></Image>
+                                                                                    :
+                                                                                    <Image source={require("../../Assets/default-avatar.png")} style={styles.Image}></Image>
+                                                                            }
+                                                                        </View>
+                                                                        <View style={styles.DescriptionContainer}>
+                                                                            <Text style={styles.Name}>{!item.userName ? 'Test User' : item.userName}</Text>
+                                                                            <Text style={((item.receiver_id == this.state.userId) && !item.seen) ? styles.DescriptionUnseen : styles.Description}>{item.product_name}</Text>
+                                                                            <Text style={((item.receiver_id == this.state.userId) && !item.seen) ? styles.Description2Unseen : styles.Description2}>{item.message}</Text>
+                                                                        </View>
+                                                                        {/* <View style={styles.DateMainContainer}>
                                                                     <Text style={styles.Date}>{item.Days}</Text>
                                                                 </View> */}
-                                                            </TouchableOpacity>
-                                                        )}
-                                                        keyExtractor={item => item.messageId}
-                                                    />
-                                                    :
-                                                    <>
-                                                        <View style={{ alignItems: 'center', justifyContent: 'center', alignSelf: 'center', height: Deviceheight / 4, width: Devicewidth / 1.5, marginBottom: 10, marginTop: 10 }}>
-                                                            <Image source={require("../../Assets/selling.jpg")} style={{ height: "100%", width: "100%", resizeMode: "contain" }}></Image>
-                                                        </View>
-                                                        <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 20, color: "#000", fontWeight: "bold", textAlign: "center" }}>No Chatted User</Text>
-                                                    </>
-                                                }
-                                            </>
-                                        }
+                                                                    </TouchableOpacity>
+                                                                )}
+                                                                keyExtractor={item => item.messageId}
+                                                            />
+                                                            :
+                                                            <>
+                                                                <View style={{ alignItems: 'center', justifyContent: 'center', alignSelf: 'center', height: Deviceheight / 4, width: Devicewidth / 1.5, marginBottom: 10, marginTop: 10 }}>
+                                                                    <Image source={require("../../Assets/selling.jpg")} style={{ height: "100%", width: "100%", resizeMode: "contain" }}></Image>
+                                                                </View>
+                                                                <Text style={{ fontFamily: "Roboto-Bold", fontSize: 20, color: "#000", fontWeight: "bold", textAlign: "center" }}>No chats available</Text>
+                                                            </>
+                                                    }
+                                                </>
+                                            }
                                         </>
 
                                     }
                                     {
                                         this.state.Buying &&
                                         <>
-                                        {
-                                            this.state.chatBuyingList !== null  &&
-                                            <>
-                                                {
-                                                    this.state.chatBuyingList.length > 0 ?
-                                                    <FlatList
-                                                        data={this.state.chatBuyingList}
-                                                        scrollEnabled={true}
-                                                        showsVerticalScrollIndicator={false}
-                                                        renderItem={({ item }) => (
-                                                            <TouchableOpacity onPress={() => this.getNavigation(item)} style={styles.MainContainer}>
-                                                                <View style={styles.ImageContainer}>
-                                                                {
-                                                                    item.userImage ?
-                                                                    <Image source={{ uri: item.userImage }} style={styles.Image}></Image>
-                                                                    :
-                                                                    <Image source={require("../../Assets/default-avatar.png")} style={styles.Image}></Image>
-                                                                }
-                                                                </View>
-                                                                <View style={styles.DescriptionContainer}>
-                                                                    <Text style={styles.Name}>{!item.userName ? 'Test User' : item.userName}</Text>
-                                                                    <Text style={((item.receiver_id == this.state.userId) && !item.seen) ? styles.DescriptionUnseen :styles.Description}>{item.product_name}</Text>
-                                                                    <Text style={((item.receiver_id == this.state.userId) && !item.seen) ? styles.Description2Unseen : styles.Description2}>{item.message}</Text>
-                                                                </View>
-                                                                {/* <View style={styles.DateMainContainer}>
+                                            {
+                                                this.state.chatBuyingList !== null &&
+                                                <>
+                                                    {
+                                                        this.state.chatBuyingList.length > 0 ?
+                                                            <FlatList
+                                                                data={this.state.chatBuyingList}
+                                                                scrollEnabled={true}
+                                                                showsVerticalScrollIndicator={false}
+                                                                renderItem={({ item }) => (
+                                                                    <TouchableOpacity onPress={() => this.getNavigation(item)} style={styles.MainContainer}>
+                                                                        <View style={styles.ImageContainer}>
+                                                                            {
+                                                                                item.userImage ?
+                                                                                    <Image source={{ uri: item.userImage }} style={styles.Image}></Image>
+                                                                                    :
+                                                                                    <Image source={require("../../Assets/default-avatar.png")} style={styles.Image}></Image>
+                                                                            }
+                                                                        </View>
+                                                                        <View style={styles.DescriptionContainer}>
+                                                                            <Text style={styles.Name}>{!item.userName ? 'Test User' : item.userName}</Text>
+                                                                            <Text style={((item.receiver_id == this.state.userId) && !item.seen) ? styles.DescriptionUnseen : styles.Description}>{item.product_name}</Text>
+                                                                            <Text style={((item.receiver_id == this.state.userId) && !item.seen) ? styles.Description2Unseen : styles.Description2}>{item.message}</Text>
+                                                                        </View>
+                                                                        {/* <View style={styles.DateMainContainer}>
                                                                     <Text style={styles.Date}>{item.Days}</Text>
                                                                 </View> */}
-                                                            </TouchableOpacity>
-                                                        )}
-                                                        keyExtractor={item => item.messageId}
-                                                    />
-                                                    :
-                                                    <>
-                                                        <View style={{ alignItems: 'center', justifyContent: 'center', alignSelf: 'center', height: Deviceheight / 4, width: Devicewidth / 1.5, marginBottom: 10, marginTop: 10 }}>
-                                                            <Image source={require("../../Assets/selling.jpg")} style={{ height: "100%", width: "100%", resizeMode: "contain" }}></Image>
-                                                        </View>
-                                                        <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 20, color: "#000", fontWeight: "bold", textAlign: "center" }}>No Chatted User</Text>
-                                                    </>
-                                                }
-                                            </>
-                                        }
+                                                                    </TouchableOpacity>
+                                                                )}
+                                                                keyExtractor={item => item.messageId}
+                                                            />
+                                                            :
+                                                            <>
+                                                                <View style={{ alignItems: 'center', justifyContent: 'center', alignSelf: 'center', height: Deviceheight / 4, width: Devicewidth / 1.5, marginBottom: 10, marginTop: 10 }}>
+                                                                    <Image source={require("../../Assets/selling.jpg")} style={{ height: "100%", width: "100%", resizeMode: "contain" }}></Image>
+                                                                </View>
+                                                                <Text style={{ fontFamily: "Roboto-Bold", fontSize: 20, color: "#000", fontWeight: "bold", textAlign: "center" }}>No chats available</Text>
+                                                            </>
+                                                    }
+                                                </>
+                                            }
                                         </>
                                     }
                                 </View>
@@ -739,18 +771,18 @@ export default class Chatter extends Component {
                         :
                         <View style={styles.NotificationFlatListContainer}>
                             {this.state.AllNotification.length == 0 ?
-                                 <>
+                                <>
 
-                                 <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 22, color: "#000", fontWeight: "bold", textAlign: "center",marginTop: 30,marginBottom:10 }}>You're all caught up</Text>
-                                 <View style={{ alignItems: 'center', justifyContent: 'center', alignSelf: 'center', height: Deviceheight / 3, width: Devicewidth / 1.5, marginBottom: 10, marginTop: 10,}}>
-                                     <Image source={require("../../Assets/no_data.png")} style={{ height: "100%", width: "100%", resizeMode: "contain" }}></Image>
-                                 </View>
-                                 <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 14, color: "#000", textAlign: "center",width:Devicewidth/1.2,marginTop:5 ,fontWeight:"800"}}>Way to go! Check back later for the latest updates on all your listings and items you are following here.</Text>
-                             </>
+                                    <Text style={{ fontFamily: "Roboto-Bold", fontSize: 22, color: "#000", fontWeight: "bold", textAlign: "center", marginTop: 30, marginBottom: 10 }}>You're all caught up</Text>
+                                    <View style={{ alignItems: 'center', justifyContent: 'center', alignSelf: 'center', height: Deviceheight / 3, width: Devicewidth / 1.5, marginBottom: 10, marginTop: 10, }}>
+                                        <Image source={require("../../Assets/no_data.png")} style={{ height: "100%", width: "100%", resizeMode: "contain" }}></Image>
+                                    </View>
+                                    <Text style={{ fontFamily: "Roboto-Bold", fontSize: 14, color: "#000", textAlign: "center", width: Devicewidth / 1.2, marginTop: 5, fontWeight: "800" }}>Way to go! Check back later for the latest updates on all your listings and items you are following here.</Text>
+                                </>
                                 :
                                 <>
-                                    <TouchableOpacity style={{ alignItems: 'center', height: Deviceheight / 22, width: Devicewidth / 5, borderRadius: Deviceheight / 44, justifyContent: 'center', backgroundColor: '#ff6700', marginLeft: Devicewidth / 1.35, marginTop: 10,marginBottom:10 }} onPress={this.getnotifyseenall}>
-                                        <Text style={{ fontFamily:"Roboto-Regular" , color: "#ffffff", fontSize: 16, textAlign: 'center' }}>Clear All</Text>
+                                    <TouchableOpacity style={{ alignItems: 'center', height: Deviceheight / 22, width: Devicewidth / 5, borderRadius: Deviceheight / 44, justifyContent: 'center', backgroundColor: '#ff6700', marginLeft: Devicewidth / 1.35, marginTop: 10, marginBottom: 10 }} onPress={this.getnotifyseenall}>
+                                        <Text style={{ fontFamily: "Roboto-Regular", color: "#ffffff", fontSize: 16, textAlign: 'center' }}>Clear All</Text>
                                     </TouchableOpacity>
                                     <FlatList
                                         data={this.state.AllNotification}
@@ -789,26 +821,26 @@ const styles = StyleSheet.create({
     },
     NotificationFlatListContainer: {
         width: Devicewidth,
-        flex:1,
+        flex: 1,
         alignItems: 'center',
         // backgroundColor: 'pink',
-        marginBottom:20
+        marginBottom: 20
     },
     FlatListContainer: {
         width: Devicewidth,
-        flex:1,
+        flex: 1,
         alignItems: 'center',
         // backgroundColor:'yellow',
-        marginBottom:20
+        marginBottom: 20
     },
     ImageContainer: {
         alignItems: "center",
         justifyContent: "center",
         //height: Deviceheight / 14,
-       // width: Devicewidth / 7,
-       width:60,
-       height:60,
-       marginLeft:10,
+        // width: Devicewidth / 7,
+        width: 60,
+        height: 60,
+        marginLeft: 10,
         borderRadius: 360,
         // backgroundColor:'green'
     },
@@ -849,13 +881,13 @@ const styles = StyleSheet.create({
     DescriptionContainer: {
         // backgroundColor:'green',
         alignItems: 'flex-start',
-    
+
         //maxWidth: Devicewidth / 1.5,
         //width: Devicewidth / 1.5,
         //height: Deviceheight / 12,
         justifyContent: 'space-evenly',
-       flex:1,
-        paddingLeft:15,
+        flex: 1,
+        paddingLeft: 15,
     },
     Name: {
         textAlign: 'left',

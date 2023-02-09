@@ -80,9 +80,9 @@ const ReactiveProductModal = (props) => {
                   {/* <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 16, color: "#000", textAlign: "center", alignSelf: 'center', marginRight: 20, }}>See Exaple</Text> */}
                 </View>
 
-                <View style={{ alignSelf: 'flex-start', width: Devicewidth, height: Deviceheight / 18, alignItems: "center", flexDirection: "row", paddingLeft: 15, }}>
+                <View style={{ alignSelf: 'flex-start', width: Devicewidth, alignItems: "center", flexDirection: "row", paddingLeft: 15,}}>
                   <RightIcon name="check" size={20} style={styles.favoriteIcon} color="#070707" />
-                  <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 16, color: "#000", textAlign: "center", alignSelf: 'center', marginLeft: 10, }}>{Product[0].description}</Text>
+                  <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 16, color: "#000", textAlign: "center", alignSelf: 'center', marginLeft: 10, width:"85%"}}>{Product[0].description}</Text>
                 </View>
 
                  {/* <TouchableOpacity

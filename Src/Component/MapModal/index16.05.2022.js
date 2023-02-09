@@ -3,7 +3,7 @@ import { View, Text, Modal, TouchableOpacity, StyleSheet, Dimensions, Image, Tex
 import AsyncStorage from '@react-native-community/async-storage';
 import Geocoder from 'react-native-geocoding';
 import Geolocation from 'react-native-geolocation-service';
-// import Geolocation from '@react-native-community/geolocation';
+ import Geolocation from '@react-native-community/geolocation';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -20,8 +20,8 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const axios = require('axios');
 //const API_KEY = 'AIzaSyCPCwSH6Wtnu0dAJUapPeU2NWTwCmlNQhY';
-const API_KEY = 'AIzaSyCZ9kuVUyhZxeFR3cPnebauMlffVOhoM1Y'
-
+// const API_KEY = 'AIzaSyCZ9kuVUyhZxeFR3cPnebauMlffVOhoM1Y'
+const API_KEY = 'AIzaSyAsJT9SLCfV4wvyd2jvG7AUgXYsaTTx1D4'
 class MapModal extends Component {
   
   constructor(props) {

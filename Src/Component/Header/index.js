@@ -40,7 +40,7 @@ const Header = (props) => {
   }
 
   const categoryPressed =()=>{
-   return("All Product")
+   return("All Products")
   }
   const [box, setBox] = useState(false)
   showBlankTextBox = () => {
@@ -55,7 +55,7 @@ const Header = (props) => {
   const handelMenu = async () => {
     try {
       const value = await AsyncStorage.getItem('UserData');
-      if (value !== null) {
+      if (value != null) {
         navigation.navigate('menu')
       } else {
         SetLoginModalFirst(true)
@@ -203,7 +203,7 @@ const Header = (props) => {
                     /> */}
 
                       <TextInput
-                      placeholder={'All Product'}
+                      placeholder={'All Products'}
                      // value={searchval}
                       placeholderTextColor={"#383838"}
                       style={styles.SearchContainer}
@@ -257,14 +257,14 @@ const styles = StyleSheet.create({
   },
   HeadrIconContainer: {
     width: Devicewidth,
-    height: Deviceheight / 12,
+    height: Deviceheight / 10,
     justifyContent: "space-between",
     flexDirection: "row",
     // backgroundColor:"yellow"
   },
   SearchContainer: {
-    borderRadius: 5,
-    // height: Deviceheight / 20,
+    borderRadius: 100,
+    // height: Deviceheight / 25,
     ///width: Devicewidth / 2,
     alignSelf: 'center',
     justifyContent: "flex-end",

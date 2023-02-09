@@ -9,6 +9,7 @@ const Deviceheight = Dimensions.get('window').height;
 import Header from "../../Component/HeaderBack"
 import LoginModal from "../../Component/LoginModal"
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Toast from 'react-native-simple-toast';
 
 const axios = require('axios');
 
@@ -69,10 +70,10 @@ export default class ForgotPassword extends Component {
                         loder: false,
                     })
                 }
-                ToastAndroid.showWithGravity(
+                Toast.showWithGravity(
                     response.data.message,
-                    ToastAndroid.SHORT,
-                    ToastAndroid.BOTTOM,
+                    Toast.SHORT,
+                    Toast.BOTTOM,
                 );
             })
             .catch(error => {
@@ -113,10 +114,10 @@ export default class ForgotPassword extends Component {
                         loder: false
                     })
                 }
-                ToastAndroid.showWithGravity(
+                Toast.showWithGravity(
                     response.data.message,
-                    ToastAndroid.SHORT,
-                    ToastAndroid.BOTTOM,
+                    Toast.SHORT,
+                    Toast.BOTTOM,
                 );
             })
             .catch(error => {
@@ -141,10 +142,10 @@ export default class ForgotPassword extends Component {
 
                     }
                 }
-                ToastAndroid.showWithGravity(
+                Toast.showWithGravity(
                     response.data.message,
-                    ToastAndroid.SHORT,
-                    ToastAndroid.BOTTOM,
+                    Toast.SHORT,
+                    Toast.BOTTOM,
                 );
             })
             .catch(error => {
@@ -359,7 +360,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#d7d7d7',
         borderRadius: 5,
         width: Devicewidth / 1.05,
-        // height: Deviceheight / 6,
+         height: Deviceheight / 6,
         paddingLeft: 5,
         paddingBottom: 10,
         paddingTop: 5
@@ -374,6 +375,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: "#ffffff",
         borderRadius: 5,
+        alignItems:"center"
     },
     inputContainer1: {
         alignSelf: "center",
@@ -385,7 +387,8 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         borderBottomWidth: 1,
         borderBottomColor: "#ffffff",
-        marginTop: 10
+        marginTop: 10,
+        alignItems:"center"
     },
     Input: {
         marginLeft: 15,
@@ -396,7 +399,7 @@ const styles = StyleSheet.create({
         // marginLeft: 30,
         paddingLeft: 10,
         paddingTop: 12,
-        fontFamily: 'Raleway; Medium',
+        //fontFamily: 'Rubik',
         // backgroundColor:'yellow',
         alignSelf: 'flex-end'
     },
@@ -407,7 +410,7 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         paddingTop: 12,
         marginLeft: 15,
-        fontFamily: 'Raleway; Medium',
+    
         // backgroundColor:'yellow',
         alignSelf: 'flex-end'
     },
@@ -423,7 +426,7 @@ const styles = StyleSheet.create({
     signinText: {
         color: "#000000",
         fontSize: 16,
-        fontFamily: 'Raleway; Medium',
+        //fontFamily: 'Rubik',
 
     },
     headingContainer: {
@@ -444,20 +447,20 @@ const styles = StyleSheet.create({
     },
     btnContainer: {
         width: Devicewidth / 1.05,
-        height: Deviceheight / 19,
+        height: Deviceheight / 20,
         alignItems: "center",
         justifyContent: 'center',
         backgroundColor: "#d7d7d7",
-        borderRadius: 20,
+        borderRadius: 30,
         marginTop: 60
     },
     btnContainer_active: {
         width: Devicewidth / 1.05,
-        height: Deviceheight / 19,
+        height: Deviceheight / 20,
         alignItems: "center",
         justifyContent: 'center',
         backgroundColor: "#ff6801",
-        borderRadius: 20,
+        borderRadius: 30,
         marginTop: 60
     },
     btnText: {
@@ -467,7 +470,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     },
     forgotText: {
-        fontFamily: 'Raleway; Medium',
+      //  fontFamily: 'Rubik',
         fontSize: 17,
         marginTop: 10,
         fontWeight: 'bold',
@@ -475,7 +478,7 @@ const styles = StyleSheet.create({
         // marginLeft:Devicewidth / 3.4
     },
     Desctext: {
-        fontFamily: 'Raleway; Medium',
+      //  fontFamily: 'Rubik',
         fontSize: 12,
         marginTop: 8,
         fontWeight: 'bold',
@@ -490,7 +493,7 @@ const styles = StyleSheet.create({
         alignSelf: "center"
     },
     AccountText: {
-        fontFamily: 'Raleway; Medium',
+       // fontFamily: 'Rubik',
         fontSize: 14,
         color: "#9d9d9d",
     },
@@ -503,7 +506,7 @@ const styles = StyleSheet.create({
         // backgroundColor:'green'
     },
     signup: {
-        fontFamily: 'Raleway; Medium',
+       // fontFamily: 'Rubik',
         fontSize: 15,
         textAlign: "center",
         color: "#383ebd",

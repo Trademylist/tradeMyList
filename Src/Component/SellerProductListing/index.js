@@ -10,7 +10,9 @@ const axios = require('axios');
 const SellerProductListing = (props) => {
     return (
         <View style={styles.Container}>
-            <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', height: Deviceheight / 5, width: Devicewidth / 2.5, marginBottom: 5, borderRadius: 5, }} onPress={() => props.navigation.navigate('productDetails', { "productId": props.ProductId,"process":props.process })}>
+            <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', height: Deviceheight / 5, width: Devicewidth / 2.5, marginBottom: 5, borderRadius: 5, }} onPress={() => props.navigation.replace('productDetails', { "productId": props.ProductId, "process": props.process })
+        }
+            >
                 <Image source={{ uri: props.image == "" ? props.category == "Jobs" ? "https://trademylist.com:8936/jobs.jpg" : props.category == "Services" ? "https://trademylist.com:8936/services.jpg" : null : props.image }} style={{ height: "100%", width: '100%', resizeMode: "contain", alignSelf: 'center' }} />
             </TouchableOpacity>
             
@@ -19,7 +21,7 @@ const SellerProductListing = (props) => {
                 props.category == "Freebies" ?
                 <Text style={{ fontFamily:"Roboto-Bold" , marginTop: 5, color: "#000", fontSize: 14, textAlign: 'center', alignSelf: 'center', fontWeight: 'bold' }}>{"Free"}</Text>
                 :
-                <Text style={{ fontFamily:"Roboto-Bold" , marginTop: 5, color: "#000", fontSize: 14, textAlign: 'center', alignSelf: 'center', fontWeight: 'bold' }}>{(props.category != "Jobs" && props.category != "Freebies" && props.category != "Services") && (props.currency == "INR" ? "₹" : "$")} {props.inr}</Text>
+                <Text style={{ fontFamily:"Roboto-Bold" , marginTop: 5, color: "#000", fontSize: 14, textAlign: 'center', alignSelf: 'center', fontWeight: 'bold' }}>{(props.category != "Jobs" && props.category != "Freebies" && props.category != "Services") && (props.currency == "INR" ? "₹ " : "$ ")} {props.inr}</Text>
                 }
             </View>
             <Text style={{ fontFamily:"Roboto-Bold" , marginTop: 10, color: "#000", fontSize: 12, textAlign: 'left', alignSelf: 'center', width: Devicewidth / 2.2, paddingLeft: 10 }}>{props.desc}</Text>

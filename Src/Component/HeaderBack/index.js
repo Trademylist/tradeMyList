@@ -19,6 +19,7 @@ const HeaderBack = (props) => {
   const { navigation } = props
 
 const handelBack=()=>{
+  console.log('+_+_+_+_+_+_+_')
   navigation.goBack()
 }
   return (

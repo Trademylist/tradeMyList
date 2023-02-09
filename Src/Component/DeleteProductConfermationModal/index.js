@@ -35,7 +35,7 @@ const DeleteProductConfermationModal = (props) => {
                         <View style={styles.modalContainer}>
                             <View style={styles.modalBody}>
                                 <ScrollView showsVerticalScrollIndicator={false}>
-                                    <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 20, fontWeight: "bold", color: "#000", textAlign: 'center', }}>Confirn!</Text>
+                                    <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 20, fontWeight: "bold", color: "#000", textAlign: 'center', }}>Confirm!</Text>
 
                                     <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 16, color: "#000", textAlign: 'center', marginTop: 15,  width: Devicewidth / 1.6,marginBottom:20  }}>Are you sure you want to delete this item ?</Text>
                                     <View style={{  alignItems: "center", justifyContent: 'space-around', alignSelf: "center", flexDirection: "row", }}>

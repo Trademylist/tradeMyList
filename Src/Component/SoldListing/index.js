@@ -9,6 +9,12 @@ const MyProductListing = (props) => {
     
     const[sellItAgainModal, setsellItAgainModal] = useState(false)
 
+    const directingSoldPage = () => {
+        console.log("bbbbb",props.ProductId)
+        //  props.navigation.navigate('productDetails',{"productId":props.ProductId})
+        props.navigation.navigate('productDetails', { "productId": props.ProductId, "process": "general"})
+        
+    }
     const deleteProduct = async (prodId) => {
         props.prodDelete(prodId)
     }
@@ -18,14 +24,14 @@ const MyProductListing = (props) => {
 
     return (
         <View style={styles.Container}>
-            <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', height: Deviceheight / 5.5, width: Devicewidth / 3, marginBottom: 5, borderRadius: 5, }} onPress={() => props.navigation.navigate('productDetails',{"productId":props.ProductId})}>
+            <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', height: Deviceheight / 5.5, width: Devicewidth / 3, marginBottom: 5, borderRadius: 5, }} onPress={directingSoldPage}>
                 <Image source={{ uri: props.image == "" ? props.category == "Jobs" ? "https://trademylist.com:8936/jobs.jpg" : props.category == "Services" ? "https://trademylist.com:8936/services.jpg" : null : props.image }} style={{ height: "100%", width: '100%', resizeMode: "contain", alignSelf: 'center' }} />
             </TouchableOpacity>
             {props.category == "Jobs" || props.category == "Services"?
             null
             :
             <View style={{ width: Devicewidth / 2.2, alignSelf: 'center', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 5 }}>
-                <Text style={{ fontFamily:"Roboto-Regular" , marginTop: 5, color: "#000", fontSize: 14, textAlign: 'center', alignSelf: 'center', fontWeight: 'bold',marginLeft:5 }}>{props.currencyCode == "INR" ? "₹ " : props.currencyCode == "USD" ? "$" : `${props.currencyCode}`}{props.inr}</Text>
+                <Text style={{ fontFamily:"Roboto-Regular" , marginTop: 5, color: "#000", fontSize: 14, textAlign: 'center', alignSelf: 'center', fontWeight: 'bold',marginLeft:5 }}>{props.currencyCode == "INR" ? "₹ " : props.currencyCode == "USD" ? "$ " : `${props.currencyCode}`}{props.inr}</Text>
                 {/* <TouchableOpacity style={{
                     height: Deviceheight / 60,
                     width: Devicewidth / 28, alignItems: "center", justifyContent: "center", alignSelf: "center", marginLeft: 20, backgroundColor: "#9e9e9e"

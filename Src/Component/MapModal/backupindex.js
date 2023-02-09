@@ -21,8 +21,8 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const axios = require('axios');
 //const API_KEY = 'AIzaSyCPCwSH6Wtnu0dAJUapPeU2NWTwCmlNQhY';
-const API_KEY = 'AIzaSyCZ9kuVUyhZxeFR3cPnebauMlffVOhoM1Y'
-
+// const API_KEY = 'AIzaSyCZ9kuVUyhZxeFR3cPnebauMlffVOhoM1Y'
+const API_KEY = 'AIzaSyAsJT9SLCfV4wvyd2jvG7AUgXYsaTTx1D4'
   
 class MapModal extends Component {
 
@@ -513,7 +513,7 @@ class MapModal extends Component {
               </View>
 
               <View style={{ width: Devicewidth / 1.05, height: Deviceheight / 14, alignItems: 'center', alignSelf: 'center', justifyContent: 'center', }}>
-                <TouchableOpacity style={{ width: Devicewidth / 1.1, height: Deviceheight / 20, alignItems: 'center', alignSelf: 'center', justifyContent: 'center', backgroundColor: "#ff6801", borderRadius: 20 }} onPress={() => this.props.updateLocation(this.state.lat, this.state.lng,this.state.sliderOneValue)} >
+                <TouchableOpacity style={{ width: Devicewidth / 1.1, height: Deviceheight / 20, alignItems: 'center', alignSelf: 'center', justifyContent: 'center', backgroundColor: "#ff6801", borderRadius: 30 }} onPress={() => this.props.updateLocation(this.state.lat, this.state.lng,this.state.sliderOneValue)} >
                   <Text style={{ fontFamily:"Roboto-Bold" , color: '#fff', fontWeight: 'bold', fontSize: 16, textAlign: 'center' }}>Set Location</Text>
 
                 </TouchableOpacity>

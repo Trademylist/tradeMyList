@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 const axios = require('axios');
 import Icon from 'react-native-vector-icons/Fontisto';
 import StarRating from 'react-native-star-rating';
+import Toast from 'react-native-simple-toast';
 
 export default class ReviewExperienceSeller extends Component{
     constructor(props) {
@@ -135,10 +136,10 @@ export default class ReviewExperienceSeller extends Component{
                         .then(response => {
                             //console.log('product sold', response.data)
                             if(response.data.success){
-                                ToastAndroid.showWithGravity(
+                                Toast.showWithGravity(
                                     "SuccessFully Review Seller",
-                                    ToastAndroid.SHORT,
-                                    ToastAndroid.BOTTOM,
+                                    Toast.SHORT,
+                                    Toast.BOTTOM,
                                 );
                                 this.props.navigation.navigate('productList')
                             }

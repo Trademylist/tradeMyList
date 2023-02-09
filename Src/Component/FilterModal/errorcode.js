@@ -17,8 +17,8 @@ Geocoder.init("AIzaSyAsJT9SLCfV4wvyd2jvG7AUgXYsaTTx1D4");
 
 
 //const API_KEY = 'AIzaSyCPCwSH6Wtnu0dAJUapPeU2NWTwCmlNQhY';
-const API_KEY = 'AIzaSyCZ9kuVUyhZxeFR3cPnebauMlffVOhoM1Y'
-
+// const API_KEY = 'AIzaSyCZ9kuVUyhZxeFR3cPnebauMlffVOhoM1Y'
+const API_KEY = 'AIzaSyAsJT9SLCfV4wvyd2jvG7AUgXYsaTTx1D4'
 const FilterModal = (props) => {
   const [modal, modalVisible] = useState(false);
   const { modalProps, SetmodalProps } = props;
@@ -276,12 +276,12 @@ const FilterModal = (props) => {
 
                   <View style={styles.DescContainer2}>
                     {fromInr != '' ?
-                      <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 15, color: "#000", textAlign: "left", alignSelf: "center",marginLeft:5 }}>{currency == "INR" ? "₹" : "$"}</Text>
+                      <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 15, color: "#000", textAlign: "left", alignSelf: "center",marginLeft:5 }}>{currency == "INR" ? "₹ " : "$ "}</Text>
                       :
                       null
                     }
                     <TextInput
-                      placeholder={`From (${currency == "INR" ? "₹" : "$"})`}
+                      placeholder={`From (${currency == "INR" ? "₹ " : "$ "})`}
                       placeholderTextColor={'black'}
                       style={fromInr==''?styles.Input:styles.InputSelect}
                       onChangeText={(val) => setFromInr(val)}
@@ -292,12 +292,12 @@ const FilterModal = (props) => {
                   </View>
                   <View style={styles.DescContainer2}>
                     {toInr != '' ?
-                      <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 15, color: "#000", textAlign: "left", alignSelf: "center",marginLeft:5 }}>{currency == "INR" ? "₹" : "$"}</Text>
+                      <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 15, color: "#000", textAlign: "left", alignSelf: "center",marginLeft:5 }}>{currency == "INR" ? "₹ " : "$ "}</Text>
                       :
                       null
                     }
                     <TextInput
-                      placeholder={`To (${currency == "INR" ? "₹" : "$"})`}
+                      placeholder={`To (${currency == "INR" ? "₹ " : "$ "})`}
                       placeholderTextColor={'black'}
                       style={toInr==''?styles.Input:styles.InputSelect}
                       onChangeText={(val) => setToInr(val)}
@@ -443,7 +443,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     paddingLeft: 10,
     paddingTop: 12,
-    fontFamily: 'Raleway; Medium',
+   // fontFamily: 'Raleway; Medium',
     alignSelf: 'flex-end',
     fontWeight: "bold", 
     textAlign: "left",
@@ -451,7 +451,6 @@ const styles = StyleSheet.create({
   },
   InputSelect: {
     width: Devicewidth / 1.2,
-    fontFamily: 'Raleway; Medium',
     alignSelf: 'flex-end',
     fontSize: 15, 
     fontWeight: "bold", 

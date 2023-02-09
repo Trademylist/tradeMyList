@@ -21,8 +21,9 @@ import MySubscriptionModal from "../../Component/SubscriptionModal"
 Geocoder.init("AIzaSyAsJT9SLCfV4wvyd2jvG7AUgXYsaTTx1D4");
 
 //const API_KEY = 'AIzaSyCPCwSH6Wtnu0dAJUapPeU2NWTwCmlNQhY';
-const API_KEY = 'AIzaSyCZ9kuVUyhZxeFR3cPnebauMlffVOhoM1Y'
-
+// const API_KEY = 'AIzaSyCZ9kuVUyhZxeFR3cPnebauMlffVOhoM1Y'
+const API_KEY = 'AIzaSyAsJT9SLCfV4wvyd2jvG7AUgXYsaTTx1D4'
+// const API_KEY = 'AIzaSyCMDLepAKckVIr8TWkM5Mq5SawWH0B6Bfw'
 class CommercialList extends Component {
     constructor(props) {
         super(props)
@@ -418,9 +419,8 @@ class CommercialList extends Component {
             return (
                 <View key={index} style={{ width: WIDTH - 10, flexDirection: 'row', marginLeft: 10, marginRight: 10, marginBottom: 30, marginTop: 20, height: 40, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center' }}>
                     <BannerAd size={BannerAdSize.SMART_BANNER}
-                        // unitId={Platform.OS == 'ios' ? 'ca-app-pub-7489460627950788/2002515682' : 'ca-app-pub-3940256099942544/6300978111'}
-                        unitId={'ca-app-pub-3940256099942544/6300978111'}
-                        
+                        unitId={Platform.OS == 'ios' ? 'ca-app-pub-2276215775107260/1748397647' : 'ca-app-pub-3940256099942544/6300978111'}
+                        // unitId={'ca-app-pub-3940256099942544/6300978111'}
                         >
                     </BannerAd>
                 </View>

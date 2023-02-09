@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, Modal, TouchableOpacity, StyleSheet, Dimensions, Image, TextInput, FlatList, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import Geocoder from 'react-native-geocoding';
-import Geolocation from 'react-native-geolocation-service';
+ import Geolocation from 'react-native-geolocation-service';
 //import Geolocation from '@react-native-community/geolocation';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -24,8 +24,9 @@ const ASPECT_RATIO = Devicewidth / Deviceheight;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const axios = require('axios');
-//const API_KEY = 'AIzaSyCPCwSH6Wtnu0dAJUapPeU2NWTwCmlNQhY';
-const API_KEY = 'AIzaSyCZ9kuVUyhZxeFR3cPnebauMlffVOhoM1Y'
+//  const API_KEY = 'AIzaSyCPCwSH6Wtnu0dAJUapPeU2NWTwCmlNQhY';
+//  const API_KEY = 'AIzaSyCZ9kuVUyhZxeFR3cPnebauMlffVOhoM1Y'
+const API_KEY = 'AIzaSyAsJT9SLCfV4wvyd2jvG7AUgXYsaTTx1D4'
 
 class MapModal extends Component {
 
@@ -153,7 +154,7 @@ class MapModal extends Component {
       });
     }
   }
-
+  // map = React.useRef(null)
   getAllData = async () => {
     // this.setState({
     //   slider1value: this.props.sliderDistance,
@@ -189,6 +190,7 @@ class MapModal extends Component {
           method: 'post',
           url: `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${API_KEY}&input=${searchText}`,
         })
+        console.log(response.data)
         if (response.data.predictions.length > 0) {
           this.setState({
             isShowingResults: true,
@@ -221,7 +223,8 @@ class MapModal extends Component {
         method: 'post',
         url: `https://maps.googleapis.com/maps/api/geocode/json?address=${item.description}&key=${API_KEY}`,
       });
-      //console.log('india', response);
+      console.log('lat', response.data.results[0].geometry.location.lat);
+      console.log('long', response.data.results[0].geometry.location.lng);
       const latitude = response.data.results[0].geometry.location.lat;
       const longitude = response.data.results[0].geometry.location.lng;
       const wholeAddress = item.description;
@@ -259,6 +262,7 @@ class MapModal extends Component {
         isShowingResults: false,
         searchResults: [],
       })
+    //  console.log("updated",this.map)
     } catch (error) {
       console.log('err', error);
     }
@@ -451,7 +455,7 @@ class MapModal extends Component {
                   <MapView
                     style={{ height: "100%", width: "100%", marginBottom: this.state.marginMap }}
                     mapPadding={{ top: 120, right: 25, bottom: 0, left: 0 }}
-                    // region={this.state.initialRegion}
+                    //region={this.state.initialRegion}
                     followUserLocation={true}
                     //showsMyLocationButton={false}
                     ref={ref => this.map = ref}
@@ -551,7 +555,7 @@ class MapModal extends Component {
                 </View>
 
                 <View style={{ width: Devicewidth / 1.05, height: Deviceheight / 14, alignItems: 'center', alignSelf: 'center', justifyContent: 'center', }}>
-                  <TouchableOpacity style={{ width: Devicewidth / 1.1, height: Deviceheight / 20, alignItems: 'center', alignSelf: 'center', justifyContent: 'center', backgroundColor: "#ff6801", borderRadius: 20 }} onPress={() => this.setFinalLocation()} >
+                  <TouchableOpacity style={{ width: Devicewidth / 1.1, height: Deviceheight / 20, alignItems: 'center', alignSelf: 'center', justifyContent: 'center', backgroundColor: "#ff6801", borderRadius: 30 }} onPress={() => this.setFinalLocation()} >
                     <Text style={{ fontFamily: "Roboto-Bold", color: '#fff', fontWeight: 'bold', fontSize: 16, textAlign: 'center' }}>Set Location</Text>
 
                   </TouchableOpacity>

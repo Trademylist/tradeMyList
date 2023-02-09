@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ScrollView, StyleSheet, Dimensions, TextInput, TouchableOpacity } from 'react-native';
+import { SafeAreaView, View, Text, Image, ScrollView, StyleSheet, Dimensions, TextInput, TouchableOpacity } from 'react-native';
 const { width: WIDTH } = Dimensions.get('window');
 const Devicewidth = Dimensions.get('window').width;
 const Deviceheight = Dimensions.get('window').height;
@@ -71,6 +71,7 @@ export default class SubmitRequest extends Component {
     render() {
         return (
             <>
+             <SafeAreaView style={{ flex: 1 }}>
                 <View style={styles.Container}>
                     <Header navigation={this.props.navigation} Desc={"Submit a request"} />
 
@@ -149,6 +150,7 @@ export default class SubmitRequest extends Component {
                         </TouchableOpacity>
                     </ScrollView>
                 </View>
+                </SafeAreaView>
             </>
         )
     }

@@ -23,13 +23,14 @@ import {
 const axios = require('axios');
 import {connect} from 'react-redux';
 import {RNS3} from "react-native-s3-upload/src/RNS3";
+import Toast from 'react-native-simple-toast';
 
 const { width: WIDTH } = Dimensions.get('window');
 const Devicewidth = Dimensions.get('window').width;
 const Deviceheight = Dimensions.get('window').height;
 //const API_KEY = 'AIzaSyCPCwSH6Wtnu0dAJUapPeU2NWTwCmlNQhY';
-const API_KEY = 'AIzaSyCZ9kuVUyhZxeFR3cPnebauMlffVOhoM1Y'
-
+// const API_KEY = 'AIzaSyCZ9kuVUyhZxeFR3cPnebauMlffVOhoM1Y'
+const API_KEY = 'AIzaSyAsJT9SLCfV4wvyd2jvG7AUgXYsaTTx1D4'
 
 const Data = [
     {
@@ -1051,10 +1052,10 @@ class CommercialListingDetails extends Component {
                                 this.setState({
                                     Submitloder: false
                                 })
-                                ToastAndroid.showWithGravity(
+                                Toast.showWithGravity(
                                     "Product Successfully Updated",
-                                    ToastAndroid.SHORT,
-                                    ToastAndroid.BOTTOM
+                                    Toast.SHORT,
+                                    Toast.BOTTOM
                                 );
                                 this.props.navigation.navigate('commercialList', { "process": 'Commercial' })
                             }
@@ -1076,10 +1077,10 @@ class CommercialListingDetails extends Component {
                                 this.setState({
                                     Submitloder: false
                                 })
-                                ToastAndroid.showWithGravity(
+                                Toast.showWithGravity(
                                     "Product Successfully added",
-                                    ToastAndroid.SHORT,
-                                    ToastAndroid.BOTTOM
+                                    Toast.SHORT,
+                                    Toast.BOTTOM
                                 );
                                 this.props.navigation.navigate('commercialList', { "process": 'Commercial' })
                             }
@@ -1629,12 +1630,12 @@ class CommercialListingDetails extends Component {
                             }
                             <View style={styles.PriceinputContainer}>
                                 {this.state.Productprice != '' ?
-                                    <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 15, color: "#000", textAlign: "left", alignSelf: "center" }}>{this.state.currency == "INR" ? "₹" : this.state.currency == "USD" ? "$" : `${this.state.currency}`}</Text>
+                                    <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 15, color: "#000", textAlign: "left", alignSelf: "center" }}>{this.state.currency == "INR" ? "₹ " : this.state.currency == "USD" ? "$ " : `${this.state.currency}`}</Text>
                                     :
                                     null
                                 }
                                 <TextInput
-                                    placeholder={`Price ( ${this.state.currency == "INR" ? "₹ " : this.state.currency == "USD" ? "$" : `${this.state.currency}`})`}
+                                    placeholder={`Price ( ${this.state.currency == "INR" ? "₹ " : this.state.currency == "USD" ? "$ " : `${this.state.currency}`})`}
                                     placeholderTextColor={'#000'}
                                     style={this.state.Productprice == '' ? styles.PriceInput : styles.PriceInputSelect}
                                     keyboardType={'numeric'}

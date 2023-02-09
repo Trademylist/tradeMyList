@@ -73,7 +73,7 @@ const MyProductListing = (props) => {
                     onPressClose={() => closeImageZoomeModal()}
                     MyImage={props.image == "" ? props.category == "Jobs" ? "https://trademylist.com:8936/jobs.jpg" : props.category == "Services" ? "https://trademylist.com:8936/services.jpg" : null : props.image}
                     navigation={props.navigation}
-                    style={{ marginTop: 0, top: 0, paddingTop: 100, backgroundColor: 'red' }}
+                    style={{ marginTop: 10, top: 10, backgroundColor: 'red' }}
                 ></MyImageZoomeModal>
 
                 <MyDeleteProductModal
@@ -93,7 +93,7 @@ const MyProductListing = (props) => {
                         props.category == "Freebies" ?
                             <Text style={{ fontFamily: "Roboto-Regular", marginTop: 5, color: "#000", fontSize: 15, textAlign: 'center', alignSelf: 'center', marginLeft: 5 }}>{"Free"}</Text>
                             :
-                            <Text style={{ fontFamily: "Roboto-Regular", marginTop: 5, color: "#000", fontSize: 15, textAlign: 'center', alignSelf: 'center', marginLeft: 5 }}>{(props.category != "Jobs" && props.category != "Freebies" && props.category != "Services") && (props.currencyCode == "INR" ? "₹" : props.currencyCode == "USD" ? "$" : `${props.currencyCode}`)}{props.inr}</Text>
+                            <Text style={{ fontFamily: "Roboto-Regular", marginTop: 5, color: "#000", fontSize: 15, textAlign: 'center', alignSelf: 'center', marginLeft: 5 }}>{(props.category != "Jobs" && props.category != "Freebies" && props.category != "Services") && (props.currencyCode == "INR" ? "₹ " : props.currencyCode == "USD" ? "$ " : `${props.currencyCode} `)}{props.inr}</Text>
                     }
                     <TouchableOpacity style={{
                         height: Deviceheight / 60,

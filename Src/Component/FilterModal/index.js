@@ -21,8 +21,9 @@ import { RESET_SLIDER_DISTANCE, STORE_SLIDER_DISTANCE } from '../../store/action
 
 Geocoder.init("AIzaSyAsJT9SLCfV4wvyd2jvG7AUgXYsaTTx1D4");
 //const API_KEY = 'AIzaSyCPCwSH6Wtnu0dAJUapPeU2NWTwCmlNQhY';
-const API_KEY = 'AIzaSyCZ9kuVUyhZxeFR3cPnebauMlffVOhoM1Y'
-
+// const API_KEY = 'AIzaSyCZ9kuVUyhZxeFR3cPnebauMlffVOhoM1Y'
+const API_KEY = 'AIzaSyAsJT9SLCfV4wvyd2jvG7AUgXYsaTTx1D4'
+// const API_KEY = 'AIzaSyCMDLepAKckVIr8TWkM5Mq5SawWH0B6Bfw'
 const FilterModal = (props) => {
   const [modal, modalVisible] = useState(false);
   const { modalProps, SetmodalProps } = props;
@@ -638,12 +639,12 @@ const FilterModal = (props) => {
 
                   <View style={styles.DescContainer2}>
                     {fromInr != '' ?
-                      <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 15, color: "#000", textAlign: "left", alignSelf: "center",marginLeft:5 }}>{currency == "INR" ? "₹" : currency == "USD" ? "$" : `${currency}`}</Text>
+                      <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 15, color: "#000", textAlign: "left", alignSelf: "center",marginLeft:5,paddingTop:12,paddingBottom:12,marginRight:3 }}>{currency == "INR" ? "₹ " : currency == "USD" ? "$ " : `${currency} `}</Text>
                       :
                       null
                     }
                     <TextInput
-                      placeholder={`From (${currency == "INR" ? "₹" : currency == "USD" ? "$" : `${currency}`})`}
+                      placeholder={`From (${currency == "INR" ? "₹ " : currency == "USD" ? "$ " : `${currency}`})`}
                       placeholderTextColor={'black'}
                       style={fromInr==''?styles.Input:styles.InputSelect}
                       onChangeText={(val) => setFromInr(val)}
@@ -654,13 +655,13 @@ const FilterModal = (props) => {
                   </View>
                   <View style={styles.DescContainer2}>
                     {toInr != '' ?
-                      <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 15, color: "#000", textAlign: "left", alignSelf: "center",marginLeft:5 }}>
-                        {`${currency == "INR" ? "₹" : currency == "USD" ? "$" : `${currency}`}`}</Text>
+                      <Text style={{ fontFamily:"Roboto-Bold" , fontSize: 15, color: "#000", textAlign: "left", alignSelf: "center",marginLeft:5,paddingTop:12,paddingBottom:12,marginRight:3 }}>
+                        {`${currency == "INR" ? "₹ " : currency == "USD" ? "$ " : `${currency} `}`}</Text>
                       :
                       null
                     }
                     <TextInput
-                      placeholder={`To (${currency == "INR" ? "₹" : currency == "USD" ? "$" : `${currency}`})`}
+                      placeholder={`To (${currency == "INR" ? "₹ " : currency == "USD" ? "$ " : `${currency} `})`}
                       placeholderTextColor={'black'}
                       style={toInr==''?styles.Input:styles.InputSelect}
                       onChangeText={(val) => setToInr(val)}
@@ -913,11 +914,11 @@ SingleSeller: {
   btnContainer: {
     alignSelf: "center",
     width: Devicewidth / 1.05,
-    height: Deviceheight / 16,
+    height: Deviceheight / 20,
     alignItems: "center",
     justifyContent: 'center',
     backgroundColor: "#ff6700",
-    borderRadius: 20,
+    borderRadius: 30,
     marginTop: 20
   },
   btnText: {

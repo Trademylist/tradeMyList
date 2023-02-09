@@ -126,7 +126,7 @@ const LoginModal = (props) => {
             await AsyncStorage.setItem('LoginType','google')
             setTimeout(async () => {
               props.onPressClose()
-              let val = await chatList(props.onChatCounterUpdate);
+              // let val = await chatList(props.onChatCounterUpdate);
               // props.onChatCounterUpdate(val);
               Setloder(false)
               props.navigation.push('home')
@@ -250,10 +250,12 @@ const LoginModal = (props) => {
   }
 
   const applelogin = async () => {
+    console.log('login with apple')
     const appleAuthRequestResponse = await appleAuth.performRequest({
       requestedOperation: appleAuth.Operation.LOGIN,
       requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
     });
+    console.log(appleAuthRequestResponse, 'appleAuthRequestResponseappleAuthRequestResponse')
     const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user);
     if (credentialState === appleAuth.State.AUTHORIZED) {
       // user is authenticated
@@ -329,26 +331,26 @@ const LoginModal = (props) => {
                       <View style={{ height: Deviceheight / 41, width: Devicewidth / 20.5, alignItems: 'center', justifyContent: 'center', alignSelf: 'center', }}>
                         <Image source={require("../../Assets/google.png")} style={{ height: "100%", width: '100%', resizeMode: "contain" }} />
                       </View>
-                      <Text style={styles.btnText} >Login with Google</Text>
+                      <Text style={styles.btnText} >Sign in with Google</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={fblogin} style={styles.btnContainer1}>
                       <View style={{ height: Deviceheight / 41, width: Devicewidth / 20, alignItems: 'center', justifyContent: 'center', alignSelf: 'center' }}>
                         <Image source={require("../../Assets/facebook.png")} style={{ height: "100%", width: '100%', resizeMode: "contain" }} />
                       </View>
-                      <Text style={styles.btnText} >Login with Facebook</Text>
+                      <Text style={styles.btnText} >Sign in  with Facebook</Text>
                     </TouchableOpacity>
                     {Platform.OS === 'ios' && (
                         <TouchableOpacity onPress={applelogin} style={styles.btnContainer2}>
                           <View style={{ height: Deviceheight / 41, width: Devicewidth / 20, alignItems: 'center', justifyContent: 'center', alignSelf: 'center' }}>
                             <Image source={require("../../Assets/apple.png")} style={{ height: "100%", width: '100%', resizeMode: "contain", tintColor: 'white' }} />
                           </View>
-                          <Text style={styles.btnText} >Login with Apple</Text>
+                          <Text style={styles.btnText} > Sign in with Apple</Text>
                         </TouchableOpacity>
                     )}
                     <Text style={styles.OR} >OR</Text>
                     <TouchableOpacity style={{ alignItems: 'center', alignSelf: "center", justifyContent: "center", }} onPress={redirectlogin}>
-                      <Text style={styles.Email} >Login with Email</Text>
+                      <Text style={styles.Email} >Sign in with Email</Text>
                     </TouchableOpacity>
 
                     <Text style={styles.accepting} >if you are continue,you are accepting</Text>
@@ -399,33 +401,33 @@ const styles = StyleSheet.create({
   },
   btnContainer: {
     width: Devicewidth / 1.1,
-    height: Deviceheight / 18,
+    height: Deviceheight / 19,
     alignItems: "center",
     justifyContent: 'center',
     backgroundColor: "#f33038",
-    borderRadius: 50,
+    borderRadius: 30,
     marginTop: 40,
     alignSelf: "center",
     flexDirection: "row"
   },
   btnContainer1: {
     width: Devicewidth / 1.1,
-    height: Deviceheight / 18,
+    height: Deviceheight / 19,
     alignItems: "center",
     justifyContent: 'center',
     backgroundColor: "#014eff",
-    borderRadius: 50,
+    borderRadius: 30,
     marginTop: 20,
     alignSelf: "center",
     flexDirection: "row"
   },
   btnContainer2: {
     width: Devicewidth / 1.1,
-    height: Deviceheight / 18,
+    height: Deviceheight / 19,
     alignItems: "center",
     justifyContent: 'center',
     backgroundColor: "black",
-    borderRadius: 50,
+    borderRadius: 30,
     marginTop: 20,
     alignSelf: "center",
     flexDirection: "row"

@@ -47,7 +47,7 @@ export const SliderEntry1 = props => {
         <View style={styles.shadow} />
         <View style={styles.imageContainer}>
           <ParallaxImage
-            source={{ uri: imageName }}
+           source={{ uri: imageName }}
             containerStyle={styles.imageContainer}
             style={styles.image}
             parallaxFactor={0.35}

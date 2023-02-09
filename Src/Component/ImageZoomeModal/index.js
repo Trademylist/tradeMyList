@@ -28,14 +28,14 @@ const ImageZoomeModal = (props) => {
 
             <View style={styles.modalContainer}>
               <View style={styles.modalBody}>
-                <TouchableOpacity style={{  marginTop: 0, alignSelf: 'flex-start', alignItems: "center", justifyContent: "center", marginLeft: 20 }}
+                <TouchableOpacity style={{  marginTop: 20, alignSelf: 'flex-start', alignItems: "center", justifyContent: "center", marginLeft: 20,zIndex:5 }}
                   onPress={() => props.onPressClose()}
                 >
                     <Text style={{ fontFamily:"Roboto-Regular" , marginTop: 5, color: "#000", fontSize: 15, textAlign: 'center', alignSelf: 'center',marginLeft:5}}>Close</Text>
 
-                   <Icon name={'close'} size={20} color={'#fff'}/>
+                   <Icon name={'close'} size={20} color={'#fff'} />
                 </TouchableOpacity>
-                <View style={{height:'100%',width:Devicewidth,alignItems:"center",alignSelf:"center",justifyContent:"center",}}>
+                <View style={{height:'100%',width:Devicewidth,alignItems:"center",alignSelf:"center",justifyContent:"center",position:"absolute"}}>
                   <ImageZoom cropWidth={Devicewidth}
                     cropHeight={Deviceheight}
                     imageWidth={Devicewidth}

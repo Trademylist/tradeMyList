@@ -180,10 +180,10 @@ export default class AllReview extends Component {
                         showsVerticalScrollIndicator={false}
                         renderItem={({ item }) => (
                             <View style={styles.MainContainer}>
-                                <View style={{ alignItems: 'center', flexDirection: 'row', width: Devicewidth, height: Deviceheight / 8, alignSelf: 'flex-start', paddingTop: 10, }}>
+                                <View style={{ alignItems: 'center', flexDirection: 'row', width: Devicewidth,  alignSelf: 'flex-start', paddingTop: 10, alignItems:"center",width:"100%" }}>
                                     <TouchableOpacity style={{
                                         height: 70,
-                                        width:70, alignItems: "center", justifyContent: "center", alignSelf: "center", borderRadius: 360, marginLeft: 20
+                                        width:70, alignItems: "center", justifyContent: "center", alignSelf: "center", borderRadius: 360, 
                                     }}>
                                         {
                                         item.sender_id.image == ''
@@ -196,7 +196,7 @@ export default class AllReview extends Component {
                                     <View style={{ alignItems: 'flex-start', alignSelf: 'flex-start', width: Devicewidth / 2.5, height: Deviceheight / 10, paddingTop: 10, marginLeft: 10 }}>
                                         <Text style={{ fontFamily:"Roboto-Bold" , color: '#000', fontSize: 20, fontWeight: 'bold', textAlign: 'left', }}>{item.sender_id.username}</Text>
                                         <TouchableOpacity style={{
-                                            height: Deviceheight / 50,
+                                            
                                             width: Devicewidth / 4, alignSelf: 'flex-start', marginTop: 10,
                                         }}>
                                             <StarRating
@@ -206,14 +206,14 @@ export default class AllReview extends Component {
                                                 halfStar={'star-half-full'}
                                                 iconSet={'FontAwesome'}
                                                 maxStars={5}
-                                                containerStyle={{ width: Devicewidth / 4.5, justifyContent: 'space-around', height: Deviceheight / 60, alignItems: "center", }}
+                                                containerStyle={{ width: Devicewidth / 4.5, justifyContent: 'space-around',  alignItems: "center", }}
                                                 starSize={18}
                                                 rating={item.rating}
                                                 fullStarColor={'#ff6801'}
                                             />
                                         </TouchableOpacity>
                                     </View>
-                                    <View style={{ alignItems: 'center', height: Deviceheight / 26, width: Devicewidth / 6, borderRadius: 30, alignSelf: 'flex-end', justifyContent: 'center', borderWidth: 1, borderColor: '#8744c1', marginBottom: 50, }}>
+                                    <View style={{ alignItems: 'center',  width: Devicewidth / 6, borderRadius: 30,  justifyContent: 'center', borderWidth: 1, borderColor: '#8744c1',  }}>
                                         <Text style={{ fontFamily:"Roboto-Regular" , color: '#8431d0', textAlign: 'center', fontSize: 16, }}>{item.user_type}</Text>
                                     </View>
                                 </View>
@@ -223,7 +223,7 @@ export default class AllReview extends Component {
                                     </View>
                                     :
                                     null}
-                                <Text style={{  fontFamily:"Roboto-Bold" , color: '#333', fontSize: 16, fontWeight: "bold", textAlign: "left", width: Devicewidth / 1.18, alignSelf: "flex-start", marginLeft: 25, height: Deviceheight / 24, borderBottomColor: '#dfdfdf', borderBottomWidth: 1,  }}>{item.description}</Text>
+                                <Text style={{  fontFamily:"Roboto-Bold" , color: '#333', fontSize: 16, fontWeight: "bold", textAlign: "left", width: Devicewidth / 1.18, alignSelf: "flex-start", marginLeft: 5,borderBottomColor: '#dfdfdf', borderBottomWidth: 1, marginTop:10  }}>{item.description}</Text>
 
                             </View>
                         )}
@@ -252,12 +252,16 @@ const styles = StyleSheet.create({
     },
     MainContainer: {
         alignItems: 'center',
-        height: Deviceheight / 4,
+       borderBottomColor:"#ddd",
+       borderBottomWidth:1,
         width: Devicewidth,
         alignSelf: "center",
         backgroundColor: '#fff',
         justifyContent: 'space-between',
         marginBottom: 5,
+        paddingBottom:10,
+        width:"90%",
+        alignSelf:"center"
 
     },
 })

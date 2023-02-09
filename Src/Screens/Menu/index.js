@@ -1,23 +1,26 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ScrollView, StyleSheet, Dimensions, TextInput, TouchableOpacity,ActivityIndicator, Platform } from 'react-native';
+import { Modal, View, Text, Image, ScrollView, StyleSheet, Dimensions, TextInput, TouchableOpacity,ActivityIndicator, Platform, Alert } from 'react-native';
 const Devicewidth = Dimensions.get('window').width;
 const Deviceheight = Dimensions.get('window').height;
 import AsyncStorage from '@react-native-community/async-storage';
 import ImageOptionModal from '../../Component/Image/index';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import IconCross from 'react-native-vector-icons/FontAwesome';
 import FbIcon from 'react-native-vector-icons/AntDesign';
 import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
 import {
     launchCamera,
     launchImageLibrary
 } from 'react-native-image-picker';
+import Icon from 'react-native-vector-icons/AntDesign'
 import ImagePicker from 'react-native-image-crop-picker';
 import { LoginManager, AccessToken, LoginButton, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 import AuthContext from '../../Context/AuthContext';
 const axios = require('axios');
 import {connect} from 'react-redux';
 import { UPDATE_CHAT_COUNTER } from '../../store/actions';
-
+import Toast from 'react-native-simple-toast';
+import Box from 'react-native-vector-icons/FontAwesome5'
+import CheckedBox from 'react-native-vector-icons/FontAwesome5'
 class Menu extends Component {
     constructor(props) {
         super(props)
@@ -27,7 +30,9 @@ class Menu extends Component {
             profileImg: '',
             LoginType:'',
             loading:true,
-            
+            isModalVisible: false,
+            modalLoading:false,
+            checked: false
         }
         this.HandelReload = this.HandelReload.bind(this)
     }
@@ -40,6 +45,9 @@ class Menu extends Component {
         this.props.navigation.addListener('focus', async () => {
             this.getData()
         })
+    }
+    onChecked = () => {
+        this.setState({checked : !this.state.checked})
     }
     getData = async () => {
         try {
@@ -74,6 +82,42 @@ class Menu extends Component {
             // error reading value
         }
     }
+    deleteAccount = async () => {
+        if(this.state.checked === false){Alert.alert("Please select the checkbox in order to delete your account")}
+        else{
+        try { const value = await JSON.parse(await AsyncStorage.getItem('UserData'))
+        this.setState({modalLoading:true})
+        console.warn('id',value.userid)
+        console.warn('Token',value.token)
+        if (value !== null) {
+
+            await axios.delete("https://trademylist.com:8936/user/" + value.userid, {
+                headers: {
+                    'x-access-token': value.token,
+                }
+            })
+                .then(async response => {
+                    this.setState({modalLoading:false, isModalVisible:false})
+                    await AsyncStorage.removeItem("UserData");
+                    await AsyncStorage.removeItem("LoginType");
+                    await AsyncStorage.removeItem("MapSliderValue");
+                    this.props.navigation.replace("productList")
+                    console.log("Del Api =====",response.data)
+                    Toast.showWithGravity(
+                        "Account Deleted successfully",
+                        Toast.SHORT,
+                        Toast.BOTTOM,
+                    );
+                    this.props.navigation.replace("productList")
+                })
+        } else {
+            // error reading value
+        }
+    } catch (e) {
+        // error reading value
+    }
+    }
+}
 
     saveData = async () => {
         const object = {
@@ -184,14 +228,14 @@ class Menu extends Component {
         //     await GoogleSignin.signOut();
         // }
         // context.updateUser();
-        this.props.navigation.navigate("productList")
+        this.props.navigation.replace("productList")
     }
 
     logout2 = async (context) => {
         await AsyncStorage.removeItem("UserData");
         await AsyncStorage.removeItem("LoginType");
         await AsyncStorage.removeItem("MapSliderValue");
-        this.props.navigation.navigate("productList")
+        this.props.navigation.replace("productList")
         // context.updateUser();
     }
 
@@ -623,8 +667,27 @@ class Menu extends Component {
                             </View>
                         </TouchableOpacity>
 
+                        <TouchableOpacity onPress={() => this.setState({isModalVisible:true})} style={{ flexDirection: 'row', alignSelf: "center", borderBottomColor: "#dedede", borderBottomWidth: 1, width: Devicewidth / 1.1, height: Deviceheight / 14, justifyContent: 'space-between' }}>
+                            <View style={{ flexDirection: 'row', alignSelf: "center", width: Devicewidth / 1.5, height: Deviceheight / 14, justifyContent: 'flex-start', paddingLeft: 10 }}>
+                                <View style={{
+                                    height: Deviceheight / 50,
+                                    width: Devicewidth / 25, alignItems: "center", justifyContent: "center", alignSelf: "center",
+                                }}>
+                                    <Image source={require("../../Assets/DeleteAccount.png")} style={{ height: "100%", width: "100%" }}></Image>
+                                </View>
+                                <Text style={{ fontFamily:"Roboto-Bold" , color: "#000", fontWeight: "bold", fontSize: 16, textAlign: 'center', alignSelf: 'center', marginLeft: 15 }}>Delete Account</Text>
+                            </View>
+                            <View
+                                style={{
+                                    height: Deviceheight / 50,
+                                    width: Devicewidth / 22, alignItems: "center", justifyContent: "center", alignSelf: "center", marginRight: 20,
+                                }}>
+                                <Image source={require("../../Assets/BackIconRight.png")} style={{ height: "100%", width: "100%" }}></Image>
+                            </View>
+                        </TouchableOpacity>
+
                         <View style={{ width: Devicewidth / 1.05, height: Deviceheight / 14, alignItems: 'center', alignSelf: 'center', justifyContent: 'center', backgroundColor: "#cccccc", marginTop: 10 }}>
-                            <TouchableOpacity style={{ width: Devicewidth / 1.2, height: Deviceheight / 20, alignItems: 'center', alignSelf: 'center', justifyContent: 'center', backgroundColor: "#ff6801", borderRadius: 20 }} onPress={() =>
+                            <TouchableOpacity style={{ width: Devicewidth / 1.2, height: Deviceheight / 20, alignItems: 'center', alignSelf: 'center', justifyContent: 'center', backgroundColor: "#ff6801", borderRadius: 30 }} onPress={() =>
                                 this.state.LoginType == "facebook" ?
                                 this.logout(context):
                                 this.logout1(context)}>
@@ -633,7 +696,48 @@ class Menu extends Component {
                         </View>
                         </View>
                        }
+                        <Modal visible={this.state.isModalVisible} transparent={true}>
+                            { this.state.modalLoading ? <ActivityIndicator style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, }} animating={true} color={"#383ebd"} size="large" /> : 
+                        <View style={{ width: "88%", height: 430, alignSelf: "center",  marginTop: "35%",borderRadius: 10, borderColor:"grey",borderWidth:1, shadowColor: 'rgba(0,0,0,0.5)',
+                        shadowRadius: 1,
+                        shadowOpacity: 0.5,
+                        shadowOffset: {
+                          width: 0,
+                          height: 1,}
+                         }}>
+                        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{flexGrow:1, backgroundColor: "#ebe7e6",borderRadius: 10,}}>
+                        <TouchableOpacity onPress={() => this.setState({ isModalVisible: false })} style={{ alignSelf:"flex-end",marginTop:8,marginRight:8 }}>
 
+<Icon name='close' color="#ff6801" size={25} />
+</TouchableOpacity>
+<View style={{flexDirection:"row",alignItems:"center",width:"90%", alignSelf:"center",marginTop:10}}>
+<Text style={{color:"red",fontWeight:"500",fontSize:20}}>Caution: </Text> 
+<Text style={{color:"black",fontWeight:"500",fontSize:17,marginLeft:5,}}>By Deleting Your Account</Text>
+</View>
+<Text style={{color:"#000",width:"85%",alignSelf:"center",textAlign:"justify",fontSize:16,marginTop:10}}>1. You’ll lose all the data and content in that account, like emails, files, chats, and photos. </Text>
+<Text style={{color:"#000",width:"85%",alignSelf:"center",textAlign:"justify",fontSize:16,marginTop:8}}>2. You’ll lose access to subscriptions and content you bought with that account.</Text>
+<Text style={{color:"#000",width:"85%",alignSelf:"center",textAlign:"justify",fontSize:16,marginTop:8}}>3. If you change your mind after deleting your account, you will not be able to recover any data. </Text>
+<View style={{flexDirection:"row",alignItems:"center",width:"90%",alignSelf:"center",marginTop:8}}>
+    {this.state.checked ? <TouchableOpacity onPress={()=>this.setState({checked:false})}>
+    <CheckedBox name="check-square" size={25} color="#ff6801"/>
+</TouchableOpacity> 
+: 
+<TouchableOpacity onPress={()=>this.setState({checked:true})} >
+    <Box name="square" size={25} color="#ff6801"/>
+</TouchableOpacity>}
+
+<Text style={{color:"#110b26",textAlign:"justify",fontSize:15,marginLeft:8}}>I Understand, and accept the conditions</Text>
+</View>
+<TouchableOpacity  onPress={this.deleteAccount} style={{width:"70%",height:40,backgroundColor:"#b8070d",alignSelf:"center",marginTop:15,alignItems:"center",justifyContent:"center",borderRadius:30}}>
+<Text style={{color:"#fff",fontSize:18,}}>Confirm Account Delete</Text>
+</TouchableOpacity>
+
+<TouchableOpacity onPress={()=>this.setState({isModalVisible:false})} style={{marginBottom:15, width:"70%",height:40,backgroundColor:"#615959",alignSelf:"center",marginTop:15,alignItems:"center",justifyContent:"center",borderRadius:30}}>
+<Text style={{color:"#fff",fontSize:18,}}>Cancel</Text>
+</TouchableOpacity>
+                        </ScrollView>
+                        </View> }
+                        </Modal>
 
 
 

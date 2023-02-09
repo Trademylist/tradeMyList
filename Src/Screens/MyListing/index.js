@@ -617,8 +617,8 @@ export default class MyListing extends Component {
                                             <View style={{alignItems: 'center', justifyContent: 'center', alignSelf: 'center', width: Devicewidth / 1.5, height: '70%', marginBottom: 20}}>
                                                 <Image source={require("../../Assets/sold.jpg")} style={{ height: "70%", width: "100%", resizeMode: "contain" }}></Image>
                                                 <Text style={{letterSpacing: 1,  fontFamily:"Roboto-Bold" , color: '#606160', textAlign: 'center', fontSize: 18,letterSpacing:1 }}>No Sold Listings</Text>
-                                                <Text style={{ marginTop: 5, fontFamily:"Roboto-medium" , color: '#606160', textAlign: 'center', fontSize: 14}}>It feels so good making your first sale on Trade.</Text>
-                                                <Text style={{letterSpacing: 1,  fontFamily:"Roboto-medium" , color: '#606160', textAlign: 'center', fontSize: 14}}>And your second. And your third.</Text>
+                                                <Text style={{ marginTop: 5, lineHeight:17,fontFamily:"Roboto-medium" , color: '#606160', textAlign: 'center', fontSize: 14}}>It feels so good making your first sale on Trade. And your second. And your third.</Text>
+                                                {/* <Text style={{letterSpacing: 1,  fontFamily:"Roboto-medium" , color: '#606160', textAlign: 'center', fontSize: 14}}>And your second. And your third.</Text> */}
                                             </View>
                                             :
                                             <FlatList
@@ -652,8 +652,8 @@ export default class MyListing extends Component {
                                                 <View style={{alignItems: 'center', justifyContent: 'center', alignSelf: 'center', width: Devicewidth / 1.5, marginBottom: Deviceheight/8, height: '80%' }}>
                                                     <Image source={require("../../Assets/expired.jpg")} style={{ height: "70%", width: "100%", resizeMode: "contain" }}></Image>
                                                     <Text style={{ fontFamily:"Roboto-Bold" , color: '#606160', textAlign: 'center', fontSize: 18, fontWeight: 'bold',letterSpacing:1 }}>No Expired Listings</Text>
-                                                    <Text style={{letterSpacing: 1, marginTop: 5, fontFamily:"Roboto-medium" , color: '#606160', textAlign: 'center', fontSize: 14}}>Your listing are active for 120 days after they are posted. (We have found buyers like listings that are fresh from the oven. )</Text>
-                                                    <Text style={{letterSpacing: 1, fontFamily:"Roboto-medium" , color: '#606160', textAlign: 'center', fontSize: 14}}>When you listings expire, you can come here to reactivate them.</Text>
+                                                    <Text style={{letterSpacing: 1, marginTop: 5, fontFamily:"Roboto-medium" , color: '#606160', textAlign: 'center', fontSize: 14}}>Your listings are active for 120 days after they are posted. (We have found buyers like listings that are fresh from the oven. )</Text>
+                                                    <Text style={{letterSpacing: 1, fontFamily:"Roboto-medium" , color: '#606160', textAlign: 'center', fontSize: 14}}> When your listings expire, you can come here to reactivate them.</Text>
 
                                                 </View>
                                                 :

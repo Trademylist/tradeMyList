@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 const axios = require('axios');
 import Icon from 'react-native-vector-icons/Fontisto';
 import StarRating from 'react-native-star-rating';
+import Toast from 'react-native-simple-toast';
 
 
 export default class ReviewExperience extends Component {
@@ -147,10 +148,10 @@ export default class ReviewExperience extends Component {
         })
         .then(response => {
             if(response.data.success){
-                ToastAndroid.showWithGravity(
+                Toast.showWithGravity(
                     "Product successfully updated",
-                    ToastAndroid.SHORT,
-                    ToastAndroid.BOTTOM,
+                    Toast.SHORT,
+                    Toast.BOTTOM,
                 );
                 this.props.navigation.navigate('myListing', { "process": 'sold' })
             }
@@ -341,7 +342,7 @@ const styles = StyleSheet.create({
         width: Devicewidth / 1.15,
         height: Deviceheight / 8,
         fontSize: 15,
-        fontFamily: 'Raleway; Medium',
+        //fontFamily: 'Rubik',
         // backgroundColor: '#f5f5f5',
         alignSelf: 'center',
         borderRadius: 10,

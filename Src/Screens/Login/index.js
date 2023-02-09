@@ -13,6 +13,7 @@ import messaging from '@react-native-firebase/messaging';
 import { chatList } from '../../helperFunctions/chatList';
 import { UPDATE_CHAT_COUNTER } from '../../store/actions';
 import {connect} from 'react-redux';
+import Toast from 'react-native-simple-toast';
 
 const axios = require('axios');
 
@@ -107,10 +108,10 @@ class Login extends Component {
                     })
 
                 }
-                ToastAndroid.showWithGravity(
+                Toast.showWithGravity(
                     response.data.message,
-                    ToastAndroid.SHORT,
-                    ToastAndroid.BOTTOM,
+                    Toast.SHORT,
+                    Toast.BOTTOM,
                 );
             })
             .catch(error => {
@@ -275,7 +276,8 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         width: Devicewidth / 1.05,
         // height: Deviceheight / 9,
-        paddingLeft: 5
+        paddingLeft: 5,
+        alignItems:"center"
     },
     inputContainer: {
         alignSelf: "center",
@@ -293,11 +295,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: '#d7d7d7',
         width: Devicewidth / 1.08,
-        height: Deviceheight / 17,
+        // height: Deviceheight / 17,
         justifyContent: 'space-around',
         borderRadius: 5,
         borderBottomWidth: 1,
         borderBottomColor: "#ffffff",
+        alignItems:"center"
     },
     Input: {
         marginLeft: 15,
@@ -346,20 +349,20 @@ const styles = StyleSheet.create({
     },
     btnContainer: {
         width: Devicewidth / 1.05,
-        height: Deviceheight / 19,
+        height: Deviceheight / 20,
         alignItems: "center",
         justifyContent: 'center',
         backgroundColor: "#d7d7d7",
-        borderRadius: 20,
+        borderRadius: 30,
         marginTop: 60
     },
     btnContainer_active: {
         width: Devicewidth / 1.05,
-        height: Deviceheight / 19,
+        height: Deviceheight / 20,
         alignItems: "center",
         justifyContent: 'center',
         backgroundColor: "#383ebd",
-        borderRadius: 20,
+        borderRadius: 30,
         marginTop: 60
     },
     btnText: {
