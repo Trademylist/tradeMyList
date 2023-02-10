@@ -1,0 +1,43 @@
+<!-- top navbar-->
+<header class="topnavbar-wrapper">
+    <!-- START Top Navbar-->
+    <nav class="navbar topnavbar top-nav-no-padding">
+        <!-- START navbar header-->
+        <div class="navbar-header">
+            <a class="navbar-brand" routerLink="/dashboard/home">
+                <div class="brand-logo">
+                    <!-- Big Logo -->
+                    <img class="block-center rounded" src="assets/img/logo.png" alt="Image" height="44px">
+                </div>
+                <div class="brand-logo-collapsed">
+                    <!-- Small Logo -->
+                    <img class="block-center rounded" src="assets/img/logo-single.png" alt="Image">
+                </div>
+            </a>
+        </div>
+        <!-- END navbar header-->
+        <!-- START Left navbar-->
+        <ul class="navbar-nav mr-auto flex-row">
+            <li class="nav-item" (click)='toggleSideNav()'>
+                <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
+                <a class="nav-link d-none d-md-block d-lg-block d-xl-block" data-trigger-resize="" data-toggle-state="aside-collapsed">
+                    <em class="fa fa-bars"></em>
+                </a>
+                <!-- Button to show/hide the sidebar on mobile. Visible on mobile only.-->
+                <a class="nav-link sidebar-toggle d-md-none" data-toggle-state="aside-toggled" data-no-persist="true">
+                    <em class="fa fa-bars"></em>
+                </a>
+            </li>
+        </ul>
+
+
+        <!-- END Left navbar-->
+        <ul class="navbar-nav flex-row">
+            <li class="nav-item mr-4 text-white font-weight-bold">
+                <label>
+                    Hi {{userInfo=='super_admin'?'Super Admin':'Admin'}}
+                </label>
+            </li>
+        </ul>
+    </nav>
+</header>

@@ -1,0 +1,10 @@
+.centerDiv {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    text-align: center;
+    width: 546px;
+    height: 265px;
+    margin-left: -273px;
+    margin-top: -132px;
+}

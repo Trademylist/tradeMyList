@@ -1,0 +1,11 @@
+<ngx-spinner bdColor ="rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-beat" [fullScreen] = "true"><p style="color: white" > Please wait... </p></ngx-spinner>
+<router-outlet *ngIf="onlineStatus"></router-outlet>
+
+<div class="centerDiv" *ngIf="!onlineStatus">
+    <section>
+        <span>
+            No Internet connection. Make sure Wi-Fi or cellular data is turned on, then try again.
+        </span>
+        <button>Retry</button>
+    </section>
+</div>

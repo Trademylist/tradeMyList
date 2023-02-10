@@ -1,0 +1,164 @@
+<section class="section-container">
+    <div class="content-wrapper">
+        <div class="content-heading">
+            <div class="row">
+                <div class="col-lg-12">
+                    <strong>
+                        <!-- <i class="fa fa-free-code-camp" aria-hidden="true"></i>  -->
+                        Freebies
+                    </strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-1 alert alert-success" role="alert" *ngIf="successDiv">{{message}}
+            <button type="button" class="cus-msg-close-btn" (click)="closeMessageDiv()">X</button>
+        </div>
+        <div class="mb-1 alert alert-danger" role="alert" *ngIf="errorDiv">{{message}}
+            <button type="button" class="cus-msg-close-btn" (click)="closeMessageDiv()">X</button>
+        </div>
+
+        <div class="row" *ngIf="freebiesListDiv">
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label>Search Freebies</label>
+                    <input class="form-control" type="text" [(ngModel)]="searchInput" placeholder="Search by freebies name">
+                </div>
+            </div>
+            <!-- <div class="col-lg-12">
+                <div class="input-group mb-1">
+                    <input class="form-control" type="text" [(ngModel)]="searchInput" (keydown)="searchInputkeyDown()" placeholder="Search by freebies name">
+                    <div class="input-group-append">
+                        <button class="btn btn-success" type="button" style="margin-right:5px;" *ngIf="searchCancelToggle" (click)="searchFreebies()"><i class="fa fa-search"></i>
+                      Search</button>
+                        <button class="btn btn-success" type="button" style="margin-right:5px;" *ngIf="!searchCancelToggle" (click)="cancelSearchFreebies()"><i class="fa fa-times"></i>
+                      Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-8 offset-lg-2 mb-1 alert alert-danger" role="alert" *ngIf="searchErrDiv">{{message}}
+                <button type="button" class="cus-msg-close-btn" (click)="closeMessageDiv()">X</button>
+            </div> -->
+            <div class="col-lg-12">
+                <div class="input-group mb-1">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary"  [routerLink]="['/dashboard/freebies/add-freebie']"><i class="fa fa-plus-circle"></i> Add New
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12 table-responsive text-black">
+                <table class="table table-striped table-hover cus-nowrap">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Freebies Name</th>
+                            <th>Seller Email</th>
+                            <th>Category</th>
+                            <th>Created Date</th>
+                            <th *ngIf="showHideCountry">Country</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let getFreebies of getFreebiesDetails | searchFilter:searchInput | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
+                            <td>{{ getIndex(i) }}</td>
+                            <td>{{getFreebies?.product_name}}</td>
+                            <td>{{getFreebies && getFreebies.user_id && getFreebies.user_id.email ? getFreebies.user_id.email : ''}}</td>
+                            <td>{{getFreebies?.category}}</td>
+                            <td>{{getFreebies?.createdAt | date}}</td>
+                            <td *ngIf="showHideCountry">{{getFreebies?.country}}</td>
+                            <td *ngIf="getFreebies?.isBlock">
+                                <span class="badge badge-danger">In Active</span>
+                            </td>
+                            <td *ngIf="!getFreebies?.isBlock">
+                                <span class="badge badge-success">Active</span>
+                            </td>
+                            <td>
+                                <span class="badge badge-success mr-2" style="cursor:pointer;" (click)="startEdit(getFreebies)">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> 
+                                </span>
+                                <span class="badge badge-danger" style="cursor:pointer;" (click)="startDelete(getFreebies)">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <tfoot>
+                    <tr>
+                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                    </tr>
+                </tfoot>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="isEditDiv">
+            <div class="col-lg-2">
+                <h4 (click)="closeEdit()">
+                    <i class="fa fa-arrow-left mr-2" aria-hidden="true"></i> Edit Freebies</h4>
+            </div>
+            <div class="col-lg-12" style="border-top: 1px solid gray;">
+                <div class="form-group mt-2">
+                    <label>Freebies Name</label>
+                    <input type="text" class="form-control" name="product_name" [(ngModel)]="editFreebiesList.product_name" required #product_name="ngModel">
+                </div>
+                <p class="valid_message" *ngIf="product_name.invalid">* Product name is required
+                </p>
+            </div>
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label>Freebies Description</label>
+                    <textarea type="text" rows="3" class="form-control" name="product_description" [(ngModel)]="editFreebiesList.product_description" required #product_desc="ngModel">
+                    </textarea>
+                </div>
+                <p class="valid_message" *ngIf="product_desc.invalid">* Description is required
+                </p>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label>Freebies Category</label>
+                    <select class="form-control" name="category" [(ngModel)]="editFreebiesList.category">
+                        <option *ngFor="let cat of categoryArray; let i=index" [ngValue]="cat.category_name">{{cat.category_name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label>Seller Phone</label>
+                    <input type="tel" minlength="10" maxlength="10" class="form-control" name="seller_phone" [(ngModel)]="editFreebiesList.seller_phone" required #seller_phone="ngModel">
+                </div>
+                <p *ngIf="seller_phone.errors?.required">
+                    * Phone no required
+                </p>
+                <p *ngIf="seller_phone.errors?.minlength">
+                    * Phone no must be at least 10 digit long
+                </p>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label>Block / Unblock</label>
+                    <select class="form-control" name="status" [(ngModel)]="editFreebiesList.isBlock">
+                        <option value="true">Block</option>
+                        <option value="false">Un Block</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-2" *ngFor="let img of editFreebiesList.image">
+                <img src="{{freebiesImageUrl}}{{img}}" alt="" width="100%">
+            </div>
+            <div class="col-lg-12 mt-4 text-center">
+                <button type="submit" class="btn btn-success mr-3" (click)="editFreebiesDetails(editFreebiesList)">
+                    <strong><i class="fa fa-check"></i> Update</strong>
+                </button>
+                <button type="submit" class="btn btn-danger" (click)="closeEdit()">
+                    <strong><i class="fa fa-times"></i> Cancel</strong>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</section>

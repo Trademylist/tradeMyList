@@ -1,0 +1,236 @@
+<section class="section-container">
+    <div class="content-wrapper">
+        <div class="content-heading">
+            <div class="row">
+                <div class="col-lg-12">
+                    <strong>
+                        <!-- <i class="fa fa-product-hunt" aria-hidden="true"></i>  -->
+                        Admin Offer & Discount Management
+                    </strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-1 alert alert-success" role="alert" *ngIf="successDiv">{{message}}
+            <button type="button" class="cus-msg-close-btn" (click)="closeMessageDiv()">X</button>
+        </div>
+        <div class="mb-1 alert alert-danger" role="alert" *ngIf="errorDiv">{{message}}
+            <button type="button" class="cus-msg-close-btn" (click)="closeMessageDiv()">X</button>
+        </div>
+
+        <div class="row" *ngIf="OfferDiscountListDiv">
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label>Search Admin Offer</label>
+                    <input class="form-control" type="text" [(ngModel)]="searchInput" placeholder="Search by offer name">
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="input-group mb-1">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" (click)="addNew()"><i class="fa fa-plus-circle"></i> Add New </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="col-lg-12">
+                <div class="input-group mb-1">
+                    <input class="form-control" type="text" [(ngModel)]="searchInput" (keydown)="searchInputkeyDown()" placeholder="Search by offer name">
+                    <div class="input-group-append">
+                        <button class="btn btn-success" type="button" style="margin-right:5px;" *ngIf="searchCancelToggle" (click)="searchOfferDiscount()"><i class="fa fa-search"></i>
+                      Search</button>
+                        <button class="btn btn-success" type="button" style="margin-right:5px;" *ngIf="!searchCancelToggle" (click)="cancelSearchOfferDiscount()"><i class="fa fa-times"></i>
+                      Cancel</button>
+                        <button class="btn btn-primary" (click)="addNew()"><i class="fa fa-plus-circle"></i> Add New </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-8 offset-lg-2 mb-1 alert alert-danger" role="alert" *ngIf="searchErrDiv">{{message}}
+                <button type="button" class="cus-msg-close-btn" (click)="closeMessageDiv()">X</button>
+            </div> -->
+
+            <div class="col-lg-12 table-responsive text-black">
+                <table class="table table-striped table-hover cus-nowrap">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Offer Name</th>
+                            <th>Category</th>
+                            <th>Created Date</th>
+                            <th *ngIf="showHideCountry">Country</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let getOfferDiscount of getOfferDiscountDetails | searchFilter:searchInput | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
+                            <td>{{i+1}}</td>
+                            <td>{{getOfferDiscount?.offer_name}}</td>
+                            <td>{{getOfferDiscount?.offer_category}}</td>
+                            <td>{{getOfferDiscount?.createdAt | date}}</td>
+                            <td *ngIf="showHideCountry">{{getOfferDiscount?.country}}</td>
+                            <td *ngIf="getOfferDiscount?.isBlock">
+                                <span class="badge badge-danger">In Active</span>
+                            </td>
+                            <td *ngIf="!getOfferDiscount?.isBlock">
+                                <span class="badge badge-success">Active</span>
+                            </td>
+                            <td>
+                                <span class="badge badge-success mr-2" style="cursor:pointer;" (click)="startEdit(getOfferDiscount)">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> 
+                                </span>
+                                <span class="badge badge-danger" style="cursor:pointer;" (click)="startDelete(getOfferDiscount)">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <tfoot>
+                    <tr>
+                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                    </tr>
+                </tfoot>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="isAddDiv">
+            <div class="col-lg-12 mb-2" style="border-bottom: 1px solid gray;">
+                <h4 (click)="closeAdd()">
+                    <i class="fa fa-arrow-left mr-2" aria-hidden="true"></i> New Offer & Discount</h4>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label>Offer Name</label>
+                    <input type="text" class="form-control" name="offer_name" [(ngModel)]="newOfferDiscountList.offer_name" required #offer_name="ngModel">
+                </div>
+                <p class="valid_message" *ngIf="offer_name.invalid">* Offer name is required
+                </p>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label>Category</label>
+                    <select class="form-control" name="category" [(ngModel)]="newOfferDiscountList.offer_category" required #offer_category="ngModel">
+                        <option *ngFor="let cat of categoryArray; let i=index" [ngValue]="cat.category_name">{{cat.category_name}}</option>
+                    </select>
+                </div>
+                <p class="valid_message" *ngIf="offer_category.invalid">* Offer Category is required
+                </p>
+            </div>
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label>Offer Description</label>
+                    <textarea type="text" rows="4" class="form-control" name="offer_description" [(ngModel)]="newOfferDiscountList.offer_description" placeholder="Enter description" required #offer_description="ngModel">
+                    </textarea>
+                </div>
+                <p class="valid_message" *ngIf="offer_description.invalid">* Description is required
+                </p>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label>Seller Phone</label>
+                    <input type="tel" minlength="10" maxlength="10" class="form-control" name="seller_phone" [(ngModel)]="newOfferDiscountList.seller_phone" required #seller_phone="ngModel">
+                </div>
+                <p *ngIf="seller_phone.errors?.required">
+                    * Phone no required
+                </p>
+                <p *ngIf="seller_phone.errors?.minlength">
+                    * Phone no must be at least 10 digit long
+                </p>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label>Image</label>
+                    <input type='file' class="form-control" name="image" accept="image/*" (change)="onSelectFile($event)">
+                </div>
+            </div>
+            <div class="col-lg-6" *ngIf="newOfferDiscountList.offer_image!=''">
+                <div class="form-group">
+                    <label>Preview Image</label>
+                    <img [src]="newOfferDiscountList.offer_image" width="100%">
+                </div>
+            </div>
+            <div class="col-lg-12 mt-4">
+                <button type="submit" class="btn btn-success mr-3" (click)="addOfferDiscountDetails()">
+                    <strong><i class="fa fa-check"></i> Create</strong>
+                </button>
+                <button type="submit" class="btn btn-danger" (click)="closeAdd()">
+                    <strong><i class="fa fa-times"></i> Cancel</strong>
+                </button>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="isEditDiv">
+            <div class="col-lg-12 mb-2" style="border-bottom: 1px solid gray;">
+                <h4 (click)="closeEdit()">
+                    <i class="fa fa-arrow-left mr-2" aria-hidden="true"></i> Edit Offer & Discount</h4>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label>Offer Name</label>
+                    <input type="text" class="form-control" name="offer_name" [(ngModel)]="editOfferDiscountList.offer_name" required #edit_offer_name="ngModel">
+                </div>
+                <p class="valid_message" *ngIf="edit_offer_name.invalid">* Offer name is required
+                </p>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label>Category</label>
+                    <select class="form-control" name="category" [(ngModel)]="editOfferDiscountList.offer_category" required #edit_offer_category="ngModel">
+                        <option *ngFor="let cat of categoryArray; let i=index" [ngValue]="cat.category_name">{{cat.category_name}}</option>
+                    </select>
+                    <!-- <input type="text" class="form-control" name="offer_category" [(ngModel)]="editOfferDiscountList.offer_category"> -->
+                </div>
+                <p class="valid_message" *ngIf="edit_offer_category.invalid">* Offer category is required
+                </p>
+            </div>
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label>Offer Description</label>
+                    <textarea type="text" rows="4" class="form-control" name="offer_description" [(ngModel)]="editOfferDiscountList.offer_description" placeholder="Enter description" required #edit_offer_description="ngModel">
+                    </textarea>
+                </div>
+                <p class="valid_message" *ngIf="edit_offer_description.invalid">* Description is required
+                </p>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label>Seller Phone</label>
+                    <input type="tel" minlength="10" maxlength="10" class="form-control" name="seller_phone" [(ngModel)]="editOfferDiscountList.seller_phone" required #edit_seller_phone="ngModel">
+                </div>
+                <p *ngIf="edit_seller_phone.errors?.required">
+                    * Phone no required
+                </p>
+                <p *ngIf="edit_seller_phone.errors?.minlength">
+                    * Phone no must be at least 10 digit long
+                </p>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label>Block / Unblock</label>
+                    <select class="form-control" name="status" [(ngModel)]="editOfferDiscountList.isBlock">
+                        <option value="true">Block</option>
+                        <option value="false">Un Block</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label>Image</label>
+                    <img src="{{offerDiscountImageUrl}}{{editOfferDiscountList.offer_image[0]}}" alt="" width="100%">
+                </div>
+            </div>
+            <div class="col-lg-12 mt-4">
+                <button type="submit" class="btn btn-success mr-3" (click)="editOfferDiscountDetails(editOfferDiscountList)">
+                    <strong><i class="fa fa-check"></i> Update</strong>
+                </button>
+                <button type="submit" class="btn btn-danger" (click)="closeEdit()">
+                    <strong><i class="fa fa-times"></i> Cancel</strong>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</section>

@@ -1,0 +1,74 @@
+<section class="section-container">
+    <div class="content-wrapper">
+        <div class="content-heading">
+            <div class="row">
+                <div class="col-lg-12">
+                    <strong>
+                        Manage Footer 
+                    </strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-1 alert alert-success" role="alert" *ngIf="successDiv">{{message}}
+            <button type="button" class="cus-msg-close-btn" (click)="closeMessageDiv()">X</button>
+        </div>
+        <div class="mb-1 alert alert-danger" role="alert" *ngIf="errorDiv">{{message}}
+            <button type="button" class="cus-msg-close-btn" (click)="closeMessageDiv()">X</button>
+        </div>
+
+        <form *ngIf="content_show" [formGroup]="footerForm">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12" [hidden]="footerDetails">
+                    <div class="form-group">
+                        <label>Footer Image</label>
+                        <img *ngIf="image" [src]="image" class="rounded mb-1" height="105px" width="180">
+                        <input type="file" class="form-control" (change)="selectImage($event)">
+                    </div>   
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-12" *ngIf="image" [hidden]="!footerDetails">
+                    <div class="form-group">
+                        <div class="img-container">
+                            <img  [src]="image" class="rounded mb-1" height="105px" width="180">
+                        </div>
+                        <div>
+                            <input type="file" class="form-control" (change)="selectImage($event)">
+                        </div>
+                    </div>   
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12"></div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" class="form-control" formControlName="title">
+                    </div>
+                    <p class="valid_message" *ngIf="footerForm.controls.title.hasError('required') && footerForm.controls.title.touched">* Title is required
+                    </p>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <label>Text</label>
+                        <textarea class="form-control" formControlName="text" ></textarea>
+                    </div>
+                    <p class="valid_message" *ngIf="footerForm.controls.text.hasError('required') && footerForm.controls.text.touched">* Text is required</p>
+                </div>
+                
+                <div class="col-lg-12 col-md-12 col-sm-12 mt-4 ">
+                    <button type="submit" [hidden]="footerDetails" class="btn btn-success mr-3" [disabled]="!footerForm.valid" (click)="submitFooter()">
+                        <strong><i class="fa fa-check"></i> Create</strong>
+                    </button> 
+
+                    <button type="submit" [hidden]="!footerDetails" class="btn btn-success mr-3" [disabled]="!footerForm.valid" (click)="submitFooter()">
+                        <strong><i class="fa fa-check"></i> Update</strong>
+                    </button> 
+
+                    <!-- <button class="btn btn-danger" (click)="closeAdd()">
+                        <strong><i class="fa fa-times"></i> Cancel</strong>
+                    </button> -->
+                </div>
+            </div>
+        </form>
+
+    </div>
+</section>

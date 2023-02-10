@@ -1,0 +1,38 @@
+<section class="section-container">
+    <div class="content-wrapper">
+        <div class="content-heading">
+            <div class="row">
+                <div class="col-lg-12">
+                    <strong>
+                        <i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard
+                    </strong>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-3 col-lg-6" *ngFor="let data of getData; index as i">
+                <div class="card">
+                    <div class="card-body" style="background-color: #5bc0de; color: #fff;">
+                        <div class="row">
+                            <div class="col-xs-5 ml-2 mr-3">
+                                <!-- <i class="fa fa-users fa-4x"></i> -->
+                            </div>
+                            <div class="col-xs-7">
+                                <div>
+                                    <h3>{{data.name}}</h3>
+                                    <div class="">{{data.count}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-uppercase">
+                        <a class="text-info" routerLink="/dashboard/{{data.path}}">
+                            <span class="mr-3">View Details</span>
+                            <span><i class="fa fa-arrow-circle-right"></i></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

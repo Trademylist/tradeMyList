@@ -1,0 +1,590 @@
+<!-- sidebar-->
+<aside class="aside-container">
+    <!-- START Sidebar (left)-->
+    <div class="aside-inner">
+        <nav class="sidebar" data-sidebar-anyclick-close="">
+            <!-- START sidebar nav-->
+            <ul class="sidebar-nav">
+                <li class=" ">
+                    <a href="#dashboard" [routerLink]="['/dashboard/home']">
+                        <em class="icon-layers"></em>
+                        <span>Dashboard</span>
+                    </a>
+                    <ul class="sidebar-nav sidebar-subnav collapse" id="dashboard">
+                        <li class=" ">
+                            <a [routerLink]="['/dashboard/home']">
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class=" " *ngIf="isAdmin">
+                    <a href="#admin" [routerLink]="['/dashboard/admin']">
+                        <em class="icon-layers"></em>
+                        <span>Manage Admin</span>
+                    </a>
+                    <ul class="sidebar-nav sidebar-subnav collapse" id="admin">
+                        <li class=" ">
+                            <a [routerLink]="['/dashboard/admin']">
+                                <span>Manage Admin</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class=" " *ngIf="isAdmin || accessPermission.manage_seller != false">
+                    <a href="#seller" [routerLink]="['/dashboard/seller']">
+                        <em class="icon-layers"></em>
+                        <span>Manage Seller</span>
+                    </a>
+                    <ul class="sidebar-nav sidebar-subnav collapse" id="seller">
+                        <li class=" ">
+                            <a [routerLink]="['/dashboard/seller']" *ngIf="isAdmin || accessPermission.manage_seller != false">
+                                <span>Manage Seller</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class=" " *ngIf="isAdmin || accessPermission.manage_product_category != false || accessPermission.manage_product != false">
+                    <a href="#product" data-toggle="collapse">
+                        <em class="icon-layers"></em>
+                        <span>Manage Product</span>
+                    </a>
+                    <ul class="sidebar-nav sidebar-subnav collapse" id="product">
+                        <li class="sidebar-subnav-header">Product</li>
+                        <li class=" ">
+                            <a [routerLink]="['/dashboard/product']"  *ngIf="isAdmin || accessPermission.manage_product != false">
+                                <span>Manage Product</span>
+                            </a>
+                            <a [routerLink]="['/dashboard/category', '1']" *ngIf="isAdmin || accessPermission.manage_product_category != false ">
+                                <span>Manage Product Category</span>
+                            </a>
+                            <!-- <a [routerLink]="['/dashboard/advertisement','1']" *ngIf="isAdmin || accessPermission.product_advertisement != false ">
+                                <span>Product Advertisement</span>
+                            </a> -->
+                        </li>
+                    </ul>
+                </li>
+                <li class=" " *ngIf="isAdmin || accessPermission.manage_commercial_category != false || accessPermission.manage_commercial != false">
+                    <a href="#freebies" data-toggle="collapse">
+                        <em class="icon-layers"></em>
+                        <span>Manage Commercial</span>
+                    </a>
+                    <ul class="sidebar-nav sidebar-subnav collapse" id="freebies">
+                        <li class="sidebar-subnav-header">Commercial</li>
+                        <li class=" ">
+                            <a [routerLink]="['/dashboard/freebies']" *ngIf="isAdmin || accessPermission.manage_commercial != false">
+                                <span>Manage Commercial</span>
+                            </a>
+                            <a [routerLink]="['/dashboard/category', '2']" *ngIf="isAdmin || accessPermission.manage_commercial_category != false">
+                                <span>Manage Commercial Category</span>
+                            </a>
+                            <!-- <a [routerLink]="['/dashboard/advertisement','2']" *ngIf="isAdmin || accessPermission.commercial_advertisement != false">
+                                <span>Freebies Advertisement</span>
+                            </a> -->
+                        </li>
+                    </ul>
+                </li>
+
+                <li class=" " *ngIf="isAdmin || accessPermission.manage_make_model != false">
+                    <a href="#make" data-toggle="collapse">
+                        <em class="icon-layers"></em>
+                        <span>Manage Make And Model</span>
+                    </a>
+                    <ul class="sidebar-nav sidebar-subnav collapse" id="make">
+                        <li class="sidebar-subnav-header">Manage Make And Model</li>
+                        <li class=" " *ngFor="let item of subCategoryName">
+                            <a *ngIf="isAdmin || accessPermission.manage_make_model != false" (click)="openAdminForm(item)">
+                                <span class="make_model_sub">{{item}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- <li class=" " *ngIf="isAdmin || accessPermission.admin_offer_banner != false || accessPermission.seller_offer_banner != false || accessPermission.offer_category != false || accessPermission.offer_advertisement != false">
+                    <a href="#offer_discount" data-toggle="collapse">
+                        <em class="icon-layers"></em>
+                        <span>Manage Offer-Discount</span>
+                    </a>
+                    <ul class="sidebar-nav sidebar-subnav collapse" id="offer_discount">
+                        <li class="sidebar-subnav-header">Offer-Discount</li>
+                        <li class=" ">
+                            <a [routerLink]="['/dashboard/admin-offer-discount']" *ngIf="isAdmin || accessPermission.admin_offer_banner != false">
+                                <span>Admin Offer Banner</span>
+                            </a>
+                            <a [routerLink]="['/dashboard/seller-offer-discount']" *ngIf="isAdmin || accessPermission.seller_offer_banner != false">
+                                <span>Seller Offer Banner</span>
+                            </a>
+                            <a [routerLink]="['/dashboard/category','3']" *ngIf="isAdmin || accessPermission.offer_category != false">
+                                <span>Offer Category</span>
+                            </a>
+                            <a [routerLink]="['/dashboard/category','4']">
+                                <span>Seller Offer Category</span>
+                            </a>
+                            <a [routerLink]="['/dashboard/advertisement','3']" *ngIf="isAdmin || accessPermission.offer_advertisement != false">
+                                <span>Offer Advertisement</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li> -->
+                <!-- <li class=" " *ngIf="isAdmin || accessPermission.manage_vacancy != false || accessPermission.vacancy_advertisement != false ">
+                    <a href="#vacancies" data-toggle="collapse">
+                        <em class="icon-layers"></em>
+                        <span>Manage Vacancy</span>
+                    </a>
+                    <ul class="sidebar-nav sidebar-subnav collapse" id="vacancies">
+                        <li class="sidebar-subnav-header">Vacancy</li>
+                        <li class=" ">
+                            <a [routerLink]="['/dashboard/vacancies']" *ngIf="isAdmin || accessPermission.manage_vacancy != false">
+                                <span>Manage Vacancy</span>
+                            </a>
+                            <a [routerLink]="['/dashboard/advertisement','4']" *ngIf="isAdmin || accessPermission.vacancy_advertisement != false">
+                                <span>Vacancy Advertisement</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li> -->
+
+                <li class=" " *ngIf="isAdmin || accessPermission.manage_report_option != false">
+                    <a href="#reports" data-toggle="collapse">
+                        <em class="icon-layers"></em>
+                        <span>Manage Reports</span>
+                    </a>
+                    <ul class="sidebar-nav sidebar-subnav collapse" id="reports">
+                        <li class="sidebar-subnav-header">Reports</li>
+                        <li class=" ">
+                            <!-- <a [routerLink]="['/dashboard/reports']" *ngIf="isAdmin || accessPermission.manage_report_option != false">
+                                <span>Manage Reports</span>
+                            </a> -->
+                            <a [routerLink]="['/dashboard/report-comment']" *ngIf="isAdmin || accessPermission.manage_report_option != false">
+                                <span>Manage Report Options</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class=" " *ngIf="isAdmin || accessPermission.cms != false">
+                    <a href="#cms" [routerLink]="['/dashboard/cms']">
+                        <em class="icon-layers"></em>
+                        <span>CMS</span>
+                    </a>
+                    <ul class="sidebar-nav sidebar-subnav collapse">
+                        <li class=" ">
+                            <a [routerLink]="['/dashboard/cms']" *ngIf="isAdmin || accessPermission.cms != false">
+                                <span>CMS</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class=" ">
+                    <a href="#settings" data-toggle="collapse" *ngIf="isAdmin || accessPermission.change_password != false">
+                        <em class="icon-layers"></em>
+                        <span>Settings</span>
+                    </a>
+                    <ul class="sidebar-nav sidebar-subnav collapse" id="settings">
+                        <li class="sidebar-subnav-header">Settings</li>
+                        <li class=" ">
+                            <a [routerLink]="['/dashboard/profile/1']" *ngIf="isAdmin">
+                                <span>Profile</span>
+                            </a>
+                            <a [routerLink]="['/dashboard/profile/2']" *ngIf="isAdmin || accessPermission.change_password != false">
+                                <span>Change Password</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class=" " *ngIf="isAdmin">
+                    <a href="#footer" [routerLink]="['/dashboard/footer']">
+                        <em class="icon-layers"></em>
+                        <span>Manage Footer</span>
+                    </a>
+                    <ul class="sidebar-nav sidebar-subnav collapse" id="footer">
+                        <li class=" ">
+                            <a [routerLink]="['/dashboard/footer']">
+                                <span>Manage Footer</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- <li class=" ">
+                    <a href="#logout" data-toggle="collapse">
+                        <em class="icon-layers"></em>
+                        <span>Log Out</span>
+                    </a>
+                    <ul class="sidebar-nav sidebar-subnav collapse" id="logout">
+                       <li class="sidebar-subnav-header">Log Out</li>
+                <li class=" ">
+                    <a style="color: white;">
+                                Log Out
+                            </a>
+                </li>
+            </ul>
+            </li> -->
+                <li class=" ">
+                    <a style="color: white;" (click)="logout()">
+                        <em class="icon-layers"></em>
+                        <span>Log Out</span>
+                    </a>
+                    <!-- <ul class="sidebar-nav sidebar-subnav collapse" id="logout">
+                        <li class=" ">
+                            <a (click)="logout()">
+                                <span>Log Out</span>
+                            </a>
+                        </li>
+                    </ul> -->
+                </li>
+            </ul>
+            <!-- END sidebar nav-->
+        </nav>
+    </div>
+    <!-- END Sidebar (left)-->
+</aside>
+<!-- offsidebar-->
+<aside class="offsidebar d-none">
+    <!-- START Off Sidebar (right)-->
+    <nav>
+        <div role="tabpanel">
+            <!-- Nav tabs-->
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" href="#app-settings" aria-controls="app-settings" role="tab" data-toggle="tab">
+                        <em class="icon-equalizer fa-lg"></em>
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" href="#app-chat" aria-controls="app-chat" role="tab" data-toggle="tab">
+                        <em class="icon-user fa-lg"></em>
+                    </a>
+                </li>
+            </ul>
+            <!-- Tab panes-->
+            <div class="tab-content">
+                <div class="tab-pane fade active show" id="app-settings" role="tabpanel">
+                    <h3 class="text-center text-thin mt-4">Settings</h3>
+                    <div class="p-2">
+                        <h4 class="text-muted text-thin">Themes</h4>
+                        <div class="row row-flush mb-2">
+                            <div class="col mb-2">
+                                <div class="setting-color">
+                                    <label data-load-css="css/theme-a.css">
+                      <input type="radio" name="setting-theme" checked="checked">
+                      <span class="icon-check"></span>
+                      <span class="split">
+                        <span class="color bg-info"></span>
+                        <span class="color bg-info-light"></span>
+                      </span>
+                      <span class="color bg-white"></span>
+                    </label>
+                                </div>
+                            </div>
+                            <div class="col mb-2">
+                                <div class="setting-color">
+                                    <label data-load-css="css/theme-b.css">
+                      <input type="radio" name="setting-theme">
+                      <span class="icon-check"></span>
+                      <span class="split">
+                        <span class="color bg-green"></span>
+                        <span class="color bg-green-light"></span>
+                      </span>
+                      <span class="color bg-white"></span>
+                    </label>
+                                </div>
+                            </div>
+                            <div class="col mb-2">
+                                <div class="setting-color">
+                                    <label data-load-css="css/theme-c.css">
+                      <input type="radio" name="setting-theme">
+                      <span class="icon-check"></span>
+                      <span class="split">
+                        <span class="color bg-purple"></span>
+                        <span class="color bg-purple-light"></span>
+                      </span>
+                      <span class="color bg-white"></span>
+                    </label>
+                                </div>
+                            </div>
+                            <div class="col mb-2">
+                                <div class="setting-color">
+                                    <label data-load-css="css/theme-d.css">
+                      <input type="radio" name="setting-theme">
+                      <span class="icon-check"></span>
+                      <span class="split">
+                        <span class="color bg-danger"></span>
+                        <span class="color bg-danger-light"></span>
+                      </span>
+                      <span class="color bg-white"></span>
+                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-flush mb-2">
+                            <div class="col mb-2">
+                                <div class="setting-color">
+                                    <label data-load-css="css/theme-e.css">
+                      <input type="radio" name="setting-theme">
+                      <span class="icon-check"></span>
+                      <span class="split">
+                        <span class="color bg-info-dark"></span>
+                        <span class="color bg-info"></span>
+                      </span>
+                      <span class="color bg-gray-dark"></span>
+                    </label>
+                                </div>
+                            </div>
+                            <div class="col mb-2">
+                                <div class="setting-color">
+                                    <label data-load-css="css/theme-f.css">
+                      <input type="radio" name="setting-theme">
+                      <span class="icon-check"></span>
+                      <span class="split">
+                        <span class="color bg-green-dark"></span>
+                        <span class="color bg-green"></span>
+                      </span>
+                      <span class="color bg-gray-dark"></span>
+                    </label>
+                                </div>
+                            </div>
+                            <div class="col mb-2">
+                                <div class="setting-color">
+                                    <label data-load-css="css/theme-g.css">
+                      <input type="radio" name="setting-theme">
+                      <span class="icon-check"></span>
+                      <span class="split">
+                        <span class="color bg-purple-dark"></span>
+                        <span class="color bg-purple"></span>
+                      </span>
+                      <span class="color bg-gray-dark"></span>
+                    </label>
+                                </div>
+                            </div>
+                            <div class="col mb-2">
+                                <div class="setting-color">
+                                    <label data-load-css="css/theme-h.css">
+                      <input type="radio" name="setting-theme">
+                      <span class="icon-check"></span>
+                      <span class="split">
+                        <span class="color bg-danger-dark"></span>
+                        <span class="color bg-danger"></span>
+                      </span>
+                      <span class="color bg-gray-dark"></span>
+                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-2">
+                        <h4 class="text-muted text-thin">Layout</h4>
+                        <div class="clearfix">
+                            <p class="float-left">Fixed</p>
+                            <div class="float-right">
+                                <label class="switch">
+                    <input id="chk-fixed" type="checkbox" data-toggle-state="layout-fixed">
+                    <span></span>
+                  </label>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <p class="float-left">Boxed</p>
+                            <div class="float-right">
+                                <label class="switch">
+                    <input id="chk-boxed" type="checkbox" data-toggle-state="layout-boxed">
+                    <span></span>
+                  </label>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <p class="float-left">RTL</p>
+                            <div class="float-right">
+                                <label class="switch">
+                    <input id="chk-rtl" type="checkbox">
+                    <span></span>
+                  </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-2">
+                        <h4 class="text-muted text-thin">Aside</h4>
+                        <div class="clearfix">
+                            <p class="float-left">Collapsed</p>
+                            <div class="float-right">
+                                <label class="switch">
+                    <input id="chk-collapsed" type="checkbox" data-toggle-state="aside-collapsed">
+                    <span></span>
+                  </label>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <p class="float-left">Collapsed Text</p>
+                            <div class="float-right">
+                                <label class="switch">
+                    <input id="chk-collapsed-text" type="checkbox" data-toggle-state="aside-collapsed-text">
+                    <span></span>
+                  </label>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <p class="float-left">Float</p>
+                            <div class="float-right">
+                                <label class="switch">
+                    <input id="chk-float" type="checkbox" data-toggle-state="aside-float">
+                    <span></span>
+                  </label>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <p class="float-left">Hover</p>
+                            <div class="float-right">
+                                <label class="switch">
+                    <input id="chk-hover" type="checkbox" data-toggle-state="aside-hover">
+                    <span></span>
+                  </label>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <p class="float-left">Show Scrollbar</p>
+                            <div class="float-right">
+                                <label class="switch">
+                    <input id="chk-scroll" type="checkbox" data-toggle-state="show-scrollbar" data-target=".sidebar">
+                    <span></span>
+                  </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="app-chat" role="tabpanel">
+                    <h3 class="text-center text-thin mt-4">Connections</h3>
+                    <div class="list-group">
+                        <!-- START list title-->
+                        <div class="list-group-item border-0">
+                            <small class="text-muted">ONLINE</small>
+                        </div>
+                        <!-- END list title-->
+                        <div class="list-group-item list-group-item-action border-0">
+                            <div class="media">
+                                <img class="align-self-center mr-3 rounded-circle thumb48" src="assets/img/user/05.jpg" alt="Image">
+                                <div class="media-body text-truncate">
+                                    <a href="#">
+                                        <strong>Juan Sims</strong>
+                                    </a>
+                                    <br>
+                                    <small class="text-muted">Designeer</small>
+                                </div>
+                                <div class="ml-auto">
+                                    <span class="circle bg-success circle-lg"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item list-group-item-action border-0">
+                            <div class="media">
+                                <img class="align-self-center mr-3 rounded-circle thumb48" src="assets/img/user/06.jpg" alt="Image">
+                                <div class="media-body text-truncate">
+                                    <a href="#">
+                                        <strong>Maureen Jenkins</strong>
+                                    </a>
+                                    <br>
+                                    <small class="text-muted">Designeer</small>
+                                </div>
+                                <div class="ml-auto">
+                                    <span class="circle bg-success circle-lg"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item list-group-item-action border-0">
+                            <div class="media">
+                                <img class="align-self-center mr-3 rounded-circle thumb48" src="assets/img/user/07.jpg" alt="Image">
+                                <div class="media-body text-truncate">
+                                    <a href="#">
+                                        <strong>Billie Dunn</strong>
+                                    </a>
+                                    <br>
+                                    <small class="text-muted">Designeer</small>
+                                </div>
+                                <div class="ml-auto">
+                                    <span class="circle bg-danger circle-lg"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item list-group-item-action border-0">
+                            <div class="media">
+                                <img class="align-self-center mr-3 rounded-circle thumb48" src="assets/img/user/08.jpg" alt="Image">
+                                <div class="media-body text-truncate">
+                                    <a href="#">
+                                        <strong>Tomothy Roberts</strong>
+                                    </a>
+                                    <br>
+                                    <small class="text-muted">Designeer</small>
+                                </div>
+                                <div class="ml-auto">
+                                    <span class="circle bg-warning circle-lg"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- START list title-->
+                        <div class="list-group-item border-0">
+                            <small class="text-muted">OFFLINE</small>
+                        </div>
+                        <!-- END list title-->
+                        <div class="list-group-item list-group-item-action border-0">
+                            <div class="media">
+                                <img class="align-self-center mr-3 rounded-circle thumb48" src="assets/img/user/09.jpg" alt="Image">
+                                <div class="media-body text-truncate">
+                                    <a href="#">
+                                        <strong>Lawrence Robinson</strong>
+                                    </a>
+                                    <br>
+                                    <small class="text-muted">Designeer</small>
+                                </div>
+                                <div class="ml-auto">
+                                    <span class="circle bg-warning circle-lg"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item list-group-item-action border-0">
+                            <div class="media">
+                                <img class="align-self-center mr-3 rounded-circle thumb48" src="assets/img/user/10.jpg" alt="Image">
+                                <div class="media-body text-truncate">
+                                    <a href="#">
+                                        <strong>Tyrone Owens</strong>
+                                    </a>
+                                    <br>
+                                    <small class="text-muted">Designeer</small>
+                                </div>
+                                <div class="ml-auto">
+                                    <span class="circle bg-warning circle-lg"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-3 py-4 text-center">
+                        <!-- Optional link to list more users-->
+                        <a class="btn btn-purple btn-sm" href="#" title="See more contacts">
+                            <strong>Load more..</strong>
+                        </a>
+                    </div>
+                    <!-- Extra items-->
+                    <div class="px-3 py-2">
+                        <p>
+                            <small class="text-muted">Tasks completion</small>
+                        </p>
+                        <div class="progress progress-xs m-0">
+                            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                                <span class="sr-only">80% Complete</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-3 py-2">
+                        <p>
+                            <small class="text-muted">Upload quota</small>
+                        </p>
+                        <div class="progress progress-xs m-0">
+                            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                                <span class="sr-only">40% Complete</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- END Off Sidebar (right)-->
+</aside>

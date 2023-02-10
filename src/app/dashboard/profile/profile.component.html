@@ -1,0 +1,174 @@
+<section class="section-container" *ngIf="formShowDiv">
+    <div class="content-wrapper">
+        <div class="content-heading">
+            <div class="row">
+                <div class="col-lg-12">
+                    <strong>
+                        Edit Profile
+                    </strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- <ul class="nav nav-pills justify-content-center">
+            <li class="nav-item">
+              <a class="nav-link active" data-toggle="pill" href="#profile">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="pill" href="#changePassword">Change Password</a>
+            </li>
+          </ul> -->
+
+        <div class="mb-1 alert alert-success" role="alert" *ngIf="successDiv">{{message}}
+            <button type="button" class="cus-msg-close-btn" (click)="closeMessageDiv()">X</button>
+        </div>
+        <div class="mb-1 alert alert-danger" role="alert" *ngIf="errorDiv">{{message}}
+            <button type="button" class="cus-msg-close-btn" (click)="closeMessageDiv()">X</button>
+        </div>
+
+        <div *ngIf="paramsData == '1'">
+            <form [formGroup]="profleForm" *ngIf="userDetails">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input class="form-control" type="text" placeholder="Enter Your Name" formControlName="username">
+                        </div>
+                    </div>
+                    <div class="col-lg-6"></div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input class="form-control" type="email" placeholder="Enter Your Email" formControlName="email">
+                        </div>
+                    </div>
+                    <div class="col-lg-12 mt-4">
+                        <button type="submit" class="btn btn-success mr-3" [disabled]="!profleForm.valid" (click)="submitUpdateProfile()">
+                        <strong><i class="fa fa-check"></i> Submit</strong>
+                        </button>
+                        <button class="btn btn-danger" (click)="close()">
+                            <strong><i class="fa fa-times"></i> Cancel</strong>
+                        </button>
+                    </div>
+                 </div>
+            </form>
+        </div>
+
+        <div *ngIf="paramsData == '2'">
+            <form [formGroup]="changePasswordForm" (ngSubmit)="changePassword(changePasswordForm.value)">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>New Password</label>
+                            <input class="form-control" type="password" formControlName="password" placeholder="New password">
+                        </div>
+                        <div class="error-messages">
+                            <ng-container *ngFor="let error of error_messages.password">
+                                <div class="error-message" *ngIf="changePasswordForm.get('password').hasError(error.type) && (changePasswordForm.get('password').dirty || changePasswordForm.get('password').touched)">
+                                    {{ error.message }}
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="col-lg-6"></div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Confirm New Password</label>
+                            <input class="form-control" type="password" formControlName="confirmpassword" placeholder="Confirm new password">
+                        </div>
+                        <div class="error-messages">
+                            <ng-container *ngFor="let error of error_messages.confirmpassword">
+                                <div class="error-message" *ngIf="changePasswordForm.get('confirmpassword').hasError(error.type) && (changePasswordForm.get('confirmpassword').dirty || changePasswordForm.get('confirmpassword').touched)">
+                                    {{ error.message }}
+                                </div>
+                            </ng-container>
+                            <div class="error-message" *ngIf="!changePasswordForm.get('confirmpassword').errors && changePasswordForm.hasError('passwordNotMatch') && (changePasswordForm.get('confirmpassword').dirty || changePasswordForm.get('confirmpassword').touched)">
+                                Password and Confirm Password fields should match
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 mt-4">
+                        <button type="submit" class="btn btn-success mr-3" [disabled]="!changePasswordForm.valid">
+                        <strong><i class="fa fa-check"></i> Change</strong>
+                        </button>
+                        <button class="btn btn-danger" (click)="close()">
+                            <strong><i class="fa fa-times"></i> Cancel</strong>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+          
+          <!-- <div class="tab-content divPad">
+            <div class="tab-pane container active" id="profile">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input class="form-control" type="text" placeholder="Enter Your Name">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input class="form-control" type="email" placeholder="Enter Your Email">
+                        </div>
+                    </div>
+                    <div class="col-lg-12 mt-4">
+                        <button type="submit" class="btn btn-success mr-3">
+                        <strong><i class="fa fa-check"></i> Submit</strong>
+                        </button>
+                        <button class="btn btn-danger" (click)="close()">
+                            <strong><i class="fa fa-times"></i> Cancel</strong>
+                        </button>
+                    </div>
+                 </div>
+            </div>
+            <div class="tab-pane container fade" id="changePassword">
+                <form [formGroup]="changePasswordForm" (ngSubmit)="changePassword(changePasswordForm.value)">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>New Password</label>
+                                <input class="form-control" type="password" formControlName="password" placeholder="New password">
+                            </div>
+                            <div class="error-messages">
+                                <ng-container *ngFor="let error of error_messages.password">
+                                    <div class="error-message" *ngIf="changePasswordForm.get('password').hasError(error.type) && (changePasswordForm.get('password').dirty || changePasswordForm.get('password').touched)">
+                                        {{ error.message }}
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="col-lg-6"></div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Confirm New Password</label>
+                                <input class="form-control" type="password" formControlName="confirmpassword" placeholder="Confirm new password">
+                            </div>
+                            <div class="error-messages">
+                                <ng-container *ngFor="let error of error_messages.confirmpassword">
+                                    <div class="error-message" *ngIf="changePasswordForm.get('confirmpassword').hasError(error.type) && (changePasswordForm.get('confirmpassword').dirty || changePasswordForm.get('confirmpassword').touched)">
+                                        {{ error.message }}
+                                    </div>
+                                </ng-container>
+                                <div class="error-message" *ngIf="!changePasswordForm.get('confirmpassword').errors && changePasswordForm.hasError('passwordNotMatch') && (changePasswordForm.get('confirmpassword').dirty || changePasswordForm.get('confirmpassword').touched)">
+                                    Password and Confirm Password fields should match
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 mt-4">
+                            <button type="submit" class="btn btn-success mr-3" [disabled]="!changePasswordForm.valid">
+                            <strong><i class="fa fa-check"></i> Change</strong>
+                            </button>
+                            <button class="btn btn-danger" (click)="close()">
+                                <strong><i class="fa fa-times"></i> Cancel</strong>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+          </div> -->
+    </div>
+</section>

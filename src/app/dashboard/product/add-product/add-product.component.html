@@ -1,0 +1,29 @@
+<section class="section-container">
+    <div class="content-wrapper">
+        <div class="content-heading">
+            <div class="row">
+                <div class="col-lg-12">
+                    <strong>
+                        Upload CSV
+                    </strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-1 alert alert-success" role="alert" *ngIf="successDiv">{{message}}
+            <button type="button" class="cus-msg-close-btn" (click)="closeMessageDiv()">X</button>
+        </div>
+        <div class="mb-1 alert alert-danger" role="alert" *ngIf="errorDiv">{{message}}
+            <button type="button" class="cus-msg-close-btn" (click)="closeMessageDiv()">X</button>
+        </div>
+        <p style="text-align: right"><strong style="color: red;">* </strong><a
+                href="https://trademylist.com/uploads/csv/product_167403438230179.csv">Sample
+                CSV</a></p>
+        <input type="file" accept=".csv" (change)="handleFileSelect($event)">
+        <div class="col-lg-12 col-md-12 col-sm-12 mt-4 ">
+            <button type="submit" class="btn btn-success mr-3" [disabled]="!validator" (click)="submitCsv()">
+                <strong><i class="fa fa-check"></i> Create</strong>
+            </button>
+        </div>
+    </div>
+</section>
