@@ -1,0 +1,33 @@
+@media screen and (max-width: 1500px) {
+    .landing-wrapper .form-section { padding: 100px 70px 60px 0px; }
+    .landing-wrapper .timer-section { padding-left: 40px;}
+}
+@media screen and (max-width: 1200px) {
+.landing-wrapper { flex-direction: column; }
+.landing-wrapper .form-section, .landing-wrapper .timer-section { width: 100%;}
+.landing-wrapper .form-section{ justify-content: center;}
+.landing-wrapper .timer-section { padding: 40px; }
+.landing-wrapper .timer-content { width: 600px; margin: auto; }
+.landing-wrapper .form-section { padding: 80px 40px; }
+.landing-wrapper .form-section .form-inner{ width: 600px;}
+.landing-wrapper .form-section .coming-soon { margin-top: 60px;}
+.landing-wrapper .form-section .follow-us { margin: 75px 0 75px; }
+}
+@media screen and (max-width: 700px) {
+    .landing-wrapper .form-section .form-inner,
+    .landing-wrapper .timer-content { width: 100%; }
+    .timer-content .rating-content{ flex-wrap: wrap;}
+    .timer-content .rating-content .rated-star { width: 50%; margin-bottom: 30px; }
+}
+@media screen and (max-width: 480px) {
+.landing-wrapper .form-section .coming-soon { font-size: 23px;}
+.landing-wrapper .form-inp .form-control { height: 50px;}
+.landing-wrapper .form-section .followus-txt { font-size: 22px;}
+.landing-wrapper .form-section .follow-us { margin: 40px 0 40px; }
+.landing-wrapper .form-section { padding: 40px 20px; }
+.landing-wrapper .timer-section { padding: 20px; }
+.landing-wrapper .timer-content .stay-tuned { font-size: 38px;}
+.timer-content .progress { width: 110px; height: 110px;}
+.timer-content .progress .progress-value div { font-size: 34px; }
+.timer-content .rating-content { margin: 20px 0 0;}
+}

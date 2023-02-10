@@ -1,0 +1,63 @@
+var mongoose = require('mongoose');
+var multer = require('multer');
+
+
+var Schema = mongoose.Schema;
+
+const GeoSchema =new Schema({
+  type:{
+    type:String,
+    default:"Point"
+  },
+  coordinates:{
+    type:[Number],
+    index:"2dsphere"
+  }
+});
+
+var FreebiesSchema = new Schema({
+  image: [{ type: String, default: null }],
+  cover_thumb: { type: String, default: null },
+  product_name: { type: String, default: null },
+  category: { type: String, default: null },
+  sub_category:[{
+    key: {type: String},
+    value:{type: String}
+ }],
+  product_price: { type: Number, default: null },
+  user_id: {
+		type: mongoose.Schema.Types.ObjectId,
+		trim: true,
+		required: true,
+		ref: 'Users'
+	},
+  seller_phone: { 
+    type: String, 
+   default:null
+   },
+  soldOut : { type: Boolean, default: false },
+  product_description: { type: String, default: null },
+  address: { type: String, default: null },
+  country: {
+    type: String,
+    trim: true,
+    default: null
+},
+geometry:GeoSchema,
+  isBlock: { type: Boolean, default: false },
+  likelist: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      trim: true,
+      default: null,
+      ref: 'Users'
+    }
+  ],
+}, {
+  timestamps: true,
+  typecast: true
+});
+
+
+
+module.exports = mongoose.model('Freebies', FreebiesSchema);

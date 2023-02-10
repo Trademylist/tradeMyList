@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="assets/css/media.css" rel="stylesheet">
+
+  <title>Trade Landing page</title>
+</head>
+
+<body>
+
+  <section class="landing-wrapper">
+    <div class="form-section">
+      <div class="form-inner">
+        <div class="logo-wrapper">
+          <img src="./assets/images/logo.png" alt="#" class="img-fluid">
+        </div>
+        <h2 class="coming-soon">Our website is coming soon,</h2>
+        <p class="followus-txt"> follow us for update now! </p>
+
+        <form>
+          <div class="form-inp">
+            <input type="text" class="form-control" placeholder="Your name">
+          </div>
+          <div class="form-inp">
+            <input type="email" class="form-control" placeholder="Email address">
+          </div>
+
+          <button type="submit" class="btn btn-primary">Notify me</button>
+        </form>
+        <div class="follow-us">
+          <p>Follow us: </p>
+
+          <a class="facebook" href="https://www.facebook.com/trademylist" target="_blank">
+            <img src="./assets/images/facebook-icon.svg">
+          </a>
+          <a class="instagram" href="https://www.instagram.com/trademylist/" target="_blank">
+            <img src="./assets/images/instagram-icon.svg">
+          </a>
+        </div>
+        <p class="alright-reserved">© 2020 Trade. All Right Reserved.</p>
+      </div>
+    </div>
+    <div class="timer-section">
+      <div class="timer-content">
+        <h2 class="stay-tuned" id="stay-tuned">Stay Tuned</h2>
+        <div class="rating-content">
+
+          <div class="rated-star">
+            <div class="progress" data-percentage="50">
+              <span class="progress-left">
+                <span class="progress-bar"></span>
+              </span>
+              <span class="progress-right">
+                <span class="progress-bar"></span>
+              </span>
+              <div class="progress-value">
+                <div>
+                  <p id="days"></p>
+                  <span>Days</span>
+                  <!--<span>completed</span>-->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="rated-star">
+            <div class="progress" data-percentage="10">
+              <span class="progress-left">
+                <span class="progress-bar"></span>
+              </span>
+              <span class="progress-right">
+                <span class="progress-bar"></span>
+              </span>
+              <div class="progress-value">
+                <div>
+                 <p id="hour"></p>
+                  <span>Hours</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="rated-star">
+            <div class="progress" data-percentage="50">
+              <span class="progress-left">
+                <span class="progress-bar"></span>
+              </span>
+              <span class="progress-right">
+                <span class="progress-bar"></span>
+              </span>
+              <div class="progress-value">
+                <div>
+                  <p id="minutes"></p>
+                  <span>Minutes</span>
+                  <!--<span>completed</span>-->
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="rated-star">
+            <div class="progress" data-percentage="20">
+              <span class="progress-left">
+                <span class="progress-bar"></span>
+              </span>
+              <span class="progress-right">
+                <span class="progress-bar"></span>
+              </span>
+              <div class="progress-value">
+                <div>
+                 <p id="seconds"></p>
+                  <span>Seconds</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+        <!--progress circle end-->
+      </div>
+    </div>
+
+
+  </section>
+
+
+
+
+
+
+
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Set the date we're counting down to
+    var countDownDate = new Date("March 1, 2021 12:00:00").getTime();
+    // 15 days 23hrs 59 min 59 sec
+    // Update the count down every 1 second
+    var x = setInterval(function() {
+    
+      // Get today's date and time
+      var now = new Date().getTime();
+        
+      // Find the distance between now and the count down date
+      var distance = countDownDate - now;
+        
+      // Time calculations for days, hours, minutes and seconds
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+         // Output the result in an element with id="demo"
+      document.getElementById("days").innerHTML = days;
+      document.getElementById("hour").innerHTML = hours;
+      document.getElementById("minutes").innerHTML = minutes;
+      document.getElementById("seconds").innerHTML = seconds;
+        
+      
+        
+      // If the count down is over, write some text 
+      if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("stay-tuned").innerHTML = "Site is Live";
+        document.getElementById("days").innerHTML = '0';
+      document.getElementById("hour").innerHTML = '0';
+      document.getElementById("minutes").innerHTML = '0';
+      document.getElementById("seconds").innerHTML = '0';
+      }
+    }, 1000);
+    </script>
+    
+    </body>
+    </html>
+
+</body>
+
+</html>

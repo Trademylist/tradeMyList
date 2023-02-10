@@ -1,0 +1,349 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6, p{ margin: 0;}
+@font-face {
+  font-family: "WorkSans-light";
+  src: url("../fonts/WorkSans-Light.woff2") format("woff2"),
+    url("../fonts/WorkSans-Light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "WorkSans-regular";
+  src: url("../fonts/WorkSans-Regular.woff2") format("woff2"),
+    url("../fonts/WorkSans-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "WorkSans-Medium";
+  src: url("../fonts/WorkSans-Medium.woff2") format("woff2"),
+    url("../fonts/WorkSans-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "WorkSans-semibold";
+  src: url("../fonts/WorkSans-SemiBold.woff2") format("woff2"),
+    url("../fonts/WorkSans-SemiBold.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "WorkSans-thin";
+  src: url("../fonts/WorkSans-Thin.woff2") format("woff2"),
+    url("../fonts/WorkSans-Thin.woff") format("woff");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "WorkSans-black";
+  src: url("../fonts/WorkSans-Black.woff2") format("woff2"),
+    url("../fonts/WorkSans-Black.woff") format("woff");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "WorkSans-bold";
+  src: url("../fonts/WorkSans-Bold.woff2") format("woff2"),
+    url("../fonts/WorkSans-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Montserrat-Medium";
+  src: url("../fonts/Montserrat-Medium.woff2") format("woff2"),
+    url("../fonts/Montserrat-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Roboto-Regular";
+  src: url("../fonts/Roboto-Regular.woff2") format("woff2"),
+    url("../fonts/Roboto-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Roboto-Light";
+  src: url("../fonts/Roboto-Light.woff2") format("woff2"),
+    url("../fonts/Roboto-Light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+.timer-section {
+  background: url("../images/gradient-bg.jpg") no-repeat center center; background-size:cover;
+}
+
+.timer-content .rating-content {
+  display: flex;
+  margin: 40px 0 0;
+  width: 100%;
+}
+/*.rating-content .rated-star{ display: flex; flex-direction: column; width: 100%; text-align: center;}*/
+.timer-content .rating-content .rated-star {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+}
+.timer-content .rating-content .rated-star:last-child {
+  margin: 0;
+}
+.timer-content .rating-content .rated-star h2 {
+  margin: 0;
+  font-size: 16px;
+  font-family: "Montserrat-Regular";
+  color: #292828;
+}
+.timer-content .progress {
+  width: 107px;
+  height: 107px;
+  line-height: inherit;
+  background: none;
+  margin: 0 auto;
+  position: relative; 
+  border-radius: 50%; 
+}
+.timer-content .progress:after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 5px solid #AC58FE;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+  
+.timer-content .progress > span {
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  z-index: 1;
+}
+.progress .progress-left {
+  left: 0;
+}
+.timer-content .progress .progress-bar {
+  width: 100%;
+  height: 100%;
+  background: none;
+  border-width: 5px;
+  border-style: solid;
+  position: absolute;
+  top: 0;
+  border-color: #fff;
+}
+.timer-content .progress .progress-left .progress-bar {
+  left: 100%;
+  border-top-right-radius: 75px;
+  border-bottom-right-radius: 75px;
+  border-left: 0;
+  -webkit-transform-origin: center left;
+  transform-origin: center left;
+}
+ 
+.timer-content .progress .progress-right {
+  right: 0;
+}
+.timer-content .progress .progress-right .progress-bar {
+  left: -101%;
+  border-top-left-radius: 75px;
+  border-bottom-left-radius: 75px;
+  border-right: 0;
+  -webkit-transform-origin: center right;
+  transform-origin: center right;
+}
+.timer-content .progress .progress-value {
+  display: flex; 
+  border-radius: 50%;
+  font-size: 22px;
+  text-align: center;
+  line-height: 16px;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: "Montserrat-Regular";
+}
+.timer-content .progress .progress-value div {
+  margin-top: 10px; font-family: 'WorkSans-light';
+  color: #fff;
+  font-size: 40px;
+}
+.timer-content .progress .progress-value span {
+  font-size: 18px;    margin-top: 8px;
+  display: block;
+  text-transform: capitalize;
+}
+/* This for loop creates the necessary css animation names Due to the split circle of progress-left and progress right, we must use the animations on each side. */
+.timer-content .progress[data-percentage="10"] .progress-right .progress-bar {
+  animation: loading-1 1.5s linear forwards;
+}
+.timer-content .progress[data-percentage="10"] .progress-left .progress-bar {
+  animation: 0;
+}
+.timer-content .progress[data-percentage="15"] .progress-left .progress-bar {
+  animation: loading-1.5 1.5s linear forwards;
+}
+.timer-content .progress[data-percentage="20"] .progress-right .progress-bar {
+  animation: loading-2 1.5s linear forwards;
+}
+.timer-content .progress[data-percentage="20"] .progress-left .progress-bar {
+  animation: 0;
+}
+.timer-content .progress[data-percentage="30"] .progress-right .progress-bar {
+  animation: loading-3 1.5s linear forwards;
+}
+.timer-content .progress[data-percentage="30"] .progress-left .progress-bar {
+  animation: 0;
+}
+.timer-content .progress[data-percentage="40"] .progress-right .progress-bar {
+  animation: loading-4 1.5s linear forwards;
+}
+.timer-content .progress[data-percentage="40"] .progress-left .progress-bar {
+  animation: 0;
+}
+.timer-content .progress[data-percentage="50"] .progress-right .progress-bar {
+  animation: loading-5 1.5s linear forwards;
+}
+.timer-content .progress[data-percentage="50"] .progress-left .progress-bar {
+  animation: 0;
+}
+.timer-content .progress[data-percentage="60"] .progress-right .progress-bar {
+  animation: loading-5 1.5s linear forwards;
+}
+.timer-content.progress[data-percentage="60"] .progress-left .progress-bar {
+  animation: loading-1 1.5s linear forwards 1.5s;
+}
+.timer-content .progress[data-percentage="70"] .progress-right .progress-bar {
+  animation: loading-5 1.5s linear forwards;
+}
+.timer-content .progress[data-percentage="70"] .progress-left .progress-bar {
+  animation: loading-2 1.5s linear forwards 1.5s;
+}
+.timer-content .progress[data-percentage="80"] .progress-right .progress-bar {
+  animation: loading-5 1.5s linear forwards;
+}
+.timer-content .progress[data-percentage="80"] .progress-left .progress-bar {
+  animation: loading-3 1.5s linear forwards 1.5s;
+}
+.timer-content .progress[data-percentage="90"] .progress-right .progress-bar {
+  animation: loading-5 1.5s linear forwards;
+}
+.timer-content .progress[data-percentage="90"] .progress-left .progress-bar {
+  animation: loading-4 1.5s linear forwards 1.5s;
+}
+.timer-content .progress[data-percentage="100"] .progress-right .progress-bar {
+  animation: loading-5 1.5s linear forwards;
+}
+.timer-content .progress[data-percentage="100"] .progress-left .progress-bar {
+  animation: loading-5 1.5s linear forwards 1.5s;
+}
+/* @keyframes loading-1 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(36);
+    transform: rotate(36deg);
+  }
+} 
+@keyframes loading-2 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(72);
+    transform: rotate(72deg);
+  }
+}
+@keyframes loading-3 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(108);
+    transform: rotate(108deg);
+  }
+}
+@keyframes loading-4 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(144);
+    transform: rotate(144deg);
+  }
+}
+@keyframes loading-5 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(180);
+    transform: rotate(180deg);
+  }
+} */
+
+
+
+/* landing page */
+.landing-wrapper { display: flex; width: 100%; justify-content: space-between; }
+.landing-wrapper .form-section,
+.landing-wrapper .timer-section{ width: 50%; box-sizing: border-box;}
+.landing-wrapper .form-section{ padding: 100px 110px 60px 0px; text-align: center;     display: flex; justify-content: flex-end; align-items: center;}
+.landing-wrapper .timer-section{ padding-left: 70px; display: flex; align-items: center;}
+.landing-wrapper .form-section .coming-soon{ color: #353535; font-family: 'WorkSans-SemiBold'; font-size: 30px; margin-top: 90px;} 
+.landing-wrapper .form-section .followus-txt{ color: #000; font-family: 'WorkSans-Light'; font-size: 38px; margin-top: 12px; margin-bottom: 40px;} 
+.landing-wrapper .form-inp{ margin-bottom: 16px;}
+.landing-wrapper .form-inp .form-control {border: 1px solid #EBEBEB; border-radius: 10px; height: 58px; font-family: 'WorkSans-Regular'; color: #5A5A5A; font-size: 18px; }
+
+.landing-wrapper .form-section .btn-primary{ margin-top: 16px;
+    background: #FF6700; border-radius: 10px; font-size: 18px; text-transform: capitalize; height: 50px; width: 100%;    border: none; font-family: 'WorkSans-semibold';
+}
+.landing-wrapper .form-section .follow-us{ display: flex; align-items: center; justify-content: center; margin: 75px 0 145px;}
+.landing-wrapper .form-section .follow-us p{  font-size: 16px; font-family: 'WorkSans-Regular'; color: #000;}
+.landing-wrapper .form-section .follow-us .facebook{ margin: 0 10px;}
+.landing-wrapper .form-section .alright-reserved{font-size: 16px; font-family: 'WorkSans-Regular'; color: #999999;}
+
+.landing-wrapper .timer-content{ width: 535px;}
+
+.landing-wrapper .timer-content .stay-tuned{ font-size: 50px; font-family: 'WorkSans-Light'; color: #fff; text-align: center;}
+
+
+
+
+
+/* /.timer-content */
+

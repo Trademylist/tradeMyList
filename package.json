@@ -1,0 +1,52 @@
+{
+  "name": "mag",
+  "version": "1.0.0",
+  "description": "mag",
+  "main": "mag.js",
+  "scripts": {
+    "test": "Hello World",
+    "start": "node mag.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git"
+  },
+  "keywords": [
+    "git",
+    "repository"
+  ],
+  "author": "Brainium",
+  "license": "ISC",
+  "devDependencies": {
+    "@angular/cli": "7.0.3",
+    "nodemon": "^1.19.4"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.804.0",
+    "bcrypt-nodejs": "0.0.3",
+    "crypto": "^1.0.1",
+    "csv-writer": "^1.6.0",
+    "ejs": "^2.6.1",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.1.6",
+    "fcm-node": "^1.5.2",
+    "fs": "0.0.1-security",
+    "generate-password": "^1.4.2",
+    "jsonwebtoken": "^8.1.1",
+    "jwks-rsa": "^2.0.5",
+    "mongoose": "^4.13.7",
+    "multer": "^1.4.2",
+    "multer-s3": "^2.9.0",
+    "multer-s3-transform": "^2.10.3",
+    "node-cron": "^2.0.3",
+    "node-mailer": "^0.1.1",
+    "nodemailer-express-handlebars": "^2.0.0",
+    "nodemailer-smtp-transport": "^2.7.4",
+    "sharp": "^0.27.0",
+    "square-connect": "^2.20200122.0",
+    "stripe": "^8.130.0",
+    "twilio": "^3.49.1",
+    "validator": "^9.4.0",
+    "xoauth2": "^1.2.0"
+  }
+}
