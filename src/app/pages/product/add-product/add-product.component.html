@@ -1,0 +1,364 @@
+
+
+<app-left-navigation>
+    <div class="add-product-wrapper">
+        <div class="form-section">
+            <form #addForm="ngForm">
+                <div class="form-group">
+                    <p class="text-heading">What are you Selling?</p>
+                    <select [(ngModel)]="product.category" name="product.category" required class="form-control"
+                        (change)="onSelectCategory($event)">
+                        <option value="undefined" hidden> Select a Category</option>
+                        <option *ngFor="let category of allCategory" value="{{category.category_name}}">
+                            {{category.category_name}}</option>
+
+                    </select>
+                </div>
+        <div [hidden]="product.category==undefined || product.category==null || product.category==''">
+                <div class="form-group">
+                    <p class="text-heading">Listing Details</p>
+                    <label for="cover_image" class="upload_image" appDnd
+                        (fileDropped)="onCoverImageFileDropped($event)">
+                        <img src="assets/images/uploadIcon.png">
+                        <input type="file" #cover_image id="cover_image" hidden
+                            (change)="fileCoverImageBrowseHandler($event)" accept="image/*"/>
+                        <p class="upload_title">Upload Cover Image</p>
+                    </label>
+                    <div class="uploaded-images row">
+                        <div class="image-upload" *ngFor="let cover of coverImage; let i = index">
+                            <img [src]="cover.url">
+                            <span class="delete_imge" (click)="deleteCoverImageFile(cover, i)">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            </span>
+                            <div class="info">
+                                <!-- <span class="name"> {{ file?.name }}</span>
+                                <span class="size">{{ formatBytes(file?.size) }}</span> -->
+                                <!-- <app-progress [progress]="cover?.progress"></app-progress> -->
+                            </div>
+
+                        </div>
+                        <span class="errorCl" id="product_cover"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+
+                    <label for="additional_images" class="upload_image" appDnd
+                        (fileDropped)="onAdditionalImagesFileDropped($event)">
+                        <input type="file" multiple #additional_images id="additional_images"
+                            (change)="fileAdditionalImagesBrowseHandler($event)" hidden accept="image/*"/>
+                        <img src="assets/images/uploadIcon.png">
+                        <p class="upload_title">Add Additional Images</p>
+                    </label>
+                    
+                    <div class="uploaded-images row">
+                        <span class="errorCl" id="product_addtionalimages">{{maxAdditionalImageError}}</span>
+                        <div class="image-upload" *ngFor="let additionalImage of additionalImages; let i = index">
+                            <img [src]="additionalImage.url">
+                            <span class="delete_imge" (click)="deleteAdditionalImagesFile(additionalImage.url, i)">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            </span>
+                            <div class="info">
+                                <!-- <span class="name"> {{ file?.name }}</span>
+                                <span class="size">{{ formatBytes(file?.size) }}</span> -->
+                                <!-- <app-progress [progress]="cover?.progress"></app-progress> -->
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <input type="text" maxLength="70" class="form-control" placeholder="{{product.category}} Name" required
+                        [(ngModel)]="product.product_name" name="product_name">
+                    <span slot="end" class="count">{{product?.product_name?.length}}/70</span>
+                    <span class="errorCl" id="product_name"></span>
+                </div>
+                <!-- <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Car">
+                </div> -->
+                <ng-container *ngIf="product?.category == 'Housing'">
+                    <div class="form-group">
+                        <select class="form-control" [(ngModel)]="product.typeList" name="product.typeList"
+                            (change)="selectTypeList($event.target.value)">
+                            <option value="undefined" hidden> {{house_sub_category[0].key}} </option>
+                            <option *ngFor="let house_val of house_sub_category[0].value" [ngValue]="house_val">
+                                {{house_val}}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <select class="form-control" [(ngModel)]="product.propertyType" name="product.propertyType"
+                            (change)="selectPropertyType($event.target.value)">
+                            <option value="undefined" hidden> {{house_sub_category[1].key}} </option>
+                            <option *ngFor="let property of house_sub_category[1].value; index as i"
+                                [ngValue]="property">
+                                {{property}}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <select class="form-control" [(ngModel)]="product.bedRoomNo" name="product.bedRoomNo"
+                            (change)="selectBedRoom($event.target.value)">
+                            <option value="undefined" hidden> {{house_sub_category[2].key}} </option>
+                            <option *ngFor="let room of house_sub_category[2].value; index as i" value="{{room}}">
+                                {{room}}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <select class="form-control" [(ngModel)]="product.bathRoomNo" name="product.bathRoomNo"
+                            (change)="selectBathRoom($event.target.value)">
+                            <option value="undefined" hidden> {{house_sub_category[3].key}} </option>
+                            <option *ngFor="let bath of house_sub_category[3].value" value="{{bath}}">
+                                {{bath}}</option>
+                        </select>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="product?.category== 'Car' || product?.category== 'Van & Trucks'">
+                    <div class="form-group">{{product.make}}
+                        <select [(ngModel)]="product.make" name="product.make"
+                            (change)="getCarMakeModel($event.target.value)" class="form-control">
+                            <option value="undefined" hidden> Make </option>
+                            <option *ngFor="let sub_val of carMakeSubCategoryList" value="{{sub_val}}">{{sub_val}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <select [(ngModel)]="product.model" name="product.model"
+                            (change)="getCarMakeModelTrim($event.target.value)" class="form-control">
+                            <option value="undefined" hidden> Model </option>
+                            <option *ngFor="let sub_val of carModelSubCategoryList" value="{{sub_val}}">{{sub_val}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <select [(ngModel)]="product.trim" name="product.trim" class="form-control">
+                            <option value="undefined" hidden> Trim </option>
+                            <option *ngFor="let sub_val of cartTrimSubCategoryList" value="{{sub_val}}">{{sub_val}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group sellerDetails">
+                        <span class="seller_proto">Seller :</span>
+                        <label class="cs-radio">Individual
+                            <input [(ngModel)]="product.seller" type="radio" checked="checked" value="Individual"
+                                name="product.seller">
+                            <span class="inner-check"></span>
+                        </label>
+                        <label class="cs-radio">Dealer
+                            <input [(ngModel)]="product.seller" type="radio" value="Dealer" name="product.seller">
+                            <span class="inner-check"></span>
+                        </label>
+
+                    </div>
+
+                    <div class="form-group">
+                        <p class="text-heading">Year {{ product?.year == 1990 ? 'Any Year' : product?.year }}</p>
+                        <div class="range-wrap">
+                            <div class="range-value" id="rangeV"></div>
+                            <input [(ngModel)]="product.year" name="product.year" id="range" type="range"
+                                min="{{yearMin}}" max="{{yearMax}}" step="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <p class="text-heading">Mileage</p>
+                        <p class="text-heading" *ngIf="checkCarRange()">Any miles</p>
+                        <p class="text-heading" *ngIf="!checkCarRange()">{{product?.range}} {{flagNew}}</p>
+                        <div class="range-wrap">
+                            <div class="range-value" id="rangeV2"></div>
+                            <input [(ngModel)]="product.range" name="product.range" id="range2" type="range" min="0"
+                                max="200000" step="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group sellerDetails">
+                        <span class="seller_proto">Transmision :</span>
+
+                        <label class="cs-radio">Manual
+                            <input [(ngModel)]="product.transmission" value="Manual" type="radio" checked="checked"
+                                name="product.manual">
+                            <span class="inner-check"></span>
+                        </label>
+                        <label class="cs-radio">Automatic
+                            <input [(ngModel)]="product.transmission" value="Automatic" type="radio" checked="checked"
+                                name="product.automatic">
+                            <span class="inner-check"></span>
+                        </label>
+                    </div>
+
+                </ng-container>
+                <ng-container *ngIf="product?.category == 'Jobs'">
+                    <div class="form-group">
+                        <input class="form-control" placeholder="Salary From" type="number" maxLength="7" required
+                            [(ngModel)]="product.salary_from" name="salary_from" required>
+                        <span slot="end" class="count">{{showLength(product.salary_from)}}/7</span>
+                        <span class="errorCl" id="salary_from"></span>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" placeholder="Salary To" type="number" maxLength="7" required
+                            [(ngModel)]="product.salary_to" name="salary_to" required>
+                        <span slot="end" class="count">{{showLength(product?.salary_to)}}/7</span>
+                        <span class="errorCl" id="salary_to"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Add Title" maxLength="20" required
+                            [(ngModel)]="product.ad_title" name="ad_title" required>
+                        <span slot="end" class="count">{{product?.ad_title?.length}}/20</span>
+                        <span class="errorCl" id="ad_title"></span>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" placeholder="Additional Information" type="text" minLength="10"
+                            maxLength="1500" [(ngModel)]="product.additional_info" name="additional_info" required>
+                        </textarea>
+                        <span slot="end" class="count cntB">{{product?.additional_info?.length}}/1500</span>
+                        <span class="errorCl" id="additional_info"></span>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="product?.category== 'Property'">
+                    <div class="form-group">
+                        <select required class="form-control" [(ngModel)]="product.furnishing" name="product.furnishing"
+                            (change)="selectFurnishing($event.target.value)">
+                            <option value="undefined" hidden> {{property_sub_category[0].key}} </option>
+                            <option *ngFor="let value of property_sub_category[0].value; index as i" value="{{value}}">
+                                {{value}}</option>
+                        </select>
+                    </div>
+
+
+                    <div class="form-group">
+                        <select required class="form-control" [(ngModel)]="product.construction_status" name="product.construction_status"
+                            (change)="selectConstructionStatus($event.target.value)">
+                            <option value="undefined" hidden> {{property_sub_category[1].key}} </option>
+                            <option *ngFor="let value of property_sub_category[1].value; index as i" value="{{value}}">
+                                {{value}}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <select required class="form-control" [(ngModel)]="product.listed_by" name="product.listed_by"
+                            (change)="selectListedBy($event.target.value)">
+                            <option value="undefined" hidden> {{property_sub_category[2].key}} </option>
+                            <option *ngFor="let value of property_sub_category[2].value; index as i" value="{{value}}">
+                                {{value}}</option>
+                        </select>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label position="floating">Super Builtup Area(Ft<sup class="supSize">2</sup>)</label>
+                        <input type="number" class="form-control" maxLength="20" required [(ngModel)]="product.super_builtup_area"
+                            name="super_builtup_area" required>
+
+                        <span class="errorCl" id="super_builtup_area"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label position="floating">Carpet Area(Ft<sup class="supSize">2</sup>)</label>
+                        <input type="number" class="form-control" required [(ngModel)]="product.carpet_area" name="carpet_area" required>
+                        <span class="errorCl" id="carpet_area"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label position="floating">Maintenance(Monthly)</label>
+                        <span slot="start" class="slotDollr"
+                            *ngIf="product?.product_price">{{product?.currencyCode}}</span>
+                        <input type="number" class="form-control" required [(ngModel)]="product.maintenance" name="maintenance" required>
+
+                        <span class="errorCl" id="maintenance"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <select required class="form-control" [(ngModel)]="product.car_parking" name="product.car_parking"
+                            (change)="selectCarParking($event.target.value)">
+                            <option value="undefined" hidden> {{property_sub_category[3].key}} </option>
+                            <option *ngFor="let value of property_sub_category[3].value; index as i" value="{{value}}">
+                                {{value==4?"3+":value}}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label position="floating">Washrooms</label>
+                        <input type="text" class="form-control" required [(ngModel)]="product.washrooms" name="washrooms" required>
+                        <span class="errorCl" id="washrooms"></span>
+                    </div>
+
+                </ng-container>
+
+                <div class="form-group">
+                    <label>Product Price &nbsp; </label>
+                    <span slot="start" class="slotDollr" *ngIf="product?.product_price">{{ product?.currencyCode}}</span>
+                    <input placeholder="{{product.category}} Price" class="form-control" type="number"
+                        [(ngModel)]="product.product_price" name="product.product_price" required>
+
+                    <span class="errorCl" id="product_price"></span>
+                </div>
+                <div class="form-group search_undefined">
+                    <input class="form-control" placeholder="Location address" [(ngModel)]="product.address"
+                        name="address" required (click)="goLocation()" placeholder="Search for a place" required>
+                    <span class="errorCl" id="address"></span>
+                </div>
+
+                <div class="form-group" *ngIf="product.category != 'Jobs & Services'">
+                    <label>Product Description</label>
+                    <textarea class="form-control" placeholder="{{product.category}} Description" type="text" minLength="10"
+                        maxLength="1500" [(ngModel)]="product.product_description" name="product_description" required>
+                  </textarea>
+                    <span slot="end" class="count cntB">{{product?.product_description?.length}}/1500</span>
+                    <span class="errorCl" id="product_description"></span>
+                </div>
+
+                <button [ngClass]="addForm.invalid || activeFlag === true ? 'productBtn inactive' : 'productBtn' "
+                    type="submit" color="primary" expand="block" shape="round" fill="outline" *ngIf="product?._id"
+                    (click)="sellerEditProduct()" [disabled]="addForm.invalid">Update</button>
+
+                <button [ngClass]="addForm.invalid || activeFlag === true ? 'productBtn inactive' : 'productBtn' "
+                    type="submit" color="primary" expand="block" shape="round" fill="outline" *ngIf="!product?._id"
+                    (click)="sellerUploadProduct()" [disabled]="addForm.invalid">Submit</button>
+
+            </div>
+            </form>
+        </div>
+    </div>
+
+
+
+</app-left-navigation>
+<!--putngxspinner-->
+
+
+<div id="crop-modal" class="modal" tabindex="-1" role="dialog">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content text-center">
+
+            <div class="modal-body">
+                <span class="close-modal" (click)="closeCropModal()" >X</span>
+                <h4>Crop Image</h4>
+            </div>
+            <div class="image-cropper-wrapper">
+            <image-cropper
+            [imageChangedEvent]="imageChangedEvent"
+            [maintainAspectRatio]="false"
+            [aspectRatio]="1 / 1"
+            format="png"
+            imageQuality:80
+            (imageCropped)="imageCropped($event)"
+            (imageLoaded)="imageLoaded()"
+            (cropperReady)="cropperReady()"
+            (loadImageFailed)="loadImageFailed()"
+        ></image-cropper>
+    </div>
+        <div class="modal-footer text-center">
+            <button type="button" class="btn alertBox" (click)="uploadCoverCroped()">Upload Croped</button>
+        </div>
+        </div>
+    </div>
+</div>

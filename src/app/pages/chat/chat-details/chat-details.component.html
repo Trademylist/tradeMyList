@@ -1,0 +1,107 @@
+<app-left-navigation>
+  <div class="seller-chater-details-wr">
+    <div class="inner-chat">
+      <div (click)="goBack()" class="backbutton">
+        <a class="back_button" (click)="goProductDetails()">
+          {{ productDetails?.product_name }}
+        </a>
+      </div>
+
+      <div class="main-cht" *ngIf="chatMessages?.length > 0" #chatcontent>
+        <div *ngFor="let chat of chatMessages; let i = index">
+          {{ chat.id }}
+          <ng-container *ngIf="productDetails._id == chat.product_id">
+            <div class="chatLine" *ngIf="isDifferentDay(i)">
+              <span>{{ getMessageDate(i) }}</span>
+            </div>
+            <div class="other-user" *ngIf="chat.sender_id != loggedUser.userid">
+              <div class="profile-image">
+                <img
+                  [src]="
+                    friendDetails?.image == null
+                      ? 'assets/images/noti_idol.jpg'
+                      : friendDetails?.image
+                  "
+                />
+              </div>
+              <div class="cht-content">
+                <div class="name-header">
+                  <h2 class="name">{{ productDetails?.product_name }}</h2>
+                  <p class="date-time">{{ chat.created | date: "h:mm a" }}</p>
+                </div>
+                <p *ngIf="chat?.image"><img [src]="chat.image" /></p>
+                <p *ngIf="chat?.message" class="chat-text">
+                  {{ chat.message }}
+                </p>
+              </div>
+            </div>
+
+            <div class="self-chat" *ngIf="chat.sender_id == loggedUser.userid">
+              <div class="cht-content">
+                <div class="name-header">
+                  <h2 class="name">Me</h2>
+                  <p class="date-time">{{ chat.created | date: "h:mm a" }}</p>
+                </div>
+                <p *ngIf="chat?.image"><img [src]="chat.image" /></p>
+                <p class="chat-text">
+                  {{ chat.message }}
+
+                  <span
+                    class="readed-message"
+                    *ngIf="
+                      (chat && chat.seen != false) || chat.seen != undefined
+                    "
+                  >
+                    <i class="fa fa-check" aria-hidden="true"></i> Seen
+                  </span>
+                </p>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+        <div [hidden]="chatImageUrl == ''" class="send-img">
+          <div class="send-img-inner">
+            <img [src]="chatImageUrl" />
+            <!-- <img src="https://magclubbucket.s3.amazonaws.com/trade_16128565927331612856594190.jpeg"> -->
+            <span (click)="closeImage()">X</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="live_scroll">
+        <div class="row text-center">
+          <div
+            class="live_scroll-box"
+            *ngFor="let msg of suggestMessage"
+            (click)="suggestedChat(msg.message)"
+          >
+            {{ msg.message }}
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-input-wr">
+        <input
+          [(ngModel)]="enteredMessage"
+          type="text"
+          class="chat-input"
+          placeholder="Type a new message..."
+        />
+        <div class="send-action">
+          <!-- <label for="attachment" class="attachment">
+                        <input type="file" hidden id="attachment" (change)="onSelectFile($event)">
+                        <img src="assets/images/attachment-pin.png">
+                    </label> -->
+          <button
+            class="btn btn-sendMessage"
+            *ngIf="enableMsgButton()"
+            (click)="sendMessage($event)"
+          >
+            <img src="assets/images/send-icon.png" />
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-left-navigation>

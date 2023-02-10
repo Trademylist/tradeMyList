@@ -1,0 +1,46 @@
+
+<style>
+    .test{
+    color: red;
+}
+</style>
+<h2 class="text-center">{{cms_title}}</h2>
+    <div class="container cms-wrapper" *ngIf="passing_param != 3" style="padding-top: 15px;">
+        <div class="row">
+            <div class="col-lg-12">
+                
+                <div [innerHTML]="getData"></div>
+                    <!-- <div [innerHTML]="getData"></div>
+                    {{getData}} -->
+                
+            </div>
+        </div>
+    </div>
+    <div class="container cmsMain  cms-wrapper" *ngIf="passing_param == 3" style="padding-top: 15px;">
+        <div class="row">
+            <div class="col-lg-12">
+                <div (click)="writeToAdmin()" >
+                    <button ion-button>WRITE TO US</button>
+                </div>
+                <div>
+                    <button ion-button (click)="showSupportNumber()">{{supportNumber}}</button>
+                    <div class="contDescript">
+                        <p class="descA">* Phone support hours</p>
+                        <p>10:00 a.m to 7:00 p.m - All days</p>
+                    </div>
+                </div>
+                <div>
+                    <button ion-button (click)="showSafetyNumber()">{{safetyNumber}}</button>
+                    <div class="contDescript">
+                        <p class="descA">* Phone support hours</p>
+                        <p>10:00 a.m to 7:00 p.m - All days</p>
+                    </div>                    
+                </div>
+                <p>
+                    {{getData}}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    

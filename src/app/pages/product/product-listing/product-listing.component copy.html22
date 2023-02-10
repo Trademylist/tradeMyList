@@ -1,0 +1,105 @@
+<!-- <app-header (onSearchQuery)="btnSearchCategory($event)"></app-header> -->
+
+<section class="home-banner">
+    <div class="container">
+        <div class="bgImage">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"> buy </li>
+                    <li class="breadcrumb-item" aria-current="page">sell</li>
+                    <li class="breadcrumb-item" aria-current="page">trade</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="latest_wrapper">
+    <div class="container">
+        <div class="latest-content">
+            <h2 *ngIf="searchQuery==''" class="lat-title"> latest products</h2>
+            <h2 *ngIf="searchQuery!=''" class="lat-title">{{searchQuery}}</h2>
+            <div class="row" *ngIf="allProduct?.length">
+                <div class="col-md-3 latest-product" *ngFor="let product of allProduct | searchFilter:searchQuery; index as i">
+                    <div class="product-card" *ngIf="product !== -1">
+                        <div class="featured-like">
+                            <button *ngIf="product.boost == 1" class="btn btn-outline-success">featured</button>
+                            <button class="btn heart"
+                            [ngClass]="isLiked(product?.likelist)?'feedLiked':'feedNotLiked'"
+                            (click)="likedUnlikedProduct(product)"> <i class="fa fa-heart" aria-hidden="true"></i> </button>
+                        </div>
+                        <div class="image-content">
+                            <img src="{{coverImageCheckAmazon(product)}}" alt="" (click)="goProductDetails(product)">
+                        </div>
+                        <div class="price-section">
+                            <div class="price-bar">
+                                <h2 class="price" *ngIf="product?.product_price">{{product?.currencyCode}} {{product?.product_price}}</h2>
+                                <h3 class="times">{{product?.createdAt}}</h3>
+                            </div>
+                            <p class="desc">{{splitWord(product.product_name, 4)}}</p>
+                        </div>
+                    </div>
+                    <div class="no-item" *ngIf="product === -1"> <img src="assets/images/no_data.png"></div>
+                </div>
+            </div>
+
+            <ng-container *ngIf="allProduct?.length <= 0">
+                <div class="no-item" *ngIf="allProduct?.length <= 0"> <img src="assets/images/no_data.png"></div>
+            </ng-container>
+
+            <section class="middle-banner">
+                <div class="m-banner-wrapper">
+                    <div class="content">
+                        <h2>Want to see your stuff here? </h2>
+                        <p>Make some extra cash by selling things in your community. <br>
+                            Go on, it's quick and easy.</p>
+                    </div>
+                    <button (click)="goToAddProduct()" type="button" class="btn start_selling">Start Selling</button>
+                </div>
+            </section>
+            <!-- <div class="row">
+                <div class="col-md-3 latest-product">
+                    <div class="product-card">
+                        <div class="featured-like">
+                            <button class="btn btn-outline-success">featured</button>
+                            <button class="btn heart"> <i class="fa fa-heart" aria-hidden="true"></i> </button>
+                        </div>
+                        <div class="image-content">
+                            <img src="assets/images/ladder.jpg">
+                        </div>
+                        <div class="price-section">
+                            <div class="price-bar">
+                                <h2 class="price">usd 84</h2>
+                                <h3 class="times">1 Day ago</h3>
+                            </div>
+                            <p class="desc"> ladder Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+                </div>
+
+    
+            </div> -->
+        </div>
+    </div>
+</section>
+
+
+
+<!-- <div id="location-alert" class="modal" tabindex="-1" role="dialog">
+    
+    <div class="modal-dialog" role="document">
+      <div class="modal-content text-center">
+        
+        <div class="modal-body location-modal-body">
+          <h4>Select your location.</h4>
+        </div>
+        <app-location [locationReason]="'productAddress'"></app-location>
+        <div *ngIf="selectedLocality!=null" class="modal-footer text-center">
+          <button type="button" class="btn alertBox" (click)="closeLocationAlert()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+
+<!--putngxspinner-->

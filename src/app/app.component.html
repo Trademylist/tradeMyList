@@ -1,0 +1,61 @@
+<app-header></app-header>
+<router-outlet></router-outlet>
+<app-footer></app-footer>
+<div id="location-alert" class="modal" tabindex="-1" role="dialog">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content text-center">
+
+            <div class="modal-body location-modal-body">
+                <!-- <span *ngIf="selectedLocality!=null" class="close-location-modal" (click)="closeLocationAlert()" >X</span> -->
+                <span class="close-location-modal" (click)="closeLocationAlert()" >X</span>
+
+                <h4>Select your location.</h4>
+            </div>
+            <app-location [locationReason]="'productAddress'"></app-location>
+            <!-- <div *ngIf="selectedLocality!=null" class="modal-footer text-center">
+                <button type="button" class="btn alertBox" (click)="closeLocationAlert()">Close</button>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Please wait...</p>
+</ngx-spinner>
+
+<ngx-scrolltop
+  [backgroundColor]="'#ff6700'"
+  [symbolColor]="'#fafafa'"
+  [size]="40"
+  [mode]="'classic'"
+  class="go-to-top"
+  position="right"
+  theme="gray">
+</ngx-scrolltop>
+<span ngxScrollTop class="go-to-top1">
+    <i class="fa fa-arrow-up" ></i> Back to top
+  </span>
+<!-- ngx-scrolltop -->
+
+<!-- <div id="product-location-alert" class="modal" tabindex="-1" role="dialog">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content text-center">
+
+            <div class="modal-body">
+                <p>Please select your location before continuing.</p>
+            </div>
+            <app-product-location [locationReason]="'productAddress'"></app-product-location>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn alertBox" (click)="setProductAddress()">Ok</button>
+            </div>
+        </div>
+    </div>
+</div> -->

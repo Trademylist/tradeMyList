@@ -1,0 +1,197 @@
+<section class="pro-list_wrapper">
+    <div class="container">
+        <div class="page-nav">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Product Categories</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{selectedCategoryDisplay()}}</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-12 leftPannel">
+                <div class="list_left_bg">
+
+                    <div class="product-cat-section">
+                        <p class="cat-title-text">Category</p>
+
+                        <div class="prod-list scrollVerical">
+                            <form>
+                                <div *ngFor="let category of allCategory; let i=index" class="form-group">
+                                    <label class="c-s-checkbox ">{{category.category_name}}
+                                        <input [checked]="filterCategory.includes(category.category_name)"
+                                            type="checkbox" [value]="category.category_name"
+                                            (change)="onSlectCategoryFilter($event)">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- <a href="#" class="viewMore">View More</a> -->
+                    </div>
+                    <!-- end category section  -->
+
+                    <div class="product-cat-section">
+                        <p class="cat-title-text">price</p>
+                        <div class="prod-list">
+                            <form>
+                                <ng-container *ngFor="let price of priceFilterInterface; let i=index;">
+                                    <div *ngIf="i==0" class="form-group">
+                                        <label class="c-s-checkbox ">Under
+                                            {{getCurrencySymbol(currencyCode)}}{{price.max}}
+                                            <input [checked]="filterPrice.includes(i+'')" type="checkbox" [value]="i" (change)="onSelectPriceFilter($event)">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+
+                                    <div *ngIf="i>0 && i<(priceFilterInterface.length-1)" class="form-group">
+                                        <label class="c-s-checkbox "> {{getCurrencySymbol(currencyCode)}}{{price.min}} -
+                                            {{getCurrencySymbol(currencyCode)}}{{price.max}}
+                                            <input  [checked]="filterPrice.includes(i+'')" type="checkbox" [value]="i" (change)="onSelectPriceFilter($event)">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div *ngIf="i==(priceFilterInterface.length-1)" class="form-group">
+                                        <label class="c-s-checkbox ">Above
+                                            {{getCurrencySymbol(currencyCode)}}{{price.min}}
+                                            <input [checked]="filterPrice.includes(i+'')" type="checkbox" [value]="i" (change)="onSelectPriceFilter($event)">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </ng-container>
+                            </form>
+
+
+                        </div>
+                        <!-- <a href="#" class="viewMore">View More</a> -->
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-lg-9 col-md-8 col-sm-12 searchResult">
+                <div class="filter_section">
+                    <div class="leftdiv">
+                        <h1>{{selectedCategoryDisplay()}}</h1>
+
+                    </div>
+                    <div class="rightdiv">
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <label class="sortBy">Sort by: </label>
+                                <select id="inputState" class="form-control" [(ngModel)]="filtersData.sortBy" name="filtersData.sortBy"
+                                    (ngModelChange)="selectSortby($event)" ngModelOptions="{standalone: true}">
+                                    <option *ngFor="let sort of sortby; let i=index;" [ngValue]="sort.value">
+                                        {{sort.data}}</option>
+
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row" *ngIf="allProduct?.length">
+                    <!-- <div class="col-lg-4 col-md-6 col-sm-12 latest-product" *ngFor="let product of allProduct; index as i"> -->
+                    <!-- <ng-container *ngFor="let product of allProduct | searchFilter:searchQuery; index as i"> -->
+                    <ng-container *ngFor="let product of allProduct; index as i">
+
+                        <div class="col-lg-4 col-md-6 col-sm-12 latest-product">
+                            <div class="ribon_wrap" *ngIf="product.boost == 1">
+                                <div class="ribbon"><button class="btn btn-outline-success">featured</button></div>
+                              </div>
+
+                            <div class="product-card" *ngIf="product !== -1" [ngClass]="{ownProduct:isMyProduct(product)}">
+                                <div class="featured-like" *ngIf="loggedUser && loggedUser.userid != product.user_id">                                    
+                                    <button class="btn heart hrtBtn"
+                                        [ngClass]="isLiked(product?.likelist)?'feedLiked':'feedNotLiked'"
+                                        (click)="likedUnlikedProduct(product)"> <i class="fa fa-heart"
+                                            aria-hidden="true"></i> </button>
+                                </div>
+                                <div class="image-content">
+                                    <img src="{{coverImageCheckAmazon(product)}}" alt=""
+                                        (click)="goProductDetails(product)">
+                                </div>
+                                <div class="price-section">
+                                    <div class="price-bar">
+                                        <h2 class="price" *ngIf="product?.product_price">{{product?.currencyCode}}
+                                            {{product?.product_price}}</h2>
+                                        <h3 class="times">{{product?.createdAt|dateAgo}}</h3>
+                                    </div>
+                                    <p class="desc">{{splitWord(product.product_name, 4)}}</p>
+                                </div>
+
+                                <div *ngIf="checkSellFaster(product)" class="sellPrdButtns">
+                                    <button class="sellFasterBtn" [ngClass]="{deactiveClass: product.boost == 1}"
+                                      [disabled]="product.boost == 1" (click)="viewBoostModal(product, 'boost')">
+                                      <i class="fa fa-flash"></i>
+                                      Sell faster
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- <div class="no-item" *ngIf="product === -1"> <img src="assets/images/no_data.png"></div> -->
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 col-sm-12 latest-product" *ngIf="product && product.show_content">
+                            <section class="middle-banner">
+                                <div class="m-banner-wrapper">
+
+                                    <div class="content">
+                                        <h2>Want to see your stuff here? </h2>
+                                        <p>Make some extra cash by selling things in your community. <br>
+                                            Go on, it's quick and easy.</p>
+                                    </div>
+                                    <button (click)="goToAddProduct()" type="button" class="btn start_selling">Start
+                                        Selling</button>
+                                </div>
+                            </section>
+                        </div>
+
+                        <!-- <section class="inmiddle-banner" *ngIf="i==2">
+                            <div class="m-banner-wrapper col-md-12">
+                                <div class="content">
+                                    <h2>Want to see your stuff here? </h2>
+                                    <p>Make some extra cash by selling things in your community. <br>
+                                        Go on, it's quick and easy.</p>
+                                </div>
+                                <button (click)="goToAddProduct()" type="button" class="btn start_selling">Start
+                                    Selling</button>
+                            </div>
+                        </section> -->
+
+                    </ng-container>
+                </div>
+
+                <ng-container *ngIf="dataLoaded == 2">
+                    <div class="no-item" *ngIf="dataLoaded == 2"> <img src="assets/images/no_product.png"></div>
+                </ng-container>
+
+                <!-- <section class="middle-banner">
+                    <div class="m-banner-wrapper">
+                        <div class="content">
+                            <h2>Want to see your stuff here? </h2>
+                            <p>Make some extra cash by selling things in your community. <br>
+                                Go on, it's quick and easy.</p>
+                        </div>
+                        <button (click)="goToAddProduct()" type="button" class="btn start_selling">Start Selling</button>
+                    </div>
+                </section> -->
+                <button *ngIf="totalProduct>allProduct.length" (click)="onLoadMore()" type="button"
+                    class="btn load-More">{{loadingMore?'Loading...':'Load More..'}}</button>
+
+            </div>
+        </div>
+
+
+
+    </div>
+</section>
+
+<div id="paypalModal" class="modal" role="dialog">
+    <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <app-stripe></app-stripe>
+      </div>
+    </div>
+  </div>
+</div>

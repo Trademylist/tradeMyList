@@ -1,0 +1,142 @@
+
+
+<app-left-navigation>
+    <div class="seller-chater-wrapper">
+        <ul class="nav nav-pills" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab"
+                    aria-controls="pills-home" aria-selected="true">All</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"
+                    aria-controls="pills-profile" aria-selected="false">Selling</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab"
+                    aria-controls="pills-contact" aria-selected="false">Buying</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+
+                <div class="chat-list" [routerLink]="['/chat-details']">
+                    <div class="chat-image">
+                        <img src="assets/images/noti_idol3.jpg">
+                    </div>
+
+                    <div class="namingDiv">
+                        <h1 class="chat-name">Johnson Doe</h1>
+                        <h3 class="product_type">Hp Laptop</h3>
+                        <p class="last-message">Is it still available ?</p>
+                        <label class="last-seen">10 days ago</label>
+                    </div>
+                </div>
+                <div class="chat-list" [routerLink]="['/chat-details']">
+                    <div class="chat-image">
+                        <img src="assets/images/noti_idol.jpg">
+                    </div>
+
+                    <div class="namingDiv">
+                        <h1 class="chat-name">Johnson Doe</h1>
+                        <h3 class="product_type">Hp Laptop</h3>
+                        <p class="last-message">what is the the selling price?</p>
+                        <label class="last-seen">10 days ago</label>
+                    </div>
+                </div>
+                <div class="chat-list" [routerLink]="['/chat-details']">
+                    <div class="chat-image">
+                        <img src="assets/images/noti_idol2.jpg">
+                    </div>
+
+                    <div class="namingDiv">
+                        <h1 class="chat-name">Patrick Anderson</h1>
+                        <h3 class="product_type">Furniture</h3>
+                        <p class="last-message">Is it still available ?</p>
+                        <label class="last-seen">2 days ago</label>
+                    </div>
+                </div>
+                <div class="chat-list" [routerLink]="['/chat-details']">
+                    <div class="chat-image">
+                        <img src="assets/images/noti_idol3.jpg">
+                    </div>
+
+                    <div class="namingDiv">
+                        <h1 class="chat-name">Adam Trup</h1>
+                        <h3 class="product_type">Car</h3>
+                        <p class="last-message">Is it still available ?</p>
+                        <label class="last-seen">10 days ago</label>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <div class="chat-list" [routerLink]="['/chat-details']">
+                    <div class="chat-image">
+                        <img src="assets/images/noti_idol.jpg">
+                    </div>
+
+                    <div class="namingDiv">
+                        <h1 class="chat-name">Johnson Doe</h1>
+                        <h3 class="product_type">Hp Laptop</h3>
+                        <p class="last-message">what is the the selling price?</p>
+                        <label class="last-seen">10 days ago</label>
+                    </div>
+                </div>
+                <div class="chat-list" [routerLink]="['/chat-details']">
+                    <div class="chat-image">
+                        <img src="assets/images/noti_idol2.jpg">
+                    </div>
+
+                    <div class="namingDiv">
+                        <h1 class="chat-name">Patrick Anderson</h1>
+                        <h3 class="product_type">Furniture</h3>
+                        <p class="last-message">Is it still available ?</p>
+                        <label class="last-seen">2 days ago</label>
+                    </div>
+                </div>
+                <div class="chat-list" [routerLink]="['/chat-details']">
+                    <div class="chat-image">
+                        <img src="assets/images/noti_idol3.jpg">
+                    </div>
+
+                    <div class="namingDiv">
+                        <h1 class="chat-name">Adam Trup</h1>
+                        <h3 class="product_type">Car</h3>
+                        <p class="last-message">Is it still available ?</p>
+                        <label class="last-seen">10 days ago</label>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+
+                <div class="chat-list" [routerLink]="['/chat-details']">
+                    <div class="chat-image">
+                        <img src="assets/images/noti_idol.jpg">
+                    </div>
+
+                    <div class="namingDiv">
+                        <h1 class="chat-name">Johnson Doe</h1>
+                        <h3 class="product_type">Hp Laptop</h3>
+                        <p class="last-message">what is the the selling price?</p>
+                        <label class="last-seen">10 days ago</label>
+                    </div>
+                </div>
+                <div class="chat-list" [routerLink]="['/chat-details']">
+                    <div class="chat-image">
+                        <img src="assets/images/noti_idol2.jpg">
+                    </div>
+
+                    <div class="namingDiv">
+                        <h1 class="chat-name">Patrick Anderson</h1>
+                        <h3 class="product_type">Furniture</h3>
+                        <p class="last-message">Is it still available ?</p>
+                        <label class="last-seen">2 days ago</label>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</app-left-navigation>
+

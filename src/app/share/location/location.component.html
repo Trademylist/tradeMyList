@@ -1,0 +1,90 @@
+<div class="container">
+
+  <div class="form-group">
+
+    <!-- <button class="setCurrentLocation-btn" type="submit" color="primary" expand="block" shape="round" fill="outline"
+      (click)="setYourCurrentLocation()">
+      <span><svg width="30px" height="30px" viewBox="-54.013 -62.286 591.544 590.692">
+        <path class="rui-77aaa" d="M 303.39 233.06 C 303.39 267.773 275.797 295.915 241.759 295.915 C 207.721 295.915 180.128 267.773 180.128 233.06 C 180.128 198.346 207.721 170.205 241.759 170.205 C 275.797 170.205 303.39 198.346 303.39 233.06 Z M 449.249 212.108 L 406.107 212.108 C 397.632 134.836 338.07 74.09 263.039 65.514 L 262.303 65.447 L 262.303 21.448 L 221.216 21.448 L 221.216 65.447 C 145.447 74.09 85.885 134.836 77.477 211.357 L 77.411 212.108 L 34.268 212.108 L 34.268 254.011 L 77.411 254.011 C 85.885 331.283 145.447 392.029 220.479 400.604 L 221.216 400.673 L 221.216 444.672 L 262.303 444.672 L 262.303 400.673 C 338.07 392.029 397.632 331.283 406.041 254.763 L 406.107 254.01 L 449.249 254.01 Z M 241.759 360.865 C 172.549 360.865 116.442 303.644 116.442 233.06 C 116.442 162.475 172.548 105.255 241.759 105.255 C 310.969 105.255 367.075 162.475 367.075 233.06 L 367.075 233.06 C 367.075 303.644 310.969 360.865 241.759 360.865 L 241.759 360.865 Z" style="fill: rgb(23, 62, 153);" transform="matrix(0.653585, 0.756853, -0.756853, 0.653585, 260.141083, -102.240189)"></path>
+      </svg>Set Current Location </span> <br/>
+      
+      <div> {{userCurrentAddress}}</div>
+    </button> -->
+
+  </div>
+  <div class="row setCurrentLocation-btn" (click)="setYourCurrentLocation()">
+    <div class="col-md-2 col-sm-2">
+      <svg width="42px" height="42px" viewBox="-54.013 -62.286 591.544 590.692">
+        <path class="rui-77aaa"
+          d="M 303.39 233.06 C 303.39 267.773 275.797 295.915 241.759 295.915 C 207.721 295.915 180.128 267.773 180.128 233.06 C 180.128 198.346 207.721 170.205 241.759 170.205 C 275.797 170.205 303.39 198.346 303.39 233.06 Z M 449.249 212.108 L 406.107 212.108 C 397.632 134.836 338.07 74.09 263.039 65.514 L 262.303 65.447 L 262.303 21.448 L 221.216 21.448 L 221.216 65.447 C 145.447 74.09 85.885 134.836 77.477 211.357 L 77.411 212.108 L 34.268 212.108 L 34.268 254.011 L 77.411 254.011 C 85.885 331.283 145.447 392.029 220.479 400.604 L 221.216 400.673 L 221.216 444.672 L 262.303 444.672 L 262.303 400.673 C 338.07 392.029 397.632 331.283 406.041 254.763 L 406.107 254.01 L 449.249 254.01 Z M 241.759 360.865 C 172.549 360.865 116.442 303.644 116.442 233.06 C 116.442 162.475 172.548 105.255 241.759 105.255 C 310.969 105.255 367.075 162.475 367.075 233.06 L 367.075 233.06 C 367.075 303.644 310.969 360.865 241.759 360.865 L 241.759 360.865 Z"
+          style="fill: rgb(255 255 255);"
+          transform="matrix(0.653585, 0.756853, -0.756853, 0.653585, 260.141083, -102.240189)"></path>
+      </svg>
+    </div>
+    <div class="col-md-10 col-sm-10 text-left">
+      <div>Set Current Location</div>
+      <div class="addres-text">{{add3Dots(userCurrentAddress,50)}}</div>
+    </div>
+  </div>
+  <div class="form-group">
+
+    <input value="{{userAddress}}" type="search" class="form-control search_field" aria-label="Search"
+      (keydown.enter)="$event.preventDefault()" placeholder="Search for a place" autocorrect="off" autocapitalize="off"
+      spellcheck="off" type="text" #searchAddress>
+  </div>
+
+  <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+    <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"
+      (dragEnd)="markerDragEnd($event)">
+    </agm-marker>
+
+    <agm-circle [latitude]="latitude" [longitude]="longitude" [circleDraggable]="false" [editable]="false"
+      [fillColor]="fillColor" [radius]="selectedRadiusCircle">
+    </agm-circle>
+  </agm-map>
+  <div class="range-wrap">
+    <div class="range-value" id="rangeLocation"></div>
+    <label class="radius-display">{{selectedRadius}} {{distanceUnit}}</label>
+    <input class="mile-range-selector" [(ngModel)]="exradius" name="exradius" list="tickmarksrange"
+      (change)="watchSlider($event)" id="rangeL" type="range" min="0" max="7" step="1">
+    <label class="radius-display">{{initialRadius}} {{distanceUnit}}</label>
+
+
+    <datalist id="tickmarksrange">
+      <option value="0" label="0%"></option>
+      <option value="1"></option>
+      <option value="2"></option>
+      <option value="3"></option>
+      <option value="4"></option>
+      <option value="5" label="50%"></option>
+      <option value="6"></option>
+      <option value="7"></option>
+    </datalist>
+  </div>
+  <div class="setLocation" *ngIf="!isPlaceChanged && locality != undefined && locationReason == 'productAddress'">
+    <button class="setLocation-btn" type="submit" color="primary" expand="block" shape="round" fill="outline"
+      (click)="setLocation()">{{(action == 'setUserLocation')?"Set Location":"Select Product Address"}}</button>
+  </div>
+
+  <div class="setLocation" *ngIf="isPlaceChanged">
+    <button [disabled]="isPlaceChanged" class="setLocation-btn" type="submit" color="primary" expand="block" shape="round" fill="outline"
+      >Fetching address, please wait...</button>
+  </div>
+
+
+  <div class="setLocation" *ngIf="(locality == undefined || locality=='') && locationReason == 'productAddress'">
+    <button class="setLocation-btn" type="submit" color="primary" expand="block" shape="round" fill="outline"
+      (click)="reloadMap()">Reload Map</button>
+  </div>
+
+  <!-- <div class="setLocation" *ngIf="locationReason == 'userAddress'">
+    <button class="setLocation-btn" type="submit" color="primary" expand="block" shape="round" fill="outline"
+      (click)="updateUserAddress()">Save</button>
+  </div> -->
+
+  <!-- <div>Address: {{userAddress}}</div>
+  <p>Latitude: {{latitude}}, Longitude: {{longitude}}</p>
+  <p>Locality: {{locality}}, Country: {{country}}</p> -->
+
+
+</div>

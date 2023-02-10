@@ -1,0 +1,83 @@
+<!-- <ion-header>
+    <ion-toolbar>
+      <ion-icon class="back-icon" name="arrow-back" slot="start" (click)="goBack()"></ion-icon>
+      <ion-title class="titleCenter">Review your experience</ion-title>
+    </ion-toolbar>
+  </ion-header> -->
+  <app-left-navigation>
+    <div class="back-button"><h5><i (click)="goBack()" class="fa fa-arrow-left" aria-hidden="true"></i> Back</h5></div>
+    <div *ngIf="ratingReviewToggle=='rating'">
+      <div lines="none">
+        <div class="b-rating">
+          <img src="{{soldedUserImage}}">
+        </div>
+      </div>
+      <div lines="none">
+        <div class="b-rating-head">
+          <p> Does your experience with buyer get five stars?</p>
+        </div>
+      </div>
+      <div lines="none">
+        <div class="rating-bar">
+          <!-- <ionic4-star-rating activeIcon="ios-star" activeColor="#ff6700" readonly="false" fontSize="25px"
+            [(ngModel)]="rating" (ngModelChange)="onChangeRate($event)">
+          </ionic4-star-rating> -->
+          <!-- <star-rating value={{avg_rating}} totalstars=5 checkedcolor="gold" uncheckedcolor="grey" size="24px"
+                                readonly="false"></star-rating> -->
+        <ngx-star-rating [(ngModel)]="rating" (ngModelChange)="onChangeRate($event)" [id]="'rating'" [disabled] ="false"></ngx-star-rating>
+        </div>
+      </div>
+      <div lines="none" *ngIf="rating>0">
+        <div class="rating-lbl">
+          <span *ngIf="rating==1">
+            Very poor
+          </span>
+          <span *ngIf="rating==2">
+            Poor
+          </span>
+          <span *ngIf="rating==3">
+            Average
+          </span>
+          <span *ngIf="rating==4">
+            Good
+          </span>
+          <span *ngIf="rating==5">
+            Excellent
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="publishReviewBtn" *ngIf="ratingReviewToggle=='rating'">
+      <button ion-button class="" [disabled]='rating == 0' (click)="publishRating()">Publish review</button>
+    </div>
+  
+    <div *ngIf="ratingReviewToggle=='review'">
+      <div lines="none">
+        <div class="b-rating">
+          <img src="{{soldedUserImage}}">
+        </div>
+      </div>
+      <div lines="none">
+        <div class="b-rating-head">
+          <p>How would you describe buyer?</p>
+        </div>
+      </div>
+      <div lines="none">
+        <div class="tag">
+          <span *ngFor="let tag of tagList" (click)="selectTag(tag)" [ngClass]="isSelectedTag(tag) ? 'tagSelect' : ''">
+            {{tag}}
+          </span>
+        </div>
+      </div>
+      <hr>
+      <div lines="none">
+        <textarea class="form-control" placeholder="Describe your experience" maxLength="255" [(ngModel)]="soldedUser.description">
+  
+        </textarea>
+        <span slot="end" class="count">{{(255 - soldedUser.description?.length)}}</span>
+      </div>
+    </div>
+    <div class="publishReviewBtn" *ngIf="ratingReviewToggle=='review'">
+      <button class="" (click)="publishReview()">Publish review</button>
+    </div>
+ </app-left-navigation>

@@ -1,0 +1,445 @@
+<section class="latest_wrapper">
+    <div class="container">
+        <div class="latest-content">
+
+            <!-- <button (click)="myBackButton()">
+                    </button> -->
+
+            <title>Submit a request</title>
+
+            <div class="writeAdmForm">
+                <form #helpForm="ngForm">
+                    <div class="form-group">
+                        <label position="stacked">Your email address<span>*</span></label>
+                        <input email  required class="form-control" #email="ngModel" type="email" name="email" [(ngModel)]="requestData.email">
+                            <ng-container *ngIf="email.invalid && (email.dirty || email.touched)">
+                                <div class="error-message" *ngIf="email.errors.required">
+                                    Email is required.
+                                  </div>
+                                  <div class="error-message" *ngIf="email.errors.email">Email must be a valid email address</div>
+                            </ng-container>
+                    </div>
+                    <div class="form-group">
+                        <label position="stacked">How can we help you<span>*</span></label>
+                        <input required class="form-control" (click)="openOptions()" name="option" #option="ngModel"
+                            [(ngModel)]="requestData.option">
+
+                            <ng-container *ngIf="option.invalid && (option.dirty || option.touched)">
+                                <div class="error-message" *ngIf="option.errors.required">
+                                    Option is required.
+                                  </div>
+                            </ng-container>
+                    </div>
+                    <div class="form-group">
+                        <label position="stacked">Name<span>*</span></label>
+                        <input required class="form-control" name="name" #name="ngModel" [(ngModel)]="requestData.name">
+                        <ng-container *ngIf="name.invalid && (name.dirty || name.touched)">
+                            <div class="error-message" *ngIf="name.errors.required">
+                                Name is required.
+                              </div>
+                        </ng-container>
+                    </div>
+                    <div class="form-group">
+                        <label position="stacked">Description<span>*</span></label>
+                        <textarea required class="form-control" name="description" #description="ngModel"
+                            [(ngModel)]="requestData.description"></textarea>
+                        <ng-container *ngIf="description.invalid && (description.dirty || description.touched)">
+                            <div class="error-message" *ngIf="description.errors.required">
+                                Description is required.
+                                </div>
+                        </ng-container>
+                    </div>
+                    <div class="form-group">
+                        <label position="stacked">Mobile number<span>*</span></label>
+                        <input tel required class="form-control" type="tel" name="phone_no" #phone_no="ngModel"
+                            [(ngModel)]="requestData.phone_no">
+
+                            <ng-container *ngIf="phone_no.invalid && (phone_no.dirty || phone_no.touched)">
+                                <div class="error-message" *ngIf="phone_no.errors.required">
+                                    Phone number is required.
+                                    </div>
+                                    <!-- <div class="error-message" *ngIf="phone_no.errors.tel">Email must be a valid email address</div> -->
+                            </ng-container>
+                    </div>
+                    <div class="form-group">
+                        <button button [disabled]="checkForm()" (click)="sendRequest()">Submit</button></div>
+                </form>
+            </div>
+        </div>
+        <!-- accordion-start -->
+        <!-- <ul class="contactDrop">
+            <li>
+               <div class="pointerCursor" (click)="panelExpanded = !panelExpanded"> <h5>drop1</h5></div>
+                <div class="dropContent" *ngIf="panelExpanded">
+                    <p>sfdsf sfdsfds sfdsf</p>
+                </div>
+            </li>
+            <li>
+                <div class="pointerCursor" (click)="panelExpanded = !panelExpanded"> <h5>drop2</h5></div>
+                 <div class="dropContent" *ngIf="panelExpanded">
+                     <p>sfdsf sfdsfds sfdsf</p>
+                 </div>
+             </li>
+            
+        </ul> -->
+        <!-- accordion-end -->
+
+        <!-- css-accordion-start -->
+        <ul class="accordion">
+            <!-- span to target fix closing accordion -->
+            <span class="target-fix" id="accordion"></span>
+            <li><i class="fa fa-circle"></i>
+                <span class="target-fix" id="accordion1"></span>
+                <a href="#accordion1" id="open-accordion1" title="open">Signing up</a>
+                <a href="#accordion" id="close-accordion1" title="close">Signing up</a>
+                <div class="accordion-content">
+                    <p>Upon launching the Trade app for the first time, you will be prompted to sign up or login with Facebook, an email address or Google.</p>
+                    <div class="indentSec">
+                        <h5><i class="fa fa-chevron-right"></i> Sign up via Email</h5>
+                        <ul>
+                            <li>To create a Trade account using your email address:</li>
+                            <li>Select ‘Sign up for an account’</li>
+                            <li>Enter email address and password</li>
+                            <li>Tap on Sign Up and you’re ready</li>
+                        </ul>
+                    </div>
+                    <p>Your Trade account will be created immediately and you’ll be logged into your brand new account.</p>
+                    <p>To create a Trade account using Facebook, you’ll need to have a verified Facebook account. Here are the steps:</p>
+                    <div class="indentSec">
+                        <h5><i class="fa fa-chevron-right"></i> Sign up via Facebook</h5>
+                        <ul>
+                            <li>Select <strong>'Continue with Facebook'</strong></li>
+                            <li>You'll be able to choose to sign up using details from your Facebook app (if you have it installed), or by manually entering your Facebook credentials. To be sure, we recommend selecting 'Log in with Phone Number or Email Address' to sign up with the intended Facebook account</li>
+                            <li>Then, select 'Log in' and depending on the username availability, you may be redirected to a page for you to change your Trade username</li>
+                        </ul>
+                    </div>
+                    <div class="indentSec">
+                        <h5><i class="fa fa-chevron-right"></i> Sign up via Google</h5>
+                        <ul>
+                            <li>If you have an existing Google Mail account or want to sign up for one, select the Google option on the app home screen. When prompted, just sign in to your existing Google+ account or create a new one!</li>
+                            <li>Thereafter, you should receive a verification email from us to verify your account. You’ll be required to verify your Trade account in order to sell on the marketplace.</li>
+                        </ul>
+                    </div>                    
+
+                </div>
+            </li>
+    
+            <!-- Second Accoridon Option -->
+            <li><i class="fa fa-circle"></i>
+                <span class="target-fix" id="accordion2"></span>
+                <a href="#accordion2" id="open-accordion2" title="open">Tips for Buying and Selling</a>
+                <a href="#accordion" id="close-accordion2" title="close">Tips for Buying and Selling</a>
+                <div class="accordion-content">
+                    <div class="accordList">
+                        <h5>Buyers</h5>
+                        <ul>
+                            <li>
+                                <strong>Do your due diligence</strong> - Do your research and homework, read an item's description, ask questions and request for photos to ensure an item you are getting is as you have expected.
+                                <p>If you come across an item which you think should not be sold on Trade, do not hesitate to report it to us so that it can be reviewed and removed if needed.</p>
+                            </li>
+                            <li><strong>Read user reviews</strong> - You can read through detailed reviews that a seller received by going to their profile. This is where other community members, including buyers like yourself, share their experiences dealing with the user.</li>
+                            <li><strong>Learn about a seller's policies</strong> - Every deal on Trade is considered an agreement between you and the seller. If any sellers have individual policies, such as whether they accept negotiations, refunds or exchanges, be sure to clue yourself in on them before you commit to a deal.</li>
+                            <li>
+                                <strong>Secure an agreement by making an offer</strong> - This, along with the seller's acceptance of the offer, is Trade way of a firm handshake to show both parties are committed to the deal. This is because both parties would be able to exchange review thereafter.
+                                <p>The right time to make to do this would be when all aspects of the transaction have been negotiated and agreed on, such as price and delivery method, day & time etc. </p>
+                            </li>
+                            <li><strong>Use the review system</strong> – Leaving reviews for one another is one of the best ways we can help each other; praise Trade that have been good to you, let them know if things can be improved next time. The more we know about our community (and ourselves), the better it is for everyone!</li>
+                            <li><strong>Opt for meet-ups so you can check your item</strong> - A perk of opting for meet-ups is so that you would be able to check and ensure that it is as you have expected, such as condition and size, before paying the seller. It's also a fun way to meet new people with similar interests and hobbies!
+                                use or entry.</li>
+                        </ul>
+                    </div>   
+                    <div class="accordList">
+                        <h5>Sellers</h5>
+                        <ul>
+                            <li><strong>Sell responsibly</strong> - Describe your items as they are, be truthful about it. Your buyers will be relying on the information you have provided to help them in their purchase decisions. </li>
+                            <li><strong>Read user reviews</strong> - You can read through detailed reviews that a buyer received by going to their profile. This is where other community members, including sellers like yourself, share their experiences dealing with the user.</li>
+                            <li><strong>State your policies clearly</strong> - Every deal on Trade is considered a private agreement between you and the buyer. If you have any policies regarding negotiations, refunds or exchanges, be sure that they are communicated to and acknowledged by your buyer prior to their commitment and carrying out of the deal. </li>
+                            <li><strong>Secure an agreement by accepting an offer</strong> - This, following a buyer's making of an offer, is Trade's way of a firm handshake to show both parties are committed to the deal. This is because both parties would be able to exchange reviews thereafter.</li>
+                            <li><strong>Use the review system</strong> – Leaving reviews for one another is one of the best ways we can help each other! Praise a fellow Trade for an exceptional experience or let them know if there are ways they can improve. Help our community by sharing your experience with others!</li>
+                            <li><strong>Opt for meet-ups to deliver your items securely</strong> – In unexpected circumstances, parcels may become damaged during delivery, arriving in a state different from when you've posted it. A perk of opting for meet-ups is so you have the assurance your item will reach the buyer in good condition. It's also a fun way to meet new people with similar interests and hobbies!</li>
+                        </ul>
+                    </div>   
+                </div>
+            </li>
+    
+            <!-- Third Accoridon Option -->
+            <li><i class="fa fa-circle"></i>
+                <span class="target-fix" id="accordion3"></span>
+                <a href="#accordion3" id="open-accordion3" title="open">Editing My Profile</a>
+                <a href="#accordion" id="close-accordion3" title="close">Editing My Profile</a>
+                <div class="accordion-content">
+                    <div class="indentSec">
+                        <h5><i class="fa fa-chevron-right"></i> How do I change my name?</h5>
+                        <ul>
+                            <li>Go to your profile page</li>
+                            <li>Tap your name</li>
+                            <li>Under the field, Change name enter your desired username</li>
+                            <li>Select "Done"</li>
+                        </ul>
+                    </div>
+                    <div class="indentSec">
+                        <h5><i class="fa fa-chevron-right"></i> How do I change my profile picture?</h5>
+                        <ul>
+                            <li>Go to your profile page</li>
+                            <li>Tap your picture</li>
+                            <li>Select the picture that you want</li>
+                            <li>Select "Done"</li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Fourth Accoridon Option -->
+            <li><i class="fa fa-circle"></i>
+                <span class="target-fix" id="accordion4"></span>
+                <a href="#accordion4" id="open-accordion4" title="open">Notification Settings</a>
+                <a href="#accordion" id="close-accordion4" title="close">Notification Settings</a>
+                <div class="accordion-content">
+                    <p><strong>How do I change my Push and Email notification preference?</strong></p>
+                    <p>Choose what updates you wish to receive from Trade by personalizing your Push and Email notifications preferences!</p>
+                    <p>To toggle your preferences:</p>
+                    <ol>
+                        <li>Go to your profile</li>
+                        <li>Select “Notification Settings”</li>
+                        <li>Toggle the notification settings accordingly</li>
+                    </ol>
+                    <p>If you do not see options listed to toggle your Push Notifications, you may have yet to enable them for your device settings. To rectify this, simply visit your device’s Settings to ensure that push notifications have been enabled for the Trade App.</p>
+                    <p>It is recommended to opt-in for Push Notifications for “New chat messages so you don’t miss out on the chats!</p>
+                </div>
+            </li>
+
+            <!-- Fifth Accoridon Option -->
+            <li><i class="fa fa-circle"></i>
+                <span class="target-fix" id="accordion5"></span>
+                <a href="#accordion5" id="open-accordion5" title="open">Share Product link</a>
+                <a href="#accordion" id="close-accordion5" title="close">Share Product link</a>
+                <div class="accordion-content">
+                    <div class="indentSec">
+                        <h5><i class="fa fa-chevron-right"></i> How do I share product with a friend?</h5>
+                        <ul>
+                            <li>Use the share button on top right corner of the product and select the media you’d like to use in order to share</li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Sixth Accoridon Option -->
+            <li><i class="fa fa-circle"></i>
+                <span class="target-fix" id="accordion6"></span>
+                <a href="#accordion6" id="open-accordion6" title="open">My Listing</a>
+                <a href="#accordion" id="close-accordion6" title="close">My Listing</a>
+                <div class="accordion-content">
+                    <div class="indentSec">
+                        <h5><i class="fa fa-chevron-right"></i> How do I edit the price/description/location of my listing?</h5>
+                        <ul>
+                            <li>Traders are given the option to edit their listings anywhere, any time!</li>
+                        </ul>
+                    </div>
+                    <p>You will be able to edit the category your listing is in, name of listing, listing description, price, - Mark As Sold. Also, there is an option for you to “delete listing”. Here's how you edit your listing:</p>
+                    <p><strong>Mobile app</strong></p>
+                    <ol>
+                        <li>Select the listing you'd like to edit on your profile</li>
+                        <li>At the top right-hand corner, tap on the "•••" button.</li>
+                        <li>You'll see an option to "Edit listing".</li>
+                    </ol>
+                    <p>Your listing will be updated on the marketplace and your profile with immediate effect.</p>
+                    <div class="indentSec">
+                        <h5><i class="fa fa-chevron-right"></i> How many photos can I upload per listing?</h5>
+                        <ul>
+                            <li>You can upload up to 10 photos of any size per listing!</li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Seventh Accoridon Option -->
+            <li><i class="fa fa-circle"></i>
+                <span class="target-fix" id="accordion7"></span>
+                <a href="#accordion7" id="open-accordion7" title="open">Seller Tools</a>
+                <a href="#accordion" id="close-accordion7" title="close">Seller Tools</a>
+                <div class="accordion-content">
+                    <div class="indentSec">
+                        <h5><i class="fa fa-chevron-right"></i> What is a featured listing?</h5>
+                        <ul>
+                            <li>We want to help you sell better!</li>
+                        </ul>
+                    </div>
+                    <p>Featuring helps increase the visibility of your items on the marketplace by bumping them to the top of the Popular (without keywords) and Recent sort. After which, it will behave like a normal listing and be moved down as new listings are added to the marketplace.</p>
+                </div>
+            </li>
+
+            <!-- Eight Accoridon Option -->
+            <li><i class="fa fa-circle"></i>
+                <span class="target-fix" id="accordion8"></span>
+                <a href="#accordion8" id="open-accordion8" title="open">Buying Features</a>
+                <a href="#accordion" id="close-accordion8" title="close">Buying Features</a>
+                <div class="accordion-content">
+                    <div class="indentSec">
+                        <h5><i class="fa fa-chevron-right"></i> How do I keep track of my favorite listings?</h5>
+                        <ul>
+                            <li>If there is a listing that you'd like to save and revisit at a later time, you may choose to favorite that listing to save it in your "My Likes" folder, found at the top of every page (heart icon).</li>
+                        </ul>
+                    </div>
+                    <p>To "favorite" a listing, select the heart icon on the listing. This can be found on the listing page and when browsing listings.</p>
+                    <div class="indentSec">
+                        <h5><i class="fa fa-chevron-right"></i> Filter tool</h5>
+                        <ul>
+                            <li>Filtering tool located on top right corner of the main page to facilitate narrowing down the search</li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nineth Accoridon Option -->
+            <li><i class="fa fa-circle"></i>
+                <span class="target-fix" id="accordion9"></span>
+                <a href="#accordion9" id="open-accordion9" title="open">Payment & Transaction</a>
+                <a href="#accordion" id="close-accordion9" title="close">Payment & Transaction</a>
+                <div class="accordion-content">
+                    <p>Payment & Transaction Content</p>
+                </div>
+            </li>
+
+            <!-- Tenth Accoridon Option -->
+            <li><i class="fa fa-circle"></i>
+                <span class="target-fix" id="accordion10"></span>
+                <a href="#accordion10" id="open-accordion10" title="open">Chatting</a>
+                <a href="#accordion" id="close-accordion10" title="close">Chatting</a>
+                <div class="accordion-content">
+                    <div class="indentSec">
+                        <h5><i class="fa fa-chevron-right"></i> How do I chat with other Traders?</h5>
+                        <ul>
+                            <li>Trade is a marketplace for buying and selling. Sellers would need to have a listing for sale, in order for buyers to start a chat with them on a particular listing.</li>
+                        </ul>
+                    </div>
+                    <p>To chat with a user, simply enter the listing you're keen on enquiring about and select "Chat". You're all set to making your first deal on Trade!</p>
+                    <div class="indentSec">
+                        <h5><i class="fa fa-chevron-right"></i> How do I report/block a user?</h5>
+                        <ul>
+                            <li>Select the profile of a user</li>
+                            <li>Select the 3 dot option in the top right corner</li>
+                            <li>Hit either report or block the user</li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Eleventh Accoridon Option -->
+            <li><i class="fa fa-circle"></i>
+                <span class="target-fix" id="accordion11"></span>
+                <a href="#accordion11" id="open-accordion11" title="open">Ratings & Reviews</a>
+                <a href="#accordion" id="close-accordion11" title="close">Ratings & Reviews</a>
+                <div class="accordion-content">
+                    <div class="indentSec">
+                        <h5><i class="fa fa-chevron-right"></i> How do I leave a review for a buyer or seller?</h5>
+                        <ul>
+                            <li>Leaving reviews for one another is one of the best ways we can help each other! Praise a fellow Trader for an exceptional experience or let them know if there are ways to improve. Help our community by sharing your experience with others!</li>
+                        </ul>
+                    </div>
+                    <p>Here are the steps to leaving a review:</p>
+                    <ol>
+                        <li>If you're a Buyer, select 'Make Offer'</li>
+                        <li>If you're a Seller, select 'Accept Offer'</li>
+                        <li>Thereafter, you should see a 'Leave Review' button</li>
+                    </ol>
+                    <p>What do I rate and review on?</p>
+                    <p>Your Trade transaction begins the moment you interact with your buyer/seller.</p>
+                    <p>As a buyer, you’ll be prompted to rate your seller for the following criteria (on a scale of 1 to 5 stars):</p>
+                    <div class="accordList">
+                        <ul>
+                            <li>Communication</li>
+                            <li>Coordination of meetup/delivery</li>
+                            <li>Actual item to description</li>
+                        </ul>
+                        <p>As a seller, you’ll be prompted to rate your buyer for the following criteria (on a scale of 1 to 5 stars):</p>
+                        <ul>
+                            <li>Communication</li>
+                            <li>Coordination of meetup/delivery</li>
+                            <li>Coordination of payment</li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+                      
+        </ul>
+        <!-- css-accordion-end -->
+    </div>
+</section>
+
+
+<!-- <div id="admin-option" class="modal" tabindex="-1" role="dialog">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content text-center">
+
+            <div class="modal-body location-modal-body">
+                
+                <h4>How can we help you?</h4>
+            </div>
+
+           
+        </div>
+    </div>
+</div> -->
+
+
+
+<!-- Modal -->
+<div id="admin-option" class="modal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+               
+                <h4 class="modal-title">How can we help you?</h4>
+                <span class="close-location-modal" (click)="closeLocationAlert()">X</span>
+            </div>
+            <div class="modal-body">
+                <div class="latest-content" *ngIf="showButton">
+
+                    <div *ngIf="!subCategorySelected && showButton">
+                        <div>
+                            <!-- <div class="item-space item-weight" lines="none">Why are you reporting this user?</div> -->
+                            <div class="item-space" *ngFor="let cat of requestCategory" (click)="reportSteps(cat)">
+                                <div class="reportList">
+                                    <div>
+                                        <div size="12">
+                                            <span>
+                                                <div class="categoryLbl">{{cat.request}} <span><i  *ngIf="checkForwardCategory(cat)" class="fa fa-arrow-right" aria-hidden="true"></i></span></div>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="subCategorySelected && showButton">
+                        <div>
+                            <div class="returnBtn" (click)="previousCategories()">
+                                <span slot="start" class="returnIcon" name="ios-arrow-back"></span> Back
+                            </div>
+                            <!-- <div class="item-space item-weight" lines="none">{{subCategoryTitle}}</div> -->
+                            <div class="item-space" *ngFor="let cat of requestCategory" (click)="reportSteps(cat)">
+                                <div class="reportList">
+                                    <div>
+                                        <div>
+                                            <span>
+                                                <div class="categoryLbl">{{cat.request}}</div>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>

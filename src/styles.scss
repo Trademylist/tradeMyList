@@ -1,0 +1,146 @@
+/* You can add global styles to this file, and also import other style files */
+h1, h2, h3, h4, h5, h6, p{ margin: 0; padding: 0;}
+body{
+    padding: 0;
+    margin: 0; box-sizing: border-box;
+    background-color: #f8f8f8;
+}
+a{
+  cursor: pointer;
+}
+.form-control:focus { 
+    border-color: #ffcba8;
+    outline: 0;
+    box-shadow: 0 0 5px 0 rgb(255 175 121);
+}
+
+.formGroup .error-messages {
+    position    : relative;
+    margin-top  : -19px;
+    font-size   : 12px;
+    padding-left: 5px;
+  }
+
+  .error-message {
+    color: red;
+    text-align: left;
+    padding-left: 15px;
+    font-size: 12px;
+}
+.feedLiked{
+    color: #ff6700;
+}
+
+.productBtn {
+    border       : none;
+    background   : #ff6700;
+    border-radius: 100px;
+    margin-bottom: 25px;
+    width        : 100%;
+    padding      : 10px;
+    color        : #fff;
+  
+    &.inactive {
+      background: #ffcdab;
+    }
+  }
+
+  .sellFasterBtn {
+    border: none;
+    background: #ff6700;
+    border-radius: 20px;
+    /* margin-bottom: 25px; */
+    width: 75%;
+    padding: 6px;
+    color: #fff;
+    margin: 2px;
+    box-shadow: 1px -3px 0px #ff67007a;
+    &.inactive {
+      background: #ffcdab;
+    }
+    button:focus{
+      outline: none;
+    }
+  }
+
+
+  .prod_details {
+    .sellFasterBtn {
+      width: 165px;
+    }
+  }
+  .sellFaster{
+    width: 160px;
+  }
+
+  .nav-link{
+    cursor: pointer;
+  }
+
+  .productEdit{
+    padding-left: 5px;
+}
+
+.sellPrdButtns{
+    display:flex;
+}
+.sellPrdButtns .btn{
+    padding: 5px;
+    margin: 2px;
+}
+
+#paypalModal .modal-content{
+    padding-bottom: 22px;
+}
+
+.deactiveClass {
+  opacity: 0.5;
+}
+
+.ownProduct{
+  box-shadow: 1px 2px 4px 2px #f59f64;
+}
+
+.rating-count{
+  margin:auto;
+}
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+
+
+.headerMain .popover{
+  min-width:100px;
+  max-width:570px !important;
+}
+
+.sendmessage {
+  border: none;
+  background: #ff6700;
+  border-radius: 20px;
+  /* margin-bottom: 25px; */
+  width: 119px;
+  padding: 9px;
+  color: #fff;
+  margin-left: 5px;
+}
+
+
+.inptGrup{
+  display: flex;
+}
+
+.no-prod{
+  text-align: center;
+  margin: auto;
+}
+
+.back-button {
+  padding: 30px;
+  background: #ff6700;
+  color: #Fff;
+}
+
+
+.live_scroll .live_scroll-box{
+  cursor: pointer;
+}

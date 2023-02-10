@@ -1,0 +1,29 @@
+.left-nav{ margin: 46px 0 30px;}
+.bg-fresh{ background: #fff; box-shadow: 0px 0px 8px #ddd; border-radius: 4px;}
+
+.active{ background:#f56200 url('../../../assets/images/right-arrow-white.png')no-repeat 90% center; color: #fff!important;}
+
+.nav-menu-lay{ width: 265px;}
+.nav-menu-lay .flex_nav-item{ flex-direction: column;}
+.nav-menu-lay .nav .nav-item{ margin: 1px 0;}
+.nav-menu-lay .nav .nav-item .nav-link{ padding: 30px 16px; font-size: 18px; font-family: 'WorkSans-Regular'; color: #7f7f7f; letter-spacing: -1px;}
+.nav-menu-lay .nav .nav-item .nav-link:hover{ background:#f56200; color: #fff!important; }
+
+@media screen and (max-width: 1400px){
+    .nav-menu-lay .nav .nav-item .nav-link { padding: 20px 16px; }
+}
+@media screen and (max-width: 1199px){
+    .nav-menu-lay{ width: auto;}
+}
+@media screen and (max-width: 992px){
+.nav-menu-lay .flex_nav-item { flex-direction: row;}
+.nav-menu-lay .nav .nav-item { width: 33.33%; }
+.nav-menu-lay .nav .nav-item .nav-link { padding: 20px 16px; }
+.nav-menu-lay { margin-bottom: 40px; } 
+}
+@media screen and (max-width: 800px){
+.nav-menu-lay .nav .nav-item { width: 50%; }
+}
+@media screen and (max-width: 576px){
+    .nav-menu-lay .nav .nav-item { width: 100%; }
+    }

@@ -1,0 +1,229 @@
+#map_canvas {
+  width: 90%;
+  height: 80%;
+  border: 1px solid red;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+}
+
+.map-wrapper {
+  position: relative;
+  width: 100%;
+  font-size: 15px;
+
+  #map_center {
+    position: absolute;
+    z-index: 99;
+    height: 40px;
+    width: 40px;
+    top: 50%;
+    left: 50%;
+    margin-left: -21px;
+    margin-top: -41px;
+  }
+}
+.fav-like {
+  cursor: pointer;
+}
+
+#myCarousel .list-inline {
+  white-space: nowrap;
+  overflow-x: auto;
+}
+
+#myCarousel .carousel-indicators {
+  position: static;
+  left: initial;
+  width: initial;
+  margin-left: initial;
+}
+
+#myCarousel .carousel-indicators > li {
+  width: initial;
+  height: initial;
+  text-indent: initial;
+}
+
+// #myCarousel .carousel-indicators > li a{
+// }
+#myCarousel .carousel-indicators > li a img {
+  max-width: 100%;
+  height: 60px;
+  width: 60px;
+  object-fit: cover;
+  object-position: center center;
+}
+#myCarousel .carousel-indicators > li.active img {
+  opacity: 1;
+}
+.list-inline-item img {
+  height: 60px;
+}
+.description-item {
+  display: flex;
+}
+
+agm-map {
+  height: 200px;
+}
+.inptGrup {
+  margin-top: 30px;
+}
+#banner-view-image .modal-body {
+  height: 459px;
+  overflow: auto;
+}
+.edit_textarea {
+  height: 120px;
+  width: 100%;
+}
+.modal_btn_in {
+  text-align: left;
+  margin-top: 15px;
+}
+.sendmessage {
+  // position: absolute;
+  // bottom: 15px;
+  // right: 15px;
+  padding-bottom: 12px;
+}
+
+.product-list .imge-section .fav-like {
+  width: 45px;
+  height: 45px;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  box-shadow: 1px 1px 4px #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 8;
+}
+.product-list .imge-section .fav-like .grey {
+  color: rgb(128, 128, 128);
+  font-size: 30px;
+}
+.product-list .imge-section .fav-like .red {
+  color: #ff2300;
+  font-size: 30px;
+}
+// .modal-backdrop {
+//   display: none !important;
+// }
+
+@media (min-width: 576px) {
+  .modal-dialog {
+    width: 100%;
+    margin: 1.75rem auto;
+    text-align: center;
+  }
+}
+@media (max-width: 991px) {
+  // .sendmessage {
+  //   position: inherit;
+  //   margin-top: 15px;
+  //   padding-bottom: 12px;
+  // }
+  // .inptGrup {
+  //   display: inherit;
+  // }
+}
+@media (max-width: 510px) {
+  .edit_textarea {
+    height: 150px;
+    width: 100%;
+  }
+}
+.product-edit-button {
+  float: right;
+  color: grey;
+  z-index: 111;
+  position: absolute;
+  right: 7px;
+  font-size: 34px;
+  cursor: pointer;
+}
+
+.seller-profile-section img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+
+.seller-profile-image .image-w {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #cccccc;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.user-title {
+  padding-left: 0px;
+  cursor: pointer;
+}
+
+.dtls-name {
+  display: flex;
+  width: 200px;
+  padding-bottom: 10px;
+}
+.seller-profile-section {
+  padding-right: 10px;
+}
+
+.productEdit {
+  padding-left: 5px;
+}
+
+.sellPrdButtns {
+  display: flex;
+}
+.sellPrdButtns .btn {
+  padding: 5px;
+  margin: 2px;
+}
+
+#paypalModal .modal-content {
+  padding-bottom: 22px;
+}
+
+.live_scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  bottom: 100px;
+  width: 100%;
+}
+
+.live_scroll .row {
+  display: block;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.live_scroll .live_scroll-box {
+  display: inline-block;
+  float: none;
+  padding: 8px;
+  border-radius: 24px;
+  background: #383ec1;
+  color: white;
+  margin-left: 20px;
+}
+
+.SubmitBtn {
+  background: #fc6600;
+  /* font-size: 20px; */
+  font-family: "WorkSans-Medium";
+  color: #fff;
+  /* height: 65px; */
+  /* width: 238px; */
+  margin: 20px 0;
+}

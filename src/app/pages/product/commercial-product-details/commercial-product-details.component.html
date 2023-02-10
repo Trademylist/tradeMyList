@@ -1,0 +1,458 @@
+<section class="product-details-w">
+  <div class="container">
+    <div class="page-nav">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <!-- <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Product Categories</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Maruti Suzuki in Matawala</li> -->
+        </ol>
+      </nav>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="product-list">
+      <div class="row">
+        <div class="col-lg-7">
+          <ngx-image-gallery
+            [images]="productGallery"
+            [conf]="conf"
+            (onOpen)="galleryOpened($event)"
+            (onClose)="galleryClosed()"
+            (onImageClicked)="galleryImageClicked($event)"
+            (onImageChange)="galleryImageChanged($event)"
+            (onDelete)="deleteImage($event)"
+          ></ngx-image-gallery>
+
+          <div class="imge-section">
+            <div id="slider">
+              <div id="myCarousel" class="carousel slide shadow">
+                <div
+                  class="fav-like"
+                  (click)="likedUnlikedFeed(productDetails)"
+                >
+                  <i
+                    class="fa fa-heart"
+                    [ngClass]="
+                      isLiked(productDetails?.likelist) ? 'red' : 'grey'
+                    "
+                    aria-hidden="true"
+                  ></i>
+                  <!-- <i class="fa fa-heart" aria-hidden="true"></i> -->
+                </div>
+                <!-- main slider carousel items -->
+                <div class="carousel-inner">
+                  <div
+                    [ngClass]="{ active: i == 0 }"
+                    class="carousel-item"
+                    data-slide-number="{{ i }}"
+                    *ngFor="let image of productImages; let i = index"
+                  >
+                    <!-- <img src="{{image}}"> -->
+                    <span class="product-edit-button" *ngIf="checkLoggedUser()">
+                      <i
+                        (click)="editProduct()"
+                        class="fa fa-pencil-square-o"
+                        aria-hidden="true"
+                      ></i>
+                    </span>
+                    <img (click)="openGallery(i)" [src]="[image]" />
+                  </div>
+
+                  <div
+                    class="carousel-item active"
+                    data-slide-number="0"
+                    *ngIf="productImages.length == 0"
+                  >
+                    <!-- <div
+                      class="fav-like"
+                      (click)="likedUnlikedFeed(productDetails)"
+                    >
+                      <i
+                        class="fa fa-heart"
+                        [ngClass]="
+                          isLiked(productDetails?.likelist) ? 'red' : 'grey'
+                        "
+                        aria-hidden="true"
+                      ></i>
+                      
+                    </div> -->
+                    <!-- <img src="{{image}}"> -->
+                    <img [src]="[productDetails.cover_thumb]" />
+                  </div>
+
+                  <a
+                    class="carousel-control-prev"
+                    href="#myCarousel"
+                    role="button"
+                    data-slide="prev"
+                  >
+                    <span
+                      class="carousel-control-prev-icon"
+                      aria-hidden="true"
+                    ></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a
+                    class="carousel-control-next"
+                    href="#myCarousel"
+                    role="button"
+                    data-slide="next"
+                  >
+                    <span
+                      class="carousel-control-next-icon"
+                      aria-hidden="true"
+                    ></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </div>
+                <!-- main slider carousel nav controls -->
+
+                <ul class="carousel-indicators list-inline mx-auto border px-2">
+                  <li
+                    class="list-inline-item"
+                    [ngClass]="{ active: j == 0 }"
+                    *ngFor="let image of productImages; let j = index"
+                  >
+                    <a
+                      id="carousel-selector-{{ j }}"
+                      [ngClass]="{ selected: j == 0 }"
+                      attr.data-slide-to="{{ j }}"
+                      data-target="#myCarousel"
+                    >
+                      <!-- <img src="{{image}}" class="img-fluid"> -->
+                      <img [src]="[image]" />
+                    </a>
+                  </li>
+
+                  <li
+                    class="list-inline-item active"
+                    *ngIf="productImages.length == 0"
+                  >
+                    <a
+                      id="carousel-selector-0"
+                      class="selected"
+                      attr.data-slide-to="0"
+                      data-target="#myCarousel"
+                    >
+                      <!-- <img src="{{image}}" class="img-fluid"> -->
+                      <img [src]="[productDetails.cover_thumb]" />
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="card prod_details">
+            <div class="price-with-s">
+              <h1 class="price" *ngIf="productDetails?.product_price">
+                {{ productDetails?.currencyCode }}&nbsp;{{
+                  productDetails?.product_price
+                }}
+              </h1>
+              <h1
+                class="price"
+                *ngIf="
+                  productDetails?.product_price &&
+                  productDetails?.product_price == null
+                "
+              >
+                Free
+              </h1>
+
+              <p *ngIf="productDetails?.category === 'Car'" class="pr-km">
+                {{ productDetails.year }}
+              </p>
+
+              <!-- <p class="pr-km">2017 - 40,000km</p> -->
+
+              <a
+                (click)="copyToClipBoard()"
+                placement="bottom"
+                class="share-product"
+                [ngbPopover]="notification"
+              >
+                <img src="assets/images/share-icon.png" />
+              </a>
+              <ng-template #notification>
+                <app-share-button type="facebook" [shareUrl]="shareLink">
+                </app-share-button>
+
+                <br />
+
+                <app-share-button type="twitter" [shareUrl]="shareLink">
+                </app-share-button>
+              </ng-template>
+
+              <h2 class="model_name">{{ productDetails?.product_name }}</h2>
+              <p class="address">{{ productDetails?.address }}</p>
+            </div>
+          </div>
+          <div class="card prod_details">
+            <div *ngIf="checkBooost()" lines="none" class="boostSection">
+              <div class="sellFaster">
+                <button
+                  ion-button
+                  class="sellFasterBtn"
+                  (click)="viewBoostModal()"
+                >
+                  <i class="fa fa-flash"></i>
+                  <span class="sellTxt"> Sell Faster Now</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="more-details">
+              <div
+                class="dtls-name"
+                *ngIf="seller_details"
+                (click)="goSellerDetails()"
+              >
+                <div class="seller-profile-section">
+                  <div class="seller-profile-image">
+                    <div class="image-w">
+                      <img
+                        src="{{
+                          seller_details?.image
+                            ? seller_details.image
+                            : 'assets/imgs/default-avatar.png'
+                        }}"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-12 user-title">
+                      <ion-label class="">
+                        {{
+                          seller_details?.username
+                            ? seller_details.username
+                            : "Trade User"
+                        }}</ion-label
+                      >
+                    </div>
+                    <div class="user-rating">
+                      <star-rating
+                        value="{{ avg_rating }}"
+                        totalstars="5"
+                        checkedcolor="gold"
+                        uncheckedcolor="grey"
+                        size="24px"
+                        readonly="false"
+                      ></star-rating>
+                    </div>
+                    <div class="rating-count">
+                      ({{ seller_details?.count ? seller_details.count : 0 }})
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="seller-detils">
+              <a class="s-d" (click)="goSellerDetails()">Seller Details</a>
+              <button
+                type="button"
+                class="btn btn-primary"
+                *ngIf="loggedUser && loggedUser.userid != seller_id"
+                class="message pro_chat"
+                (click)="openChatBox()"
+              >
+                Chat With Seller
+              </button>
+              <!-- <a *ngIf="loggedUser && loggedUser.userid != seller_id" class="message" (click)="openChatBox()"> <img src="assets/images/chat-doubleIcon.png"></a> -->
+            </div>
+
+            <div class="seller-map">
+              <!-- <agm-map *ngIf="productDetails.geometry!=undefined" [latitude]="productDetails.geometry.coordinates[1]" [longitude]="productDetails.geometry.coordinates[0]" [zoom]="15">
+                                <agm-marker [latitude]="productDetails.geometry.coordinates[1]" [longitude]="productDetails.geometry.coordinates[0]" [markerDraggable]="true"
+                                >
+                                </agm-marker>
+                            </agm-map> -->
+              <div #gmap1 id="map"></div>
+
+              <!-- <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3444.253401975267!2d78.0203695146003!3d30.315309262681932!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3909298bcf16028b%3A0x74a19d7c85960b23!2sMata%20Wala%20Bagh%2C%20Saharanpur%20Rd%2C%20Laxman%20Chowk%2C%20Dehradun%2C%20Uttarakhand%20248001!5e0!3m2!1sen!2sin!4v1606211825406!5m2!1sen!2sin"
+                                width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""
+                                aria-hidden="false" tabindex="0"></iframe> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="more-details">
+                <div class="dtls-name" *ngIf="seller_details" (click)="goSellerDetails()">
+                    <div class="seller-profile-section">
+                        <div class="seller-profile-image">
+                            <div class="image-w">
+                                <img
+                        src="{{seller_details?.image ? seller_details.image : 'assets/imgs/default-avatar.png'}}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12 user-title">
+                                <ion-label class="">
+                                    {{seller_details?.username ? seller_details.username : 'Trade User'}}</ion-label>
+                            </div>
+                            <div class="user-rating">
+                                <star-rating value={{avg_rating}} totalstars=5 checkedcolor="gold" uncheckedcolor="grey" size="24px"
+                                readonly="false"></star-rating>
+                            </div>
+                            <div class="rating-count">
+                                ({{seller_details?.count ? seller_details.count : 0}})
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="details-header"> Details</h3>
+
+                <div class="more-info">
+                    <p class="in-item"> <span>Category</span>{{productDetails?.category}}</p>
+                    <p class="in-item"> <span>Posted</span> {{productDetails?.createdAt}}</p>
+                    <p class="in-item description-item"> <span>Description</span>{{productDetails?.product_description}}
+                    </p>
+                    <ng-container *ngIf="productDetails?.category === 'Van & Trucks' ">
+                        <p class="in-item"> <span>Main Details</span>This is
+                            {{productDetails.make}}&nbsp;{{productDetails.model}} car.</p>
+                        <p class="in-item"> <span>Seller</span> {{productDetails.seller}}</p>
+                        <p class="in-item"> <span>Trnsmission</span> {{productDetails.transmission}}</p>
+                        <p class="in-item"> <span>Trim</span> {{productDetails.trim}}</p>
+                        <p class="in-item"> <span>Year</span> {{productDetails.year}}</p>
+                    </ng-container>
+
+                    <ng-container *ngIf="productDetails?.category === 'Property' ">
+                        <p *ngIf="productDetails.furnishing != ''"  class="in-item"> <span>Furnishing:</span>{{productDetails.furnishing}}</p>
+                        <p *ngIf="productDetails.construction_status != ''"  class="in-item"> <span>Construction Status:</span>{{productDetails.construction_status}}</p>
+                        <p *ngIf="productDetails.listed_by != ''"  class="in-item"> <span>Listed By:</span>{{productDetails.listed_by}}</p>
+                        <p *ngIf="productDetails.car_parking != ''"  class="in-item"> <span>Car Parking:</span>{{productDetails.car_parking}}</p>
+                        <p *ngIf="productDetails.super_builtup_area != ''"  class="in-item"> <span>Super Builtup Area(Ft<sup class="supSize">2</sup>):</span>{{productDetails.super_builtup_area}}</p>
+                        <p *ngIf="productDetails.carpet_area != ''"  class="in-item"> <span>Carpet Area(Ft<sup class="supSize">2</sup>):</span>{{productDetails.carpet_area}}</p>
+                        <p *ngIf="productDetails.maintenance != ''"  class="in-item"> <span>Maintenance(Monthly):</span>{{productDetails.maintenance}}</p>
+                        <p *ngIf="productDetails.washrooms != ''"  class="in-item"> <span>Washrooms:</span>{{productDetails.washrooms}}</p>
+                        
+                    </ng-container>
+
+                    <ng-container *ngIf="productDetails?.category === 'Jobs' || productDetails?.category === 'Services'">
+                        <p *ngIf="productDetails.type_of_job != ''"  class="in-item"> <span>Type of
+                            {{productDetails.category == 'Jobs' ? 'Job' : 'Service'}}:</span>{{productDetails.type_of_job}}</p>
+                    </ng-container>
+
+                </div>
+            </div> -->
+    </div>
+  </div>
+</section>
+
+<!-- Modal -->
+<div id="paypalModal" class="modal" role="dialog">
+  <!-- <div class="modal-dialog modal-dialog-scrollable"> -->
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <!-- <div class="modal-header">
+          <button type="button" class="close" (click)="closePaypalModal()" data-dismiss="modal">&times;</button>
+          
+        </div> -->
+      <div class="modal-body">
+        <app-stripe></app-stripe>
+      </div>
+      <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div> -->
+    </div>
+  </div>
+</div>
+
+<div
+  id="chatbox"
+  class="modal"
+  tabindex="-1"
+  role="dialog"
+>
+  <!-- <div class="modal-dialog modal-dialog-scrollable"> -->
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="close"
+          (click)="closeChatBox()"
+          data-dismiss="modal"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <ng-container *ngIf="showChatOption()">
+          <div>
+            <div>
+              <div class="live_scroll">
+                <div class="row text-center">
+                  <div
+                    class="live_scroll-box"
+                    *ngFor="let msg of suggestMessage"
+                    (click)="suggestedChat(msg.message)"
+                  >
+                    {{ msg.message }}
+                  </div>
+                </div>
+              </div>
+              <div class="mesgesBxft">
+                <div class="inptGrup">
+                  <input
+                    class="textarea form-control edit_textarea"
+                    type="text"
+                    placeholder="Type your message here..."
+                    [(ngModel)]="enteredMessage"
+                    rows="3"
+                  />
+                  <!-- <button
+                    type="submit"
+                    class="sendmessage"
+                    [ngClass]="
+                      enteredMessage == '' ? 'submit-btnft-dis' : 'submit-btnft'
+                    "
+                    (click)="sendMessage($event)"
+                    [disabled]="enteredMessage == ''"
+                  >
+                    <span>Send</span>
+                  </button> -->
+                </div>
+                <div class="modal_btn_in">
+                  <button
+                    type="submit"
+                    class="sendmessage"
+                    [ngClass]="
+                      enteredMessage == '' ? 'submit-btnft-dis' : 'submit-btnft'
+                    "
+                    (click)="sendMessage($event)"
+                    [disabled]="enteredMessage == ''"
+                  >
+                    <span>Send</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <div *ngIf="!showChatOption()">
+          <h5>
+            Please
+            <a class="btn SubmitBtn loginbtn" (click)="goToLogin()">login</a>
+            for chat with seller.
+          </h5>
+        </div>
+      </div>
+      <!-- <div class="modal-footer">
+               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+             </div> -->
+    </div>
+  </div>
+</div>

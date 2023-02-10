@@ -1,0 +1,348 @@
+
+
+<app-left-navigation>
+
+    <div class="my-listing-wrapper">
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item" (click)="segmentChanged('favourites')">
+                <a class="nav-link" [ngClass]="{'active': segment === 'favourites'}" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab"
+                    aria-controls="pills-home" aria-selected="true">Favorites</a>
+            </li>
+            <li class="nav-item" (click)="segmentChanged('product')">
+                <a class="nav-link" [ngClass]="{'active': segment === 'product'}" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"
+                    aria-controls="pills-profile" aria-selected="segment=='product'?true:false">Product</a>
+            </li>
+           
+            <li class="nav-item" (click)="segmentChanged('commercial')">
+                <a class="nav-link"  [ngClass]="{'active': segment === 'commercial'}" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab"
+                    aria-controls="pills-contact" aria-selected="segment=='commercial'?true:false">Commercial</a>
+            </li>
+            <li class="nav-item" (click)="segmentChanged('sold')">
+                <a class="nav-link" [ngClass]="{'active': segment === 'sold'}" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab"
+                    aria-controls="pills-contact" aria-selected="segment=='sold'?true:false">Sold</a>
+            </li>
+            <li class="nav-item" (click)="segmentChanged('expired')">
+                <a class="nav-link" [ngClass]="{'active': segment === 'expired'}" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab"
+                    aria-controls="pills-contact" aria-selected="segment=='expired'?true:false">Expired</a>
+            </li>
+        </ul>
+        <div [ngSwitch]="segment">
+            <div class="tab-content" id="pills-tabContent">
+                <ng-container *ngSwitchCase="'favourites'" >
+                    <div *ngIf="getFavouriteProduct?.length" class="tab-pane fade show active"
+                        role="tabpanel" aria-labelledby="pills-home-tab" id="pills-home">
+                        <!-- /products -->
+                        <div class="row">
+                            <div *ngFor="let product of getFavouriteProduct; index as i"
+                                class="col-lg-4  col-md-6 col-sm-6 latest-product my-product">
+                                <div class="product-card">
+                                    <ng-container *ngIf="product?.image[0]">
+                                        <div class="featured-like">
+                                            <!-- <button class="btn btn-outline-success"  (click)="likedUnlikedFeed(product)"
+                                                [ngClass]="isLiked(product.likelist) ? 'feedLiked' : 'feedNotLiked'"><i class="fa fa-heart" aria-hidden="true"></i></button> -->
+                                            <button class="btn heart" (click)="likedUnlikedFeed(product)"> <i class="trash_icon fa fa-trash-o"
+                                                    aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </ng-container>
+                                    <div class="image-content" (click)="goProductDetails(product)">
+                                        <img src="{{coverImageCheckAmazon(product)}}" alt="" >
+                                    </div>
+                                    <div class="price-section">
+                                        <div class="price-bar">
+                                            <h2 class="price">{{product?.currencyCode}} {{product?.product_price}}</h2>
+                                            <!-- <h3 class="times">{{product?.createdAt}}</h3> -->
+                                        </div>
+                                        <p class="desc"> {{splitWord(product.product_name, 4)}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div *ngIf="getFavouriteProduct?.length<1">
+                        <div class="no-prod">
+                            <img src="assets/images/selling.jpg">
+                            <h3>No listings for favourite</h3>
+                            <p>
+                              You haven't marked Favourite!
+                            </p>
+                          </div>
+                    </div>
+
+                </ng-container>
+
+
+                <ng-container *ngSwitchCase="'product'" >
+                    <div *ngIf="getUploadedProduct?.length" class="tab-pane fade show active"
+                        role="tabpanel" aria-labelledby="pills-home-tab" id="pills-home">
+                        <!-- /products -->
+                        <div class="row">
+                            <div *ngFor="let product of getUploadedProduct; index as i"
+                                class="col-lg-4  col-md-6 col-sm-6 latest-product my-product">
+                                <div class="product-card">
+                                    <!-- <ng-container *ngIf="product?.image[0]"> -->
+                                        <div class="featured-like">
+                                            <!-- <button (click)="likedUnlikedFeed(product)" class="btn btn-outline-success"
+                                                [ngClass]="isLiked(product.likelist) ? 'feedLiked' : 'feedNotLiked'">featured</button> -->
+                                            <button class="btn heart" (click)="startDelete(product,'product')"> <i class="trash_icon fa fa-trash-o"
+                                                    aria-hidden="true"></i>
+                                            </button>
+                                            <span class="productEdit" (click)="startEdit(product,'product','product')">
+                                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                    <!-- </ng-container> -->
+                                    <div class="image-content" (click)="goProductDetails(product)">
+                                        <img src="{{coverImageCheckAmazon(product)}}" alt="">
+                                    </div>
+                                    
+                                    <div class="price-section">
+                                        <div class="price-bar">
+                                            <h2 class="price">{{product?.currencyCode}} {{product?.product_price}}</h2>
+                                            <!-- <h3 class="times">{{product?.createdAt}}</h3> -->
+                                        </div>
+                                        <p class="desc"> {{splitWord(product.product_name, 2)}}</p>
+                                    </div>
+
+                                    <div class="sellPrdButtns">
+                                        <button class="pruductBoots sellFasterBtn" [ngClass]="{deactiveClass: product.boost == 1}"
+                                          [disabled]="checkBooost(product)" (click)="viewBoostModal(product, 'boost')">
+                                          <i class="fa fa-flash"></i>
+                                          Sell faster
+                                        </button>
+                                        <button class="markSold sellFasterBtn" (click)="startSold(product,'product')">
+                                          Mark as sold
+                                        </button>
+                                      </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="getUploadedProduct?.length<1">
+                        <div class="no-prod">
+                            <img src="assets/images/selling.jpg">
+                            <h3>No listings for sale</h3>
+                            <p>
+                              You haven't posted lately!
+                              Why not snap a picture of something you'd
+                              like to sell?
+                            </p>
+                          </div>
+                    </div>
+                </ng-container>
+
+                
+                <ng-container *ngSwitchCase="'commercial'" >
+                    <div *ngIf="getUploadedCommercial?.length" class="tab-pane fade show active"
+                        role="tabpanel" aria-labelledby="pills-home-tab" id="pills-home">
+                        <!-- /products -->
+                        <div class="row">
+                            <div *ngFor="let product of getUploadedCommercial; index as i"
+                                class="col-lg-4  col-md-6 col-sm-6 latest-product my-product">
+                                <div class="product-card">
+                                    <!-- <ng-container *ngIf="product?.image[0]"> -->
+                                        <div class="featured-like">
+                                            <!-- <button (click)="likedUnlikedFeed(product)" class="btn btn-outline-success"
+                                                [ngClass]="isLiked(product.likelist) ? 'feedLiked' : 'feedNotLiked'">featured</button> -->
+                                            <button class="btn heart" (click)="startDelete(product,'commercial')"> <i class="trash_icon fa fa-trash-o"
+                                                    aria-hidden="true"></i>
+                                            </button>
+                                            <span class="productEdit" (click)="startEdit(product,'commercial','commercial')">
+                                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                    <!-- </ng-container> -->
+                                    <div class="image-content" (click)="goProductDetails(product)">
+                                        <img src="{{coverImageCheckAmazon(product)}}" alt="">
+                                    </div>
+                                    
+                                    <div class="price-section">
+                                        <div class="price-bar">
+                                            <h5 *ngIf="product?.product_price && product?.product_price == null">Free</h5>
+                                            <h2 class="price">{{product?.currencyCode}} {{product?.product_price}}</h2>
+                                            <!-- <h3 class="times">{{product?.createdAt}}</h3> -->
+                                        </div>
+                                        <p class="desc"> {{splitWord(product.product_name, 2)}}</p>
+                                    </div>
+
+                                    <!-- <div class="sellPrdButtns">
+                                        <button class="btn btn-outline-success pruductBoots" [ngClass]="{deactiveClass: product.boost == 1}"
+                                          [disabled]="checkBooost(product)" (click)="viewBoostModal(product, 'boost')">
+                                          <i class="fa fa-flash"></i>
+                                          Sell faster
+                                        </button>
+                                        <button class="btn btn-outline-success markSold" (click)="startSold(product,'commercial')">
+                                          Mark as sold
+                                        </button>
+                                      </div> -->
+
+                                      <div class="sellPrdButtns">
+                                        <button class="pruductBoots sellFasterBtn" [ngClass]="{deactiveClass: product.boost == 1}"
+                                          [disabled]="checkBooost(product)" (click)="viewBoostModal(product, 'boost')">
+                                          <i class="fa fa-flash"></i>
+                                          Sell faster
+                                        </button>
+                                        <button class="markSold sellFasterBtn" (click)="startSold(product,'commercial')">
+                                          Mark as sold
+                                        </button>
+                                      </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="getUploadedCommercial?.length<1">
+                        <div class="no-prod">
+                            <img src="assets/images/sold.jpg">
+                            <h3>No sold listings</h3>
+                            <p>
+                              It feels so good making your first sale on Trade.
+                              And your second. And your third.
+                            </p>
+                          </div>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngSwitchCase="'sold'" >
+                    <div *ngIf="getSoldProduct?.length || getSoldCommercial?.length" class="tab-pane fade show active"
+                        role="tabpanel" aria-labelledby="pills-home-tab" id="pills-home">
+                        <!-- /products -->
+                        <div class="row">
+                            <div *ngFor="let product of getSoldProduct; index as i"
+                                class="col-lg-4  col-md-6 col-sm-6 latest-product my-product">
+                                <div class="product-card">
+                                    <div class="image-content">
+                                        <img src="{{coverImageCheckAmazon(product)}}" alt=""
+                                            (click)="goProductDetails(product)">
+                                    </div>
+                                    <div class="price-section">
+                                        <div class="price-bar">
+                                            <h2 class="price">{{product?.currencyCode}} {{product?.product_price}}</h2>
+                                            <!-- <h3 class="times">{{product?.createdAt}}</h3> -->
+                                        </div>
+                                        <p class="desc"> {{splitWord(product.product_name, 2)}}</p>
+                                    </div>
+
+                                    <div class="sellPrdButtns">
+                                        <button class="pruductBoots sellFasterBtn" (click)="startDeleteSoldItem(product, 'product')">
+                                            Delete
+                                        </button>
+                                        <button class="markSold sellFasterBtn" (click)="sellAgain(product,'product')">
+                                            Sell it again
+                                        </button>
+                                      </div>
+                                </div>
+                            </div>
+
+                            <div *ngFor="let product of getSoldCommercial; index as i"
+                            class="col-lg-4  col-md-6 col-sm-6 latest-product my-product">
+                            <div class="product-card">
+                                <div class="image-content">
+                                    <img src="{{coverImageCheckAmazon(product)}}" alt=""
+                                        (click)="goProductDetails(product)">
+                                </div>
+                                <div class="price-section">
+                                    <div class="price-bar">
+                                        <h2 class="price">{{product?.currencyCode}} {{product?.product_price}}</h2>
+                                        <!-- <h3 class="times">{{product?.createdAt}}</h3> -->
+                                    </div>
+                                    <p class="desc"> {{splitWord(product.product_name, 2)}}</p>
+                                </div>
+
+                                <div class="sellPrdButtns">
+                                    <button class="pruductBoots sellFasterBtn" (click)="startDeleteSoldItem(product, 'commercial')">
+                                        Delete
+                                    </button>
+                                    <button class="markSold sellFasterBtn" (click)="sellAgain(product,'commercial')">
+                                        Sell it again
+                                    </button>
+                                  </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div *ngIf="getSoldProduct?.length<1 && getSoldCommercial?.length <1">
+                        <div class="no-prod">
+                            <img src="assets/images/sold.jpg">
+                            <h3>No sold listings</h3>
+                            <p>
+                              It feels so good making your first sale on Trade.
+                              And your second. And your third.
+                            </p>
+                          </div>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngSwitchCase="'expired'" >
+                    <div *ngIf="getExpireProduct?.length  || getExpireCommercial?.length" class="tab-pane fade show active"
+                        role="tabpanel" aria-labelledby="pills-home-tab" id="pills-home">
+                        <!-- /products -->
+                        <div class="row">
+                            <div *ngFor="let product of getExpireProduct; index as i"
+                                class="col-lg-4  col-md-6 col-sm-6 latest-product my-product">
+                                <div class="product-card">
+                                    <div class="image-content">
+                                        <img src="{{coverImageCheckAmazon(product)}}" alt=""
+                                            (click)="goProductDetails(product)">
+                                    </div>
+                                    <div class="price-section">
+                                        <div class="price-bar">
+                                            <h2 class="price" *ngIf="product?.product_price">{{product?.currencyCode}}&nbsp;{{ product?.product_price }}</h2>
+                                            <h2 class="price" *ngIf="product?.product_price && product?.product_price == null">Free</h2>
+                                            <!-- <h3 class="times">{{product?.createdAt}}</h3> -->
+                                        </div>
+                                        <p class="desc"> {{splitWord(product.product_name, 2)}}</p>
+                                    </div>
+
+                                    <div class="sellPrdButtns">
+                                        <button class="pruductBoots sellFasterBtn" [ngClass]="{deactiveClass: product.boost == 1}"
+                                          [disabled]="checkBooost(product)" (click)="startDeleteExpired(product, 'product')">
+                                          Delete
+                                        </button>
+                                        <button class="markSold sellFasterBtn" (click)="viewBoostModal(product,'reactivate')">
+                                            Reactivate
+                                        </button>
+                                      </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="getExpireProduct?.length<1  && getExpireCommercial?.length <1">
+                        <div class="no-prod">
+                            <img src="assets/images/expired.jpg">
+                            <h3>No expired listings</h3>
+                            <p>
+                              Your listing are active for 30
+                              days after they're posted. (We've
+                              found buyers like listings that are
+                              fresh from the oven.)
+                            </p>
+                            <p>
+                              When your listings expire,
+                              you can come here to reactivate them.
+                            </p>
+                          </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+
+
+    </div>
+</app-left-navigation>
+
+
+<!--putngxspinner-->
+
+<!-- Modal -->
+<div id="paypalModal" class="modal" role="dialog">
+    <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <app-stripe></app-stripe>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-dialog #appDialog></app-dialog>

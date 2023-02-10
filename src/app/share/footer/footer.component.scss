@@ -1,0 +1,45 @@
+.footer-wrapper{ background: #1a1a1a; padding: 30px 20px 20px;}
+.footer-wrapper .custom_f_width .header-title{ color: #fff; font-size: 16px; font-family: 'WorkSans-Medium'; margin-bottom: 10px; text-transform: uppercase;}
+ 
+.footer-wrapper .custom_f_width .nav .nav-item .nav-link{ color: #a2a3a7; font-size: 14px; font-family: 'WorkSans-regular'; padding: 2px 0; }
+.footer-wrapper .custom_f_width .social-media-wr { margin-top: 24px;}
+.footer-wrapper .custom_f_width .social-media-wr .follow-us{ color: #fff; font-size: 18px; font-family: 'WorkSans-regular'; margin-bottom:15px; text-transform: uppercase;}
+.footer-wrapper .custom_f_width .icons{  display: flex; justify-content: space-between; width: 160px;}
+.footer-wrapper .custom_f_width .icons i{  color: #fff; font-size: 26px;}
+
+.desclaimer-wrapper{ background: #141414; margin-top: -1px; padding: 4px 0; }
+.desclaimer-wrapper .terms-condition .desclaimer{ color: #636363; font-family: 'WorkSans-regular'; font-size: 15px; margin: 0;}
+.desclaimer-wrapper .terms-condition-row .terms-condition .breadcrumb .breadcrumb-item{ color: #636363; font-family: 'WorkSans-regular'; font-size: 15px; margin: 0; cursor: pointer;}
+.desclaimer-wrapper .terms-condition-row { display: flex; justify-content: space-between; align-items: center;}
+.desclaimer-wrapper .terms-condition-row .terms-condition .breadcrumb {  background: transparent; margin: 0;}
+
+.desclaimer-wrapper .terms-condition-row .breadcrumb-item+.breadcrumb-item::before{ content: '|'; }
+
+@media screen and (max-width: 991px) {
+.footer-wrapper .custom_f_width { flex: 0 0 50%;  max-width: 50%; padding-top: 15px;
+    padding-bottom: 15px;
+}
+.footer-wrapper .custom_f_width .icons {
+    width: 100px;
+}
+}
+@media screen and (max-width: 768px) {
+    .footer-wrapper .custom_f_width { flex: 0 0 100%; max-width: 100%; text-align: center; }
+    .footer-wrapper .custom_f_width .icons{justify-content: space-around; margin: auto;}
+    .footer-wrapper .custom_f_width .icons {
+        width: 130px;
+    }
+}
+
+@media screen and (max-width: 668px) {
+.desclaimer-wrapper .terms-condition-row{ flex-direction: column;}
+.desclaimer-wrapper{
+    padding: 20px 0;
+}
+
+}
+
+@media screen and (max-width: 360px) {
+.footer-wrapper .custom_f_width .icons{ margin: auto;}
+
+}

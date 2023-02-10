@@ -1,0 +1,76 @@
+.back-icon {
+    margin-left: 20px;
+    font-size  : larger;
+    color      : #ff6700;
+}
+
+.ion-list {
+    margin-top: 20px;
+}
+
+.b-rating {
+    text-align: center;
+    width     : 100%;
+
+    img {
+        height       : 100px;
+        border-radius: 50%;
+    }
+}
+
+.b-rating-head {
+    text-align: center;
+    margin    : 12px;
+
+    p {
+        font-size  : 25px;
+        font-weight: bold;
+        color      : #000;
+    }
+}
+
+.rating-bar {
+    // background: red;
+    display: flex;
+    padding-left: 32%;
+}
+
+.rating-lbl {
+    text-align: center;
+    width     : 100%;
+}
+
+.tag span {
+    border       : 1px solid;
+    border-color : #c7bbbc;
+    border-radius: 20px;
+    padding      : 5px;
+    margin       : 5px;
+}
+
+.tagSelect {
+    background   : gray;
+    color        : #fff;
+    border-radius: 20px;
+    padding      : 5px;
+    margin       : 5px;
+}
+
+ion-item .count {
+    position: relative;
+}
+
+.publishReviewBtn {
+    // bottom  : 20px !important;
+    // position: absolute;
+    // width   : 100%;
+    margin-left: 37%;
+    button {
+        background-color: #ff6700;
+        border-radius   : 25px;
+        width           : 170px;
+        color           : white;
+        padding         : 10px;
+        margin          : 5px 2% 10px 2%;
+    }
+}

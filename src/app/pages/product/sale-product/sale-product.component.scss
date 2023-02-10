@@ -1,0 +1,41 @@
+.cat-label {
+    color      : #000;
+    font-size  : 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.back-icon {
+    margin-left: 20px;
+    font-size  : larger;
+    color      : #ff6700;
+}
+
+.catImg {
+    float        : left;
+    border-radius: 100px;
+    height       : 28px;
+    margin-right : 10px;
+}
+
+.saleSomeWhere {
+    color     : #ff6700;
+    text-align: center;
+    // bottom    : 20px !important;
+    position  : absolute;
+    width     : 100%;
+}
+.no-prod{
+    text-align: center;
+    margin: auto;
+}
+.saleSomeWhere{
+    cursor: pointer;
+}
+
+.ion-list{
+    padding-top: 10px;
+}
+.categorybg{
+    cursor: pointer;
+}

@@ -1,0 +1,38 @@
+<section class="latest_wrapper">
+    <div class="container">
+        <div class="latest-content">
+           
+                <button (click)="myBackButton()">
+                    </button>
+           
+            <title>Submit a request</title>
+
+            <div class="writeAdmForm">
+                <form>
+                    <div class="form-group">
+                        <label position="stacked">Your email address<span>*</span></label>
+                        <input class="form-control" [(ngModel)]="requestData.email">
+                    </div>
+                    <div class="form-group">
+                        <label position="stacked">How can we help you<span>*</span></label>
+                        <input class="form-control" (click)="openOptions()" [(ngModel)]="requestData.option">
+                    </div>
+                    <div class="form-group">
+                        <label position="stacked">Name<span>*</span></label>
+                        <input class="form-control" [(ngModel)]="requestData.name">
+                    </div>
+                    <div class="form-group">
+                        <label position="stacked">Description<span>*</span></label>
+                        <textarea class="form-control" [(ngModel)]="requestData.description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label position="stacked">Mobile number<span>*</span></label>
+                        <input class="form-control" type="tel" [(ngModel)]="requestData.phone_no">
+                    </div>
+                    <div class="form-group">
+                        <button button [disabled]="checkForm()" (click)="sendRequest()">Submit</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

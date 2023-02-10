@@ -1,0 +1,49 @@
+<section class="latest_wrapper">
+    <h2>How can we help you?</h2>
+
+    <div class="container">
+        <div class="latest-content" *ngIf="showButton">
+ 
+                <div *ngIf="!subCategorySelected && showButton">
+                    <div>
+                        <!-- <div class="item-space item-weight" lines="none">Why are you reporting this user?</div> -->
+                        <div class="item-space" *ngFor="let cat of requestCategory"
+                            (click)="reportSteps(cat)">
+                            <div class="reportList">
+                                <div>
+                                    <div size="12">
+                                        <span>
+                                            <div class="categoryLbl">{{cat.request}}</div>
+                                            <span class="iconFLoat" *ngIf="checkForwardCategory(cat)"
+                                                name="ios-arrow-forward"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> {{subCategorySelected|json}}
+                <div *ngIf="subCategorySelected && showButton"> test
+                    <div>
+                        <div  class="returnBtn" (click)="previousCategories()">
+                            <span slot="start" class="returnIcon" name="ios-arrow-back"></span> Back
+                        </div>
+                        <!-- <div class="item-space item-weight" lines="none">{{subCategoryTitle}}</div> -->
+                        <div class="item-space"  *ngFor="let cat of requestCategory"
+                            (click)="reportSteps(cat)">
+                            <div class="reportList">
+                                <div>
+                                    <div>
+                                        <span>
+                                            <div class="categoryLbl">{{cat.request}}</div>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+      
+        </div>
+    </div>
+</section>

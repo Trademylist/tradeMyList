@@ -1,0 +1,116 @@
+<section class="home-banner">
+    <div class="container">
+        <div class="bgImage">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"> buy </li>
+                    <li class="breadcrumb-item" aria-current="page">sell</li>
+                    <li class="breadcrumb-item" aria-current="page">trade</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="latest_wrapper">
+    <div class="container">
+        <div class="latest-content">
+            <h2 class="lat-title"> latest products</h2>
+            <div class="row" *ngIf="allProduct?.length">
+                <ng-container *ngFor="let product of allProduct;index as i">
+
+                <!-- <ng-container *ngFor="let product of allProduct | searchFilter:searchQuery; index as i"> -->
+                <div class="col-md-3 latest-product" id="{{product._id}}" >
+                    <div class="product-card" *ngIf="product !== -1" [ngClass]="{ownProduct:isMyProduct(product)}">
+                        <div class="featured-like">
+                            <div class="ribon_wrap" *ngIf="product.boost == 1">
+                                <div class="ribbon"><button class="btn btn-outline-success">featured</button></div>
+                              </div>
+                            
+                            <button class="btn heart hrtBtn" *ngIf="loggedUser && loggedUser.userid != product.user_id" [ngClass]="isLiked(product?.likelist)?'feedLiked':'feedNotLiked'"
+                                (click)="likedUnlikedProduct(product)"> <i class="fa fa-heart" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="image-content">
+                            <img src="{{coverImageCheckAmazon(product)}}" alt="" (click)="goProductDetails(product)">
+                        </div>
+                        <div class="price-section">
+                            <div class="price-bar">
+                                <h2 class="price" *ngIf="product?.product_price">{{product?.currencyCode}}
+                                    {{product?.product_price}}</h2>
+                                <h3 class="times">{{product?.createdAt | dateAgo}}</h3>
+                            </div>
+                            <p class="desc">{{splitWord(product.product_name, 4)}}</p>
+                        </div>
+                        <div *ngIf="checkSellFaster(product)" class="sellPrdButtns">
+                            <button class="sellFasterBtn" [ngClass]="{deactiveClass: product.boost == 1}"
+                              [disabled]="product.boost == 1" (click)="viewBoostModal(product, 'boost')">
+                              <i class="fa fa-flash"></i>
+                              Sell faster
+                            </button>
+                        </div>
+
+                        <!-- <div class="no-item" *ngIf="product === -1"> <img src="assets/images/no_product.png"></div> -->
+                    </div>
+                </div>
+
+                <div class="col-md-3 latest-product" *ngIf="product && product.show_content">
+                    <section class="middle-banner">
+                        <div class="m-banner-wrapper">
+                            <div class="content">
+                                <h2>Want to see your stuff here? </h2>
+                                <p>Make some extra cash by selling things in your community. <br>
+                                    Go on, it's quick and easy.</p>
+                            </div>
+                            <button (click)="goToAddProduct()" type="button" class="btn start_selling">Start Selling</button>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- <section class="inmiddle-banner" *ngIf="i==3">
+                    <div class="m-banner-wrapper col-md-12">
+                        <div class="content">
+                            <h2>Want to see your stuff here? </h2>
+                            <p>Make some extra cash by selling things in your community. <br>
+                                Go on, it's quick and easy.</p>
+                        </div>
+                        <button (click)="goToAddProduct()" type="button" class="btn start_selling">Start
+                            Selling</button>
+                    </div>
+                </section> -->
+            </ng-container>
+                <!-- <div  infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50"
+                [infiniteScrollContainer]="selector" [fromRoot]="true" (scrolled)="onScroll()" (scrolledUp)="onScrollUp()">
+            </div> -->
+            </div>
+
+            <ng-container *ngIf="dataLoaded == 2">
+                <div class="no-item" *ngIf="dataLoaded == 2"> <img src="assets/images/no_product.png"></div>
+            </ng-container>
+
+            <!-- <section class="middle-banner">
+                <div class="m-banner-wrapper">
+                    <div class="content">
+                        <h2>Want to see your stuff here? </h2>
+                        <p>Make some extra cash by selling things in your community. <br>
+                            Go on, it's quick and easy.</p>
+                    </div>
+                    <button (click)="goToAddProduct()" type="button" class="btn start_selling">Start Selling</button>
+                </div>
+            </section> -->
+            <button *ngIf="totalProduct>allProduct.length" (click)="loadMore()" type="button" class="btn load-More">{{loadingMore?'Loading...':'Load More..'}}</button>
+
+        </div>
+    </div>
+</section>
+
+
+<div id="paypalModal" class="modal" role="dialog">
+    <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <app-stripe></app-stripe>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,255 @@
+
+input[type=range] {
+    -webkit-appearance: none;
+    margin: 15px 0;
+    width: 100%;
+  }
+  input[type=range]:focus {
+    outline: none;
+  }
+  input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 2px;
+    cursor: pointer;
+    animate: 0.2s;
+    background: #8e8e8e;
+    border-radius: 25px;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: #ff2200; 
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -8px;
+  }
+  input[type=range]:focus::-webkit-slider-runnable-track {
+    background: #ff2200;
+  }
+  .range-wrap{
+    width: 100%;
+    position: relative;
+  }
+  .range-value{
+    position: absolute;
+    top: -50%; font-size: 16px; font-family: 'WorkSans-Regular';
+  }
+  .range-value span{
+    width: 30px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    background: #03a9f4; 
+    color: #fff; 
+    display: block;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    border-radius: 6px;
+  }
+  .range-value span:before{
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-top: 10px solid #ff2200;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    margin-top: -1px;
+  }
+
+
+
+
+  /* stackbiz code */
+
+  .container {
+    width: 450px;
+    height: 200px;
+    padding: 2rem;
+    text-align: center;
+    border: dashed 1px #979797;
+    position: relative;
+    margin: 0 auto;
+  
+    input {
+      opacity: 0;
+      position: absolute;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+    }
+  
+    label {
+      color: white;
+      width: 183px;
+      height: 44px;
+      border-radius: 21.5px;
+      background-color: #db202f;
+      padding: 8px 16px;
+    }
+  
+    h3 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #38424c;
+    }
+  }
+  
+  .fileover {
+    animation: shake 1s;
+    animation-iteration-count: infinite;
+  }
+  
+  .files-list {
+    margin-top: 1.5rem;
+  
+    .single-file {
+      display: flex;
+      padding: 0.5rem;
+      justify-content: space-between;
+      align-items: center;
+      border: dashed 1px #979797;
+      margin-bottom: 1rem;
+  
+      .delete {
+        display: flex;
+        margin-left: 0.5rem;
+        cursor: pointer;
+        align-self: flex-end;
+      }
+  
+  
+      display: flex;
+      flex-grow: 1;
+  
+      .name {
+        font-size: 14px;
+        font-weight: 500;
+        color: #353f4a;
+        margin: 0;
+      }
+  
+      .size {
+        font-size: 12px;
+        font-weight: 500;
+        color: #a4a4a4;
+        margin: 0;
+        margin-bottom: 0.25rem;
+      }
+  
+      .info {
+        width: 100%
+      }
+    }
+  }
+  
+  /* Shake animation */
+  @keyframes shake {
+    0% {
+      transform: translate(1px, 1px) rotate(0deg);
+    }
+  
+    10% {
+      transform: translate(-1px, -2px) rotate(-1deg);
+    }
+  
+    20% {
+      transform: translate(-3px, 0px) rotate(1deg);
+    }
+  
+    30% {
+      transform: translate(3px, 2px) rotate(0deg);
+    }
+  
+    40% {
+      transform: translate(1px, -1px) rotate(1deg);
+    }
+  
+    50% {
+      transform: translate(-1px, 2px) rotate(-1deg);
+    }
+  
+    60% {
+      transform: translate(-3px, 1px) rotate(0deg);
+    }
+  
+    70% {
+      transform: translate(3px, 1px) rotate(-1deg);
+    }
+  
+    80% {
+      transform: translate(-1px, -1px) rotate(1deg);
+    }
+  
+    90% {
+      transform: translate(1px, 2px) rotate(0deg);
+    }
+  
+    100% {
+      transform: translate(1px, -2px) rotate(-1deg);
+    }
+  }
+  
+
+.errorCl{
+  margin-left: 18px;
+  color:red;
+}
+
+/* local modal css */
+
+
+.modal-footer {
+  display: block;
+}
+
+.alertBox {
+  border: 1px solid #250187;
+  padding: 10px 20px;
+  border-radius: 50px;
+  width: 45%;
+  background: #250187;
+  color: #fff;
+
+}
+.modal-dialog {
+  height: 100vh !important;
+  display: flex;
+}
+
+.modal-content {
+  margin: auto !important;
+  height: fit-content !important;
+}
+
+.image-cropper-wrapper{
+  height: 400px;
+  width: 496px;
+  overflow: hidden;
+}
+
+.modal{
+  z-index: 20 !important;   
+}
+.modal-backdrop{
+  z-index: 10;
+}
+
+.modal-body{
+  background: #ff6700;
+  color: #fff;
+  margin-bottom: 16px
+}
+.close-modal{
+  float: right;
+  cursor: pointer;
+}
+
+/* end locatain modal css */

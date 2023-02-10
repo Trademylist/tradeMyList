@@ -1,0 +1,158 @@
+
+
+<app-left-navigation>
+
+    <div class="add-product-wrapper">
+        <div class="form-section">
+            <form>
+                <div class="form-group">
+                    <p class="text-heading">What are you Selling?</p>
+                    <select class="form-control">
+                        <option selected> Select a Category</option>
+                        <option>Phone</option>
+                        <option>Car</option>
+                        <option>Bike</option>
+                        <option>Furniture</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <p class="text-heading">Listing Details</p>
+                    <input type="file" id="actual-btn" hidden />
+                    <label for="actual-btn" class="upload_image">
+                        <img src="assets/images/uploadIcon.png">
+                        <p class="upload_title">Upload Cover Image</p>
+                    </label>
+
+                    <div class="uploaded-images row">
+                        <div class="image-upload">
+                            <img src="assets/images/car.jpg">
+                            <span class="delete_imge">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            </span>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <input type="file" id="actual-btn" hidden />
+                    <label for="actual-btn" class="upload_image">
+                        <img src="assets/images/uploadIcon.png">
+                        <p class="upload_title">Add Additional Images</p>
+                    </label>
+
+                    <div class="uploaded-images row">
+                        <div class="image-upload">
+                            <img src="assets/images/car.jpg">
+                            <span class="delete_imge">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        <div class="image-upload">
+                            <img src="assets/images/car2.png">
+                            <span class="delete_imge">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Product Name">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Car">
+                </div>
+                <div class="form-group">
+                    <select class="form-control">
+                        <option selected> Company</option>
+                        <option>Phone</option>
+                        <option>Car</option>
+                        <option>Bike</option>
+                        <option>Furniture</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select class="form-control">
+                        <option selected> Model</option>
+                        <option>Phone</option>
+                        <option>Car</option>
+                        <option>Bike</option>
+                        <option>Furniture</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select class="form-control">
+                        <option selected> Trim</option>
+                        <option>Phone</option>
+                        <option>Car</option>
+                        <option>Bike</option>
+                        <option>Furniture</option>
+                    </select>
+                </div>
+
+                <div class="form-group sellerDetails">
+                    <span class="seller_proto">Seller :</span>
+
+                    <label class="cs-radio">Individual
+                        <input type="radio" checked="checked" name="radio">
+                        <span class="inner-check"></span>
+                    </label>
+                    <label class="cs-radio">Dealer
+                        <input type="radio" checked="checked" name="radio">
+                        <span class="inner-check"></span>
+                    </label>
+
+                </div>
+
+
+                <div class="form-group">
+                    <p class="text-heading">Year</p>
+                    <div class="range-wrap">
+                        <div class="range-value" id="rangeV"></div>
+                        <input id="range" type="range" min="1985" max="2020" value="2000" step="1">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <p class="text-heading">Mileage</p>
+                    <div class="range-wrap">
+                        <div class="range-value" id="rangeV2"></div>
+                        <input id="range2" type="range" min="2000" max="50000" value="15540" step="1">
+                    </div>
+                </div>
+
+
+                <div class="form-group sellerDetails">
+                    <span class="seller_proto">Transmision :</span>
+
+                    <label class="cs-radio">Manual
+                        <input type="radio" checked="checked" name="radio">
+                        <span class="inner-check"></span>
+                    </label>
+                    <label class="cs-radio">Automatic
+                        <input type="radio" checked="checked" name="radio">
+                        <span class="inner-check"></span>
+                    </label> 
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Product Price">
+                </div>
+                <div class="form-group search_undefined">
+                    <input type="text" class="form-control" placeholder="Undefined">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Product Description">
+                </div>
+
+                <button type="submit" class="btn btn_add_product">Submit</button>
+            </form>
+        </div>
+    </div>
+
+
+
+</app-left-navigation>
+

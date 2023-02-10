@@ -1,0 +1,596 @@
+
+
+<app-left-navigation>
+    <div class="back-button"><h5><i (click)="goBack()" class="fa fa-arrow-left" aria-hidden="true"></i> {{pageTitle}}</h5></div>
+    <div class="profile-details-wrapper">
+        <form [formGroup]="changeNameForm" (ngSubmit)="changeName(changeNameForm.value)" *ngIf="task == 'changeName'">
+            <div>
+                <div>
+                    <input class="form-control inputBrdr" type="text" formControlName="name"
+                        placeholder="Enter your name" maxlength="18">
+                    <!-- <ion-icon class="icon-size" name="md-person"></ion-icon> -->
+
+                </div>
+                <div>
+                    <span
+                        class="count cntB">{{changeNameForm.value.name != null ? changeNameForm.value.name?.length : 0}}/18</span>
+                    <div class="error-messages">
+                        <ng-container *ngFor="let error of error_messages.name">
+                            <div class="error-message"
+                                *ngIf="changeNameForm.get('name').hasError(error.type) && (changeNameForm.get('name').dirty || changeNameForm.get('name').touched)">
+                                {{ error.message }}
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="button-area">
+                    <button type="submit" button [ngClass]="changeNameForm.valid ? 'edit-btn' : 'disable-edit-btn'"
+                        [disabled]="!changeNameForm.valid">
+                        <strong>Save</strong>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <form [formGroup]="changeBioForm" (ngSubmit)="changeBio(changeBioForm.value)" *ngIf="task == 'changeBio'">
+            <div>
+                <div>
+                    <textarea rows="3" maxlength="150" class="inputBrdr" type="text" formControlName="bio"
+                        placeholder="{{bioPlaceholder}}">
+          </textarea>
+                </div>
+                <div>
+                    <span
+                        class="count cntB">{{changeBioForm.value.bio != null ? changeBioForm.value.bio?.length : 0}}/150</span>
+                    <div class="error-messages">
+                        <ng-container *ngFor="let error of error_messages.name">
+                            <div class="error-message"
+                                *ngIf="changeBioForm.get('bio').hasError(error.type) && (changeBioForm.get('bio').dirty || changeBioForm.get('bio').touched)">
+                                {{ error.message }}
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="button-area">
+                    <button type="submit" button [ngClass]="changeBioForm.valid ? 'edit-btn' : 'disable-edit-btn'"
+                        [disabled]="!changeBioForm.valid">
+                        <strong>Save</strong>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <form [formGroup]="changeEmailForm" (ngSubmit)="changeEmail(changeEmailForm.value)"
+            *ngIf="task == 'changeEmail'">
+            <div>
+                <div *ngIf="task == 'changeEmail'">
+                    <label class="user-email"><span class="email-style">Current email: </span>{{previousEmail}}
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input class="inputBrdr form-control" type="email" formControlName="email"
+                        placeholder="New email (email@domain.com)">
+
+                </div>
+                <div class="error-messages">
+                    <ng-container *ngFor="let error of error_messages.name">
+                        <div class="error-message"
+                            *ngIf="changeEmailForm.get('email').hasError(error.type) && (changeEmailForm.get('email').dirty || changeEmailForm.get('email').touched)">
+                            {{ error.message }}
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="button-area">
+                    <button type="submit" button [ngClass]="changeEmailForm.valid ? 'edit-btn' : 'disable-edit-btn'"
+                        [disabled]="!changeEmailForm.valid">
+                        <strong>Save</strong>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+       
+        <form [formGroup]="changePasswordForm" (ngSubmit)="changePassword(changePasswordForm.value)" *ngIf="task == 'changePassword'">
+                <div class="form-group">
+                    <input class="form-control" type="password" formControlName="currPassword" placeholder="Current password"/>
+                    <div class="error-messages">
+                        <ng-container *ngFor="let error of error_messages.currPassword">
+                            <div class="error-message"
+                                *ngIf="changePasswordForm.get('currPassword').hasError(error.type) && (changePasswordForm.get('currPassword').dirty || changePasswordForm.get('currPassword').touched)">
+                                {{ error.message }}
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input class="form-control" type="password" formControlName="password" placeholder="New password">
+                    <div class="error-messages">
+                        <ng-container *ngFor="let error of error_messages.password">
+                            <div class="error-message"
+                                *ngIf="changePasswordForm.get('password').hasError(error.type) && (changePasswordForm.get('password').dirty || changePasswordForm.get('password').touched)">
+                                {{ error.message }}
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input class="form-control" type="password" formControlName="confirmpassword"
+                        placeholder="Confirm new password">
+                    <div class="error-messages">
+                        <ng-container *ngFor="let error of error_messages.confirmpassword">
+                            <div class="error-message"
+                                *ngIf="changePasswordForm.get('confirmpassword').hasError(error.type) && (changePasswordForm.get('confirmpassword').dirty || changePasswordForm.get('confirmpassword').touched)">
+                                {{ error.message }}
+                            </div>
+                        </ng-container>
+                        <div class="error-message"
+                            *ngIf="!changePasswordForm.get('confirmpassword').errors && changePasswordForm.hasError('passwordNotMatch') && (changePasswordForm.get('confirmpassword').dirty || changePasswordForm.get('confirmpassword').touched)">
+                            Password and Confirm Password fields are not matching
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit" [ngClass]="changePasswordForm.valid ? 'edit-btn' : 'disable-edit-btn'"
+                        [disabled]="!changePasswordForm.valid">
+                        <strong> Change</strong>
+                    </button>
+                </div>
+        </form>
+
+        <div class="nSettings" *ngIf="task == 'notificationSettings'">
+            <div lines='none'>
+                <div class="row">
+                    <div class="col-md-10">
+                        <h5>Push Notifications</h5>
+                        <p>Push notifications about your listing, activity, and updates</p>
+                    </div>
+                    <div class="col-md-2">
+                        
+                        <label class="switch-toggle">
+                            <input type="checkbox" [(ngModel)]="allNotificationEnable" (ngModelChange)="toggleAllNotification()">
+                            <span class="slider round"></span>
+                        </label>
+
+                    </div>
+                    <ng-container *ngIf="!showMorePush">
+                        <div class="col-md-12 showMore">
+                            <a class="accordionBtn" (click)="showMorePush = !showMorePush">Show More</a>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div lines='none' *ngIf="showMorePush">
+                <div>
+                    <p style="margin-left: 20px">Listing updates</p>
+                    <div lines='none'>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h5>Favourite listing change</h5>
+                                <p>We'll send you notifications so you can see stat changes about your favorite listings
+                                </p>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="switch-toggle">
+                                    <input type="checkbox" [(ngModel)]="push.description_change_favorited_product"
+                                    (ngModelChange)="checkSettings()">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div lines='none'>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h5>Price change</h5>
+                                <p>We'll send you notifications so you can see price changes about your favorite
+                                    listings</p>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="switch-toggle">
+                                    <input type="checkbox" [(ngModel)]="push.price_change_favorited_product"
+                                    (ngModelChange)="checkSettings()">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div lines='none'>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h5>New pictures added to favourite</h5>
+                                <p>We'll send you notifications so you can see image changes about your favorite
+                                    listings</p>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="switch-toggle">
+                                    <input type="checkbox" [(ngModel)]="push.image_change_favorited_product"
+                                    (ngModelChange)="checkSettings()">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div lines='none'>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h5>Favourite listing sold</h5>
+                                <p>We'll send you notifications when your favorite listings is sold by seller</p>
+                            </div>
+                            <div class="col-md-3">
+                                <!-- <ion-toggle [(ngModel)]="push.soldOut_favorited_product"
+                                    (ngModelChange)="checkSettings()"></ion-toggle> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div lines='none'>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h5>Favourite listing deleted</h5>
+                                <p>We'll send you notifications when your favorite listings is deleted by seller</p>
+                            </div>
+                            <div class="col-md-3">
+                                
+                                <label class="switch-toggle">
+                                    <input type="checkbox" [(ngModel)]="push.delete_favorite_product"
+                                    (ngModelChange)="checkSettings()">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div lines='none'>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h5>Favourite listing expired</h5>
+                                <p>We'll send you notifications when your favorite listings has expired</p>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="switch-toggle">
+                                    <input type="checkbox" [(ngModel)]="push.expired_favorite_product"
+                                    (ngModelChange)="checkSettings()">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="margin-left: 20px">Activity</p>
+                    <div lines='none'>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h5>New review</h5>
+                                <p>We'll send you notifications when other users give you reviews</p>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="switch-toggle">
+                                    <input type="checkbox" [(ngModel)]="push.review" (ngModelChange)="checkSettings()">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div lines='none'>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h5>User favourite listing</h5>
+                                <p>We'll send you notifications when other users favourite your listings</p>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="switch-toggle">
+                                    <input type="checkbox" [(ngModel)]="push.user_visit_product" (ngModelChange)="checkSettings()">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div lines='none'>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h5>Listing expired</h5>
+                                <p>We'll send you notifications when your posted listings gets expired</p>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="switch-toggle">
+                                    <input type="checkbox" [(ngModel)]="push.expired_product" (ngModelChange)="checkSettings()">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="accordionBtnPos">
+                        <a class="accordionBtn" *ngIf="showMorePush" (click)="showMorePush = !showMorePush">Show
+                            Less</a>
+                    </p>
+                </div>
+            </div>
+
+            <div lines='none'>
+                <div class="row notifHeading">
+                    <div class="col-md-10">
+                        <h5>Email</h5>
+                        <p>Emails about your listings activity, and updates</p>
+                    </div>
+                    <div class="col-md-2">
+                                <label class="switch-toggle">
+                                    <input type="checkbox" [(ngModel)]="allEmailEnable" (ngModelChange)="toggleAllEmail()">
+                                    <span class="slider round"></span>
+                                </label>
+                    </div>
+                    <ng-container *ngIf="!showMoreEmail">
+                        <div class="col-md-12 showMore">
+                            <a class="accordionBtn" (click)="showMoreEmail = !showMoreEmail">Show More</a>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div lines='none' *ngIf="showMoreEmail">
+                <div>
+                    <p style="margin-left: 20px">Listing updates</p>
+                    <div lines='none'>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h5>Favourite listing change</h5>
+                                <p>We'll send you emails so you can see stat changes about your favorite listings</p>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="switch-toggle">
+                                    <input type="checkbox" [(ngModel)]="email.description_change_favorited_product"
+                                    (ngModelChange)="checkSettings()">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div lines='none'>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h5>Price change</h5>
+                                <p>We'll send you emails so you can see price changes about your favorite listings</p>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="switch-toggle">
+                                    <input type="checkbox" [(ngModel)]="email.price_change_favorited_product"
+                                    (ngModelChange)="checkSettings()">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div lines='none'>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h5>New pictures added to favourite</h5>
+                                <p>We'll send you emails so you can see image changes about your favorite listings</p>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="switch-toggle">
+                                    <input type="checkbox" [(ngModel)]="email.image_change_favorited_product"
+                                    (ngModelChange)="checkSettings()">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div lines='none'>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h5>Favourite listing sold</h5>
+                                <p>We'll send you emails when your favorite listings is sold by seller</p>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="switch-toggle">
+                                    <input type="checkbox" [(ngModel)]="email.soldOut_favorited_product"
+                                    (ngModelChange)="checkSettings()">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div lines='none'>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h5>Favourite listing deleted</h5>
+                                <p>We'll send you emails when your favorite listings is deleted by seller</p>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="switch-toggle">
+                                    <input type="checkbox" [(ngModel)]="email.delete_favorite_product"
+                                    (ngModelChange)="checkSettings()">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div lines='none'>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h5>Favourite listing expired</h5>
+                                <p>We'll send you emails when your favorite listings has expired</p>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="switch-toggle">
+                                    <input type="checkbox" [(ngModel)]="email.expired_favorite_product"
+                                    (ngModelChange)="checkSettings()">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="margin-left: 20px">Activity</p>
+                    <div lines='none'>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h5>New review</h5>
+                                <p>We'll send you emails when other users give you reviews</p>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="switch-toggle">
+                                    <input type="checkbox" [(ngModel)]="email.review" (ngModelChange)="checkSettings()">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div lines='none'>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h5>User favourite listing</h5>
+                                <p>We'll send you emails when other users favourite your listings</p>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="switch-toggle">
+                                    <input type="checkbox" [(ngModel)]="email.user_visit_product" (ngModelChange)="checkSettings()">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div lines='none'>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h5>Listing expired</h5>
+                                <p>We'll send you emails when your posted listings gets expired</p>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="switch-toggle">
+                                    <input type="checkbox" [(ngModel)]="email.expired_product" (ngModelChange)="checkSettings()">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="accordionBtnPos">
+                        <a class="accordionBtn" *ngIf="showMoreEmail" (click)="showMoreEmail = !showMoreEmail">Show
+                            Less</a>
+                    </p>
+                </div>
+            </div>
+
+            <div lines='none'>
+                <div class="row notifHeading">
+                    <div class="col-md-10">
+                        <h5>Chat Notifications</h5>
+                        <p>Push notifications and emails about chat messages</p>
+                    </div>
+                    <div class="col-md-2">
+                                <label class="switch-toggle">
+                                    <input type="checkbox" [(ngModel)]="allChatEnable" (ngModelChange)="toggleAllChat()">
+                                    <span class="slider round"></span>
+                                </label>
+                    </div>
+                    <ng-container *ngIf="!showMoreChat">
+                        <div class="col-md-12 showMore">
+                            <a class="accordionBtn" (click)="showMoreChat = !showMoreChat">Show More</a>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div lines='none' *ngIf="showMoreChat">
+                <div>
+                    <p style="margin-left: 20px">Push notifications</p>
+                    <div lines='none'>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h5>Unread messages</h5>
+                                <p>We'll send you reminders about unread chat messages</p>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="switch-toggle">
+                                    <input type="checkbox" [(ngModel)]="email.chat" (ngModelChange)="checkSettings()">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="margin-left: 20px">Email</p>
+                    <div lines='none'>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h5>Unread messages</h5>
+                                <p>We'll send you reminders about unread chat messages</p>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="switch-toggle">
+                                    <input type="checkbox" [(ngModel)]="push.chat" (ngModelChange)="checkSettings()">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="accordionBtnPos">
+                        <a class="accordionBtn" *ngIf="showMoreChat" (click)="showMoreChat = !showMoreChat">Show
+                            Less</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <ng-container *ngIf="task == 'myReviews'">
+
+            <div *ngIf="myReviews?.length" class="all-review-wrapper">
+                <div class="review-item" *ngFor="let review of myReviews; index as i">
+                    <div class="image-review">
+                        <img src="{{review?.image ? review.image : 'assets/images/default-avatar.png'}}">
+                    </div>
+                    <div class="name-conetnt">
+                        <h1 class="user-name"> {{review?.username ? review.username : 'Trade User'}}</h1>
+                        <span class="type-of-user" (click)="goToUserDetails(review)"> {{review?.user_type}}</span>
+                        <div class="rating-bar">
+                            <star-rating value={{review.rating}} totalstars=5 checkedcolor="gold" uncheckedcolor="grey" size="24px"
+                            readonly="false"></star-rating>
+                        </div>
+                        
+                        <p class="review_description">{{review?.description}}</p>
+
+                        <div class="row" *ngIf="review?.tags.length">
+                            <div class="col-md-12">
+                                <div class="list-tag">
+                                    <span *ngFor="let tag of review.tags; index as i">
+                                        {{tag}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="no-prod" *ngIf="myReviews?.length <= 0">
+                <img src="assets/images/selling.jpg">
+                <h3>No review</h3>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="task == 'myBlockList'">
+
+            <div class="block-list-wrp">
+                <div *ngFor="let user of blockList" class="block-person">
+                    <div class="blk-image">
+                        <img src="{{user?.image ? user.image : 'assets/images/default-avatar.png'}}">
+                    </div>
+                    <h3 class="name-blk-person">{{user.username}}</h3>
+                     <span class="buyer">{{user.role=='seller'?'Seller':Buyer}}</span>
+                    <button class="btn unblock" (click)="unblockUser(user._id)" >Unblock</button>
+                </div>
+                <!-- <div class="block-person">
+                    <div class="blk-image">
+                        <img src="{{user.image}}">
+                    </div>
+                    <h3 class="name-blk-person">{{user.username}}</h3>
+                     <span class="seller">Seller</span>
+                    <button class="btn unblock" (click)="unblockUser(user._id)" >Unblock</button>
+                </div> -->
+            </div>
+            <div class="no-prod" *ngIf="blockList?.length <= 0">
+                <!-- <img src="{{user.image}}"> -->
+                <h3>No users in block list</h3>
+            </div>
+        </ng-container>
+    </div>
+</app-left-navigation>
+
+
+<!--putngxspinner-->

@@ -1,0 +1,75 @@
+<!-- <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button (click)="goBack()">
+          <ion-icon name="arrow-round-back"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title>Report User</ion-title>
+    </ion-toolbar>
+  </ion-header> -->
+  
+  <div class="seller-container">
+
+    <div class="container">
+    <div *ngIf=" false && showButton == false">
+      <div class="no-prod no-category">
+        <img src="assets/images/selling.jpg">
+        <h3>No report category found</h3>
+      </div>
+    </div>
+    <ng-container *ngIf="!subCategorySelected && showButton">
+
+        <div class="item-space item-weight" lines="none">Why are you reporting this user?</div>
+        <div class="item-space" lines="none" *ngFor="let cat of reportCategory" (click)="reportSteps(cat)">
+          <div class="reportList">
+                <span>
+                  <label class="categoryLbl">{{cat.comment}}</label>
+                  <i class="fa fa-chevron-right iconFLoat" aria-hidden="true"  *ngIf="checkForwardCategory(cat)"></i>
+                  <i class="fa fa-check reportIcon iconFLoat" aria-hidden="true" *ngIf="checkSelectCategory(cat)" name="md-checkmark"></i>
+                  <!-- <ion-icon class="iconFLoat" *ngIf="checkForwardCategory(cat)" name="ios-arrow-forward"></ion-icon> -->
+                  <!-- <ion-icon class="reportIcon iconFLoat" *ngIf="checkSelectCategory(cat)" name="md-checkmark"></ion-icon> -->
+                </span>
+              <div *ngIf="showTextarea" size="12">
+                <textarea class="otherCat form-control" *ngIf="checkOtherCategory(cat)"
+                  placeholder="Add any additional notes that may help us to resolve this issue" maxlength="255"
+                  [(ngModel)]="manual_comment" (focus)="otherComment(cat)"></textarea>
+                <span *ngIf="checkOtherCategory(cat)"
+                  class="count cntB">{{manual_comment != null ? manual_comment?.length : 0}}/255</span>
+              </div>
+          </div>
+        </div>
+        <div class="reportCover" (click)="reportUser()">
+          <button class="reportBtn">Report</button>
+        </div>
+    
+    </ng-container>
+    <ng-container *ngIf="subCategorySelected && showButton">
+  
+        <div class="item-space item-weight" lines="none">{{subCategoryTitle}}</div>
+        <div class="item-space" lines="none" *ngFor="let cat of reportCategory" (click)="reportSteps(cat)">
+          <div class="reportList">
+                <span>
+                  <label class="categoryLbl">{{cat.comment}}</label>
+                  <i class="fa fa-check reportIcon iconFLoat" aria-hidden="true" *ngIf="checkSelectCategory(cat)"></i>
+
+                  <!-- <ion-icon class="reportIcon iconFLoat" *ngIf="checkSelectCategory(cat)" name="md-checkmark"></ion-icon> -->
+                </span>
+                <textarea class="otherCat form-control" *ngIf="checkOtherCategory(cat)"
+                  placeholder="Add any additional notes that may help us to resolve this issue"
+                  [(ngModel)]="manual_comment" (focus)="otherComment(cat)"></textarea>
+          </div>
+        </div>
+        <div lines="none" class="returnBtn" (click)="previousCategories()">
+            <span><i class="fa fa-chevron-left returnIcon" aria-hidden="true"></i> Report something else</span>
+
+          <!-- <ion-icon slot="start" class="returnIcon" name="ios-arrow-back"></ion-icon> Report something else -->
+        </div>
+        <div class="reportCover" (click)="reportUser()">
+          <button class="reportBtn">Report</button>
+        </div>
+     
+    </ng-container>
+  </div>
+</div>
+  <app-dialog #appDialog></app-dialog>

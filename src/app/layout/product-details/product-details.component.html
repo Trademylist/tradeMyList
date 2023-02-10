@@ -1,0 +1,108 @@
+
+
+<section class="product-details-w">
+    <div class="container">
+        <div class="page-nav">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Product Categories</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Maruti Suzuki in Matawala</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="product-list">
+            <div class="row">
+                <div class="col-lg-7 ">
+                    <div class="imge-section ">
+                        <div id="demo" class="carousel slide" data-ride="carousel" data-interval="false">
+
+                            <!-- Indicators -->
+                            <ul class="carousel-indicators">
+                                <div data-target="#demo" *ngFor="let item of HEROES; let i = index"
+                                    [ngClass]="{'active' : i == 0}" (click)="onselectFruit(item)">
+                                    <img [src]="item.imgurl" style="width: 60px; height: 60px; margin: 10px;">
+                                </div>
+
+                            </ul>
+
+                            <!-- The slideshow -->
+                            <div class="carousel-inner">
+                               
+                                <div class="carousel-item" *ngFor="let item of HEROES; let i = index"
+                                    [ngClass]="{'active' : i == 0}">
+                                    
+                                    <img class="image-lg" [src]="item.imgurl">
+                                </div>
+
+                            </div>
+                            <div class="cus-height"></div>
+                            <!-- Left and right controls -->
+                            <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                                <span class="carousel-control-prev-icon"></span>
+                            </a>
+                            <a class="carousel-control-next" href="#demo" data-slide="next">
+                                <span class="carousel-control-next-icon"></span>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="card prod_details">
+                        <div class="price-with-s">
+
+                            <h1 class="price">$3663</h1>
+                            <p class="pr-km">2017 - 40,000km</p>
+
+                            <a class="share-product" [routerLink]="['/routePath']"> <img
+                                    src="assets/images/share-icon.png"> </a>
+
+                            <h2 class="model_name">Maruti Suzuki Swift Windsong Limited
+                                edition VXI, 2017, Petrol</h2>
+                            <p class="address">Matawala Bagh, Dehradun, Uttaranchal
+                                Oct 26</p>
+                        </div>
+                    </div>
+                    <div class="card prod_details">
+                        <div class="seller-detils">
+                            <a class="s-d" [routerLink]="['/routePath']">Seller Details</a>
+                            <a class="message" [routerLink]="['/routePath']"> <img
+                                    src="assets/images/chat-doubleIcon.png"></a>
+                        </div>
+                        <div class="seller-map">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3444.253401975267!2d78.0203695146003!3d30.315309262681932!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3909298bcf16028b%3A0x74a19d7c85960b23!2sMata%20Wala%20Bagh%2C%20Saharanpur%20Rd%2C%20Laxman%20Chowk%2C%20Dehradun%2C%20Uttarakhand%20248001!5e0!3m2!1sen!2sin!4v1606211825406!5m2!1sen!2sin"
+                                width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""
+                                aria-hidden="false" tabindex="0"></iframe>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="more-details">
+                <h3 class="details-header"> Details</h3>
+
+                <div class="more-info">
+                    <p class="in-item"> <span>Category</span>Car</p>
+                    <p class="in-item"> <span>Posted</span>15 days ago</p>
+                    <p class="in-item"> <span>Description</span>Uploading car to sell</p>
+                    <p class="in-item"> <span>Main Details</span>This is Maruti Eeco Car</p>
+                    <p class="in-item"> <span>Seller</span>Individual</p>
+                    <p class="in-item"> <span>Trnsmission</span>Automatic</p>
+                    <p class="in-item"> <span>Trim</span>E1</p>
+                    <p class="in-item"> <span>Year</span>2000</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+

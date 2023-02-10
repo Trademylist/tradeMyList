@@ -1,0 +1,171 @@
+.c-s-checkbox:hover { color: #ffa800;}
+.c-s-checkbox {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin: 15px 0;
+    cursor: pointer;
+    font-size: 16px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none; color: #818181;
+    user-select: none;
+    font-family: 'WorkSans-regular';
+  }
+  
+  /* Hide the browser's default checkbox */
+  .c-s-checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  /* Create a custom checkbox */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 23px;
+    width: 23px;
+    border: 1px solid #d2d2d2;
+    border-radius: 0px; 
+  }
+  
+  /* On mouse-over, add a grey background color */
+  .c-s-checkbox:hover input ~ .checkmark {
+    background-color: #fff;
+    border: 1px solid #ffa800;
+  }
+  
+  /* When the checkbox is checked, add a blue background */
+  .c-s-checkbox input:checked ~ .checkmark {
+    background-color: #fff;
+  }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Show the checkmark when checked */
+  .c-s-checkbox input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  /* Style the checkmark/indicator */
+  .c-s-checkbox .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid #ff6700;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+
+
+  /* radio button */
+
+  .cs-radio {
+    display: block; position: relative; padding-left: 30px; 
+    cursor: pointer; font-size: 22px; -webkit-user-select: none;
+    -moz-user-select: none; -ms-user-select: none; user-select: none;
+  }
+   
+  .cs-radio input {
+    position: absolute; opacity: 0; cursor: pointer;
+  }
+ 
+  .inner-check {
+    position: absolute; top: 4px; left: 0; height: 22px;
+    width: 22px; background-color: #fff; border-radius: 50%; border: 1px solid #cacaca;
+  }
+ 
+  .cs-radio input:checked ~ .inner-check {
+    background-color: #fff; border: 1px solid #f16000;
+  }
+  
+  .inner-check:after {
+    content: ""; position: absolute; display: none;
+  }
+ 
+  .cs-radio input:checked ~ .inner-check:after {
+    display: block;
+  }
+ 
+  .cs-radio .inner-check:after {
+    top: 50%; left: 50%; width: 11px; height: 11px;
+    border-radius: 50%; background: #f16000; transform: translate(-50%, -50%);
+  }
+
+  /* custom switch */
+
+  .switch-toggle {
+    position: relative;
+    display: inline-block;
+    width: 52px;
+    height: 22px; margin: 0;
+  } 
+  
+  .switch-toggle input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 2px;
+    bottom: 0px;
+    background-color: #fff;
+    -webkit-transition: .4s; box-shadow: 0px 1px 5px #757474;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #f36100;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #f36100;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+    height: 28px;
+    width: 28px;
+    left: 2px;
+    bottom: -1px;
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }

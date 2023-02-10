@@ -1,0 +1,77 @@
+.no-item img{
+    width: 400px;
+    margin: auto;
+}
+
+.no-item{
+   text-align: center;
+}
+
+.hrtBtn{ position: relative;}
+.ribon_wrap{
+    width: 119px;
+    height: 116px;
+    overflow: hidden;
+    position: absolute;
+    top: 10px;
+    right: 8px; }
+.ribon_wrap button{ padding: 0; border: none!important; outline: none; color: #fff!important;}
+.ribon_wrap button:hover{ background-color: transparent!important;}
+  .ribbon {
+    font: bold 15px Sans-Serif;
+    line-height: 18px;
+    color: #333;
+    text-align: center;
+    text-transform: uppercase;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    position: relative;
+    padding: 7px 0;
+    left: -4px;
+    top: 26px;
+    width: 166px;
+    background-color: #ff6700;
+    color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    letter-spacing: 0.5px;
+    box-shadow: -3px 5px 6px -5px rgba(0, 0, 0, 0.5);
+    outline: 1px solid #fff;
+    outline-offset: -4px; }
+  
+  .ribbon:before, .ribbon:after {
+    content: "";
+    border-top: 4px solid #4e7c7d;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    position: absolute;
+    bottom: -4px; }
+  
+  .ribbon:before {
+    content: "";
+    position: absolute;
+    left: 0px;
+    top: 100%;
+    z-index: -1;
+    border-left: 4px solid #bd5108;
+    border-right: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-top: 4px solid #bd5108; }
+  
+  .ribbon:after {
+    content: "";
+    position: absolute;
+    right: 7px;
+    top: 100%;
+    z-index: -1;
+    border-left: 4px solid transparent;
+    border-right: 4px solid #bd5108;
+    border-bottom: 4px solid transparent;
+    border-top: 4px solid #bd5108; }
+  
+    @media (max-width:568px){
+      .no-item img{
+        width: 100%;
+      }
+    }

@@ -1,0 +1,328 @@
+<div class="header-wrapper">
+  <div class="headerMain">
+    <div class="header-container">
+      <div class="top-wrapper">
+        <div (click)="onHomePageClick()" class="logo-wrapper">
+          <img
+            [routerLink]="['/home-page']"
+            src="assets/images/trade-logo.png"
+            class="img-responsive"
+          />
+        </div>
+
+        <div class="search-download">
+          <div class="search-section">
+            <form class="form-inline">
+              <input
+                [(ngModel)]="searchQuery"
+                name="searchQuery"
+                (change)="search($event)"
+                (keyup)="search($event)"
+                class="form-control search_field"
+                type="search"
+                placeholder="Find Cars, Mobile Phones and more..."
+                aria-label="Search"
+              />
+              <div class="form-group locationSeletTop">
+                <div class="topSelect" (click)="getLocation()">&nbsp;</div>
+                <select
+                  [(ngModel)]="locality"
+                  name="locality"
+                  class="form-control selectBox"
+                >
+                  <option value="{{ locality }}">{{ locality }}</option>
+                </select>
+                <!-- <div>
+                                <input placeholder="search for location" autocorrect="off" autocapitalize="off"
+                                    spellcheck="off" type="text" class="form-control" #search>
+                            </div> -->
+
+                <!-- <div class="map" #map></div> -->
+                <!-- <input ngx-google-places-autocomplete  #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)" /> -->
+                <!-- <input ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)"/> -->
+              </div>
+              <!-- <button class="btn btn-go" type="button" (click)="onGo()">go</button> -->
+              <button
+                class="btn sellBtn"
+                type="submit"
+                (click)="goToAddProduct()"
+              >
+                <!-- <img src="../../../assets/images/cameraicon.png"> -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-camera camera-icon"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M15 12V6a1 1 0 0 0-1-1h-1.172a3 3 0 0 1-2.12-.879l-.83-.828A1 1 0 0 0 9.173 3H6.828a1 1 0 0 0-.707.293l-.828.828A3 3 0 0 1 3.172 5H2a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2z"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    d="M8 11a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"
+                  />
+                  <path d="M3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
+                </svg>
+                Sell
+              </button>
+            </form>
+          </div>
+
+          <div class="notification-section">
+            <div class="">
+              <a (click)="goToChatListPage()"
+                ><span class="notific" *ngIf="totalUnreadMsg > 0"
+                  >{{ totalUnreadMsg
+                  }}<span *ngIf="totalUnreadMsg > 99" class="notiPlus"
+                    >+</span
+                  ></span
+                >
+                <!-- <img src="./assets/images/chatIcon.png"> -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-chat-left-fill chat-icon"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"
+                  />
+                </svg>
+              </a>
+              <a
+                placement="bottom"
+                #popover="ngbPopover"
+                [autoClose]="'outside'"
+                [ngbPopover]="notification"
+              >
+                <span class="notific" *ngIf="notificationDetails.length > 0"
+                  >{{ notificationDetails.length
+                  }}<span
+                    *ngIf="notificationDetails.length > 99"
+                    class="notiPlus"
+                    >+</span
+                  ></span
+                >
+                <!-- <img src="../../../assets/images/notification.png"> -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-bell-fill notification-icon"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"
+                  />
+                </svg>
+              </a>
+              <a (click)="goToDownload()" class="downloadApp"
+                ><img src="assets/images/download.svg" />
+                <span> the app</span>
+              </a>
+            </div>
+            <!-- <button *ngIf="loggedUser==null" class="btn login-signup" [routerLink]="['/signin']"
+                            routerLinkActive="router-link-active">
+                            <i class="fa fa-user-circle-o" aria-hidden="true"></i> Sign in/ Sign up
+                        </button> -->
+            <div *ngIf="loggedUser == null" class="btn login-signup">
+              <i
+                class="fa fa-user-circle-o"
+                aria-hidden="true"
+                [routerLink]="['/signin']"
+                routerLinkActive="router-link-active"
+                ><span>Sign in</span></i
+              >
+              <i
+                [routerLink]="['/signup']"
+                routerLinkActive="router-link-active"
+              >
+                / Sign up</i
+              >
+            </div>
+            <!-- profile button after logged in -->
+            <div *ngIf="loggedUser != null" class="dropdown show profile">
+              <button
+                type="button"
+                class="btn login-signup dropdown-toggle"
+                id="dropdownMenuLink"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <span class="img-wer">
+                  <img
+                    src="{{
+                      loggedUser?.image
+                        ? loggedUser.image
+                        : 'assets/images/noti_idol2.jpg'
+                    }}"
+                  />
+                </span>
+                <p class="user_name">
+                  {{
+                    loggedUser.username == null
+                      ? "Trade User"
+                      : loggedUser.username
+                  }}
+                </p>
+              </button>
+
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a
+                  class="dropdown-item"
+                  [routerLink]="['/' + baseRoute + '/user/edit-profile']"
+                  >My Profile</a
+                >
+                <a class="dropdown-item" (click)="logout()">Logout</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a class="toggle_button" (click)="toggle1()"
+          ><i class="fa fa-bars" aria-hidden="true"> </i> &nbsp; Product
+          Categories & Commercial Categories
+        </a>
+      </div>
+    </div>
+    <ng-template #notification>
+      <div class="notification_dm noticlss">
+        <h2 class="notification_title">
+          notifications
+          <span *ngIf="notificationDetails.length == 0"> is empty!</span>
+          <span
+            *ngIf="notificationDetails.length > 0"
+            class="notification-delete"
+            (click)="clearAllNotification()"
+            >Clear All</span
+          >
+        </h2>
+        <div
+          class="notification-item"
+          *ngFor="let notification of notificationDetails"
+        >
+          <div class="image-area">
+            <img src="assets/images/noti_idol.jpg" />
+          </div>
+          <div
+            class="content-area cpointer"
+            (click)="checkNotificaion(notification)"
+          >
+            <div class="nme-date">
+              <h2 class="name">
+                {{ notification?.title }}
+                <span
+                  (click)="clearIndividualNotification(notification)"
+                  class="notification-delete"
+                  ><i class="trash_icon fa fa-trash-o" aria-hidden="true"></i
+                ></span>
+              </h2>
+              <!-- <h6 class="time_date">20/08/2020 <span> 09:30pm</span></h6> -->
+            </div>
+
+            <p class="desc">{{ notification?.message }}</p>
+
+            <p *ngIf="notification?.image">
+              <i class="fa fa-picture-o" aria-hidden="true"></i>
+            </p>
+          </div>
+        </div>
+        <div class="no-prod" *ngIf="notificationLoaded == 2">
+          <h3>You're all caught up</h3>
+          <!-- <img class="no-notification-img" src="assets/images/no_data.png"> -->
+          <!-- <h1>Notificatin Empty</h1> -->
+          <div class="clr-notification">
+            Way to go! Check back later for the latest updates on all your
+            listings and items you are following here.
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>
+
+<!-- .catedgory and commercial -->
+<div class="cat-commerci-wrapper">
+  <div class="header-container">
+    <div class="drawer-navigationMenu" [ngClass]="{ showData: status1 }">
+      <div class="small-logo">
+        <img src="assets/images/trade-logo.png" class="img-fluid" />
+        <a class="close_button" (click)="toggle1()">X</a>
+      </div>
+      <nav class="navbar topNav topNav1 navbar-expand-lg navbar-light">
+        <a class="navbar-brand" (click)="goToProduct()">PRODUCT &nbsp;:</a>
+        <div
+          *ngIf="true || showLeftButton"
+          (click)="buttonLeft()"
+          [ngClass]="{ 'backWard': !showLeftButton, 'backWard_color': showLeftButton }"
+        >
+          <a class="nav-link"
+            ><i class="fa fa-angle-double-left" aria-hidden="true"></i
+          ></a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul id="product-h-category" class="navbar-nav mr-auto">
+            <li
+              *ngFor="let category of allCategory; index as i"
+              class="nav-item active"
+              (click)="btnSearchCategory(category)"
+            >
+              <a class="nav-link">{{ category?.category_name }}</a>
+            </li>
+          </ul>
+        </div>
+        <div
+          *ngIf="true || !showLeftButton"
+          (click)="buttonRight()"
+          class="forWard"
+        >
+          <a class="nav-link"
+            ><i class="fa fa-angle-double-right" aria-hidden="true"></i
+          ></a>
+        </div>
+      </nav>
+
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" (click)="goToCommercialProduct()"
+          >COMMERCIAL &nbsp;:</a
+        >
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <!-- <img src="{{categoryCommercialImageUrl}}{{category?.category_image[0]}}"> -->
+            <li
+              class="nav-item active"
+              *ngFor="let category of allCommercialCategory; index as i"
+              (click)="btnSearchCommercialCategory(category)"
+            >
+              <a class="nav-link">{{ category?.category_name }}</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<!-- <div id="location-alert" class="modal" tabindex="-1" role="dialog">
+    
+    <div class="modal-dialog" role="document">
+      <div class="modal-content text-center">
+        
+        <div class="modal-body">
+          <h4>Select your location.</h4>
+        </div>
+        <app-location *ngIf="loadMap" [locationReason]="'productAddress'"></app-location>
+        <div selectedLocality!=null" class="modal-footer text-center">
+          <button type="button" class="btn alertBox" (click)="closeLocationAlert()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+<!--putngxspinner-->

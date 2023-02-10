@@ -1,0 +1,19 @@
+.tag {
+    width : auto !important;
+    height: 35px;
+
+    .tag-key {
+        border       : 1px solid;
+        border-color : #c7bbbc;
+        border-radius: 20px;
+        padding      : 4px;
+        margin       : 5px;
+    }
+
+    .cnt {
+        font-weight: bold;
+    }
+}
+.no-prod{
+    text-align: center;
+}

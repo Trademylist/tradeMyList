@@ -1,0 +1,72 @@
+
+
+<app-left-navigation>
+
+    <div class="edit-profile-wr">
+        <div class="edit-wr">
+            <form>
+                <div class="profile-section">
+                    <div class="image-with-upload">
+                        <div class="image-w">
+                            <img src="{{userDetails?.image ? userDetails.image : 'assets/images/default-avatar.png'}}">
+                        </div>
+                        <label class="image-up" for="upload-photo">
+                            <input type="file" accept="image/*" id="upload-photo" hidden (change)="fileHandler($event)">
+                            <img src="assets/images/Upload-camera-Icon.jpg">
+                        </label>
+                    </div>
+                    <h1 class="profile-header"
+                        (click)="profileSettings('changeName', userDetails.username ? userDetails.username : null)">
+                        {{userDetails?.username == null ? 'Trade User' : userDetails?.username}}</h1>
+                    <p class="member">Member since {{userDetails?.createdAt | date:'yyyy'}}</p>
+                    <div class="verified-wrap">
+                        <span class="vf-By">Verified with: </span>
+                        <span *ngIf="userDetails?.login_type=='Facebook'"><i class="fa fa-facebook-square"
+                                aria-hidden="true"></i></span>
+                        <span *ngIf="userDetails?.login_type==null"><i class="fa fa-envelope"
+                                aria-hidden="true"></i></span>
+                        <span *ngIf="userDetails?.login_type=='Phone number'"><i class="fa fa-mobile"
+                                aria-hidden="true"></i></span>
+                        <img *ngIf="userDetails?.login_type=='Google'" src="assets/images/gmailIcon.png">
+                    </div>
+                </div>
+
+                <!-- <div class="form-group">
+                <input type="text" placeholder="First Name" value="William" class="form-control"> 
+            </div>
+            <div class="form-group">
+                <input type="text" placeholder="Last Name" value="Doe" class="form-control"> 
+            </div> -->
+
+
+                <div class="form-group">
+                    <a class="change_password"
+                        (click)="profileSettings('changeName', userDetails.username ? userDetails.username : null)">
+                        Change Name <img src="assets/images/right-arrow-red.png"></a>
+                </div>
+
+                <div class="form-group" *ngIf="userDetails?.login_type!='Facebook' && userDetails?.login_type!='Google'" >
+                    <a class="change_password" (click)="profileSettings('changePassword','')">Change Password <img
+                            src="assets/images/right-arrow-red.png"></a>
+                </div>
+
+                <!-- <div class="form-group">
+                <a class="change_password" (click)="profileSettings('notificationSettings','')" >Notifications settings <img src="assets/images/right-arrow-red.png"></a> 
+            </div> -->
+
+                <!-- <div class="form-group">
+                <a class="change_password" (click)="profileSettings('changeEmail', userDetails.email ? userDetails.email : null)" >Edit Email <img src="assets/images/right-arrow-red.png"></a> 
+            </div> -->
+
+
+
+                <!-- <button type="button" class="btn save-btn">Save</button> -->
+            </form>
+
+        </div>
+    </div>
+</app-left-navigation>
+
+
+
+<!--putngxspinner-->

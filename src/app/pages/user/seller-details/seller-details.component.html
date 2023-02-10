@@ -1,0 +1,231 @@
+<div class="seller-container">
+
+    <div class="container">
+
+        <div class="seller-details-w">
+            <div class="profile-section">
+                <div class="image-with-upload">
+                    <div class="image-w">
+                        <img
+                            src="{{sellerBasicDetails?.image ? sellerBasicDetails.image : 'assets/images/default-avatar.png'}}">
+                    </div>
+                    <!-- <label class="image-up" for="upload-photo">
+                        <input type="file" id="upload-photo" hidden>
+                        <img src="assets/images/Upload-camera-Icon.jpg">
+                    </label> -->
+                </div>
+                <div class="profile-content">
+                    <h1 class="profile-header">
+                        {{ sellerBasicDetails?.username ? sellerBasicDetails.username : 'Trade User' | titlecase }}</h1>
+                    <div class="ratings">
+                        <!-- <ngx-star-rating [(ngModel)]="sellerRating"  [id]="'avg_rating'" [disabled] ="true"></ngx-star-rating>
+                        <span class="count-review">({{sellerBasicDetails?.count}})</span> -->
+                        <!-- <star-rating value=4.3 totalstars=5 checkedcolor="red" uncheckedcolor="black" size="24px"
+                        readonly="false"></star-rating> -->
+
+                        <star-rating value={{sellerRating}} totalstars=5 checkedcolor="gold" uncheckedcolor="grey" size="24px"
+                        readonly="false"></star-rating>
+                    </div>
+                    <div>{{ sellerBasicDetails?.address }}</div>
+                    <div class="verified-wrap">
+                        <!-- <span class="vf-By">Verified with: </span>
+                        <img src="assets/images/gmailIcon.png"> -->
+
+                        <span class="vf-By">Verified with: </span>
+                        <span *ngIf="sellerBasicDetails?.login_type=='Facebook'"><i class="fa fa-facebook-square"
+                                aria-hidden="true"></i></span>
+                        <span *ngIf="sellerBasicDetails?.login_type==null"><i class="fa fa-envelope"
+                                aria-hidden="true"></i></span>
+                        <span *ngIf="sellerBasicDetails?.login_type=='Phone number'"><i class="fa fa-mobile"
+                                aria-hidden="true"></i></span>
+                        <img *ngIf="sellerBasicDetails?.login_type=='Google'" src="assets/images/gmailIcon.png">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-action" *ngIf="checkLoggedUser()">
+                <button class="btn fill-actionButton" (click)="blockUser()">Block user</button>
+                <button class="btn outline-actionButton" (click)="openReportPage()">report user</button>
+            </div>
+        </div>
+
+        <div class="seller-details-w2">
+
+            <div class="my-listing-wrapper">
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                    <li class="nav-item" (click)="segmentChanged('selling')">
+                        <a class="nav-link" [ngClass]="{'active': sellerSegment === 'selling'}" id="pills-home-tab"
+                            data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home"
+                            aria-selected="true">Product</a>
+                    </li>
+                    <li class="nav-item" (click)="segmentChanged('commercial')">
+                        <a class="nav-link" [ngClass]="{'active': sellerSegment === 'commercial'}"
+                            id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"
+                            aria-controls="pills-profile" aria-selected="false">Commercial</a>
+                    </li>
+                    <li class="nav-item" (click)="segmentChanged('reviews')">
+                        <a class="nav-link" [ngClass]="{'active': sellerSegment === 'reviews'}" id="pills-contact-tab"
+                            data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact"
+                            aria-selected="false">Reviews</a>
+                    </li>
+
+                </ul>
+                <div class="tab-content" id="pills-tabContent" [ngSwitch]="sellerSegment">
+                    <ng-container *ngSwitchCase="'selling'">
+
+                        <div *ngIf="sellerProducts?.length" class="tab-pane fade show active" id="pills-home"
+                            role="tabpanel" aria-labelledby="pills-home-tab">
+                            <!-- /products -->
+                            <div class="row">
+                                <ng-container *ngFor='let product of sellerProducts;let index = index'>
+                                    <div class=" col-lg-3  col-md-4  col-sm-6 latest-product">
+                                        <div class="product-card" (click)="openProductDetails(product)">
+                                            <div class="featured-like">
+                                                <button class="btn btn-outline-success" *ngIf="product?.soldOut">Sold
+                                                    out</button>
+                                                <button class="btn heart">
+
+                                                </button>
+                                            </div>
+                                            <div class="image-content">
+                                                <img (click)="goProductDetails(product)"
+                                                    src="{{ product?.cover_thumb ? product.cover_thumb : product?.image[0] ? product.image[0] : 'assets/imgs/no_image.jpg' }}">
+                                            </div>
+                                            <div class="price-section">
+                                                <div class="price-bar">
+                                                    <h2 class="price" *ngIf="product?.product_price">
+                                                        {{ product?.currencyCode }}&nbsp;<span>{{ product?.product_price }}</span>
+                                                    </h2>
+                                                    <h2 class="price"
+                                                        *ngIf="product?.product_price && product?.product_price == null">
+                                                        Free</h2>
+
+                                                    <!-- <h3 class="times">1 Day ago</h3> -->
+                                                </div>
+                                                <p class="desc"> {{product?.product_name}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </div>
+
+                        </div>
+
+                        <div class="no-prod" *ngIf="sellerProducts?.length<1">
+                            <img src="assets/images/selling.jpg">
+                            <h3> No listings for Products</h3>
+                        </div>
+
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'commercial'">
+                        <div class="tab-pane fade show active" id="pills-profile" role="tabpanel"
+                            aria-labelledby="pills-profile-tab" *ngIf="sellerCommercials?.length">
+                            <!-- /products -->
+                            <div class="row">
+                                <ng-container *ngFor='let product of sellerCommercials;let index = index'>
+                                    <div class=" col-lg-3  col-md-4  col-sm-6 latest-product">
+                                        <div class="product-card" (click)="openCommercialDetails(product)">
+                                            <div class="featured-like">
+                                                <button class="btn btn-outline-success" *ngIf="product?.soldOut">Sold
+                                                    out</button>
+                                                <button class="btn heart">
+                                                </button>
+                                            </div>
+                                            <div class="image-content">
+                                                <img 
+                                                    src="{{ product?.cover_thumb ? product.cover_thumb : product?.image[0] ? product.image[0] : 'assets/imgs/no_image.jpg' }}">
+                                            </div>
+                                            <div class="price-section">
+                                                <div class="price-bar">
+                                                    <h2 class="price" *ngIf="product?.product_price">
+                                                        {{ product?.currencyCode }}&nbsp;<span>{{ product?.product_price }}</span>
+                                                    </h2>
+                                                    <h2
+                                                        *ngIf="product?.product_price && product?.product_price == null">
+                                                        Free</h2>
+                                                    <!-- <h3 class="times">1 Day ago</h3> -->
+                                                </div>
+                                                <p class="desc"> {{ product?.product_name }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="no-prod" *ngIf="sellerCommercials?.length<1">
+                            <img src="assets/images/selling.jpg">
+                            <h3> No listings for Commercials</h3>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'reviews'">
+                        <div class="tab-pane fade show active" id="pills-contact" role="tabpanel"
+                            aria-labelledby="pills-contact-tab" *ngIf="sellerReviews?.length">
+
+                            <div class="all-review-wrapper">
+                                <p>{{ sellerBasicDetails?.username ? sellerBasicDetails.username : 'Trade User' | titlecase }}
+                                    is usually
+                                    described as </p>
+                                <br />
+                                <div class="row">
+                                    <div class="col-md col-sm tag"
+                                        *ngFor="let tag of sellerBasicDetails.tags | keyvalue">
+                                        <span class="tag-key">
+                                            {{tag.key}}: <span class="cnt">{{tag.value}}</span>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <ng-container *ngIf="sellerReviews?.length">
+                                    <p>All reviews</p>
+                                    <div class="review-item" *ngFor="let review of sellerReviews; index as i">
+                                        <div class="image-review" (click)="seeUserDetails(review.sender_id)">
+                                            <img src="{{review?.image ? review.image : 'assets/imgs/default-avatar.png'}}">
+                                        </div>
+                                        <div class="name-conetnt">
+                                            <h1 class="user-name" (click)="seeUserDetails(review.sender_id)">{{review?.username ? review.username : 'Trade User'}}</h1>
+                                            <span class="type-of-user"> {{review?.user_type}}</span>
+                                            <div class="rating-bar">
+                                                <star-rating value={{review.rating}} totalstars=5 checkedcolor="gold" uncheckedcolor="grey" size="24px"
+                        readonly="false"></star-rating>
+                                            </div>
+                                            <div class="row" *ngIf="review?.tags.length">
+                                                <div class="col-md-3" *ngFor="let tag of review.tags; index as i">
+                                                    {{tag}}
+                                                </div>
+                                            </div>
+                                            <p class="review_description">{{review?.description}}</p>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            
+
+
+                                <!-- <div class="all-pagination">
+                                    <ul class="pagination justify-content-center">
+
+                                        <li class="page-item pagination-active"><a class="page-link" href="#">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">.</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">.</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">.</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">10</a></li>
+                                    </ul>
+                                </div> -->
+
+                            </div>
+                        </div>
+                        <div class="no-prod" *ngIf="sellerReviews?.length<1">
+                            <img src="assets/images/selling.jpg">
+                            <h3>No listings for Reviews</h3>
+                          </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<app-dialog #appDialog [title]="dialogTitle" [message]="dialogMessage"></app-dialog>

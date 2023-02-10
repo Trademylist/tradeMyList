@@ -1,0 +1,129 @@
+
+<section id="download-app" class="download_app">
+    <div class="container">
+        <div class="download-inner-wrapper">
+            <div class="download-item">
+                <h1 class="download-title"> download the trade app</h1>
+                <p class="text-desc">Welcome to TradeMyListl! This is your one and only stop for anything. Whether you’re looking to get the most out of your Trade experience or you just want to learn more about our users and our impact on the community, look no further. Tutorials, blog articles, portraits of fellow users, advice, news… Find it all on TradeMyList! </p>
+  
+                <div class="action-button">
+                    <button><img src="assets/images/googlePlay.png" class="img-fluid"></button>
+                    <button><img src="assets/images/appStore.png" class="img-fluid"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+  
+  <section class="footer-wrapper">
+      <div class="container">
+          <div class="row">
+              <!-- <div class="col-md-3 custom_f_width">
+                  <h1 class="header-title">popular location</h1>   
+  
+                  <ul class="nav flex-column">
+                      <li class="nav-item">
+                        <a class="nav-link" href="#">Kolkata</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#">Mumbai</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#">Chennai</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#">Bangalore</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#">Pune</a>
+                      </li>
+                    </ul>
+              </div>  -->
+              
+              <div class="col-md-4 custom_f_width">
+                  <h1 class="header-title"> About Us</h1>  
+                  <ul class="nav flex-column">
+                      <!-- <li class="nav-item">
+                        <a class="nav-link" href="#">About Trade</a>
+                      </li> -->
+                      <!-- <li class="nav-item">
+                        <a class="nav-link" href="#">FAQ</a>
+                      </li> -->
+                      <!-- <li class="nav-item">
+                        <a class="nav-link" href="#">Careers</a>
+                      </li> -->
+                      <!-- <li class="nav-item">
+                        <a class="nav-link" href="#">Trade Team</a>
+                      </li> -->
+                      <li class="nav-item">
+                        <a class="nav-link" (click)="goTo('trade-help/ask-admin')" >Contact Us</a>
+                      </li>
+                    </ul>
+              </div> 
+              <div class="col-md-4 custom_f_width">
+                  <h1 class="header-title"> MY ACCOUNTS </h1> 
+                  <ul class="nav flex-column">
+                      <li class="nav-item" *ngIf="loggedUser==null">
+                        <a class="nav-link">
+                          <span [routerLink]="['/signin']"
+                          routerLinkActive="router-link-active"> Login / </span><span [routerLink]="['/signup']"
+                          routerLinkActive="router-link-active">Register</span></a>
+                      </li>
+                     
+                      <!-- <li class="nav-item">
+                        <a class="nav-link"  (click)="goToUrl('trade/product/my-product-listing/favourites')">My Wishlist</a>
+                      </li> -->
+                      <li class="nav-item">
+                        <a class="nav-link"  (click)="goToUrl('trade/product/my-product-listing/favourites')">My Favorites</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" (click)="goTo('trade-help/ask-admin')">Help</a>
+                      </li>
+                      
+                    </ul>
+              </div> 
+              <div class="col-md-4 custom_f_width">
+                  <h1 class="header-title"> CONTACT </h1> 
+                  <ul class="nav flex-column">
+                      <!-- <li class="nav-item">
+                        <a class="nav-link" href="tel:2465388888">Call : (246) 538-8888</a>
+                      </li> -->
+                      <li class="nav-item">
+                        <a class="nav-link" href="#">Email: info@dcoffice.net</a>
+                      </li>
+                      <li class="nav-item">
+                        <div class="social-media-wr">
+                          <h1 class="follow-us"> follow us on </h1> 
+                          <div class="icons">
+                            <a href="https://www.facebook.com/trademylist"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                            <!-- <a href=""><i class="fa fa-twitter" aria-hidden="true"></i></a> -->
+                            <a href=""><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                            <a href="https://www.instagram.com/trademylist/"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                          </div>
+                        </div>
+                      </li>
+                     
+                      
+                    </ul>
+              </div> 
+          </div>
+      </div>
+  </section>
+  
+  <section class="desclaimer-wrapper">
+    <div class="container">
+        <div class="row terms-condition-row">
+            <div class="terms-condition">
+                <p class="desclaimer"> © 2020 Trade. All Right Reserved.</p> 
+            </div>
+            <div class="terms-condition">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item" (click)="goTo('terms-and-conditions')">Terms & Conditions</li>
+                      <li class="breadcrumb-item" aria-current="page" (click)="goTo('privacy-policy')">Privacy Policy</li>
+                    </ol>
+                  </nav>
+            </div>
+        </div>
+    </div>
+  </section>

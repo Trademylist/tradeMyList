@@ -1,0 +1,55 @@
+agm-map {
+    height: 200px;
+}
+
+.pac-container {
+    background-color: #FFF;
+    z-index: 20;
+    position: fixed;
+    float: left;
+    display: inline-block;
+}
+
+.setLocation-btn {
+    text-align   : center;
+    border       : none;
+    // background   : var(--bgblue);
+    background: #ff6700;
+    border-radius: 100px;
+    margin-bottom: 25px;
+    width        : 95%;
+    padding      : 10px;
+    color        : #fff;
+    font-weight: 600;
+  }
+
+  .setCurrentLocation-btn{
+    text-align   : center;
+    border       : none;
+    // background   : var(--bgblue);
+    background: #250187;
+    border-radius: 100px;
+    margin-bottom: 0px;
+    width        : 100%;
+    padding      : 0px;
+    color        : #fff;
+    font-weight: 600;
+    margin: auto;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    img{
+      padding-right: 2px;
+    }
+    cursor: pointer;
+  }
+  .setCurrentLocation-btn:hover{
+    background: #3906c3;
+  }
+  .mile-range-selector{
+    width: 48%;
+    padding: 0px;
+    margin: 16px;
+  }
+  .setCurrentLocation-btn .addres-text{
+    font-size: 11px;
+  }

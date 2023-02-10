@@ -1,0 +1,67 @@
+.item-space {
+    padding: 5px 0px 5px 0px;
+    // text-align:center;
+}
+.item-weight {
+    font-weight: 600;
+}
+.reportCover {
+    text-align: center;
+    // position: fixed;
+    left: 0;
+    bottom: 25px;
+    right: 0;
+}
+.reportIcon {
+    color: #ff6700;
+}
+.reportBtn {
+    background-color: #ff6700;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 50px;
+    text-align: center;
+    width: 30%;
+    font-weight: 600;
+}
+.returnBtn {
+    color: #ff6700;
+    font-weight: 600;
+    text-align: center;
+}
+.returnBtn span{
+  cursor: pointer;
+}
+.returnIcon {
+    margin: 0;
+    color: #ff6700;
+}
+.categoryLbl {
+    text-align: center;;
+}
+.iconFLoat {
+    float: right;
+    font-size: 16px;
+    padding: 7px;
+}
+.otherCat {
+    border-top: 1px solid #c7bfbf;
+}
+.reportList {
+    cursor: pointer;
+    padding-left: 16px;
+    background: #e6e7e8;
+    border-radius: 0px;
+}
+
+.reportList label{
+    cursor: pointer;
+}
+.count {
+    position: relative;
+    float: right;
+    color: #c7bfbf;
+}
+.no-category {
+    width: 100%
+}

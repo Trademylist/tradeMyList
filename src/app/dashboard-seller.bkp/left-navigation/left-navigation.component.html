@@ -1,0 +1,50 @@
+<section class="left-nav">
+<div class="container">
+    <div class="row">
+        <div class="col-xl-3 col-lg-4 col-sm-12 ">
+            <div class="nav-menu-lay bg-fresh">
+                <ul class="nav flex_nav-item">
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/edit-profile']" routerLinkActive="active" >Edit Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/add-product']" routerLinkActive="active" >Add Product</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/add-commercial-product']" routerLinkActive="active" >Add Commercial Product</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/my-listing']" routerLinkActive="active" >My Listing</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/chatter']" routerLinkActive="active" >Chatter</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/all-reviews']" routerLinkActive="active" >All Reviews</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/block-list']" routerLinkActive="active" >Block List</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/notification-settings']" routerLinkActive="active" >Notification Settings</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/logout']">Logout</a>
+                    </li>
+ 
+                </ul>
+            </div>
+        </div>
+        <div class="col-xl-9 col-lg-8 col-sm-12">
+            <div class="bg-fresh">
+            <ng-content></ng-content>
+        </div>
+        </div>
+    </div>
+</div>
+</section>

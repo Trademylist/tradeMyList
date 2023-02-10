@@ -1,0 +1,104 @@
+ 
+.main-cht {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+.main-cht::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
+}
+
+
+.live_scroll {
+overflow-x: auto;
+overflow-y: hidden;
+white-space: nowrap;
+position: absolute;
+bottom: 100px;
+width: 100%;
+}
+
+.live_scroll .row {
+display      : block;
+margin-bottom: 10px;
+margin-top   : 10px;
+}
+
+.chat-text {
+  color: #453d3d !important;
+}
+
+.live_scroll .live_scroll-box {
+display      : inline-block;
+float        : none;
+padding      : 8px;
+border-radius: 24px;
+background   : #383ec1;
+color        : white;
+margin-left  : 20px;
+}
+.clear-chat{
+float: right;
+}
+.readed-message{
+font-size: 10px;
+color: #f14040;
+float: right;
+}
+.profile-image img{
+width: 85px;
+}
+.send-img{
+// display:flex;
+}
+.send-img img{
+// width: 75px;
+// height: 75px;
+// float: right;
+}
+.send-img span{
+cursor: pointer;
+  // /* top: 11px; */
+  // width: 23px;
+  // height: 23px;
+  // background: red;
+  // border-radius: 50%;
+  // float: right;
+  // padding-left: 7px;
+  // color: #fff
+}
+
+.ng-star-inserted img{
+width: 40px;
+height: 40px;
+}
+.send-img-inner{
+border: 1px solid #a09999;
+width: 100px;
+float: right;
+margin-right: 49px;
+padding: 10px;
+position: relative;
+}
+
+.send-img-inner img{
+width: 100%;
+}
+
+.send-img-inner span{
+width: 16px;
+height: 16px;
+border-radius: 100px;
+background-color: #ff0000;
+color: #fff;
+display: inline-block;
+position: absolute;
+z-index: 9;
+right: 3px;
+top: 3px;
+text-align: center;
+font-size: 12px;
+line-height: 17px;
+
+}
+.chat-input-wr{ height: 60px; padding: 15px 25px; bottom: 26px;}
+.chat-input-wr .chat-input{ font-size: 18px;}
